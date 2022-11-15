@@ -1,0 +1,5 @@
+Input error-checking criteria:
+- If checking first line, read number of ants
+- If line contains '-', read links
+- If line contains ' ', read coordinates and names
+- If line contains '#', read comments.
