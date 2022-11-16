@@ -1,0 +1,8 @@
+lem-in
+./objects/
+./sam/objects/
+./elliot/objects
+./libft/objects/
+./libft/libft.a
+*.o
+*.a

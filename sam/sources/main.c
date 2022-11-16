@@ -6,7 +6,7 @@
 /*   By: swilliam <swilliam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/07 16:16:16 by swilliam          #+#    #+#             */
-/*   Updated: 2022/11/16 16:09:46 by swilliam         ###   ########.fr       */
+/*   Updated: 2022/11/16 16:43:49 by swilliam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,5 +30,7 @@ int	main(void)
 		exit(EXIT_FAILURE);
 	initialise_structs(data, rooms, links);
 	read_input(data, rooms, links);
+	print_data(data, rooms, links); //for testing purposes
+	exit(EXIT_SUCCESS);
 	return (0);
 }

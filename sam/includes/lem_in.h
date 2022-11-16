@@ -6,7 +6,7 @@
 /*   By: swilliam <swilliam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/07 16:28:47 by swilliam          #+#    #+#             */
-/*   Updated: 2022/11/16 16:07:02 by swilliam         ###   ########.fr       */
+/*   Updated: 2022/11/16 16:43:21 by swilliam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,9 +28,9 @@ typedef struct rooms
 	char			*name;
 	int				coord_x;
 	int				coord_y;
-	int				start;
+	bool			start;
 	bool			start_searching;
-	int				end;
+	bool			end;
 	bool			end_searching;
 	struct rooms	*next;
 	struct rooms	*previous;
@@ -43,6 +43,11 @@ typedef struct	links
 	struct links	*next;
 	struct links	*previous;
 }				t_links;
+
+/*
+** Testing functions:
+*/
+void	print_data(t_data *data, t_rooms *rooms, t_links *links);
 
 /*
 ** Initialisation:
