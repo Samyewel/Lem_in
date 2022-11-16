@@ -6,7 +6,7 @@
 /*   By: swilliam <swilliam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/05 14:50:00 by swilliam          #+#    #+#             */
-/*   Updated: 2022/10/04 12:41:45 by swilliam         ###   ########.fr       */
+/*   Updated: 2022/11/16 15:40:35 by swilliam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -171,5 +171,6 @@ char		*float_f_dtostr(t_printf *flags, long double f);
 ** Error handling
 */
 void		ft_printf_error(t_printf *flags, char *error_message);
+void		ft_printf_strerror(char *error_message);
 
 #endif
