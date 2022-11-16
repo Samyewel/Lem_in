@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: swilliam <swilliam@student.42.fr>          +#+  +:+       +#+        */
+/*   By: egaliber <egaliber@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/07 16:16:16 by swilliam          #+#    #+#             */
-/*   Updated: 2022/11/15 17:29:29 by swilliam         ###   ########.fr       */
+/*   Updated: 2022/11/16 12:39:27 by egaliber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "lem_in.h"
+#include "../includes/lem_in.h"
 
 int	error_management(char *input)
 {
@@ -34,10 +34,14 @@ int	main(int argc, char **argv)
 {
 	t_rooms	*rooms;
 	t_links	*links;
+	t_data *data;
 	int	i;
+
+	// Maybe initiate struct function?
 
 	rooms = (t_rooms *)malloc(sizeof(t_rooms));
 	links = (t_links *)malloc(sizeof(t_links));
+	data = (t_data *)malloc(sizeof(t_data));
 	if (!rooms || !links)
 		exit(EXIT_FAILURE);
 	i = 1;
