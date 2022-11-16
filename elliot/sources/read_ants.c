@@ -6,7 +6,7 @@
 /*   By: egaliber <egaliber@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/15 16:22:40 by egaliber          #+#    #+#             */
-/*   Updated: 2022/11/15 17:23:52 by egaliber         ###   ########.fr       */
+/*   Updated: 2022/11/16 12:27:16 by egaliber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ void read_ants(t_data *data)
 	line = NULL;
 	i = 0;
 	
-	get_next_line(0, *line);
+	get_next_line(0, &line);
 	while (line != '\0')
 	{
 		if (!line)
