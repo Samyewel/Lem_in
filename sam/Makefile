@@ -6,13 +6,14 @@
 #    By: swilliam <swilliam@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/11/05 13:26:33 by swilliam          #+#    #+#              #
-#    Updated: 2022/11/15 16:04:03 by swilliam         ###   ########.fr        #
+#    Updated: 2022/11/21 14:04:44 by swilliam         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 # Source files
 LEM_IN_DIR = ./sources/
-LEM_IN_FILES = main.c
+LEM_IN_FILES = main.c read_input.c initialise.c print_data.c store_input.c \
+list_utils.c
 
 # Libft
 LIBFT_DIR = ../libft/
@@ -28,11 +29,11 @@ FLAGS = -Wall -Wextra -Werror
 DEBUG = -g
 INCLUDES = -I./includes -I$(LIBFT_DIR)includes -I../eval_tests
 ADD_LIB = -L. $(LIBFT)
+TEST_CMD = ./lem-in < ./maps/test.map
 LEM_IN = lem-in
 
 # Utilities
 DELETE = $(LEM_IN) $(OBJ)
-#PLAYER = ./eval_tests/play.py
 
 all:		$(LEM_IN)
 
@@ -66,4 +67,7 @@ fclean: 	clean
 
 re:			fclean all
 
-.PHONY: all clean fclean re
+test:		all
+			$(TEST_CMD)
+
+.PHONY: all clean fclean re test

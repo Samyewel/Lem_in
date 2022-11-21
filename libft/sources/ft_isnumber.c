@@ -1,28 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   initialise.c                                       :+:      :+:    :+:   */
+/*   ft_isnumber.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: swilliam <swilliam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/11/16 15:45:20 by swilliam          #+#    #+#             */
-/*   Updated: 2022/11/21 15:12:36 by swilliam         ###   ########.fr       */
+/*   Created: 2022/11/21 16:59:33 by swilliam          #+#    #+#             */
+/*   Updated: 2022/11/21 17:03:02 by swilliam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "lem_in.h"
+#include "libft.h"
 
-/*
-** initialise_data:
-** -
-*/
-
-t_data	*initialise_data(t_data *data)
+int	ft_isnumber(char *string)
 {
-	if (!(data))
-		data = (t_data *)malloc(sizeof(t_data));
-	data->ant_count = 0;
-	data->starting_search = false;
-	data->ending_search = false;
-	return (data);
+	int	i;
+
+	i = -1;
+	while (string[++i])
+	{
+		if (!ft_isdigit(string[i]))
+			return (0);
+	}
+	return (1);
 }

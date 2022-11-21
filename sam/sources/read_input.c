@@ -6,7 +6,7 @@
 /*   By: swilliam <swilliam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/16 14:13:08 by swilliam          #+#    #+#             */
-/*   Updated: 2022/11/16 16:30:37 by swilliam         ###   ########.fr       */
+/*   Updated: 2022/11/21 17:18:28 by swilliam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,21 +19,10 @@
 ** - If the line only contains a number, this will be stored.
 */
 
-static void	read_ants(t_data *data, char *line, int line_count)
+static void	read_ants(t_data *data, char *line, int line_n)
 {
-	int	i;
-
-	i = 0;
-	if (line_count == 0)
-	{
-		while (line[i])
-		{
-			if (!ft_isdigit(line[i]))
-				return ;
-			i++;
-		}
+	if (line_n == 0 && ft_isnumber(line))
 		data->ant_count = ft_atoi(line);
-	}
 }
 
 /*
@@ -46,22 +35,24 @@ static void	read_ants(t_data *data, char *line, int line_count)
 **   searching for the next line that contains a room.
 */
 
-static void	read_comments(t_rooms *rooms, char *line, int line_count)
+static void	read_comments(t_data *data, char *line, int line_n)
 {
 	int	i;
 
 	i = 0;
-	if (line_count > 0)
+	if (line_n == 0)
+		return ;
+	if (line[0] == '#' && line[1] != '#')
+		return ;
+	if (line[0] == '#' && line[1] == '#')
 	{
-		if (line[0] == '#' && line[1] == '#')
+		data->starting_search = (ft_strcmp(line, "##start") == 0);
+		data->ending_search = (ft_strcmp(line, "##end") == 0);
+		if (data->starting_search && data->ending_search)
 		{
-			if (ft_strcmp(line, "##start") == 0)
-				rooms->start_searching = true;
-			if (ft_strcmp(line, "##end") == 0)
-				rooms->end_searching = true;
+			ft_printf("Start and end toggles both true in %s on line %d.\n", __func__, __LINE__);
+			exit(EXIT_FAILURE);
 		}
-		if (line[0] == '#' && line[1] != '#')
-			return ;
 	}
 }
 
@@ -76,31 +67,32 @@ static void	read_comments(t_rooms *rooms, char *line, int line_count)
 **   y coordinates).
 ** - If we are searching for the next room given after a start or end modifier,
 **   that room is given the corresponding value.
+** - All necessary room data is then allocated and added to the list of rooms.
 */
 
-static void	read_rooms(t_rooms *rooms, char *line, int line_count)
+static void	read_rooms(t_data *data, t_rooms **rooms, char *line, int line_n)
 {
-	char	**room_split;
-	int		i;
+	t_rooms	*room;
+	t_rooms	*temp;
 
-	room_split = NULL;
-	i = 0;
-	if (line_count > 0 && line[0] != 'L' && line[0] != '#')
+	room = NULL;
+	temp = *rooms;
+	if (line_n > 0 && line[0] != 'L' && line[0] != '#')
 	{
-		if (ft_strchr(line, ' ') != NULL)
+		if (ft_strchr(line, ' ') == NULL && ft_strchr(line, '-') != NULL)
 			return ;
-		room_split = ft_strsplit(line, ' ');
-		if (!room_split)
-			exit(EXIT_FAILURE);
-		rooms->name = room_split[0];
-		rooms->coord_x = ft_atoi(room_split[1]);
-		rooms->coord_y = ft_atoi(room_split[2]);
-		rooms->start = rooms->start_searching;
-		rooms->start_searching = false;
-		rooms->end = rooms->end_searching;
-		rooms->end_searching = false;
-		ft_arrdel(room_split);
-		rooms->next = NULL;
+		if (ft_wordcount(line, ' ') != 3)
+			ft_printf_strerror("Invalid input.");
+		room = create_room(*rooms);
+		room = store_room_data(data, room, line);
+		if (temp == NULL)
+			*rooms = room;
+		else
+		{
+			while (temp->next != NULL)
+				temp = temp->next;
+			temp->next = room;
+		}
 	}
 }
 
@@ -109,20 +101,23 @@ static void	read_rooms(t_rooms *rooms, char *line, int line_count)
 ** -
 */
 
-static void	read_links(t_links *links, char *line, int line_count)
+static void	read_links(t_links *links, char *line, int line_n)
 {
 	char	**link_split;
 	int		i;
 
 	link_split = NULL;
 	i = 0;
-	if (line_count > 0)
+	if (line_n > 0)
 	{
-		if (ft_strchr(line, '-') != NULL)
+		if (ft_strchr(line, '-') != NULL && ft_strchr(line, ' ') == NULL)
 			return ;
 		link_split = ft_strsplit(line, '-');
 		if (!link_split)
+		{
+			ft_printf("Memory allocation failure in %s on line %d.\n", __func__, __LINE__);
 			exit(EXIT_FAILURE);
+		}
 		links->a = link_split[0];
 		links->b = link_split[1];
 		ft_arrdel(link_split);
@@ -140,19 +135,21 @@ static void	read_links(t_links *links, char *line, int line_count)
 ** - read_links will only read lines containing '-' symbols.
 */
 
-void	read_input(t_data *data, t_rooms *rooms, t_links *links)
+void	read_input(t_data *data, t_rooms **rooms, t_links *links)
 {
 	char	*line;
-	int		line_count;
+	int		line_n;
 
 	line = NULL;
-	line_count = 0;
+	line_n = 0;
 	while (get_next_line(0, &line))
 	{
-		read_ants(data, line, line_count);
-		read_comments(rooms, line, line_count);
-		read_rooms(rooms, line, line_count);
-		read_links(links, line, line_count);
+		ft_printf("%s\n", line);
+		read_ants(data, line, line_n);
+		read_comments(data, line, line_n);
+		read_rooms(data, rooms, line, line_n);
+		read_links(links, line, line_n);
+		line_n++;
 		if (line != NULL)
 			ft_strdel(&line);
 	}
