@@ -6,14 +6,13 @@
 #    By: swilliam <swilliam@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/11/05 13:26:33 by swilliam          #+#    #+#              #
-#    Updated: 2022/11/21 14:04:44 by swilliam         ###   ########.fr        #
+#    Updated: 2022/11/22 15:44:28 by swilliam         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 # Source files
 LEM_IN_DIR = ./sources/
-LEM_IN_FILES = main.c read_input.c initialise.c print_data.c store_input.c \
-list_utils.c
+LEM_IN_FILES = main.c read_input.c initialise.c print_data.c list_utils.c
 
 # Libft
 LIBFT_DIR = ../libft/

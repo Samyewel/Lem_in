@@ -6,7 +6,7 @@
 /*   By: swilliam <swilliam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/16 14:13:08 by swilliam          #+#    #+#             */
-/*   Updated: 2022/11/21 17:18:28 by swilliam         ###   ########.fr       */
+/*   Updated: 2022/11/22 15:54:23 by swilliam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,8 @@
 /*
 ** read_ants:
 ** - Reads only from the first line of the input.
-** - Loops through the line, checking that only numbers are found.
-** - If the line only contains a number, this will be stored.
+** - Ensure that the link only contains a number.
+** - Stores the number of ants given into a struct.
 */
 
 static void	read_ants(t_data *data, char *line, int line_n)
@@ -28,18 +28,15 @@ static void	read_ants(t_data *data, char *line, int line_n)
 /*
 ** read_comments:
 ** - Will only be read after the first line.
-** - If a line begins with one '#', it a comment for user-reading purposes, and
+** - If a line begins with one '#', it's a comment for user-reading purposes, and
 **   therefore will not be stored or printed.
-** - If a line begins with two '#', it is a modifier for the next room to
+** - If a line begins with two '#', it's is a modifier for the next room to
 **   specify if it is the start or end room. This triggers a boolean used for
 **   searching for the next line that contains a room.
 */
 
 static void	read_comments(t_data *data, char *line, int line_n)
 {
-	int	i;
-
-	i = 0;
 	if (line_n == 0)
 		return ;
 	if (line[0] == '#' && line[1] != '#')
@@ -49,10 +46,7 @@ static void	read_comments(t_data *data, char *line, int line_n)
 		data->starting_search = (ft_strcmp(line, "##start") == 0);
 		data->ending_search = (ft_strcmp(line, "##end") == 0);
 		if (data->starting_search && data->ending_search)
-		{
-			ft_printf("Start and end toggles both true in %s on line %d.\n", __func__, __LINE__);
-			exit(EXIT_FAILURE);
-		}
+			ft_printf_strerror("Start and end toggles both true.");
 	}
 }
 
@@ -65,8 +59,6 @@ static void	read_comments(t_data *data, char *line, int line_n)
 **   coordinates.
 ** - Splits the line into three pieces of storable data (name, x coordinate,
 **   y coordinates).
-** - If we are searching for the next room given after a start or end modifier,
-**   that room is given the corresponding value.
 ** - All necessary room data is then allocated and added to the list of rooms.
 */
 
@@ -82,7 +74,7 @@ static void	read_rooms(t_data *data, t_rooms **rooms, char *line, int line_n)
 		if (ft_strchr(line, ' ') == NULL && ft_strchr(line, '-') != NULL)
 			return ;
 		if (ft_wordcount(line, ' ') != 3)
-			ft_printf_strerror("Invalid input.");
+			ft_printf_strerror("Invalid coordinate input.");
 		room = create_room(*rooms);
 		room = store_room_data(data, room, line);
 		if (temp == NULL)
@@ -98,31 +90,33 @@ static void	read_rooms(t_data *data, t_rooms **rooms, char *line, int line_n)
 
 /*
 ** read_links:
-** -
+** - Ensures that the line met is not the first, and that it meets the criteria
+**   for a valid link command.
+** - Splits the line into two names, with each representing that room's between
+**   one link.
+** - Calls add_link twice with the names alternating, giving those rooms a link
+**   between the two.
 */
 
-static void	read_links(t_links *links, char *line, int line_n)
+static void	read_links(t_rooms **rooms, char *line, int line_n)
 {
-	char	**link_split;
-	int		i;
+	char	**line_split;
+	t_links	*link;
+	t_rooms	*temp;
 
-	link_split = NULL;
-	i = 0;
-	if (line_n > 0)
-	{
-		if (ft_strchr(line, '-') != NULL && ft_strchr(line, ' ') == NULL)
-			return ;
-		link_split = ft_strsplit(line, '-');
-		if (!link_split)
-		{
-			ft_printf("Memory allocation failure in %s on line %d.\n", __func__, __LINE__);
-			exit(EXIT_FAILURE);
-		}
-		links->a = link_split[0];
-		links->b = link_split[1];
-		ft_arrdel(link_split);
-		links->next = NULL;
-	}
+	line_split = NULL;
+	link = NULL;
+	temp = *rooms;
+	if (line_n == 0)
+		return ;
+	if (ft_strchr(line, '-') == NULL)
+		return ;
+	line_split = ft_strsplit(line, '-');
+	if (!line_split)
+		ft_printf_strerror("Memory allocation failure in read_links.");
+	add_link(rooms, line_split[0], line_split[1]);
+	add_link(rooms, line_split[1], line_split[0]);
+	ft_arrdel(line_split);
 }
 
 /*
@@ -135,7 +129,7 @@ static void	read_links(t_links *links, char *line, int line_n)
 ** - read_links will only read lines containing '-' symbols.
 */
 
-void	read_input(t_data *data, t_rooms **rooms, t_links *links)
+void	read_input(t_data *data, t_rooms **rooms)
 {
 	char	*line;
 	int		line_n;
@@ -144,11 +138,11 @@ void	read_input(t_data *data, t_rooms **rooms, t_links *links)
 	line_n = 0;
 	while (get_next_line(0, &line))
 	{
-		ft_printf("%s\n", line);
+		ft_printf("%s\n", line); //Remove before submission
 		read_ants(data, line, line_n);
 		read_comments(data, line, line_n);
 		read_rooms(data, rooms, line, line_n);
-		read_links(links, line, line_n);
+		read_links(rooms, line, line_n);
 		line_n++;
 		if (line != NULL)
 			ft_strdel(&line);
