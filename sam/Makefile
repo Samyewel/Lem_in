@@ -6,13 +6,14 @@
 #    By: swilliam <swilliam@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/11/05 13:26:33 by swilliam          #+#    #+#              #
-#    Updated: 2022/11/22 15:44:28 by swilliam         ###   ########.fr        #
+#    Updated: 2022/11/23 16:48:58 by swilliam         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 # Source files
 LEM_IN_DIR = ./sources/
-LEM_IN_FILES = main.c read_input.c initialise.c print_data.c list_utils.c
+LEM_IN_FILES = main.c read_input.c initialise.c print_data.c list_utils.c \
+list_creation.c
 
 # Libft
 LIBFT_DIR = ../libft/
@@ -28,7 +29,7 @@ FLAGS = -Wall -Wextra -Werror
 DEBUG = -g
 INCLUDES = -I./includes -I$(LIBFT_DIR)includes -I../eval_tests
 ADD_LIB = -L. $(LIBFT)
-TEST_CMD = ./lem-in < ./maps/test.map
+TEST_CMD = ./lem-in < ../resources/maps/
 LEM_IN = lem-in
 
 # Utilities
@@ -66,7 +67,10 @@ fclean: 	clean
 
 re:			fclean all
 
-test:		all
-			$(TEST_CMD)
+test0:		all
+			$(TEST_CMD)0.map
+
+test1:		all
+			$(TEST_CMD)1.map
 
 .PHONY: all clean fclean re test
