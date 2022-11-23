@@ -1,40 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   initialise.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: swilliam <swilliam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/11/07 16:16:16 by swilliam          #+#    #+#             */
-/*   Updated: 2022/11/22 14:49:38 by swilliam         ###   ########.fr       */
+/*   Created: 2022/11/16 15:45:20 by swilliam          #+#    #+#             */
+/*   Updated: 2022/11/21 15:12:36 by swilliam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lem_in.h"
 
 /*
-** lem-in:
+** initialise_data:
 ** -
 */
 
-int	main(void)
+t_data	*initialise_data(t_data *data)
 {
-	t_data	*data;
-	t_rooms	*rooms;
-	t_links	*links;
-
-	data = NULL;
-	rooms = NULL;
-	links = NULL;
-	data = initialise_data(data);
-	if (!data)
-		ft_printf_strerror("Memory allocation failure in main.");
-	read_input(data, &rooms);
-	print_data(data, rooms); //Remove before submission
-	system("leaks lem-in");
-	exit(EXIT_SUCCESS);
-	return (0);
+	if (!(data))
+		data = (t_data *)malloc(sizeof(t_data));
+	data->ant_count = 0;
+	data->starting_search = false;
+	data->ending_search = false;
+	return (data);
 }
-
-//Program execution:
-//./lem-in < maps/test.map
