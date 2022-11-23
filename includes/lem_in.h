@@ -6,7 +6,7 @@
 /*   By: swilliam <swilliam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/07 16:28:47 by swilliam          #+#    #+#             */
-/*   Updated: 2022/11/22 15:38:18 by swilliam         ###   ########.fr       */
+/*   Updated: 2022/11/23 14:40:45 by swilliam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,10 +54,16 @@ void	print_data(t_data *data, t_rooms *rooms);
 t_data	*initialise_data(t_data *data);
 
 /*
-** List utilities:
+** List creation:
 */
 t_rooms	*create_room(t_rooms *rooms);
 t_links	*add_link(t_rooms **rooms, char *link_a, char *link_b);
+
+/*
+** List utilities:
+*/
+t_rooms	*find_start_room(t_rooms **rooms);
+t_rooms	*find_end_room(t_rooms **rooms);
 
 /*
 ** Reading:

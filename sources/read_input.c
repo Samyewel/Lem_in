@@ -6,7 +6,7 @@
 /*   By: swilliam <swilliam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/16 14:13:08 by swilliam          #+#    #+#             */
-/*   Updated: 2022/11/23 13:49:18 by swilliam         ###   ########.fr       */
+/*   Updated: 2022/11/23 14:47:09 by swilliam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ static void	read_rooms(t_data *data, t_rooms **rooms, char *line, int line_n)
 
 	room = NULL;
 	temp = *rooms;
-	if (line_n == 0 || (line[0] != 'L' && line[0] != '#'))
+	if (line_n == 0 || (line[0] == 'L' || line[0] == '#'))
 		return ;
 	if (ft_strchr(line, ' ') == NULL && ft_strchr(line, '-') != NULL)
 		return ;
