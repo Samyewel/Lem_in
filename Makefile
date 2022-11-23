@@ -3,17 +3,17 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: swilliam <swilliam@student.42.fr>          +#+  +:+       +#+         #
+#    By: egaliber <egaliber@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/11/05 13:26:33 by swilliam          #+#    #+#              #
-#    Updated: 2022/11/23 14:55:12 by swilliam         ###   ########.fr        #
+#    Updated: 2022/11/23 15:20:52 by egaliber         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 # Source files
 LEM_IN_DIR = ./sources/
 LEM_IN_FILES = main.c read_input.c initialise.c list_utils.c print_data.c \
-list_creation.c
+list_creation.c bfs.c
 
 # Libft
 LIBFT_DIR = ./libft/
