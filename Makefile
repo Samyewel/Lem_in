@@ -6,7 +6,7 @@
 #    By: swilliam <swilliam@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/11/05 13:26:33 by swilliam          #+#    #+#              #
-#    Updated: 2022/11/23 14:44:40 by swilliam         ###   ########.fr        #
+#    Updated: 2022/11/23 14:55:12 by swilliam         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -34,7 +34,7 @@ LEM_IN = lem-in
 # Utilities
 DELETE = $(LEM_IN) $(OBJ)
 #PLAYER = ./eval_tests/play.py
-TEST_CMD = TEST_CMD = ./lem-in < ./resources/maps/
+TEST_CMD = ./lem-in < ./resources/maps/
 
 all:		$(LEM_IN)
 
@@ -73,7 +73,5 @@ test0:		all
 
 test1:		all
 			$(TEST_CMD)1.map
-
-
 
 .PHONY: all clean fclean re
