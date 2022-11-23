@@ -6,7 +6,7 @@
 /*   By: swilliam <swilliam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/16 14:13:08 by swilliam          #+#    #+#             */
-/*   Updated: 2022/11/23 13:36:45 by swilliam         ###   ########.fr       */
+/*   Updated: 2022/11/23 14:43:39 by swilliam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,22 +69,21 @@ static void	read_rooms(t_data *data, t_rooms **rooms, char *line, int line_n)
 
 	room = NULL;
 	temp = *rooms;
-	if (line_n > 0 && line[0] != 'L' && line[0] != '#')
+	if (line_n == 0 || (line[0] == 'L' || line[0] == '#'))
+		return ;
+	if (ft_strchr(line, ' ') == NULL && ft_strchr(line, '-') != NULL)
+		return ;
+	if (ft_wordcount(line, ' ') != 3)
+		ft_printf_strerror("Invalid coordinate input.");
+	room = create_room(*rooms);
+	room = store_room_data(data, room, line);
+	if (temp == NULL)
+		*rooms = room;
+	else
 	{
-		if (ft_strchr(line, ' ') == NULL && ft_strchr(line, '-') != NULL)
-			return ;
-		if (ft_wordcount(line, ' ') != 3)
-			ft_printf_strerror("Invalid coordinate input.");
-		room = create_room(*rooms);
-		room = store_room_data(data, room, line);
-		if (temp == NULL)
-			*rooms = room;
-		else
-		{
-			while (temp->next != NULL)
-				temp = temp->next;
-			temp->next = room;
-		}
+		while (temp->next != NULL)
+			temp = temp->next;
+		temp->next = room;
 	}
 }
 
@@ -101,14 +100,10 @@ static void	read_rooms(t_data *data, t_rooms **rooms, char *line, int line_n)
 static void	read_links(t_rooms **rooms, char *line, int line_n)
 {
 	char	**line_split;
-	t_links	*link;
-	t_rooms	*temp;
 
-	line_split = NULL;
-	link = NULL;
-	temp = *rooms;
 	if (line_n == 0)
 		return ;
+	line_split = NULL;
 	if (ft_strchr(line, '-') == NULL)
 		return ;
 	line_split = ft_strsplit(line, '-');

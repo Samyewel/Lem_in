@@ -6,7 +6,7 @@
 /*   By: swilliam <swilliam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/16 16:29:43 by swilliam          #+#    #+#             */
-/*   Updated: 2022/11/22 15:03:11 by swilliam         ###   ########.fr       */
+/*   Updated: 2022/11/23 16:03:03 by swilliam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,13 @@ void	print_data(t_data *data, t_rooms *rooms)
 {
 	t_rooms	*ptr;
 	t_links	*link;
+	t_rooms	*start;
+	t_rooms	*end;
+
+	start = find_start_room(&rooms);
+	end = find_end_room(&rooms);
+	ft_printf("Starting room: %s\n", start->name);
+	ft_printf("Ending room: %s\n", end->name);
 
 	ptr = rooms;
 	ft_printf("\nAnt count: %d\n\n", data->ant_count);
