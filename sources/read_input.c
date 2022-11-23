@@ -6,7 +6,7 @@
 /*   By: swilliam <swilliam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/16 14:13:08 by swilliam          #+#    #+#             */
-/*   Updated: 2022/11/23 16:07:29 by swilliam         ###   ########.fr       */
+/*   Updated: 2022/11/23 16:14:03 by swilliam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,7 +101,7 @@ static void	read_links(t_rooms **rooms, char *line, int line_n)
 {
 	char	**line_split;
 
-	if (line_n == 0)
+	if (line_n == 0 || line[0] == '#')
 		return ;
 	line_split = NULL;
 	if (ft_strchr(line, '-') == NULL)
