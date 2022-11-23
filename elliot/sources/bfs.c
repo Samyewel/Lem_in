@@ -6,7 +6,7 @@
 /*   By: egaliber <egaliber@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/22 17:27:42 by egaliber          #+#    #+#             */
-/*   Updated: 2022/11/23 15:17:27 by egaliber         ###   ########.fr       */
+/*   Updated: 2022/11/23 16:31:35 by egaliber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,20 +40,24 @@ void	check_links(t_queue **tail, t_queue *que)
 	int i;
 
 	i = 0;
+
+	
 }
 
 void	init_bfs(t_rooms *rooms, t_queue **head, t_queue **tail, t_queue **que)
 {
-	t_rooms *start; 
+	t_rooms *start;
+	t_rooms *end;
 	
 	start = find_start_room(&rooms);
+	end = find_end_room(&rooms);
 	ft_printf("%d\n", start);
 	*head->next = NULL;
 	*tail = *head;
 	*que = *head;
 }
 
-static int	bfs(t_data *data, t_rooms *rooms)
+static int	bfs(t_rooms *rooms)
 {
 	t_queue	*que;
 	t_queue	*tail;
@@ -64,9 +68,9 @@ static int	bfs(t_data *data, t_rooms *rooms)
 	head = NULL;
 	init_bfs(rooms, head, &tail, &que);
 	/*does end have a name/room assigned to it*/
-	while (rooms->end->parent == NULL) // while end doesnthave (we havent checked all)
+	while (rooms->end == NULL) // while end doesnthave (we havent checked all)
 	{
 		check_links(que, tail)
-		que->next;
+		que = que->next;
 	}
 }
