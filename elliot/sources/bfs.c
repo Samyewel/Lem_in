@@ -6,7 +6,7 @@
 /*   By: egaliber <egaliber@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/22 17:27:42 by egaliber          #+#    #+#             */
-/*   Updated: 2022/11/23 13:09:48 by egaliber         ###   ########.fr       */
+/*   Updated: 2022/11/23 13:15:46 by egaliber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,13 +29,15 @@ void	init_bfs(t_rooms *rooms, t_queue **head, t_queue **tail, t_queue **que)
 	*que = *head;
 }
 
-static int	bfs(t_data *data, t_queue **head, t_rooms *rooms)
+static int	bfs(t_data *data, t_rooms *rooms)
 {
 	t_queue	*que;
 	t_queue	*tail;
+	t_queue *head;
 
 	que = NULL;
 	tail = NULL;
+	head = NULL;
 	bfs_init(rooms, head, &tail, &que);
 	while (rooms->end->parent == NULL) // while end doesnthave (we havent checked all)
 	{
