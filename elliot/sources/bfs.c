@@ -6,7 +6,7 @@
 /*   By: egaliber <egaliber@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/22 17:27:42 by egaliber          #+#    #+#             */
-/*   Updated: 2022/11/23 13:48:36 by egaliber         ###   ########.fr       */
+/*   Updated: 2022/11/23 15:17:27 by egaliber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@ void	check_links(t_queue **tail, t_queue *que)
 	/*array of the links is needed
 	need to check the flows
 	*/
+	t_rooms	link_array;
 	int i;
 
 	i = 0;
@@ -43,10 +44,10 @@ void	check_links(t_queue **tail, t_queue *que)
 
 void	init_bfs(t_rooms *rooms, t_queue **head, t_queue **tail, t_queue **que)
 {
-	*head = (t_queue *)malloc(sizeof(t_queue));
-	if (!*head)
-		error();
-	*head->name = rooms->start;
+	t_rooms *start; 
+	
+	start = find_start_room(&rooms);
+	ft_printf("%d\n", start);
 	*head->next = NULL;
 	*tail = *head;
 	*que = *head;
@@ -61,10 +62,11 @@ static int	bfs(t_data *data, t_rooms *rooms)
 	que = NULL;
 	tail = NULL;
 	head = NULL;
-	bfs_init(rooms, head, &tail, &que);
+	init_bfs(rooms, head, &tail, &que);
 	/*does end have a name/room assigned to it*/
 	while (rooms->end->parent == NULL) // while end doesnthave (we havent checked all)
 	{
-		check_links()
+		check_links(que, tail)
+		que->next;
 	}
 }
