@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   list_utils.c                                       :+:      :+:    :+:   */
+/*   list_creation.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: swilliam <swilliam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/21 13:53:38 by swilliam          #+#    #+#             */
-/*   Updated: 2022/11/23 13:40:13 by swilliam         ###   ########.fr       */
+/*   Updated: 2022/11/23 16:06:49 by swilliam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ t_rooms	*store_room_data(t_data *data, t_rooms *room, char *line)
 /*
 ** create_link:
 ** - Creates a fresh link to be added to a list.
-** - Takes the name of a linked room.
+** - Takes the name of a linked room and modifies the link's name.
 */
 
 static t_links	*create_link(char *link_name)
@@ -94,9 +94,7 @@ t_links	*add_link(t_rooms **rooms, char *link_a, char *link_b)
 	link = NULL;
 	link = create_link(link_b);
 	temp_link = NULL;
-	temp_room = *rooms;
-	while (ft_strcmp(temp_room->name, link_a) != 0)
-		temp_room = temp_room->next;
+	temp_room = find_room(rooms, link_a);
 	if (temp_room->links == NULL)
 		temp_room->links = link;
 	else
