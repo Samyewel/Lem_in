@@ -6,7 +6,7 @@
 /*   By: swilliam <swilliam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/16 14:13:08 by swilliam          #+#    #+#             */
-/*   Updated: 2022/11/22 15:54:23 by swilliam         ###   ########.fr       */
+/*   Updated: 2022/11/23 13:36:45 by swilliam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,8 @@ static void	read_ants(t_data *data, char *line, int line_n)
 /*
 ** read_comments:
 ** - Will only be read after the first line.
-** - If a line begins with one '#', it's a comment for user-reading purposes, and
-**   therefore will not be stored or printed.
+** - If a line begins with one '#', it's a comment for user-reading
+*8   purposes, and therefore will not be stored or printed.
 ** - If a line begins with two '#', it's is a modifier for the next room to
 **   specify if it is the start or end room. This triggers a boolean used for
 **   searching for the next line that contains a room.
