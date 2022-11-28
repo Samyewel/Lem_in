@@ -3,17 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   print_data.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: swilliam <swilliam@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sam <sam@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/16 16:29:43 by swilliam          #+#    #+#             */
-/*   Updated: 2022/11/23 14:52:50 by swilliam         ###   ########.fr       */
+/*   Updated: 2022/11/28 21:28:17 by sam              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lem_in.h"
 
 /*
-** Remove before submission
 ** print_data:
 ** - Prints all data that has been stored.
 */
@@ -47,4 +46,27 @@ void	print_data(t_data *data, t_rooms *rooms)
 		ft_printf("\n");
 		ptr = ptr->next;
 	}
+}
+
+/*
+** print_queue:
+** - Prints the contents of the queue.
+*/
+
+void	print_queue(t_queue **queue)
+{
+	t_queue	*temp_queue;
+
+	temp_queue = *queue;
+	ft_printf("Queue:\n");
+	while (temp_queue)
+	{
+		if (temp_queue->visited)
+			ft_printf("!");
+		ft_printf("%s", temp_queue->name);
+		if (temp_queue->next != NULL)
+			ft_printf(", ");
+		temp_queue = temp_queue->next;
+	}
+	ft_printf("\n");
 }

@@ -6,7 +6,7 @@
 /*   By: sam <sam@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/07 16:28:47 by swilliam          #+#    #+#             */
-/*   Updated: 2022/11/28 16:44:29 by sam              ###   ########.fr       */
+/*   Updated: 2022/11/28 21:01:33 by sam              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,7 @@ typedef struct queue
 ** Testing functions:
 */
 void	print_data(t_data *data, t_rooms *rooms);
+void	print_queue(t_queue **queue);
 
 /*
 ** Initialisation:
@@ -85,10 +86,18 @@ t_rooms	*store_room_data(t_data *data, t_rooms *rooms, char *line);
 t_queue	*create_queue_node(t_queue *queue, char *room_name);
 t_rooms	*visit_next(t_queue **queue, t_rooms **rooms);
 int		is_empty(t_queue **queue);
+int		is_duplicate(t_queue **queue, char *link_name);
+void	explore_room(t_queue **queue, t_queue *queue_node, t_rooms *room);
 
 /*
 ** BFS functionality:
 */
 bool	bfs(t_rooms **rooms);
+int		edmonds_karp(t_rooms **rooms);
+
+/*
+** Data cleaning:
+*/
+void	clean_queue(t_queue **queue);
 
 #endif
