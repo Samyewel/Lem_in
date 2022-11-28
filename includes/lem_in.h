@@ -6,7 +6,7 @@
 /*   By: sam <sam@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/07 16:28:47 by swilliam          #+#    #+#             */
-/*   Updated: 2022/11/28 14:12:14 by sam              ###   ########.fr       */
+/*   Updated: 2022/11/28 16:44:29 by sam              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,15 +34,21 @@ typedef struct links
 typedef struct rooms
 {
 	char			*name;
-	int				coord_x;
-	int				coord_y;
 	bool			start;
 	bool			end;
-	bool			visited;
 	int				ants;
-	struct rooms	*next;
+	int				coord_x;
+	int				coord_y;
 	struct links	*links;
+	struct rooms	*next;
 }				t_rooms;
+
+typedef struct queue
+{
+	char			*name;
+	bool			visited;
+	struct queue	*next;
+}				t_queue;
 
 /*
 ** Testing functions:
@@ -72,5 +78,17 @@ t_rooms	*find_room(t_rooms **rooms, char *link_name);
 */
 void	read_input(t_data *data, t_rooms **rooms);
 t_rooms	*store_room_data(t_data *data, t_rooms *rooms, char *line);
+
+/*
+** Queue functions:
+*/
+t_queue	*create_queue_node(t_queue *queue, char *room_name);
+t_rooms	*visit_next(t_queue **queue, t_rooms **rooms);
+int		is_empty(t_queue **queue);
+
+/*
+** BFS functionality:
+*/
+bool	bfs(t_rooms **rooms);
 
 #endif
