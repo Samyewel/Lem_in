@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   bfs.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: egaliber <egaliber@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sam <sam@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/28 13:51:24 by sam               #+#    #+#             */
-/*   Updated: 2022/11/28 14:31:53 by egaliber         ###   ########.fr       */
+/*   Updated: 2022/11/28 14:52:17 by sam              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,10 +16,10 @@ typedef struct s_queue
 {
 	struct s_rooms	*name;
 	struct s_queue	*next;
-	bool	checked;
+	bool			checked;
 }	t_queue;
 
-void	check_links(t_rooms *room, t_queue *que)
+void	check_links(t_rooms *room, t_queue *queue)
 {
 	/*array of the links is needed
 	need to check the flows
@@ -30,48 +30,51 @@ void	check_links(t_rooms *room, t_queue *que)
 	int i;
 
 	i = 0;
-	que->name
-	que->next = find_links()
-
-	
+	queue->name
+	queue->next = find_links()
 }
 
-t_queue	*add_to_que(t_queue *que)
+t_queue	*initialise_queue_node(t_queue *queuem))
 {
-	que = (t_queue *)malloc(sizeof(t_queue));
-	que->name = NULL;
-	que->next = NULL;
-	que->checked = FALSE;
-	return (que);
+	queue = (t_queue *)malloc(sizeof(t_queue));
+	queue->name = NULL;
+	queue->next = NULL;
+	queue->checked = FALSE;
+	return (queue);
 }
 
-void	init_bfs(t_rooms *rooms, t_queue **head, t_queue **tail, t_queue **que)
+t_queue	*add_to_queue(t_queue *queue, char *room_name)
 {
-	t_rooms *start;
-	t_rooms *end;
-	
-	start = find_start_room(&rooms);
-	end = find_end_room(&rooms);
-	ft_printf("%d\n", start);
-	*head->next = NULL;
-	*tail = *head;
-	*que = *head;
+	queue->name = ft_strdup(room_name);
+	return(queue)
 }
 
-static int	bfs(t_rooms *rooms)
+int		is_empty(t_queue **queue)
 {
-	t_queue	*que;
-	t_queue	*tail;
-	t_queue *head;
-
-	que = NULL;
-	tail = NULL;
-	head = NULL;
-	init_bfs(rooms, head, &tail, &que);
-	/*does end have a name/room assigned to it*/
-	while (rooms->end == NULL) // while end doesnthave (we havent checked all)
+	while (queue)
 	{
-		check_links(que, tail)
-		que = que->next;
+		if (queue->checked)
+			return (0);
+		queue = queue->next;
+	}
+	return (1);
+}
+
+static int	bfs(t_rooms **rooms)
+{
+	t_queue	*queue;
+	t_rooms	*start;
+	t_rooms	*temp;
+
+	start = find_start_room(&rooms);
+	temp = start;
+	queue = initialise_queue_node(queue);
+	queue = add_to_queue(queue, start->name);
+
+	/*does end have a name/room assigned to it*/
+	while (!is_empty(&queue)) // while end doesnthave (we havent checked all)
+	{
+		//check_links(que, tail)
+		queue = queue->next;
 	}
 }

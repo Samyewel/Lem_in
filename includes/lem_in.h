@@ -6,7 +6,7 @@
 /*   By: sam <sam@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/07 16:28:47 by swilliam          #+#    #+#             */
-/*   Updated: 2022/11/28 13:53:05 by sam              ###   ########.fr       */
+/*   Updated: 2022/11/28 14:12:14 by sam              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,7 @@ typedef struct rooms
 	int				coord_y;
 	bool			start;
 	bool			end;
+	bool			visited;
 	int				ants;
 	struct rooms	*next;
 	struct links	*links;

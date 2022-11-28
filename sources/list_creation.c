@@ -6,7 +6,7 @@
 /*   By: sam <sam@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/21 13:53:38 by swilliam          #+#    #+#             */
-/*   Updated: 2022/11/28 13:51:52 by sam              ###   ########.fr       */
+/*   Updated: 2022/11/28 14:12:52 by sam              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,9 @@ t_rooms	*create_room(t_rooms *room)
 	room->name = NULL;
 	room->coord_x = 0;
 	room->coord_y = 0;
-	room->start = 0;
-	room->end = 0;
+	room->start = false;
+	room->end = false;
+	room->visited = false;
 	room->ants = 0;
 	room->next = NULL;
 	room->links = NULL;
