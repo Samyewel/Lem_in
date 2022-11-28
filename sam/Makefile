@@ -3,16 +3,16 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: swilliam <swilliam@student.42.fr>          +#+  +:+       +#+         #
+#    By: sam <sam@student.42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/11/05 13:26:33 by swilliam          #+#    #+#              #
-#    Updated: 2022/11/23 16:48:58 by swilliam         ###   ########.fr        #
+#    Updated: 2022/11/28 11:47:27 by sam              ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 # Source files
 LEM_IN_DIR = ./sources/
-LEM_IN_FILES = main.c read_input.c initialise.c print_data.c list_utils.c \
+LEM_IN_FILES = main.c read_input.c print_data.c list_utils.c \
 list_creation.c
 
 # Libft

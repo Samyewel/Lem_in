@@ -6,7 +6,7 @@
 /*   By: sam <sam@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/15 16:18:43 by swilliam          #+#    #+#             */
-/*   Updated: 2022/09/13 12:28:33 by sam              ###   ########.fr       */
+/*   Updated: 2022/11/28 13:54:32 by sam              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,10 +40,8 @@ static void	hex_prefix(t_printf *flags, unsigned long long x)
 static void	print_hex_left(t_printf *flags, unsigned long long x, int x_length,
 char *utoa_res)
 {
-	int		i;
 	int		prefix;
 
-	i = 0;
 	prefix = 0;
 	if (flags->precision_specified && flags->precision > x_length)
 		x_length = flags->precision;

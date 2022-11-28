@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lem_in.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: swilliam <swilliam@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sam <sam@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/07 16:28:47 by swilliam          #+#    #+#             */
-/*   Updated: 2022/11/23 14:40:45 by swilliam         ###   ########.fr       */
+/*   Updated: 2022/11/28 13:53:05 by sam              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,7 @@ t_links	*add_link(t_rooms **rooms, char *link_a, char *link_b);
 */
 t_rooms	*find_start_room(t_rooms **rooms);
 t_rooms	*find_end_room(t_rooms **rooms);
+t_rooms	*find_room(t_rooms **rooms, char *link_name);
 
 /*
 ** Reading:
