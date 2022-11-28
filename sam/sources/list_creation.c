@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: sam <sam@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/11/23 14:33:57 by swilliam          #+#    #+#             */
-/*   Updated: 2022/11/28 11:46:04 by sam              ###   ########.fr       */
+/*   Created: 2022/11/21 13:53:38 by swilliam          #+#    #+#             */
+/*   Updated: 2022/11/28 16:26:25 by sam              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,13 +21,13 @@ t_rooms	*create_room(t_rooms *room)
 {
 	room = (t_rooms *)malloc(sizeof(t_rooms));
 	if (!room)
-		ft_printf("Memory allocation failure in create_room.");
+		ft_printf_strerror("Memory allocation failure in create_room.");
 	room->name = NULL;
-	room->coord_x = 0;
-	room->coord_y = 0;
 	room->start = false;
 	room->end = false;
 	room->ants = 0;
+	room->coord_x = 0;
+	room->coord_y = 0;
 	room->next = NULL;
 	room->links = NULL;
 	return (room);
@@ -71,11 +71,11 @@ static t_links	*create_link(char *link_name)
 
 	link = (t_links *)malloc(sizeof(t_rooms));
 	if (!link)
-		ft_printf("Memory allocation failure in create_link.");
+		ft_printf_strerror("Memory allocation failure in create_link.");
 	link->name = NULL;
 	link->name = ft_strdup(link_name);
 	if (!link->name)
-		ft_printf("Memory allocation failure in create_link.");
+		ft_printf_strerror("Memory allocation failure in create_link.");
 	link->next = NULL;
 	return (link);
 }

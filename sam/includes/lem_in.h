@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lem_in.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: swilliam <swilliam@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sam <sam@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/07 16:28:47 by swilliam          #+#    #+#             */
-/*   Updated: 2022/11/23 16:02:10 by swilliam         ###   ########.fr       */
+/*   Updated: 2022/11/28 21:01:33 by sam              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,20 +34,27 @@ typedef struct links
 typedef struct rooms
 {
 	char			*name;
-	int				coord_x;
-	int				coord_y;
 	bool			start;
 	bool			end;
 	int				ants;
-	struct rooms	*next;
+	int				coord_x;
+	int				coord_y;
 	struct links	*links;
+	struct rooms	*next;
 }				t_rooms;
 
+typedef struct queue
+{
+	char			*name;
+	bool			visited;
+	struct queue	*next;
+}				t_queue;
+
 /*
-** Remove before submission.
 ** Testing functions:
 */
 void	print_data(t_data *data, t_rooms *rooms);
+void	print_queue(t_queue **queue);
 
 /*
 ** Initialisation:
@@ -72,5 +79,25 @@ t_rooms	*find_room(t_rooms **rooms, char *link_name);
 */
 void	read_input(t_data *data, t_rooms **rooms);
 t_rooms	*store_room_data(t_data *data, t_rooms *rooms, char *line);
+
+/*
+** Queue functions:
+*/
+t_queue	*create_queue_node(t_queue *queue, char *room_name);
+t_rooms	*visit_next(t_queue **queue, t_rooms **rooms);
+int		is_empty(t_queue **queue);
+int		is_duplicate(t_queue **queue, char *link_name);
+void	explore_room(t_queue **queue, t_queue *queue_node, t_rooms *room);
+
+/*
+** BFS functionality:
+*/
+bool	bfs(t_rooms **rooms);
+int		edmonds_karp(t_rooms **rooms);
+
+/*
+** Data cleaning:
+*/
+void	clean_queue(t_queue **queue);
 
 #endif
