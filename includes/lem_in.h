@@ -6,19 +6,19 @@
 /*   By: swilliam <swilliam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/07 16:28:47 by swilliam          #+#    #+#             */
-/*   Updated: 2022/11/29 15:02:14 by swilliam         ###   ########.fr       */
+/*   Updated: 2022/11/29 15:06:35 by swilliam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef LEM_IN_H
 # define LEM_IN_H
 
+# define DEBUG 1 // Set to 1 if you wish to see debug messages.
+
 # include "ft_printf.h"
 # include "get_next_line.h"
 # include "libft.h"
 # include <stdbool.h>
-
-# define DEBUG 1 // Set to 1 if you wish to see debug messages.
 
 typedef struct data
 {
