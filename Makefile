@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: sam <sam@student.42.fr>                    +#+  +:+       +#+         #
+#    By: swilliam <swilliam@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/11/05 13:26:33 by swilliam          #+#    #+#              #
-#    Updated: 2022/11/28 21:17:04 by sam              ###   ########.fr        #
+#    Updated: 2022/11/29 15:00:52 by swilliam         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -69,9 +69,12 @@ fclean: 	clean
 re:			fclean all
 
 test0:		all
-			$(TEST_CMD)0.map
+			@$(TEST_CMD)0.map
 
 test1:		all
-			$(TEST_CMD)1.map
+			@$(TEST_CMD)1.map
+
+test2:		all
+			@$(TEST_CMD)2.map
 
 .PHONY: all clean fclean re

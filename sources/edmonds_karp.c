@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   edmonds_karp.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sam <sam@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: swilliam <swilliam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/28 13:51:24 by sam               #+#    #+#             */
-/*   Updated: 2022/11/28 21:31:13 by sam              ###   ########.fr       */
+/*   Updated: 2022/11/29 15:00:07 by swilliam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ bool	bfs(t_rooms **rooms)
 		temp_queue = temp_queue->next;
 		// moves along the queue to the next room name
 	}
-	if (end_visited)
+	if (end_visited && DEBUG == true)
 		print_queue(&queue); // Print contents of queue
 	clean_queue(&queue); // Flush contents of queue
 	return (end_visited); // Returns true if a path from start to end is found

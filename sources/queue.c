@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   queue.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sam <sam@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: swilliam <swilliam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/28 16:22:53 by sam               #+#    #+#             */
-/*   Updated: 2022/11/28 21:30:19 by sam              ###   ########.fr       */
+/*   Updated: 2022/11/29 14:49:44 by swilliam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,8 @@ t_queue	*create_queue_node(t_queue *queue, char *room_name)
 		ft_printf_strerror("Memory allocation failure in create_queue_node");
 	queue->name = NULL;
 	queue->name = ft_strdup(room_name);
+	if (!queue->name)
+		ft_printf_strerror("Memory allocation failure in create_queue_node");
 	queue->next = NULL;
 	queue->visited = false;
 	return (queue);

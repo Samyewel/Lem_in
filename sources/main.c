@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sam <sam@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: swilliam <swilliam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/07 16:16:16 by swilliam          #+#    #+#             */
-/*   Updated: 2022/11/28 21:27:29 by sam              ###   ########.fr       */
+/*   Updated: 2022/11/29 15:01:57 by swilliam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,10 +44,12 @@ int	main(void)
 	if (!data)
 		ft_printf_strerror("Memory allocation failure in main.");
 	read_input(data, &rooms);
-	print_data(data, rooms); // Remove before submission
+	if (DEBUG == true)
+		print_data(data, rooms); // Remove before submission
 	if (edmonds_karp(&rooms) > 0)
-		ft_printf("\n");
-	system("leaks lem-in");
+		ft_printf("");
+	if (DEBUG == true)
+		system("leaks lem-in");
 	exit(EXIT_SUCCESS);
 	return (0);
 }
