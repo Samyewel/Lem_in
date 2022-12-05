@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   list_creation.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sam <sam@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: swilliam <swilliam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/21 13:53:38 by swilliam          #+#    #+#             */
-/*   Updated: 2022/11/28 16:26:25 by sam              ###   ########.fr       */
+/*   Updated: 2022/11/29 14:51:11 by swilliam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,8 @@ t_rooms	*store_room_data(t_data *data, t_rooms *room, char *line)
 	if (!ft_isnumber(line_split[1]) || !ft_isnumber(line_split[2]))
 		ft_printf_strerror("Coordinates given are not numbers.");
 	room->name = ft_strdup(line_split[0]);
+	if (!room->name)
+		ft_printf_strerror("Memory allocation failure in store_room_data.");
 	room->coord_x = ft_atoi(line_split[1]);
 	room->coord_y = ft_atoi(line_split[2]);
 	ft_arrdel(line_split);

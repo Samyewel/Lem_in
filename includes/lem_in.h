@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lem_in.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: swilliam <swilliam@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sam <sam@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/07 16:28:47 by swilliam          #+#    #+#             */
-/*   Updated: 2022/11/29 15:06:35 by swilliam         ###   ########.fr       */
+/*   Updated: 2022/12/05 14:50:37 by sam              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,8 +94,7 @@ void	explore_room(t_queue **queue, t_queue *queue_node, t_rooms *room);
 /*
 ** BFS functionality:
 */
-bool	bfs(t_rooms **rooms);
-int		edmonds_karp(t_rooms **rooms);
+int		find_max_flow(t_rooms **rooms);
 
 /*
 ** Data cleaning:

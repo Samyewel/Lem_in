@@ -6,7 +6,7 @@
 /*   By: swilliam <swilliam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/16 14:13:08 by swilliam          #+#    #+#             */
-/*   Updated: 2022/11/23 16:14:03 by swilliam         ###   ########.fr       */
+/*   Updated: 2022/11/29 14:59:29 by swilliam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,13 @@
 
 static void	read_ants(t_data *data, char *line, int line_n)
 {
-	if (line_n == 0 && ft_isnumber(line))
-		data->ant_count = ft_atoi(line);
+	if (line_n == 0)
+	{
+		if (ft_isnumber(line))
+			data->ant_count = ft_atoi(line);
+		else
+			ft_printf_strerror("No ant count given.");
+	}
 }
 
 /*
@@ -133,7 +138,8 @@ void	read_input(t_data *data, t_rooms **rooms)
 	line_n = 0;
 	while (get_next_line(0, &line))
 	{
-		ft_printf("%s\n", line); //Remove before submission
+		if (DEBUG == true)
+			ft_printf("%s\n", line); //Remove before submission
 		read_ants(data, line, line_n);
 		read_comments(data, line, line_n);
 		read_rooms(data, rooms, line, line_n);

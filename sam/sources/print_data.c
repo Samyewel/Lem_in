@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   print_data.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sam <sam@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: swilliam <swilliam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/16 16:29:43 by swilliam          #+#    #+#             */
-/*   Updated: 2022/11/28 21:28:17 by sam              ###   ########.fr       */
+/*   Updated: 2022/11/29 14:43:48 by swilliam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,10 +33,8 @@ void	print_data(t_data *data, t_rooms *rooms)
 	while (ptr)
 	{
 		ft_printf("Name: %s\n", ptr->name);
-		ft_printf("x: %d\n", ptr->coord_x);
-		ft_printf("y: %d\n", ptr->coord_y);
-		ft_printf("Start? %d\n", ptr->start);
-		ft_printf("End? %d\n", ptr->end);
+		ft_printf("x: %d\ny: %d\n", ptr->coord_x, ptr->coord_y);
+		ft_printf("Start? %d\nEnd? %d\n", ptr->start, ptr->end);
 		link = ptr->links;
 		while (link)
 		{

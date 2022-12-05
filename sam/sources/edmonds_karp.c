@@ -6,7 +6,7 @@
 /*   By: sam <sam@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/28 13:51:24 by sam               #+#    #+#             */
-/*   Updated: 2022/11/28 21:31:13 by sam              ###   ########.fr       */
+/*   Updated: 2022/12/05 16:35:23 by sam              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 ** -
 */
 
-bool	bfs(t_rooms **rooms)
+static bool	bfs(t_rooms **rooms)
 {
 	bool	end_visited;
 	t_rooms	*temp_room;
@@ -39,13 +39,16 @@ bool	bfs(t_rooms **rooms)
 		explore_room(&queue, temp_queue, temp_room);
 		// adds room links to queue
 		end_visited += (temp_room->end && temp_queue->visited);
+		// checks to ensure end is reached
+		if (end_visited)
+			break ;
 		// ensures a path from start to end exists
 		temp_room = visit_next(&queue, rooms);
 		// sets the room pointer to the next unvisited room in the queue
 		temp_queue = temp_queue->next;
 		// moves along the queue to the next room name
 	}
-	if (end_visited)
+	if (DEBUG == true)
 		print_queue(&queue); // Print contents of queue
 	clean_queue(&queue); // Flush contents of queue
 	return (end_visited); // Returns true if a path from start to end is found
@@ -56,21 +59,31 @@ bool	bfs(t_rooms **rooms)
 ** -
 */
 
-int	edmonds_karp(t_rooms **rooms)
+static int	edmonds_karp(t_rooms **rooms)
+{
+	//t_queue	*paths;
+	int	flow;
+
+	//paths = NULL;
+	flow = 0;
+	while (bfs(rooms))
+	{
+		if (flow == 1) // Prevent infinite loop until functional
+			break ;
+		flow++;
+		//save paths here
+	}
+	return (flow);
+}
+
+int	find_max_flow(t_rooms **rooms)
 {
 	int	max_flow;
-	int	test_toggle = 1; //set to 0 for looping, 1 for one iteration.
 
-	max_flow = 420;
-	if (test_toggle == 0)
+	max_flow = edmonds_karp(rooms);
+	if (max_flow <= 0)
 	{
-		while (bfs(rooms))
-		{
-			ft_printf("");
-		}
+		return (0);
 	}
-	else
-		if (bfs(rooms))
-			ft_printf("");
-	return (max_flow);
+	return (1);
 }

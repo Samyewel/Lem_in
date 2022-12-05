@@ -5,7 +5,10 @@ Input error-checking criteria:
 - If line contains '#', read comments
 
 To-do:
-- Tidying read_input.c
-- Start looking into reading and storing links
-- Error definitions
-- 
+- Storing shortest path from start to end
+	- Backtrack path found in bfs
+- Edmonds_karp:
+	- Increase flow in each iteration of bfs in edmonds_karp
+	- Save paths found on each iteration of bfs in edmonds_karp
+- Look into how to store the path data from the flow algorithm.
+  Perhaps look into building a dynamic array system?
