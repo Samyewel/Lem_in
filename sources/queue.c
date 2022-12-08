@@ -6,7 +6,7 @@
 /*   By: swilliam <swilliam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/28 16:22:53 by sam               #+#    #+#             */
-/*   Updated: 2022/11/29 14:49:44 by swilliam         ###   ########.fr       */
+/*   Updated: 2022/12/08 16:50:15 by swilliam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,11 @@ t_queue	*create_queue_node(t_queue *queue, char *room_name)
 	if (!queue->name)
 		ft_printf_strerror("Memory allocation failure in create_queue_node");
 	queue->next = NULL;
+	queue->previous = NULL;
+	queue->start = false;
+	queue->end = false;
 	queue->visited = false;
+	queue->valid = true;
 	return (queue);
 }
 
@@ -76,7 +80,7 @@ t_rooms	*visit_next(t_queue **queue, t_rooms **rooms)
 **   found within the queue.
 */
 
-int	is_duplicate(t_queue **queue, char *link_name)
+static int	is_dupe(t_queue **queue, char *link_name)
 {
 	t_queue	*temp_queue;
 
@@ -100,30 +104,27 @@ void	explore_room(t_queue **queue, t_queue *queue_node, t_rooms *room)
 {
 	t_queue	*temp_queue;
 	t_links	*temp_link;
+	int		links;
 
 	temp_queue = *queue;
-	// Pointer to the head of the queue.
-	temp_link = NULL;
+	temp_link = room->links;
 	queue_node->visited = true;
-	// Confirm that we have now visited this room.
 	if (room->links == NULL)
 		return ;
-	// If the current room has no links, exit the function
-	temp_link = room->links;
-	// Point to the head of the list of links of the current room
+	queue_node->start = room->start;
+	queue_node->end = room->end;
+	links = 0;
 	while (temp_link)
-	// Loop through the links of the current room
 	{
-		if (!is_duplicate(queue, temp_link->name))
-		// checks name is not already in queue
+		if (is_dupe(queue, temp_link->name) && links++ == 1 && !temp_link->next)
+			temp_queue->valid = false;
+		else if (!is_dupe(queue, temp_link->name))
 		{
 			while (temp_queue->next != NULL)
 				temp_queue = temp_queue->next;
-			// Loops through queue to the tail of the list
 			temp_queue->next = create_queue_node(*queue, temp_link->name);
-			// Adds a node to the tail of the queue
+			temp_queue->next->previous = temp_queue;
 		}
 		temp_link = temp_link->next;
-		// Iterate to the next link in the list
 	}
 }
