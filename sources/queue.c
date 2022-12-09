@@ -6,7 +6,7 @@
 /*   By: swilliam <swilliam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/28 16:22:53 by sam               #+#    #+#             */
-/*   Updated: 2022/12/08 16:50:15 by swilliam         ###   ########.fr       */
+/*   Updated: 2022/12/09 18:07:10 by swilliam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 **   as the room name given as a variable.
 */
 
-t_queue	*create_queue_node(t_queue *queue, char *room_name)
+t_queue	*add_to_queue(t_queue *queue, char *room_name, t_queue *prev, int depth)
 {
 	queue = (t_queue *)malloc(sizeof(t_queue));
 	if (!queue)
@@ -28,7 +28,8 @@ t_queue	*create_queue_node(t_queue *queue, char *room_name)
 	if (!queue->name)
 		ft_printf_strerror("Memory allocation failure in create_queue_node");
 	queue->next = NULL;
-	queue->previous = NULL;
+	queue->previous = prev;
+	queue->depth = depth;
 	queue->start = false;
 	queue->end = false;
 	queue->visited = false;
@@ -43,14 +44,14 @@ t_queue	*create_queue_node(t_queue *queue, char *room_name)
 
 int	is_empty(t_queue **queue)
 {
-	t_queue	*temp;
+	t_queue	*temp_queue;
 
-	temp = *queue;
-	while (temp)
+	temp_queue = *queue;
+	while (temp_queue)
 	{
-		if (temp->visited == false)
+		if (temp_queue->visited == false)
 			return (0);
-		temp = temp->next;
+		temp_queue = temp_queue->next;
 	}
 	return (1);
 }
@@ -100,30 +101,30 @@ static int	is_dupe(t_queue **queue, char *link_name)
 **   with that room, besides duplicates.
 */
 
-void	explore_room(t_queue **queue, t_queue *queue_node, t_rooms *room)
+void	explore_room(t_queue **queue_head, t_queue *queue, t_rooms *room)
 {
 	t_queue	*temp_queue;
 	t_links	*temp_link;
 	int		links;
 
-	temp_queue = *queue;
+	temp_queue = *queue_head;
 	temp_link = room->links;
-	queue_node->visited = true;
+	queue->visited = true;
 	if (room->links == NULL)
 		return ;
-	queue_node->start = room->start;
-	queue_node->end = room->end;
+	queue->start = room->start;
+	queue->end = room->end;
 	links = 0;
 	while (temp_link)
 	{
-		if (is_dupe(queue, temp_link->name) && links++ == 1 && !temp_link->next)
-			temp_queue->valid = false;
-		else if (!is_dupe(queue, temp_link->name))
+		if (++links == 1 && !temp_link->next && (!queue->start && !queue->end))
+			queue->valid = false;
+		if (!is_dupe(queue_head, temp_link->name))
 		{
 			while (temp_queue->next != NULL)
 				temp_queue = temp_queue->next;
-			temp_queue->next = create_queue_node(*queue, temp_link->name);
-			temp_queue->next->previous = temp_queue;
+			temp_queue->next = add_to_queue(queue, temp_link->name, \
+					temp_queue, queue->depth + 1);
 		}
 		temp_link = temp_link->next;
 	}

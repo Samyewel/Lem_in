@@ -6,7 +6,7 @@
 /*   By: swilliam <swilliam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/07 16:28:47 by swilliam          #+#    #+#             */
-/*   Updated: 2022/12/08 18:37:24 by swilliam         ###   ########.fr       */
+/*   Updated: 2022/12/09 18:03:29 by swilliam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,7 @@ typedef struct queue
 	bool			end;
 	bool			visited;
 	bool			valid;
+	int				depth;
 	struct queue	*next;
 	struct queue	*previous;
 }				t_queue;
@@ -95,17 +96,17 @@ t_rooms	*store_room_data(t_data *data, t_rooms *rooms, char *line);
 /*
 ** Queue functions:
 */
-t_queue	*create_queue_node(t_queue *queue, char *room_name);
+t_queue	*add_to_queue(t_queue *queue, char *room, t_queue *prev, int depth);
 t_rooms	*visit_next(t_queue **queue, t_rooms **rooms);
 int		is_empty(t_queue **queue);
-void	explore_room(t_queue **queue, t_queue *queue_node, t_rooms *room);
+void	explore_room(t_queue **queue_head, t_queue *queue, t_rooms *room);
 
 /*
 ** BFS functionality:
 */
 int		find_max_flow(t_rooms *rooms);
-void	trace_path(t_rooms *rooms, t_rooms *parent_room, char *link_name);
-t_queue	*backtrace_queue(t_queue **queue, t_rooms **room_head, t_rooms *rooms);
+void	trace_path(t_queue *queue, t_rooms *rooms, t_rooms *parent, char *link);
+t_queue	*backtrace_queue(t_queue *queue, t_rooms **room_head, t_rooms *rooms);
 
 /*
 ** Data cleaning:

@@ -6,7 +6,7 @@
 /*   By: swilliam <swilliam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/28 13:51:24 by sam               #+#    #+#             */
-/*   Updated: 2022/12/08 18:42:21 by swilliam         ###   ########.fr       */
+/*   Updated: 2022/12/09 18:08:13 by swilliam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,15 +19,15 @@
 
 static t_queue	*bfs(t_rooms **rooms)
 {
-	bool	end_visited;
-	t_rooms	*temp_room;
-	t_queue	*queue;
-	t_queue	*temp_queue;
+	t_queue		*queue;
+	t_queue		*temp_queue;
+	t_rooms		*temp_room;
+	bool		end_visited;
 
 	end_visited = false;
 	queue = NULL;
 	temp_room = find_start_room(rooms);
-	queue = create_queue_node(queue, temp_room->name);
+	queue = add_to_queue(queue, temp_room->name, NULL, 0);
 	if (!queue)
 		ft_printf_strerror("Memory allocation failure in bfs");
 	temp_queue = queue;
@@ -60,7 +60,7 @@ static t_queue	*bfs_process(t_rooms *rooms)
 		ft_printf_strerror("No end found.");
 	if (DEBUG == true)
 		print_queue(&queue);
-	backtraced_queue = backtrace_queue(&queue, &rooms, rooms);
+	backtraced_queue = backtrace_queue(queue, &rooms, rooms);
 	clean_queue(&queue);
 	return (backtraced_queue);
 }
@@ -73,7 +73,7 @@ static t_queue	*bfs_process(t_rooms *rooms)
 static int	edmonds_karp(t_rooms *rooms)
 {
 	t_queue	*queue;
-	t_links	*paths;
+	t_paths	*paths;
 	int		flow;
 
 	queue = NULL;
@@ -82,7 +82,7 @@ static int	edmonds_karp(t_rooms *rooms)
 	while (1)
 	{
 		queue = bfs_process(rooms);
-		if (flow == 1) // Prevent infinite loop until functional
+		if (flow == 0) // Prevent infinite loop until functional
 			break ;
 		flow++;
 		//save paths here
@@ -90,6 +90,11 @@ static int	edmonds_karp(t_rooms *rooms)
 	}
 	return (flow);
 }
+
+/*
+** find_max_flow
+** -
+*/
 
 int	find_max_flow(t_rooms *rooms)
 {

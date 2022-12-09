@@ -6,7 +6,7 @@
 /*   By: swilliam <swilliam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/16 16:29:43 by swilliam          #+#    #+#             */
-/*   Updated: 2022/11/29 14:43:48 by swilliam         ###   ########.fr       */
+/*   Updated: 2022/12/09 16:35:45 by swilliam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,9 @@ void	print_queue(t_queue **queue)
 		if (temp_queue->visited)
 			ft_printf("!");
 		ft_printf("%s", temp_queue->name);
+		ft_printf(" [%d]", temp_queue->depth);
+		if (!temp_queue->valid)
+			ft_printf(" (INVALID)");
 		if (temp_queue->next != NULL)
 			ft_printf(", ");
 		temp_queue = temp_queue->next;
