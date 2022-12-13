@@ -6,7 +6,7 @@
 /*   By: swilliam <swilliam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/07 16:28:47 by swilliam          #+#    #+#             */
-/*   Updated: 2022/12/09 18:03:29 by swilliam         ###   ########.fr       */
+/*   Updated: 2022/12/13 15:33:13 by swilliam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,8 @@ typedef struct paths
 {
 	char			*name;
 	struct paths	*next;
+	struct links	*links;
+
 }				t_paths;
 
 /*
@@ -105,7 +107,7 @@ void	explore_room(t_queue **queue_head, t_queue *queue, t_rooms *room);
 ** BFS functionality:
 */
 int		find_max_flow(t_rooms *rooms);
-void	trace_path(t_queue *queue, t_rooms *rooms, t_rooms *parent, char *link);
+int		trace_path(t_queue *queue, t_rooms *rooms, t_rooms *parent, char *link);
 t_queue	*backtrace_queue(t_queue *queue, t_rooms **room_head, t_rooms *rooms);
 
 /*
