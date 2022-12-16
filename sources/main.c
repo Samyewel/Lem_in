@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: swilliam <swilliam@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sam <sam@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/07 16:16:16 by swilliam          #+#    #+#             */
-/*   Updated: 2022/12/08 17:50:04 by swilliam         ###   ########.fr       */
+/*   Updated: 2022/12/16 17:07:18 by sam              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ int	main(void)
 	if (find_max_flow(rooms) > 0)
 		ft_printf("");
 	if (DEBUG == true)
-		system("leaks lem-in");
+		system("leaks lem-in | grep 'leaks for'");
 	exit(EXIT_SUCCESS);
 	return (0);
 }

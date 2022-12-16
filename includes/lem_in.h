@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lem_in.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: swilliam <swilliam@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sam <sam@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/07 16:28:47 by swilliam          #+#    #+#             */
-/*   Updated: 2022/12/13 15:33:13 by swilliam         ###   ########.fr       */
+/*   Updated: 2022/12/16 16:48:57 by sam              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,7 @@ typedef struct queue
 typedef struct paths
 {
 	char			*name;
+	int				flow;
 	struct paths	*next;
 	struct links	*links;
 
@@ -70,6 +71,7 @@ typedef struct paths
 */
 void	print_data(t_data *data, t_rooms *rooms);
 void	print_queue(t_queue **queue);
+void	print_path_name(t_rooms *parent, t_rooms *link);
 
 /*
 ** Initialisation:
@@ -107,7 +109,6 @@ void	explore_room(t_queue **queue_head, t_queue *queue, t_rooms *room);
 ** BFS functionality:
 */
 int		find_max_flow(t_rooms *rooms);
-int		trace_path(t_queue *queue, t_rooms *rooms, t_rooms *parent, char *link);
 t_queue	*backtrace_queue(t_queue *queue, t_rooms **room_head, t_rooms *rooms);
 
 /*

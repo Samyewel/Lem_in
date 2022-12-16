@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   path_flow.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: swilliam <swilliam@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sam <sam@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/28 13:51:24 by sam               #+#    #+#             */
-/*   Updated: 2022/12/09 18:08:13 by swilliam         ###   ########.fr       */
+/*   Updated: 2022/12/16 16:33:33 by sam              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,6 +78,8 @@ static int	edmonds_karp(t_rooms *rooms)
 
 	queue = NULL;
 	paths = NULL;
+	if (paths == NULL)
+		ft_printf(""); // Surpress warnings
 	flow = 0;
 	while (1)
 	{

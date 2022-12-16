@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   print_data.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: swilliam <swilliam@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sam <sam@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/16 16:29:43 by swilliam          #+#    #+#             */
-/*   Updated: 2022/12/09 16:35:45 by swilliam         ###   ########.fr       */
+/*   Updated: 2022/12/16 16:47:19 by sam              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,4 +70,13 @@ void	print_queue(t_queue **queue)
 		temp_queue = temp_queue->next;
 	}
 	ft_printf("\n");
+}
+
+void	print_path_name(t_rooms *parent, t_rooms *link)
+{
+	if (parent->end)
+		ft_printf("%s->", parent->name);
+	ft_printf("%s", link->name);
+	if (!link->start)
+		ft_printf("->");
 }

@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   backtrace.c                                        :+:      :+:    :+:   */
+/*   backtrack_queue.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: swilliam <swilliam@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sam <sam@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/08 17:28:33 by swilliam          #+#    #+#             */
-/*   Updated: 2022/12/13 15:57:30 by swilliam         ###   ########.fr       */
+/*   Updated: 2022/12/16 17:42:00 by sam              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 ** -
 */
 
-int		find_depth(t_queue **queue, char *room_name)
+static int	find_depth(t_queue **queue, char *room_name)
 {
 	t_queue	*temp_queue;
 
@@ -41,62 +41,69 @@ int		find_depth(t_queue **queue, char *room_name)
 
 // 4->3->2->0
 // ------2->5
-// 		 ^
+//
 
-
-int		is_valid(t_queue **queue, t_rooms *room, char *link_name)
+static int	is_valid(
+t_queue **queue,
+t_rooms *parent,
+t_rooms *current,
+char *link_name)
 {
 	t_queue	*temp_queue;
 
 	temp_queue = NULL;
 	temp_queue = *queue;
-	if (ft_strcmp(room->name, link_name) == 0)
-		return (0);
-	if (find_depth(queue, parent_name) <= find_depth(queue, link_name))
+	if (parent->start || current->end \
+		|| ft_strcmp(parent->name, link_name) == 0)
 		return (0);
 	while (temp_queue)
 	{
-		if (ft_strcmp(temp_queue->name, link_name) == 0)
+		if (ft_strcmp(temp_queue->name, current->name) == 0 \
+			&& find_depth(queue, current->name) >= find_depth(queue, link_name))
 			return (temp_queue->valid);
 		temp_queue = temp_queue->next;
 	}
 	return (0);
 }
 
-void	print_path_name(t_rooms *parent, t_rooms *link)
-{
-	if (parent->end)
-		ft_printf("%s->", parent->name);
-	ft_printf("%s", link->name);
-	if (!link->start)
-		ft_printf("->");
+/*
+** add_to_front:
+** -
+*/
 
-}
+//t_paths add_to_paths(**path_head, t_rooms *parent, t_rooms *child)
 
 /*
 ** trace_path:
 ** -
 */
 
-int		trace_path(t_queue *queue, t_rooms *rooms, t_rooms *parent, char *link)
+static int	trace_path(
+t_queue *queue,
+t_rooms *rooms,
+t_rooms *parent,
+char *link)
 {
 	t_rooms	*temp_room;
 	t_links	*temp_links;
 
 	temp_room = NULL;
 	temp_links = NULL;
-	if (parent->start || !is_valid(&queue, parent->name, link))
-		return (0);
 	temp_room = find_room(&rooms, link);
-	print_path_name(parent, temp_room);
+	if (!is_valid(&queue, parent, temp_room, link))
+		return (0);
+	if (DEBUG == true)
+		print_path_name(parent, temp_room);
 	if (temp_room->start)
 		return (1);
 	temp_links = temp_room->links;
 	while (temp_links)
 	{
-		if (is_valid(&queue, temp_room, temp_links->name))
-			if (trace_path(queue, rooms, temp_room, temp_links->name))
-				ft_printf("\n");
+		if (trace_path(queue, rooms, temp_room, temp_links->name))
+		{
+			//STORE PATH NODE HERER
+			return (1);
+		}
 		temp_links = temp_links->next;
 	}
 	return (parent->end);
@@ -128,10 +135,11 @@ t_queue	*backtrace_queue(t_queue *queue, t_rooms **room_head, t_rooms *rooms)
 	result = NULL; //create_queue_node(result, temp_room->name);
 	while (temp_links)
 	{
-		ft_printf("\n\nTRACING NEXT END_ROOM LINK\n");
+		ft_printf("\nTracing path:\n");
 		if (trace_path(queue, rooms, end_room, temp_links->name))
-			ft_printf("Start found.\n");
+			ft_printf("\n");
 		temp_links = temp_links->next;
 	}
+	ft_printf("\n");
 	return (result);
 }
