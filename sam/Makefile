@@ -3,17 +3,18 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: sam <sam@student.42.fr>                    +#+  +:+       +#+         #
+#    By: swilliam <swilliam@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/11/05 13:26:33 by swilliam          #+#    #+#              #
-#    Updated: 2022/11/28 21:34:00 by sam              ###   ########.fr        #
+#    Updated: 2022/12/20 17:30:29 by swilliam         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 # Source files
 LEM_IN_DIR = ./sources/
-LEM_IN_FILES = main.c read_input.c list_utils.c print_data.c \
-list_creation.c edmonds_karp.c queue.c clean_data.c
+LEM_IN_FILES = main.c read_input.c room_list_utils.c print_data.c \
+list_creation.c path_flow.c queue.c clean_data.c backtrack_queue.c \
+paths.c
 
 # Libft
 LIBFT_DIR = ../libft/

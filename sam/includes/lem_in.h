@@ -3,17 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   lem_in.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sam <sam@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: swilliam <swilliam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/07 16:28:47 by swilliam          #+#    #+#             */
-/*   Updated: 2022/12/05 14:50:37 by sam              ###   ########.fr       */
+/*   Updated: 2022/12/20 16:34:00 by swilliam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef LEM_IN_H
 # define LEM_IN_H
 
-# define DEBUG 1 // Set to 1 if you wish to see debug messages.
+# define DEBUG 0 // Set to 1 if you wish to see debug messages.
 
 # include "ft_printf.h"
 # include "get_next_line.h"
@@ -48,15 +48,30 @@ typedef struct rooms
 typedef struct queue
 {
 	char			*name;
+	bool			start;
+	bool			end;
 	bool			visited;
+	bool			valid;
+	int				flow;
+	int				depth;
 	struct queue	*next;
+	struct queue	*previous;
 }				t_queue;
+
+typedef struct paths
+{
+	int				path_nb;
+	struct paths	*next;
+	struct queue	path;
+}				t_paths;
 
 /*
 ** Testing functions:
 */
 void	print_data(t_data *data, t_rooms *rooms);
 void	print_queue(t_queue **queue);
+void	print_path_name(t_queue *path_node);
+void	print_paths(t_paths **path_list);
 
 /*
 ** Initialisation:
@@ -85,16 +100,18 @@ t_rooms	*store_room_data(t_data *data, t_rooms *rooms, char *line);
 /*
 ** Queue functions:
 */
-t_queue	*create_queue_node(t_queue *queue, char *room_name);
+t_queue	*add_to_queue(t_queue *queue, char *room, t_queue *prev, int depth);
 t_rooms	*visit_next(t_queue **queue, t_rooms **rooms);
 int		is_empty(t_queue **queue);
-int		is_duplicate(t_queue **queue, char *link_name);
-void	explore_room(t_queue **queue, t_queue *queue_node, t_rooms *room);
+void	explore_room(t_queue **queue_head, t_queue *queue, t_rooms *room);
 
 /*
 ** BFS functionality:
 */
-int		find_max_flow(t_rooms **rooms);
+int		find_max_flow(t_rooms *rooms);
+t_queue	*backtrace_queue(t_queue *queue, t_rooms **room_head, t_rooms *rooms);
+void	add_to_path(t_paths **paths, t_rooms *room);
+void	create_new_path(t_paths **paths, t_rooms *room);
 
 /*
 ** Data cleaning:

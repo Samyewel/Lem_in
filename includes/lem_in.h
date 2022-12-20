@@ -3,17 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   lem_in.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sam <sam@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: swilliam <swilliam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/07 16:28:47 by swilliam          #+#    #+#             */
-/*   Updated: 2022/12/16 16:48:57 by sam              ###   ########.fr       */
+/*   Updated: 2022/12/20 16:34:00 by swilliam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef LEM_IN_H
 # define LEM_IN_H
 
-# define DEBUG 1 // Set to 1 if you wish to see debug messages.
+# define DEBUG 0 // Set to 1 if you wish to see debug messages.
 
 # include "ft_printf.h"
 # include "get_next_line.h"
@@ -52,6 +52,7 @@ typedef struct queue
 	bool			end;
 	bool			visited;
 	bool			valid;
+	int				flow;
 	int				depth;
 	struct queue	*next;
 	struct queue	*previous;
@@ -59,11 +60,9 @@ typedef struct queue
 
 typedef struct paths
 {
-	char			*name;
-	int				flow;
+	int				path_nb;
 	struct paths	*next;
-	struct links	*links;
-
+	struct queue	path;
 }				t_paths;
 
 /*
@@ -71,7 +70,8 @@ typedef struct paths
 */
 void	print_data(t_data *data, t_rooms *rooms);
 void	print_queue(t_queue **queue);
-void	print_path_name(t_rooms *parent, t_rooms *link);
+void	print_path_name(t_queue *path_node);
+void	print_paths(t_paths **path_list);
 
 /*
 ** Initialisation:
@@ -110,6 +110,8 @@ void	explore_room(t_queue **queue_head, t_queue *queue, t_rooms *room);
 */
 int		find_max_flow(t_rooms *rooms);
 t_queue	*backtrace_queue(t_queue *queue, t_rooms **room_head, t_rooms *rooms);
+void	add_to_path(t_paths **paths, t_rooms *room);
+void	create_new_path(t_paths **paths, t_rooms *room);
 
 /*
 ** Data cleaning:

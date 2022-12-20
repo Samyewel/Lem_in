@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   print_data.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sam <sam@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: swilliam <swilliam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/16 16:29:43 by swilliam          #+#    #+#             */
-/*   Updated: 2022/12/16 16:47:19 by sam              ###   ########.fr       */
+/*   Updated: 2022/12/20 17:29:27 by swilliam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,11 +72,30 @@ void	print_queue(t_queue **queue)
 	ft_printf("\n");
 }
 
-void	print_path_name(t_rooms *parent, t_rooms *link)
+void	print_path_name(t_queue *path_node)
 {
-	if (parent->end)
-		ft_printf("%s->", parent->name);
-	ft_printf("%s", link->name);
-	if (!link->start)
-		ft_printf("->");
+	if (path_node->end)
+		ft_printf("%s", path_node->name);
+	else
+		ft_printf("%s->", path_node->name);
+}
+
+void	print_paths(t_paths **path_list)
+{
+	t_paths	*temp_path_list;
+	t_queue	*temp_path;
+
+	temp_path_list = *path_list;
+	while (temp_path_list)
+	{
+		ft_printf("Path[%d]: ", temp_path_list->path_nb);
+		temp_path = &temp_path_list->path;
+		while (temp_path)
+		{
+			print_path_name(temp_path);
+			ft_printf("%s->", temp_path->name);
+			temp_path = temp_path->next;
+		}
+		temp_path_list = temp_path_list->next;
+	}
 }
