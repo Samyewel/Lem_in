@@ -1,41 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   queue.c                                            :+:      :+:    :+:   */
+/*   queue_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: swilliam <swilliam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/28 16:22:53 by sam               #+#    #+#             */
-/*   Updated: 2022/12/09 18:07:10 by swilliam         ###   ########.fr       */
+/*   Updated: 2022/12/21 17:19:41 by swilliam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lem_in.h"
-
-/*
-** create_queue_node:
-** - Allocates a fresh link to be added to the queue, setting the name
-**   as the room name given as a variable.
-*/
-
-t_queue	*add_to_queue(t_queue *queue, char *room_name, t_queue *prev, int depth)
-{
-	queue = (t_queue *)malloc(sizeof(t_queue));
-	if (!queue)
-		ft_printf_strerror("Memory allocation failure in create_queue_node");
-	queue->name = NULL;
-	queue->name = ft_strdup(room_name);
-	if (!queue->name)
-		ft_printf_strerror("Memory allocation failure in create_queue_node");
-	queue->next = NULL;
-	queue->previous = prev;
-	queue->depth = depth;
-	queue->start = false;
-	queue->end = false;
-	queue->visited = false;
-	queue->valid = true;
-	return (queue);
-}
 
 /*
 ** is_empty:
@@ -123,7 +98,7 @@ void	explore_room(t_queue **queue_head, t_queue *queue, t_rooms *room)
 		{
 			while (temp_queue->next != NULL)
 				temp_queue = temp_queue->next;
-			temp_queue->next = add_to_queue(queue, temp_link->name, \
+			temp_queue->next = create_queue(queue, temp_link->name, \
 					temp_queue, queue->depth + 1);
 		}
 		temp_link = temp_link->next;

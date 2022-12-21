@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   path_flow.c                                        :+:      :+:    :+:   */
+/*   calculate_flow.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sam <sam@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: swilliam <swilliam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/28 13:51:24 by sam               #+#    #+#             */
-/*   Updated: 2022/12/16 16:33:33 by sam              ###   ########.fr       */
+/*   Updated: 2022/12/21 17:20:24 by swilliam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ static t_queue	*bfs(t_rooms **rooms)
 	end_visited = false;
 	queue = NULL;
 	temp_room = find_start_room(rooms);
-	queue = add_to_queue(queue, temp_room->name, NULL, 0);
+	queue = create_queue(queue, temp_room->name, NULL, 0);
 	if (!queue)
 		ft_printf_strerror("Memory allocation failure in bfs");
 	temp_queue = queue;
@@ -50,19 +50,18 @@ static t_queue	*bfs(t_rooms **rooms)
 ** -
 */
 
-static t_queue	*bfs_process(t_rooms *rooms)
+static t_paths	*bfs_process(t_heads *heads)
 {
-	t_queue	*queue;
-	t_queue	*backtraced_queue;
+	t_paths	*backtracked_queue;
 
-	queue = bfs(&rooms);
-	if (!queue)
+	heads->queue_head = bfs(&heads->rooms_head);
+	if (!heads->queue_head)
 		ft_printf_strerror("No end found.");
-	if (DEBUG == true)
-		print_queue(&queue);
-	backtraced_queue = backtrace_queue(queue, &rooms, rooms);
-	clean_queue(&queue);
-	return (backtraced_queue);
+	if (DEBUG == true && QUEUE == true)
+		print_queue(&heads->queue_head);
+	backtracked_queue = backtrack_queue(heads);
+	clean_queue(&heads->queue_head);
+	return (backtracked_queue);
 }
 
 /*
@@ -70,9 +69,9 @@ static t_queue	*bfs_process(t_rooms *rooms)
 ** -
 */
 
-static int	edmonds_karp(t_rooms *rooms)
+static int	edmonds_karp(t_heads *heads)
 {
-	t_queue	*queue;
+	t_paths	*queue;
 	t_paths	*paths;
 	int		flow;
 
@@ -83,12 +82,12 @@ static int	edmonds_karp(t_rooms *rooms)
 	flow = 0;
 	while (1)
 	{
-		queue = bfs_process(rooms);
+		queue = bfs_process(heads);
 		if (flow == 0) // Prevent infinite loop until functional
 			break ;
 		flow++;
 		//save paths here
-		clean_queue(&queue);
+		clean_queue(&heads->queue_head);
 	}
 	return (flow);
 }
@@ -98,11 +97,11 @@ static int	edmonds_karp(t_rooms *rooms)
 ** -
 */
 
-int	find_max_flow(t_rooms *rooms)
+int	find_max_flow(t_heads *heads)
 {
 	int	max_flow;
 
-	max_flow = edmonds_karp(rooms);
+	max_flow = edmonds_karp(heads);
 	if (max_flow <= 0)
 	{
 		return (0);

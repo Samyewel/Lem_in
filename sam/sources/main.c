@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sam <sam@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: swilliam <swilliam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/07 16:16:16 by swilliam          #+#    #+#             */
-/*   Updated: 2022/12/16 17:07:18 by sam              ###   ########.fr       */
+/*   Updated: 2022/12/21 16:45:07 by swilliam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,12 +20,30 @@
 
 t_data	*initialise_data(t_data *data)
 {
-	if (!(data))
-		data = (t_data *)malloc(sizeof(t_data));
+	data = (t_data *)malloc(sizeof(t_data));
+	if (!data)
+		ft_printf_strerror("Memory allocation failure in initialise_data");
 	data->ant_count = 0;
 	data->starting_search = false;
 	data->ending_search = false;
 	return (data);
+}
+
+/*
+** initialise_heads:
+** - Initialises a struct containing the heads of each list used during the
+**   program.
+*/
+
+t_heads	*initialise_heads(t_heads *heads)
+{
+	heads = (t_heads *)malloc(sizeof(t_heads));
+	if (!heads)
+		ft_printf_strerror("Memory allocation failure in initialise_heads");
+	heads->rooms_head = NULL;
+	heads->queue_head = NULL;
+	heads->paths_head = NULL;
+	return (heads);
 }
 
 /*
@@ -35,20 +53,23 @@ t_data	*initialise_data(t_data *data)
 
 int	main(void)
 {
+	t_heads	*heads;
 	t_data	*data;
-	t_rooms	*rooms;
 
 	data = NULL;
-	rooms = NULL;
+	heads = NULL;
 	data = initialise_data(data);
-	if (!data)
+	heads = initialise_heads(heads);
+	if (!data || !heads)
 		ft_printf_strerror("Memory allocation failure in main.");
-	read_input(data, &rooms);
-	if (DEBUG == true)
-		print_data(data, rooms); // Remove before submission
-	if (find_max_flow(rooms) > 0)
+	read_input(data, heads);
+	if (DEBUG == true && ROOMS == true)
+		print_rooms(&heads->rooms_head);
+	if (DEBUG == true && EXTRA == true)
+		print_data(data);
+	if (find_max_flow(heads) > 0)
 		ft_printf("");
-	if (DEBUG == true)
+	if (DEBUG == true && LEAKS == true)
 		system("leaks lem-in | grep 'leaks for'");
 	exit(EXIT_SUCCESS);
 	return (0);
