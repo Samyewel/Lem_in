@@ -6,7 +6,7 @@
 /*   By: swilliam <swilliam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/28 16:22:53 by sam               #+#    #+#             */
-/*   Updated: 2022/12/21 17:19:41 by swilliam         ###   ########.fr       */
+/*   Updated: 2023/01/05 14:53:03 by swilliam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,5 +102,24 @@ void	explore_room(t_queue **queue_head, t_queue *queue, t_rooms *room)
 					temp_queue, queue->depth + 1);
 		}
 		temp_link = temp_link->next;
+	}
+}
+
+/*
+**	reset_visited:
+**	- Resets each node in the queue so that they are no longer considered
+**    visited, so that backtracking can re-use this boolean.
+*/
+
+void	reset_visted(t_queue **queue)
+{
+	t_queue	*temp_queue;
+
+	temp_queue = *queue;
+	while (temp_queue)
+	{
+		if (temp_queue->visited == true)
+			temp_queue->visited = false;
+		temp_queue = temp_queue->next;
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: swilliam <swilliam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/28 13:51:24 by sam               #+#    #+#             */
-/*   Updated: 2022/12/21 17:20:24 by swilliam         ###   ########.fr       */
+/*   Updated: 2023/01/05 14:51:29 by swilliam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,7 @@ static t_paths	*bfs_process(t_heads *heads)
 		ft_printf_strerror("No end found.");
 	if (DEBUG == true && QUEUE == true)
 		print_queue(&heads->queue_head);
+	reset_visted(&heads->queue_head);
 	backtracked_queue = backtrack_queue(heads);
 	clean_queue(&heads->queue_head);
 	return (backtracked_queue);

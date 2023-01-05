@@ -6,7 +6,7 @@
 /*   By: swilliam <swilliam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/16 16:29:43 by swilliam          #+#    #+#             */
-/*   Updated: 2022/12/21 16:42:47 by swilliam         ###   ########.fr       */
+/*   Updated: 2023/01/05 15:12:50 by swilliam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@
 void	print_data(t_data *data)
 {
 	ft_printf("\nAnt count: %d\n", data->ant_count);
+	ft_printf("\nRoom count: %d\n", data->room_count);
 }
 
 /*

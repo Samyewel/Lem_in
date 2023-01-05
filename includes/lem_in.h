@@ -6,7 +6,7 @@
 /*   By: swilliam <swilliam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/07 16:28:47 by swilliam          #+#    #+#             */
-/*   Updated: 2022/12/21 17:26:30 by swilliam         ###   ########.fr       */
+/*   Updated: 2023/01/05 15:13:08 by swilliam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@
 
 # define DEBUG 1
 # define INPUT 0
-# define EXTRA 0
+# define EXTRA 1
 # define ROOMS 0
 # define QUEUE 0
 # define PATHS 1
@@ -40,6 +40,7 @@
 typedef struct data
 {
 	int				ant_count;
+	int				room_count;
 	bool			starting_search;
 	bool			ending_search;
 }				t_data;
@@ -68,6 +69,7 @@ typedef struct queue
 	bool			start;
 	bool			end;
 	bool			visited;
+	bool			checked;
 	bool			valid;
 	int				flow;
 	int				depth;
@@ -118,6 +120,7 @@ t_queue	*create_queue(t_queue *queue, char *room, t_queue *prev, int depth);
 int		is_empty(t_queue **queue);
 t_rooms	*visit_next(t_queue **queue, t_rooms **rooms);
 void	explore_room(t_queue **queue_head, t_queue *queue, t_rooms *room);
+void	reset_visted(t_queue **queue);
 
 // Paths:
 void	create_new_path(t_heads *heads, t_rooms *room);
