@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: swilliam <swilliam@student.42.fr>          +#+  +:+       +#+        */
+/*   By: egaliber <egaliber@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/07 16:16:16 by swilliam          #+#    #+#             */
-/*   Updated: 2022/12/21 16:45:07 by swilliam         ###   ########.fr       */
+/*   Updated: 2023/01/05 15:23:23 by egaliber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,9 @@ t_data	*initialise_data(t_data *data)
 	if (!data)
 		ft_printf_strerror("Memory allocation failure in initialise_data");
 	data->ant_count = 0;
+	data->room_count = 0;
+	data->finished = 0;
+	data->ant_num = 0;
 	data->starting_search = false;
 	data->ending_search = false;
 	return (data);
@@ -43,6 +46,7 @@ t_heads	*initialise_heads(t_heads *heads)
 	heads->rooms_head = NULL;
 	heads->queue_head = NULL;
 	heads->paths_head = NULL;
+	heads->ants_head = NULL;
 	return (heads);
 }
 

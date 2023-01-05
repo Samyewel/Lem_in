@@ -6,7 +6,7 @@
 /*   By: swilliam <swilliam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/16 14:13:08 by swilliam          #+#    #+#             */
-/*   Updated: 2022/12/21 17:20:38 by swilliam         ###   ########.fr       */
+/*   Updated: 2023/01/05 15:11:31 by swilliam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,6 +90,8 @@ static void	read_rooms(t_data *data, t_heads *heads, char *line, int line_n)
 			temp = temp->next;
 		temp->next = room;
 	}
+	if (!room->end && !room->start)
+		data->room_count++;
 }
 
 /*
