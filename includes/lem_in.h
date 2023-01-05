@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lem_in.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: swilliam <swilliam@student.42.fr>          +#+  +:+       +#+        */
+/*   By: egaliber <egaliber@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/07 16:28:47 by swilliam          #+#    #+#             */
-/*   Updated: 2023/01/05 15:13:08 by swilliam         ###   ########.fr       */
+/*   Updated: 2023/01/05 15:21:13 by egaliber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,8 @@ typedef struct data
 {
 	int				ant_count;
 	int				room_count;
+	int				finished;
+	int				ant_num;
 	bool			starting_search;
 	bool			ending_search;
 }				t_data;
@@ -89,8 +91,18 @@ typedef struct heads
 	struct paths	*paths_head;
 	struct rooms	*rooms_head;
 	struct queue	*queue_head;
+	struct ants		*ants_head;
 }				t_heads;
 
+	typedef struct s_ants
+{
+	struct s_queue			*next_room;
+	int						ant_number;
+	struct s_ants			*next;
+	char					*room_location;
+	bool					has_moved;
+	bool					has_finished;
+}				t_ants;
 // Debugging:
 void	print_data(t_data *data);
 void	print_rooms(t_rooms **rooms);
