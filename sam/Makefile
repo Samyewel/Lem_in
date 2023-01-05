@@ -6,15 +6,21 @@
 #    By: swilliam <swilliam@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/11/05 13:26:33 by swilliam          #+#    #+#              #
-#    Updated: 2022/12/20 17:30:29 by swilliam         ###   ########.fr        #
+#    Updated: 2022/12/21 17:21:41 by swilliam         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 # Source files
 LEM_IN_DIR = ./sources/
-LEM_IN_FILES = main.c read_input.c room_list_utils.c print_data.c \
-list_creation.c path_flow.c queue.c clean_data.c backtrack_queue.c \
-paths.c
+LEM_IN_FILES = \
+main.c read_input.c \
+calculate_flow.c backtrack_queue.c \
+debug_printing.c \
+clean_data.c \
+room_creation.c room_utils.c \
+link_creation.c \
+queue_creation.c queue_utils.c \
+path_creation.c
 
 # Libft
 LIBFT_DIR = ../libft/

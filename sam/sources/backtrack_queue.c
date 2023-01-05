@@ -6,7 +6,7 @@
 /*   By: swilliam <swilliam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/08 17:28:33 by swilliam          #+#    #+#             */
-/*   Updated: 2022/12/20 17:06:02 by swilliam         ###   ########.fr       */
+/*   Updated: 2022/12/21 17:23:21 by swilliam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,8 @@
 
 /*
 ** find_depth:
-** -
+** - Searches for depth given to each node during the BFS to be used to
+**   ensure a path is heading towards start.
 */
 
 static int	find_depth(t_queue **queue, char *room_name)
@@ -33,15 +34,13 @@ static int	find_depth(t_queue **queue, char *room_name)
 
 /*
 ** is_valid:
-** -
+** - Checks that the room being checked is meets the criteria to allow
+**   the backtrack algorithm to continue.
+** - A room is valid if:
+**   - It has more than one link.
+**   - It is not coming from the start room.
+**   - It is not returning to the parent.
 */
-
-// A room is valid IF:
-// - It has more than one link
-
-// 4->3->2->0
-// ------2->5
-//
 
 static int	is_valid(
 t_queue **queue,
@@ -67,21 +66,14 @@ char *link_name)
 }
 
 /*
-** add_to_front:
-** -
-*/
-
-//t_paths add_to_paths(**path_head, t_rooms *parent, t_rooms *child)
-
-/*
 ** trace_path:
-** -
+** - Recursively checks all valid rooms to find a path from end to start.
+** - Once start is found, a linked-list is created with that node, and
+**   returns true back up the recursion path, adding each node into the list.
 */
 
 static int	trace_path(
-t_paths *paths,
-t_queue *queue,
-t_rooms *rooms,
+t_heads *heads,
 t_rooms *parent,
 char *link
 )
@@ -91,25 +83,25 @@ char *link
 
 	temp_room = NULL;
 	temp_links = NULL;
-	temp_room = find_room(&rooms, link);
-	if (!is_valid(&queue, parent, temp_room, link))
+	temp_room = find_room(&heads->rooms_head, link);
+	if (!is_valid(&heads->queue_head, parent, temp_room, link))
 		return (0);
 	if (temp_room->start)
 	{
-		create_new_path(&paths, temp_room);
+		create_new_path(heads, temp_room);
 		return (1);
 	}
 	temp_links = temp_room->links;
 	while (temp_links)
 	{
-		if (trace_path(paths, queue, rooms, temp_room, temp_links->name))
+		if (trace_path(heads, temp_room, temp_links->name))
 		{
-			add_to_path(&paths, temp_room);
+			store_path_data(heads, temp_room);
 			return (1);
 		}
 		temp_links = temp_links->next;
 	}
-	return (parent->end);
+	return (0);
 }
 
 // !start, !1, !6, !8, !2, !12, !7, !9, !3, !4, !10, !end, !11, !5
@@ -124,28 +116,27 @@ char *link
 // PATH [2] = start -> 8 -> 9 -> 10 -> 11 -> 3 -> end
 
 /*
-** backtrace_queue:
-** -
+** backtrack_queue:
+** - Searches each link from the end node, recursively tracing each link
+**   for any paths leading to the start node, storing them in a linked-list.
 */
 
-t_queue	*backtrace_queue(t_queue *queue, t_rooms **room_head, t_rooms *rooms)
+t_paths	*backtrack_queue(t_heads *heads)
 {
-	t_queue	*result;
-	t_rooms	*end_room;
-	t_links	*temp_links;
-	t_paths	*paths;
+	t_paths				*result;
+	t_rooms				*end_room;
+	t_links				*temp_links;
 
-	paths = NULL;
-	end_room = find_end_room(room_head);
-	temp_links = end_room->links;
 	result = NULL;
+	end_room = find_end_room(&heads->rooms_head);
+	temp_links = end_room->links;
 	while (temp_links)
 	{
-		if (trace_path(paths, queue, rooms, end_room, temp_links->name))
-			add_to_path(&paths, end_room);
+		if (trace_path(heads, end_room, temp_links->name))
+			store_path_data(heads, end_room);
 		temp_links = temp_links->next;
 	}
-	if (DEBUG == true)
-		print_paths(&paths);
+	if (DEBUG == true && PATHS == true)
+		print_paths(&heads->paths_head);
 	return (result);
 }

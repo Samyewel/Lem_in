@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   paths.c                                            :+:      :+:    :+:   */
+/*   path_creation.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: swilliam <swilliam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/12/13 15:04:24 by swilliam          #+#    #+#             */
-/*   Updated: 2022/12/20 17:29:44 by swilliam         ###   ########.fr       */
+/*   Created: 2022/12/21 17:09:45 by swilliam          #+#    #+#             */
+/*   Updated: 2022/12/21 17:23:06 by swilliam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,6 @@ static t_queue	*create_path_node(t_rooms *room, t_queue *previous)
 {
 	t_queue	*new_node;
 
-	ft_printf("Creating node: %s\n", room->name);
 	new_node = (t_queue *)malloc(sizeof(t_queue));
 	if (!new_node)
 		ft_printf_strerror("Memory allocation failure in create_path_node");
@@ -39,19 +38,21 @@ static t_queue	*create_path_node(t_rooms *room, t_queue *previous)
 
 /*
 ** create_path:
-** -
+** - Allocates a fresh
 */
 
-static t_paths	*create_path(t_paths *path, int i, t_queue *path_start)
+static t_paths	*create_path(int i, t_queue *path_start)
 {
-	ft_printf("Creating new path %d\n", i);
-	path = (t_paths *)malloc(sizeof(t_paths));
-	if (!path)
+	t_paths	*new_path;
+
+	new_path = NULL;
+	new_path = (t_paths *)malloc(sizeof(t_paths));
+	if (!new_path)
 		ft_printf_strerror("Memory allocation failure in create_path_node");
-	path->path_nb = i;
-	path->path = *path_start;
-	path->next = NULL;
-	return (path);
+	new_path->path_nb = i;
+	new_path->path = *path_start;
+	new_path->next = NULL;
+	return (new_path);
 }
 
 /*
@@ -59,7 +60,7 @@ static t_paths	*create_path(t_paths *path, int i, t_queue *path_start)
 ** -
 */
 
-void	create_new_path(t_paths **paths, t_rooms *room)
+void	create_new_path(t_heads *heads, t_rooms *room)
 {
 	t_paths	*temp_paths;
 	t_queue	*path_start;
@@ -67,27 +68,22 @@ void	create_new_path(t_paths **paths, t_rooms *room)
 	int		i;
 
 	i = 0;
-	path_start = create_path_node(room, NULL);
-	temp_paths = *paths;
 	path = NULL;
-	if (temp_paths == NULL)
+	path_start = create_path_node(room, NULL);
+	temp_paths = heads->paths_head;
+	if (heads->paths_head == NULL)
 	{
-		ft_printf("temp_paths == NULL\n");
-		path = create_path(*paths, 0, path_start);
-		*paths = path;
-		temp_paths = *paths;
-		ft_printf("test: %d\n", temp_paths->path_nb);
+		path = create_path(0, path_start);
+		heads->paths_head = path;
+		temp_paths = heads->paths_head;
 	}
 	else
 	{
-		ft_printf("temp_paths != NULL\n");
-		while (temp_paths)
-		{
+		while (++i && temp_paths->next != NULL)
 			temp_paths = temp_paths->next;
-			i++;
-		}
-		path = create_path(*paths, i, path_start);
+		path = create_path(i, path_start);
 		temp_paths->next = path;
+		temp_paths = temp_paths->next;
 	}
 }
 
@@ -96,15 +92,13 @@ void	create_new_path(t_paths **paths, t_rooms *room)
 ** -
 */
 
-void	add_to_path(t_paths **paths, t_rooms *room)
+void	store_path_data(t_heads *heads, t_rooms *room)
 {
 	t_paths	*temp_paths;
 	t_queue	*temp_queue;
 
-	temp_paths = *paths;
+	temp_paths = heads->paths_head;
 	temp_queue = NULL;
-	ft_printf("Adding to paths...\n");
-	//ft_printf("path nb = %d\n", temp_paths->path_nb);
 	while (temp_paths)
 	{
 		temp_queue = &temp_paths->path;
@@ -112,7 +106,6 @@ void	add_to_path(t_paths **paths, t_rooms *room)
 		{
 			if (temp_queue->next == NULL && temp_queue->end == false)
 			{
-				ft_printf("Adding to path[%d]: %s\n", temp_paths->path_nb, room->name);
 				temp_queue->next = create_path_node(room, temp_queue);
 				return ;
 			}

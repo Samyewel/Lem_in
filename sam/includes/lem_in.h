@@ -6,14 +6,31 @@
 /*   By: swilliam <swilliam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/07 16:28:47 by swilliam          #+#    #+#             */
-/*   Updated: 2022/12/20 16:34:00 by swilliam         ###   ########.fr       */
+/*   Updated: 2022/12/21 17:26:30 by swilliam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef LEM_IN_H
 # define LEM_IN_H
 
-# define DEBUG 0 // Set to 1 if you wish to see debug messages.
+/*
+** Debug toggles:
+** - DEBUG: Enables the printing of debug messages.
+** - INPUT: Prints the contents of the file being input into the program.
+** - EXTRA: Prints the contents of the data struct.
+** - ROOMS: Prints all rooms and all relevant data.
+** - QUEUE: Prints the queue used for the BFS algorithm.
+** - PATHS: Prints all paths found from start to end.
+** - LEAKS: Prints a memory leak report.
+*/
+
+# define DEBUG 1
+# define INPUT 0
+# define EXTRA 0
+# define ROOMS 0
+# define QUEUE 0
+# define PATHS 1
+# define LEAKS 1
 
 # include "ft_printf.h"
 # include "get_next_line.h"
@@ -27,12 +44,6 @@ typedef struct data
 	bool			ending_search;
 }				t_data;
 
-typedef struct links
-{
-	char			*name;
-	struct links	*next;
-}				t_links;
-
 typedef struct rooms
 {
 	char			*name;
@@ -44,6 +55,12 @@ typedef struct rooms
 	struct links	*links;
 	struct rooms	*next;
 }				t_rooms;
+
+typedef struct links
+{
+	char			*name;
+	struct links	*next;
+}				t_links;
 
 typedef struct queue
 {
@@ -65,57 +82,52 @@ typedef struct paths
 	struct queue	path;
 }				t_paths;
 
-/*
-** Testing functions:
-*/
-void	print_data(t_data *data, t_rooms *rooms);
+typedef struct heads
+{
+	struct paths	*paths_head;
+	struct rooms	*rooms_head;
+	struct queue	*queue_head;
+}				t_heads;
+
+// Debugging:
+void	print_data(t_data *data);
+void	print_rooms(t_rooms **rooms);
 void	print_queue(t_queue **queue);
 void	print_path_name(t_queue *path_node);
 void	print_paths(t_paths **path_list);
 
-/*
-** Initialisation:
-*/
+// Initialisation:
 t_data	*initialise_data(t_data *data);
+t_heads	*initialise_heads(t_heads *heads);
 
-/*
-** List creation:
-*/
+// Reading:
+void	read_input(t_data *data, t_heads *heads);
+
+// Rooms
 t_rooms	*create_room(t_rooms *rooms);
-t_links	*add_link(t_rooms **rooms, char *link_a, char *link_b);
-
-/*
-** List utilities:
-*/
+t_rooms	*store_room_data(t_data *data, t_rooms *rooms, char *line);
 t_rooms	*find_start_room(t_rooms **rooms);
 t_rooms	*find_end_room(t_rooms **rooms);
 t_rooms	*find_room(t_rooms **rooms, char *link_name);
 
-/*
-** Reading:
-*/
-void	read_input(t_data *data, t_rooms **rooms);
-t_rooms	*store_room_data(t_data *data, t_rooms *rooms, char *line);
+// Links:
+t_links	*store_link(t_rooms **rooms, char *link_a, char *link_b);
 
-/*
-** Queue functions:
-*/
-t_queue	*add_to_queue(t_queue *queue, char *room, t_queue *prev, int depth);
-t_rooms	*visit_next(t_queue **queue, t_rooms **rooms);
+// Queue:
+t_queue	*create_queue(t_queue *queue, char *room, t_queue *prev, int depth);
 int		is_empty(t_queue **queue);
+t_rooms	*visit_next(t_queue **queue, t_rooms **rooms);
 void	explore_room(t_queue **queue_head, t_queue *queue, t_rooms *room);
 
-/*
-** BFS functionality:
-*/
-int		find_max_flow(t_rooms *rooms);
-t_queue	*backtrace_queue(t_queue *queue, t_rooms **room_head, t_rooms *rooms);
-void	add_to_path(t_paths **paths, t_rooms *room);
-void	create_new_path(t_paths **paths, t_rooms *room);
+// Paths:
+void	create_new_path(t_heads *heads, t_rooms *room);
+void	store_path_data(t_heads *heads, t_rooms *room);
 
-/*
-** Data cleaning:
-*/
+// BFS functionality:
+int		find_max_flow(t_heads *heads);
+t_paths	*backtrack_queue(t_heads *heads);
+
+// Data cleaning:
 void	clean_queue(t_queue **queue);
 
 #endif
