@@ -6,7 +6,7 @@
 /*   By: egaliber <egaliber@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/05 14:29:46 by egaliber          #+#    #+#             */
-/*   Updated: 2023/01/05 14:47:50 by egaliber         ###   ########.fr       */
+/*   Updated: 2023/01/05 15:00:22 by egaliber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ finished
 number of rooms?
 -----
 heads needs:
-ants_head
+struct ants	*ants_head
 */
 typedef struct s_ants
 {
@@ -49,7 +49,7 @@ t_ants	*make_new_ant(t_data *data, t_ants *new)
 	return (new);
 }
 
-t_ants	*make_ants(t_data *data, t_ants *ants)
+t_ants	*make_ants(t_data *data, t_ants *ants, t_heads *heads)
 {
 	t_ants	*new_ant;
 	
