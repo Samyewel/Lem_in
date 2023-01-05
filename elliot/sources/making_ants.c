@@ -6,12 +6,20 @@
 /*   By: egaliber <egaliber@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/05 14:29:46 by egaliber          #+#    #+#             */
-/*   Updated: 2023/01/05 14:30:10 by egaliber         ###   ########.fr       */
+/*   Updated: 2023/01/05 14:47:50 by egaliber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lem_in.h"
 
+/* need to add to data:
+ant_num
+finished
+number of rooms?
+-----
+heads needs:
+ants_head
+*/
 typedef struct s_ants
 {
 	struct s_queue			*next_room;

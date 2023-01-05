@@ -6,13 +6,13 @@
 /*   By: egaliber <egaliber@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/05 14:28:29 by egaliber          #+#    #+#             */
-/*   Updated: 2023/01/05 14:31:09 by egaliber         ###   ########.fr       */
+/*   Updated: 2023/01/05 14:49:35 by egaliber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lem_in.h"
 
-void	move_ants_alrdy_in_play(t_result *res, t_ants *ants, t_data *data, t_queue *test)
+void	move_ants_alrdy_in_play(t_ants *ants, t_data *data, t_queue *queue)
 {
 	ants->room_location = ants->next_room->room_name;
 	ants->next_room = ants->next_room->next;
@@ -20,7 +20,7 @@ void	move_ants_alrdy_in_play(t_result *res, t_ants *ants, t_data *data, t_queue 
 	//ants = ants->next;
 }
 
-void	send_next(t_result *res, t_ants *ants, t_data *data, t_queue *test)
+void	send_next(t_ants *ants, t_data *data, t_queue *queue)
 {
 	ants->room_location = test->room_name;
 	ants->next_room = test->next;
@@ -28,7 +28,7 @@ void	send_next(t_result *res, t_ants *ants, t_data *data, t_queue *test)
 	ants->has_moved = true;
 }
 
-void	send_first(t_result *res, t_ants *ants, t_data *data, t_queue *test)
+void	send_first(t_ants *ants, t_data *data, t_queue *queue)
 {
 	ants->room_location = test->room_name;
 	ants->next_room = test->next;
@@ -36,7 +36,7 @@ void	send_first(t_result *res, t_ants *ants, t_data *data, t_queue *test)
 	ants->has_moved = true;
 }
 
-void	printer(t_result *res, t_ants *ants, t_data *data, t_queue *test)
+void	printer(t_ants *ants, t_queue *queue, t_heads *heads, t_paths *paths, t_data *data)
 {
 	int i;
 	int x;
@@ -45,11 +45,11 @@ void	printer(t_result *res, t_ants *ants, t_data *data, t_queue *test)
 	x = 0;
 	//printf("\nwhat is i = %d\n", test->i);
 	//printf("data number of ants = %d\n\n", data->number_of_ants);
-	while (data->finished != data->number_of_ants)
+	while (data->finished != data->ant_count)
 	{
 		if (ants->ant_number == 1 && ants->has_moved == false && ants->has_finished == false)
 		{
-			send_first(res, ants, data, queue);
+			send_first(ants, data, queue);
 		}
 		if (heads->ants_head->has_moved == true)
 		{
@@ -58,9 +58,9 @@ void	printer(t_result *res, t_ants *ants, t_data *data, t_queue *test)
 			{
 				if (ants->has_moved == true && ants->has_finished == false)
 					{
-						move_ants_alrdy_in_play(res, ants, data, queue);
+						move_ants_alrdy_in_play(ants, data, queue);
 						//printf("|%d|", ants->ant_number);
-						if  (ft_atoi(ants->room_location) == data->number_of_rooms)//== 0)
+						if  (ft_atoi(ants->room_location) == data->number_of_rooms)//== 0 queue->end == true)
 						{
 							ants->has_finished = true;
 							data->finished++;
@@ -93,13 +93,14 @@ void	printer(t_result *res, t_ants *ants, t_data *data, t_queue *test)
 	}
 }
 
-void	ant_mover(t_paths *paths, t_queue *queue, t_heads *heads)
+void	ant_mover(t_paths *paths, t_queue *queue, t_heads *heads, t_data *data)
 {
 	t_ants	*ants;
 	t_ants	*temp;
 
 	while (data->ant_num < data->ant_count)
 		ants = make_ants(data, ants);
-	temp = heads->ants_head
+	temp = heads->ants_head;
+	ants = temp;
 	printer(ants, queue, heads, paths, data)
 }
