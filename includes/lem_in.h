@@ -6,7 +6,7 @@
 /*   By: swilliam <swilliam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/07 16:28:47 by swilliam          #+#    #+#             */
-/*   Updated: 2023/01/05 15:13:08 by swilliam         ###   ########.fr       */
+/*   Updated: 2023/01/05 15:22:54 by swilliam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@
 
 # define DEBUG 1
 # define INPUT 0
-# define EXTRA 1
+# define EXTRA 0
 # define ROOMS 0
 # define QUEUE 0
 # define PATHS 1
