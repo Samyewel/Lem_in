@@ -6,56 +6,75 @@
 /*   By: egaliber <egaliber@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/07 16:16:16 by swilliam          #+#    #+#             */
-/*   Updated: 2022/11/16 12:39:27 by egaliber         ###   ########.fr       */
+/*   Updated: 2023/01/05 15:23:23 by egaliber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/lem_in.h"
+#include "lem_in.h"
 
-int	error_management(char *input)
+/*
+** initialise_data:
+** - Allocates the struct used to store data that associated with the
+**   functionality of the project.
+*/
+
+t_data	*initialise_data(t_data *data)
 {
-	char	*line;
-	int		fd;
-	int		i;
-
-	line = NULL;
-	i = 1;
-	fd = open(input[1], O_RDONLY);
-	while (i > 0)
-	{
-		i = get_next_line(fd, &line);
-		ft_printf("%s\n", line);
-		ft_strdel(&line);
-	}
-	return (1);
+	data = (t_data *)malloc(sizeof(t_data));
+	if (!data)
+		ft_printf_strerror("Memory allocation failure in initialise_data");
+	data->ant_count = 0;
+	data->room_count = 0;
+	data->finished = 0;
+	data->ant_num = 0;
+	data->starting_search = false;
+	data->ending_search = false;
+	return (data);
 }
 
-int	main(int argc, char **argv)
+/*
+** initialise_heads:
+** - Initialises a struct containing the heads of each list used during the
+**   program.
+*/
+
+t_heads	*initialise_heads(t_heads *heads)
 {
-	t_rooms	*rooms;
-	t_links	*links;
-	t_data *data;
-	int	i;
+	heads = (t_heads *)malloc(sizeof(t_heads));
+	if (!heads)
+		ft_printf_strerror("Memory allocation failure in initialise_heads");
+	heads->rooms_head = NULL;
+	heads->queue_head = NULL;
+	heads->paths_head = NULL;
+	heads->ants_head = NULL;
+	return (heads);
+}
 
-	// Maybe initiate struct function?
+/*
+** lem-in:
+** -
+*/
 
-	rooms = (t_rooms *)malloc(sizeof(t_rooms));
-	links = (t_links *)malloc(sizeof(t_links));
-	data = (t_data *)malloc(sizeof(t_data));
-	if (!rooms || !links)
-		exit(EXIT_FAILURE);
-	i = 1;
-	if (argc == 2)
-	{
-		if (!error_management(argv[1]))
-			exit(EXIT_FAILURE);
-		else
-		{
-			ft_printf("All Gucci.\n");
-			exit(EXIT_SUCCESS);
-		}
-	}
-	else
-		ft_printf("Error.\n");
+int	main(void)
+{
+	t_heads	*heads;
+	t_data	*data;
+
+	data = NULL;
+	heads = NULL;
+	data = initialise_data(data);
+	heads = initialise_heads(heads);
+	if (!data || !heads)
+		ft_printf_strerror("Memory allocation failure in main.");
+	read_input(data, heads);
+	if (DEBUG == true && ROOMS == true)
+		print_rooms(&heads->rooms_head);
+	if (DEBUG == true && EXTRA == true)
+		print_data(data);
+	if (find_max_flow(heads) > 0)
+		ft_printf("");
+	if (DEBUG == true && LEAKS == true)
+		system("leaks lem-in | grep 'leaks for'");
+	exit(EXIT_SUCCESS);
 	return (0);
 }
