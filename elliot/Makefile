@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: swilliam <swilliam@student.42.fr>          +#+  +:+       +#+         #
+#    By: egaliber <egaliber@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/11/05 13:26:33 by swilliam          #+#    #+#              #
-#    Updated: 2022/12/21 17:19:15 by swilliam         ###   ########.fr        #
+#    Updated: 2023/01/05 15:42:46 by egaliber         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,7 +20,8 @@ clean_data.c \
 room_creation.c room_utils.c \
 link_creation.c \
 queue_creation.c queue_utils.c \
-path_creation.c
+path_creation.c ants_creation.c \
+the_printer.c
 
 # Libft
 LIBFT_DIR = ./libft/
