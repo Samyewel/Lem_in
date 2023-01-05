@@ -3,16 +3,25 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: swilliam <swilliam@student.42.fr>          +#+  +:+       +#+         #
+#    By: egaliber <egaliber@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/11/05 13:26:33 by swilliam          #+#    #+#              #
-#    Updated: 2022/11/15 15:57:45 by swilliam         ###   ########.fr        #
+#    Updated: 2023/01/05 15:42:46 by egaliber         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 # Source files
 LEM_IN_DIR = ./sources/
-LEM_IN_FILES = main.c
+LEM_IN_FILES = \
+main.c read_input.c \
+calculate_flow.c backtrack_queue.c \
+debug_printing.c \
+clean_data.c \
+room_creation.c room_utils.c \
+link_creation.c \
+queue_creation.c queue_utils.c \
+path_creation.c ants_creation.c \
+the_printer.c
 
 # Libft
 LIBFT_DIR = ./libft/
@@ -32,7 +41,7 @@ LEM_IN = lem-in
 
 # Utilities
 DELETE = $(LEM_IN) $(OBJ)
-#PLAYER = ./eval_tests/play.py
+TEST_CMD = ./lem-in < ./resources/maps/
 
 all:		$(LEM_IN)
 
@@ -65,5 +74,14 @@ fclean: 	clean
 			@printf "\rAll created files removed.\n"
 
 re:			fclean all
+
+test0:		all
+			@$(TEST_CMD)0.map
+
+test1:		all
+			@$(TEST_CMD)1.map
+
+test2:		all
+			@$(TEST_CMD)2.map
 
 .PHONY: all clean fclean re
