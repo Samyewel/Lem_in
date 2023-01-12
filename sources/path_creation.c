@@ -6,7 +6,7 @@
 /*   By: swilliam <swilliam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/21 17:09:45 by swilliam          #+#    #+#             */
-/*   Updated: 2022/12/21 17:23:06 by swilliam         ###   ########.fr       */
+/*   Updated: 2023/01/05 16:03:18 by swilliam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,7 +104,7 @@ void	store_path_data(t_heads *heads, t_rooms *room)
 		temp_queue = &temp_paths->path;
 		while (temp_queue)
 		{
-			if (temp_queue->next == NULL && temp_queue->end == false)
+			if (temp_queue->next == NULL && temp_queue->start == false)
 			{
 				temp_queue->next = create_path_node(room, temp_queue);
 				return ;

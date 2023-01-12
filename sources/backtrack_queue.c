@@ -6,7 +6,7 @@
 /*   By: swilliam <swilliam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/08 17:28:33 by swilliam          #+#    #+#             */
-/*   Updated: 2023/01/05 15:21:20 by swilliam         ###   ########.fr       */
+/*   Updated: 2023/01/12 16:18:32 by swilliam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,30 +22,44 @@
 **   - It is not returning to the parent.
 */
 
-static int	is_valid(
-t_queue **queue,
-t_rooms *parent,
-t_rooms *current,
-char *link_name)
+// !start, !1, !6, !8, !2, !12, !7, !9, !3, !4, !10, !end, !11, !5
+// #        12     4 - 5
+// #         |    /     \
+// # start - 1 - 2 - 3 - end
+// #    | \     /    |
+// #    |  6 - 7     |
+// #    |            |
+// #    8 - 9 - 10 - 11
+// PATH [1] = start -> 1 -> 2 -> 4 -> 5 -> end
+// PATH [2] = start -> 8 -> 9 -> 10 -> 11 -> 3 -> end
+
+static int	is_visited(
+t_heads *heads,
+t_stack *stack,
+char *link_name
+)
 {
-	t_queue	*temp_queue;
+	int		i;
+	t_rooms	*temp_room;
 
-	temp_queue = *queue;
-
-	if (parent->start || current->end \
-		|| ft_strcmp(parent->name, link_name) == 0)
-		return (0);
-	while (temp_queue)
+	i = 0;
+	temp_room = find_room(&heads->rooms_head, link_name);
+	while (i < stack->top)
 	{
-		if (ft_strcmp(temp_queue->name, current->name) == 0 \
-			&& temp_queue->valid && temp_queue->visited == false)
-			{
-				temp_queue->visited = true;
-				return (1);
-			}
-		temp_queue = temp_queue->next;
+		if (ft_strcmp(stack->data[i].name, temp_room->name) == 0)
+			return (1);
+		i++;
 	}
 	return (0);
+}
+
+static void printCurrentPath(t_stack stack) {
+    for (int i = 0; i < stack.top; i++) {
+        //strcpy(paths[pathIndex][i], stack.data[i].name);
+		ft_printf("%s->", stack.data[i].name);
+    }
+	ft_printf("\n");
+    //pathIndex++;
 }
 
 /*
@@ -55,37 +69,46 @@ char *link_name)
 **   returns true back up the recursion path, adding each node into the list.
 */
 
-static int	trace_path(
+// !start, !1, !6, !8, !2, !12, !7, !9, !3, !4, !10, !end, !11, !5
+// #        12     4 - 5
+// #         |    /     \
+// # start - 1 - 2 - 3 - end
+// #    | \     /    |
+// #    |  6 - 7     |
+// #    |            |
+// #    8 - 9 - 10 - 11
+// PATH [1] = start -> 1 -> 2 -> 4 -> 5 -> end
+// PATH [2] = start -> 8 -> 9 -> 10 -> 11 -> 3 -> end
+
+static void	trace_path(
 t_heads *heads,
-t_rooms *parent,
-char *link
+t_stack *stack,
+char *current_name
 )
 {
 	t_rooms	*temp_room;
 	t_links	*temp_links;
 
-	temp_room = NULL;
+	temp_room = find_room(&heads->rooms_head, current_name);
 	temp_links = NULL;
-	temp_room = find_room(&heads->rooms_head, link);
-	if (!is_valid(&heads->queue_head, parent, temp_room, link))
-		return (0);
-	if (temp_room->start)
+	push(stack, temp_room);
+	if (temp_room->end)
 	{
-		reset_visted(&heads->queue_head);
-		create_new_path(heads, temp_room);
-		return (1);
+		//create_new_path(heads, )
+		printCurrentPath(*stack);
+		return ;
 	}
 	temp_links = temp_room->links;
 	while (temp_links)
 	{
-		if (trace_path(heads, temp_room, temp_links->name))
+		if (!is_visited(heads, stack, temp_links->name))
 		{
-			store_path_data(heads, temp_room);
-			return (1);
+			ft_printf("from %s to %s\n", temp_room->name, temp_links->name);
+			trace_path(heads, stack, temp_links->name);
 		}
 		temp_links = temp_links->next;
 	}
-	return (0);
+	pop(stack);
 }
 
 // !start, !1, !6, !8, !2, !12, !7, !9, !3, !4, !10, !end, !11, !5
@@ -107,20 +130,28 @@ char *link
 
 t_paths	*backtrack_queue(t_heads *heads)
 {
-	t_paths				*result;
-	t_rooms				*end_room;
-	t_links				*temp_links;
+	t_paths	*result;
+	t_rooms	*start_room;
+	t_stack	stack;
 
 	result = NULL;
-	end_room = find_end_room(&heads->rooms_head);
-	temp_links = end_room->links;
-	while (temp_links)
-	{
-		if (trace_path(heads, end_room, temp_links->name))
-			store_path_data(heads, end_room);
-		temp_links = temp_links->next;
-	}
+	stack.top = 0;
+	start_room = find_start_room(&heads->rooms_head);
+	//create_new_path(heads, start_room);
+	//push(dfs_stack, start_room);
+	trace_path(heads, &stack, start_room->name);
+		//create_new_path(heads, start_room);
 	if (DEBUG == true && PATHS == true)
 		print_paths(&heads->paths_head);
 	return (result);
 }
+
+/*
+create graph to store all possible outputs:
+start->1->2->4->5->end
+start->1->2->3->end
+start->6->7->2->4->5->end
+start->6->7->2->3->end
+start->8->9->10->11->3->end
+start->8->9->10->11->3->2->4->5->end
+*/

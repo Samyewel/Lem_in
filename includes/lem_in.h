@@ -6,10 +6,9 @@
 /*   By: swilliam <swilliam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/07 16:28:47 by swilliam          #+#    #+#             */
-/*   Updated: 2023/01/05 15:27:16 by swilliam         ###   ########.fr       */
+/*   Updated: 2023/01/12 16:01:30 by swilliam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
 
 #ifndef LEM_IN_H
 # define LEM_IN_H
@@ -32,6 +31,9 @@
 # define QUEUE 0
 # define PATHS 1
 # define LEAKS 1
+
+#define MAX_NAME_LENGTH 100
+#define MAX_STACK_SIZE 100
 
 # include "ft_printf.h"
 # include "get_next_line.h"
@@ -95,15 +97,23 @@ typedef struct heads
 	struct ants		*ants_head;
 }				t_heads;
 
-	typedef struct s_ants
+typedef struct ants
 {
-	struct s_queue			*next_room;
-	int						ant_number;
-	struct s_ants			*next;
-	char					*room_location;
-	bool					has_moved;
-	bool					has_finished;
+	struct queue	*next_room;
+	int				ant_number;
+	struct ants		*next;
+	char			*room_location;
+	bool			has_moved;
+	bool			has_finished;
 }				t_ants;
+
+typedef struct stack
+{
+	struct	rooms data[MAX_STACK_SIZE];
+	int		top;
+}				t_stack;
+
+
 // Debugging:
 void	print_data(t_data *data);
 void	print_rooms(t_rooms **rooms);
@@ -142,6 +152,10 @@ void	store_path_data(t_heads *heads, t_rooms *room);
 // BFS functionality:
 int		find_max_flow(t_heads *heads);
 t_paths	*backtrack_queue(t_heads *heads);
+
+//DFS
+void	push(t_stack *stack, t_rooms *room);
+void	pop(t_stack *stack);
 
 // Data cleaning:
 void	clean_queue(t_queue **queue);
