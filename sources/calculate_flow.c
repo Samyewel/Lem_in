@@ -6,7 +6,7 @@
 /*   By: swilliam <swilliam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/28 13:51:24 by sam               #+#    #+#             */
-/*   Updated: 2023/01/05 14:51:29 by swilliam         ###   ########.fr       */
+/*   Updated: 2023/01/12 18:27:23 by swilliam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ static t_queue	*bfs(t_rooms **rooms)
 ** -
 */
 
-static t_paths	*bfs_process(t_heads *heads)
+static t_paths	*bfs_process(t_heads *heads, t_data *data)
 {
 	t_paths	*backtracked_queue;
 
@@ -60,7 +60,7 @@ static t_paths	*bfs_process(t_heads *heads)
 	if (DEBUG == true && QUEUE == true)
 		print_queue(&heads->queue_head);
 	reset_visted(&heads->queue_head);
-	backtracked_queue = backtrack_queue(heads);
+	backtracked_queue = backtrack_queue(heads, data);
 	clean_queue(&heads->queue_head);
 	return (backtracked_queue);
 }
@@ -70,7 +70,7 @@ static t_paths	*bfs_process(t_heads *heads)
 ** -
 */
 
-static int	edmonds_karp(t_heads *heads)
+static int	edmonds_karp(t_heads *heads, t_data *data)
 {
 	t_paths	*queue;
 	t_paths	*paths;
@@ -83,7 +83,7 @@ static int	edmonds_karp(t_heads *heads)
 	flow = 0;
 	while (1)
 	{
-		queue = bfs_process(heads);
+		queue = bfs_process(heads, data);
 		if (flow == 0) // Prevent infinite loop until functional
 			break ;
 		flow++;
@@ -98,11 +98,11 @@ static int	edmonds_karp(t_heads *heads)
 ** -
 */
 
-int	find_max_flow(t_heads *heads)
+int	find_max_flow(t_heads *heads, t_data *data)
 {
 	int	max_flow;
 
-	max_flow = edmonds_karp(heads);
+	max_flow = edmonds_karp(heads, data);
 	if (max_flow <= 0)
 	{
 		return (0);

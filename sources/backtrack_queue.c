@@ -6,7 +6,7 @@
 /*   By: swilliam <swilliam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/08 17:28:33 by swilliam          #+#    #+#             */
-/*   Updated: 2023/01/12 16:18:32 by swilliam         ###   ########.fr       */
+/*   Updated: 2023/01/12 20:20:01 by swilliam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,33 +33,29 @@
 // PATH [1] = start -> 1 -> 2 -> 4 -> 5 -> end
 // PATH [2] = start -> 8 -> 9 -> 10 -> 11 -> 3 -> end
 
-static int	is_visited(
+static bool	is_visited(
 t_heads *heads,
-t_stack *stack,
+bool *visited,
 char *link_name
 )
 {
-	int		i;
 	t_rooms	*temp_room;
 
-	i = 0;
 	temp_room = find_room(&heads->rooms_head, link_name);
-	while (i < stack->top)
-	{
-		if (ft_strcmp(stack->data[i].name, temp_room->name) == 0)
-			return (1);
-		i++;
-	}
-	return (0);
+	return (visited[temp_room->id]);
 }
 
-static void printCurrentPath(t_stack stack) {
-    for (int i = 0; i < stack.top; i++) {
-        //strcpy(paths[pathIndex][i], stack.data[i].name);
-		ft_printf("%s->", stack.data[i].name);
+static void printCurrentPath(t_stack stack)
+{
+	int	i;
+
+	i = 0;
+    while (i < stack.top)
+	{
+		ft_printf("%s->", stack.nodes[i].name);
+		i++;
     }
 	ft_printf("\n");
-    //pathIndex++;
 }
 
 /*
@@ -83,6 +79,7 @@ static void printCurrentPath(t_stack stack) {
 static void	trace_path(
 t_heads *heads,
 t_stack *stack,
+bool *visited,
 char *current_name
 )
 {
@@ -90,24 +87,25 @@ char *current_name
 	t_links	*temp_links;
 
 	temp_room = find_room(&heads->rooms_head, current_name);
-	temp_links = NULL;
 	push(stack, temp_room);
+	visited[temp_room->id] = true;
+	temp_links = NULL;
 	if (temp_room->end)
 	{
-		//create_new_path(heads, )
 		printCurrentPath(*stack);
-		return ;
 	}
-	temp_links = temp_room->links;
-	while (temp_links)
+	else
 	{
-		if (!is_visited(heads, stack, temp_links->name))
+		temp_links = temp_room->links;
+		while (temp_links)
 		{
-			ft_printf("from %s to %s\n", temp_room->name, temp_links->name);
-			trace_path(heads, stack, temp_links->name);
+			if (!is_visited(heads, visited, temp_links->name))
+				trace_path(heads, stack, visited, temp_links->name);
+
+			temp_links = temp_links->next;
 		}
-		temp_links = temp_links->next;
 	}
+	visited[temp_room->id] = false;
 	pop(stack);
 }
 
@@ -128,21 +126,24 @@ char *current_name
 **   for any paths leading to the start node, storing them in a linked-list.
 */
 
-t_paths	*backtrack_queue(t_heads *heads)
+t_paths	*backtrack_queue(t_heads *heads, t_data *data)
 {
 	t_paths	*result;
 	t_rooms	*start_room;
 	t_stack	stack;
+	bool	*visited;
 
 	result = NULL;
-	stack.top = 0;
+	visited = (bool *) malloc(sizeof(bool) * data->room_count);
+	if (!visited)
+		ft_printf_strerror("Memory allocation failure in backtrack_queue");
 	start_room = find_start_room(&heads->rooms_head);
-	//create_new_path(heads, start_room);
-	//push(dfs_stack, start_room);
-	trace_path(heads, &stack, start_room->name);
-		//create_new_path(heads, start_room);
+	stack.top = 0;
+	ft_memset(visited, false, data->room_count);
+	trace_path(heads, &stack, visited, start_room->name);
 	if (DEBUG == true && PATHS == true)
 		print_paths(&heads->paths_head);
+	free(visited);
 	return (result);
 }
 

@@ -6,43 +6,57 @@
 /*   By: swilliam <swilliam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/12 14:54:12 by swilliam          #+#    #+#             */
-/*   Updated: 2023/01/12 16:01:24 by swilliam         ###   ########.fr       */
+/*   Updated: 2023/01/12 20:19:03 by swilliam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lem_in.h"
 
+static void display_stack(t_stack stack)
+{
+    int i;
+
+    i = 0;
+    ft_printf("Stack contents: ");
+    while (i < stack.top)
+    {
+        ft_printf("%s ", stack.nodes[i].name);
+        i++;
+    }
+    ft_printf("\n");
+}
+
 void	push(t_stack *stack, t_rooms *room)
 {
-    if (stack->top < MAX_STACK_SIZE)
-	{
-        stack->data[stack->top] = *room;
-        stack->top++;
-    } else {
-        // Stack overflow
+    struct stack_node *node;
+
+    node = (struct stack_node *) malloc(sizeof(struct stack_node));
+    if (!node)
+        ft_printf_strerror("Memory allocation failure in push.");
+    node->id = room->id;
+    ft_strcpy(node->name, room->name);
+    node->next = NULL;
+    if (stack->top == 0)
+        stack->nodes = node;
+    else
+    {
+        node->next = stack->nodes;
+        stack->nodes = node;
     }
+    stack->top++;
+    display_stack(*stack);
 }
 
 void	pop(t_stack *stack)
 {
-    if (stack->top > 0)
-	{
-        stack->top--;
-    }
-	else
-	{
-        // Stack underflow
-    }
-}
+    struct stack_node  *temp_node;
 
-t_rooms *peek(t_stack *stack)
-{
-    if (stack->top > 0)
-	{
-        return (&stack->data[stack->top - 1]);
-    }
-	else
-	{
-        return (NULL);
+    temp_node = NULL;
+    if (stack->nodes != NULL && stack->top > 0)
+    {
+        temp_node = stack->nodes;
+        stack->nodes = stack->nodes->next;
+        free(temp_node);
+        stack->top--;
     }
 }

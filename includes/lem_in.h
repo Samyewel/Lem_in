@@ -6,7 +6,7 @@
 /*   By: swilliam <swilliam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/07 16:28:47 by swilliam          #+#    #+#             */
-/*   Updated: 2023/01/12 16:01:30 by swilliam         ###   ########.fr       */
+/*   Updated: 2023/01/12 19:27:11 by swilliam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,7 @@ typedef struct data
 
 typedef struct rooms
 {
+	int				id;
 	char			*name;
 	bool			start;
 	bool			end;
@@ -107,12 +108,18 @@ typedef struct ants
 	bool			has_finished;
 }				t_ants;
 
+typedef struct stack_node
+{
+	int		id;
+	char	name[MAX_NAME_LENGTH];
+	struct stack_node *next;
+}	t_stack_node;
+
 typedef struct stack
 {
-	struct	rooms data[MAX_STACK_SIZE];
+	struct	stack_node *nodes;
 	int		top;
 }				t_stack;
-
 
 // Debugging:
 void	print_data(t_data *data);
@@ -150,8 +157,8 @@ void	create_new_path(t_heads *heads, t_rooms *room);
 void	store_path_data(t_heads *heads, t_rooms *room);
 
 // BFS functionality:
-int		find_max_flow(t_heads *heads);
-t_paths	*backtrack_queue(t_heads *heads);
+int		find_max_flow(t_heads *heads, t_data *data);
+t_paths	*backtrack_queue(t_heads *heads, t_data *data);
 
 //DFS
 void	push(t_stack *stack, t_rooms *room);

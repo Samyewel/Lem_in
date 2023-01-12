@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: egaliber <egaliber@student.42.fr>          +#+  +:+       +#+        */
+/*   By: swilliam <swilliam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/07 16:16:16 by swilliam          #+#    #+#             */
-/*   Updated: 2023/01/05 15:23:23 by egaliber         ###   ########.fr       */
+/*   Updated: 2023/01/12 18:32:09 by swilliam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ int	main(void)
 		print_rooms(&heads->rooms_head);
 	if (DEBUG == true && EXTRA == true)
 		print_data(data);
-	if (find_max_flow(heads) > 0)
+	if (find_max_flow(heads, data) > 0)
 		ft_printf("");
 	if (DEBUG == true && LEAKS == true)
 		system("leaks lem-in | grep 'leaks for'");
