@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   read_input.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: swilliam <swilliam@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sam <sam@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/16 14:13:08 by swilliam          #+#    #+#             */
-/*   Updated: 2023/01/12 18:51:45 by swilliam         ###   ########.fr       */
+/*   Updated: 2023/01/13 15:30:00 by sam              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,6 @@ static void	read_rooms(t_data *data, t_heads *heads, char *line, int line_n)
 			temp = temp->next;
 		temp->next = room;
 	}
-	//if (!room->end && !room->start)
 	data->room_count++;
 }
 

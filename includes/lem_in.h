@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lem_in.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: swilliam <swilliam@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sam <sam@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/07 16:28:47 by swilliam          #+#    #+#             */
-/*   Updated: 2023/01/12 19:27:11 by swilliam         ###   ########.fr       */
+/*   Updated: 2023/01/13 15:50:17 by sam              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,9 +31,6 @@
 # define QUEUE 0
 # define PATHS 1
 # define LEAKS 1
-
-#define MAX_NAME_LENGTH 100
-#define MAX_STACK_SIZE 100
 
 # include "ft_printf.h"
 # include "get_next_line.h"
@@ -96,6 +93,7 @@ typedef struct heads
 	struct rooms	*rooms_head;
 	struct queue	*queue_head;
 	struct ants		*ants_head;
+	struct stack	*stack_head;
 }				t_heads;
 
 typedef struct ants
@@ -108,17 +106,21 @@ typedef struct ants
 	bool			has_finished;
 }				t_ants;
 
+# define MAX_NAME_LENGTH 100
+
 typedef struct stack_node
 {
-	int		id;
-	char	name[MAX_NAME_LENGTH];
-	struct stack_node *next;
-}	t_stack_node;
+	int					id;
+	char				name[MAX_NAME_LENGTH];
+	bool				start;
+	bool				end;
+	struct stack_node	*next;
+}	t_node;
 
 typedef struct stack
 {
-	struct	stack_node *nodes;
-	int		top;
+	struct stack_node	*nodes;
+	int					top;
 }				t_stack;
 
 // Debugging:
@@ -153,8 +155,8 @@ void	explore_room(t_queue **queue_head, t_queue *queue, t_rooms *room);
 void	reset_visted(t_queue **queue);
 
 // Paths:
-void	create_new_path(t_heads *heads, t_rooms *room);
-void	store_path_data(t_heads *heads, t_rooms *room);
+void	create_new_path(t_heads *heads, t_node *start_node);
+void	store_path_data(t_heads *heads, t_node *node);
 
 // BFS functionality:
 int		find_max_flow(t_heads *heads, t_data *data);
@@ -162,7 +164,7 @@ t_paths	*backtrack_queue(t_heads *heads, t_data *data);
 
 //DFS
 void	push(t_stack *stack, t_rooms *room);
-void	pop(t_stack *stack);
+t_node	*pop(t_stack *stack);
 
 // Data cleaning:
 void	clean_queue(t_queue **queue);

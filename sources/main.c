@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: swilliam <swilliam@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sam <sam@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/07 16:16:16 by swilliam          #+#    #+#             */
-/*   Updated: 2023/01/12 18:32:09 by swilliam         ###   ########.fr       */
+/*   Updated: 2023/01/13 15:22:28 by sam              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,7 @@ t_heads	*initialise_heads(t_heads *heads)
 		ft_printf_strerror("Memory allocation failure in initialise_heads");
 	heads->rooms_head = NULL;
 	heads->queue_head = NULL;
+	heads->stack_head = NULL;
 	heads->paths_head = NULL;
 	heads->ants_head = NULL;
 	return (heads);

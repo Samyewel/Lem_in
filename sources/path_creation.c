@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   path_creation.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: swilliam <swilliam@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sam <sam@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/21 17:09:45 by swilliam          #+#    #+#             */
-/*   Updated: 2023/01/05 16:03:18 by swilliam         ###   ########.fr       */
+/*   Updated: 2023/01/13 15:48:36 by sam              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,16 +60,18 @@ static t_paths	*create_path(int i, t_queue *path_start)
 ** -
 */
 
-void	create_new_path(t_heads *heads, t_rooms *room)
+void	create_new_path(t_heads *heads, t_node *start_node)
 {
+	t_rooms	*start_room;
 	t_paths	*temp_paths;
 	t_queue	*path_start;
 	t_paths	*path;
 	int		i;
 
 	i = 0;
+	start_room = find_room(&heads->rooms_head, start_node->name);
 	path = NULL;
-	path_start = create_path_node(room, NULL);
+	path_start = create_path_node(start_room, NULL);
 	temp_paths = heads->paths_head;
 	if (heads->paths_head == NULL)
 	{
@@ -92,11 +94,13 @@ void	create_new_path(t_heads *heads, t_rooms *room)
 ** -
 */
 
-void	store_path_data(t_heads *heads, t_rooms *room)
+void	store_path_data(t_heads *heads, t_node *node)
 {
 	t_paths	*temp_paths;
 	t_queue	*temp_queue;
+	t_rooms	*temp_room;
 
+	temp_room = find_room(&heads->rooms_head, node->name);
 	temp_paths = heads->paths_head;
 	temp_queue = NULL;
 	while (temp_paths)
@@ -104,9 +108,9 @@ void	store_path_data(t_heads *heads, t_rooms *room)
 		temp_queue = &temp_paths->path;
 		while (temp_queue)
 		{
-			if (temp_queue->next == NULL && temp_queue->start == false)
+			if (temp_queue->next == NULL && temp_queue->end == false)
 			{
-				temp_queue->next = create_path_node(room, temp_queue);
+				temp_queue->next = create_path_node(temp_room, temp_queue);
 				return ;
 			}
 			temp_queue = temp_queue->next;

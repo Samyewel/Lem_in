@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   calculate_flow.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: swilliam <swilliam@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sam <sam@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/28 13:51:24 by sam               #+#    #+#             */
-/*   Updated: 2023/01/12 18:27:23 by swilliam         ###   ########.fr       */
+/*   Updated: 2023/01/13 12:57:08 by sam              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ static int	edmonds_karp(t_heads *heads, t_data *data)
 
 	queue = NULL;
 	paths = NULL;
-	if (paths == NULL)
+	if (paths == NULL || queue == NULL)
 		ft_printf(""); // Surpress warnings
 	flow = 0;
 	while (1)
