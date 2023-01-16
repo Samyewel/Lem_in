@@ -6,7 +6,7 @@
 /*   By: sam <sam@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/07 16:16:16 by swilliam          #+#    #+#             */
-/*   Updated: 2023/01/13 15:22:28 by sam              ###   ########.fr       */
+/*   Updated: 2023/01/16 12:43:42 by sam              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,6 +75,7 @@ int	main(void)
 	if (find_max_flow(heads, data) > 0)
 		ft_printf("");
 	if (DEBUG == true && LEAKS == true)
+		//system("leaks lem-in");
 		system("leaks lem-in | grep 'leaks for'");
 	exit(EXIT_SUCCESS);
 	return (0);

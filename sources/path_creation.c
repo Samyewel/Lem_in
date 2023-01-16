@@ -6,7 +6,7 @@
 /*   By: sam <sam@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/21 17:09:45 by swilliam          #+#    #+#             */
-/*   Updated: 2023/01/13 15:48:36 by sam              ###   ########.fr       */
+/*   Updated: 2023/01/16 12:42:13 by sam              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ static t_paths	*create_path(int i, t_queue *path_start)
 	if (!new_path)
 		ft_printf_strerror("Memory allocation failure in create_path_node");
 	new_path->path_nb = i;
-	new_path->path = *path_start;
+	new_path->path = path_start;
 	new_path->next = NULL;
 	return (new_path);
 }
@@ -105,7 +105,7 @@ void	store_path_data(t_heads *heads, t_node *node)
 	temp_queue = NULL;
 	while (temp_paths)
 	{
-		temp_queue = &temp_paths->path;
+		temp_queue = temp_paths->path;
 		while (temp_queue)
 		{
 			if (temp_queue->next == NULL && temp_queue->end == false)

@@ -6,7 +6,7 @@
 /*   By: sam <sam@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/28 13:51:24 by sam               #+#    #+#             */
-/*   Updated: 2023/01/13 12:57:08 by sam              ###   ########.fr       */
+/*   Updated: 2023/01/16 13:34:55 by sam              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,6 @@ static t_paths	*bfs_process(t_heads *heads, t_data *data)
 		ft_printf_strerror("No end found.");
 	if (DEBUG == true && QUEUE == true)
 		print_queue(&heads->queue_head);
-	reset_visted(&heads->queue_head);
 	backtracked_queue = backtrack_queue(heads, data);
 	clean_queue(&heads->queue_head);
 	return (backtracked_queue);
@@ -70,27 +69,37 @@ static t_paths	*bfs_process(t_heads *heads, t_data *data)
 ** -
 */
 
+static void	update_flow(t_paths *path, int flow)
+{
+	t_queue	*temp_queue;
+
+	if (!path)
+		return ;
+	temp_queue = path->path;
+	while (temp_queue)
+	{
+		temp_queue->flow = flow;
+		temp_queue = temp_queue->next;
+	}
+}
+
 static int	edmonds_karp(t_heads *heads, t_data *data)
 {
-	t_paths	*queue;
-	t_paths	*paths;
-	int		flow;
+	t_paths	*backtracked_path;
+	int		max_flow;
 
-	queue = NULL;
-	paths = NULL;
-	if (paths == NULL || queue == NULL)
-		ft_printf(""); // Surpress warnings
-	flow = 0;
+	backtracked_path = NULL;
+	max_flow = 0;
 	while (1)
 	{
-		queue = bfs_process(heads, data);
-		if (flow == 0) // Prevent infinite loop until functional
+		backtracked_path = bfs_process(heads, data);
+		if (!backtracked_path)
 			break ;
-		flow++;
-		//save paths here
-		clean_queue(&heads->queue_head);
+		update_flow(backtracked_path, max_flow + 1);
+		max_flow++;
+		clean_paths(heads);
 	}
-	return (flow);
+	return (max_flow);
 }
 
 /*
@@ -103,9 +112,5 @@ int	find_max_flow(t_heads *heads, t_data *data)
 	int	max_flow;
 
 	max_flow = edmonds_karp(heads, data);
-	if (max_flow <= 0)
-	{
-		return (0);
-	}
-	return (1);
+	return (max_flow);
 }

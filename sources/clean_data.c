@@ -6,7 +6,7 @@
 /*   By: sam <sam@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/28 20:30:16 by sam               #+#    #+#             */
-/*   Updated: 2023/01/13 15:21:46 by sam              ###   ########.fr       */
+/*   Updated: 2023/01/16 12:45:41 by sam              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,17 +34,17 @@ void	clean_queue(t_queue **queue)
 
 void	clean_paths(t_heads *heads)
 {
-	t_paths	*temp_paths;
-	t_queue	*temp_queue;
-	t_paths	*temp_data;
+	t_paths	*current_path;
+	t_paths	*next_path;
 
-	temp_paths = heads->paths_head;
-	while (temp_paths)
+	current_path = heads->paths_head;
+	next_path = NULL;
+	while (current_path != NULL)
 	{
-		temp_queue = &temp_paths->path;
-		clean_queue(&temp_queue);
-		temp_data = temp_paths->next;
-		free(temp_paths);
-		temp_paths = temp_data;
+		next_path = current_path->next;
+		clean_queue(&current_path->path);
+		free(current_path);
+		current_path = next_path;
 	}
+	heads->paths_head = NULL;
 }

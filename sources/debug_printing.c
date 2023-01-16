@@ -6,7 +6,7 @@
 /*   By: sam <sam@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/16 16:29:43 by swilliam          #+#    #+#             */
-/*   Updated: 2023/01/13 15:14:32 by sam              ###   ########.fr       */
+/*   Updated: 2023/01/16 12:41:15 by sam              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,7 +99,7 @@ void	print_paths(t_paths **path_list)
 	while (temp_path_list)
 	{
 		ft_printf("Path[%d]: ", temp_path_list->path_nb);
-		temp_path = &temp_path_list->path;
+		temp_path = temp_path_list->path;
 		while (temp_path)
 		{
 			print_path_name(temp_path);
