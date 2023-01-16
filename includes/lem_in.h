@@ -6,7 +6,7 @@
 /*   By: sam <sam@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/07 16:28:47 by swilliam          #+#    #+#             */
-/*   Updated: 2023/01/13 15:50:17 by sam              ###   ########.fr       */
+/*   Updated: 2023/01/16 13:26:48 by sam              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,9 @@
 # include "get_next_line.h"
 # include "libft.h"
 # include <stdbool.h>
+
+# define INT_MAX 2147483647
+# define INT_MIN -2147483648
 
 typedef struct data
 {
@@ -74,7 +77,7 @@ typedef struct queue
 	bool			visited;
 	bool			checked;
 	bool			valid;
-	int				flow;
+	long long		flow;
 	int				depth;
 	struct queue	*next;
 	struct queue	*previous;
@@ -83,8 +86,9 @@ typedef struct queue
 typedef struct paths
 {
 	int				path_nb;
+	int				flow;
 	struct paths	*next;
-	struct queue	path;
+	struct queue	*path;
 }				t_paths;
 
 typedef struct heads
@@ -168,5 +172,6 @@ t_node	*pop(t_stack *stack);
 
 // Data cleaning:
 void	clean_queue(t_queue **queue);
+void	clean_paths(t_heads *heads);
 
 #endif
