@@ -6,7 +6,7 @@
 /*   By: sam <sam@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/12 14:54:12 by swilliam          #+#    #+#             */
-/*   Updated: 2023/01/13 15:48:56 by sam              ###   ########.fr       */
+/*   Updated: 2023/01/16 21:27:53 by sam              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ static t_node	*create_stack_node(t_rooms *room)
 	ft_strcpy(node->name, room->name);
 	node->start = room->start;
 	node->end = room->end;
+	node->flow = 1;
 	node->next = NULL;
 	return (node);
 }

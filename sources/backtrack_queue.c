@@ -6,7 +6,7 @@
 /*   By: sam <sam@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/08 17:28:33 by swilliam          #+#    #+#             */
-/*   Updated: 2023/01/13 15:47:48 by sam              ###   ########.fr       */
+/*   Updated: 2023/01/16 22:09:28 by sam              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,31 +56,30 @@ static void	store_stack_reverse(t_heads *heads, t_node *current)
 
 static void	trace_path(
 t_heads *heads,
-t_stack *stack,
 bool *visited,
 char *current_name)
 {
-	t_rooms			*temp_room;
-	t_links			*temp_links;
+	t_rooms	*temp_room;
+	t_links	*temp_links;
 
 	temp_room = find_room(&heads->rooms_head, current_name);
-	push(stack, temp_room);
+	push(heads->stack, temp_room);
 	visited[temp_room->id] = true;
 	temp_links = NULL;
 	if (temp_room->end)
-		store_stack_reverse(heads, stack->nodes);
+		store_stack_reverse(heads, heads->stack->nodes);
 	else
 	{
 		temp_links = temp_room->links;
 		while (temp_links)
 		{
 			if (!is_visited(heads, visited, temp_links->name))
-				trace_path(heads, stack, visited, temp_links->name);
+				trace_path(heads, visited, temp_links->name);
 			temp_links = temp_links->next;
 		}
 	}
 	visited[temp_room->id] = false;
-	pop(stack);
+	pop(heads->stack);
 }
 
 /*
@@ -94,21 +93,19 @@ char *current_name)
 
 t_paths	*backtrack_queue(t_heads *heads, t_data *data)
 {
-	t_paths	*result;
 	t_rooms	*start_room;
-	t_stack	stack;
 	bool	*visited;
 
-	result = NULL;
+	start_room = find_start_room(&heads->rooms_head);
 	visited = (bool *) malloc(sizeof(bool) * data->room_count);
 	if (!visited)
 		ft_printf_strerror("Memory allocation failure in backtrack_queue");
-	start_room = find_start_room(&heads->rooms_head);
-	stack.top = 0;
+	heads->stack = (t_stack *)malloc(sizeof(t_stack));
+	heads->stack->top = 0;
 	ft_memset(visited, false, data->room_count);
-	trace_path(heads, &stack, visited, start_room->name);
+	trace_path(heads, visited, start_room->name);
 	if (DEBUG == true && PATHS == true)
 		print_paths(&heads->paths_head);
 	free(visited);
-	return (result);
+	return (heads->paths_head);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   link_creation.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: swilliam <swilliam@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sam <sam@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/21 17:00:10 by swilliam          #+#    #+#             */
-/*   Updated: 2022/12/21 17:06:15 by swilliam         ###   ########.fr       */
+/*   Updated: 2023/01/16 21:45:07 by sam              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,6 @@ static t_links	*create_link(char *link_name)
 	link = (t_links *)malloc(sizeof(t_rooms));
 	if (!link)
 		ft_printf_strerror("Memory allocation failure in create_link.");
-	link->name = NULL;
 	link->name = ft_strdup(link_name);
 	if (!link->name)
 		ft_printf_strerror("Memory allocation failure in create_link.");

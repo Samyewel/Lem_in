@@ -6,7 +6,7 @@
 /*   By: sam <sam@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/07 16:16:16 by swilliam          #+#    #+#             */
-/*   Updated: 2023/01/16 12:43:42 by sam              ###   ########.fr       */
+/*   Updated: 2023/01/16 21:07:37 by sam              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,9 +45,9 @@ t_heads	*initialise_heads(t_heads *heads)
 		ft_printf_strerror("Memory allocation failure in initialise_heads");
 	heads->rooms_head = NULL;
 	heads->queue_head = NULL;
-	heads->stack_head = NULL;
 	heads->paths_head = NULL;
 	heads->ants_head = NULL;
+	heads->stack = NULL;
 	return (heads);
 }
 
@@ -72,7 +72,7 @@ int	main(void)
 		print_rooms(&heads->rooms_head);
 	if (DEBUG == true && EXTRA == true)
 		print_data(data);
-	if (find_max_flow(heads, data) > 0)
+	if (calculate_flow(heads, data) > 0)
 		ft_printf("");
 	if (DEBUG == true && LEAKS == true)
 		//system("leaks lem-in");

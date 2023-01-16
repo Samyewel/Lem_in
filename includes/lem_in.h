@@ -6,7 +6,7 @@
 /*   By: sam <sam@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/07 16:28:47 by swilliam          #+#    #+#             */
-/*   Updated: 2023/01/16 13:26:48 by sam              ###   ########.fr       */
+/*   Updated: 2023/01/16 21:43:36 by sam              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@
 ** - ROOMS: Prints all rooms and all relevant data.
 ** - QUEUE: Prints the queue used for the BFS algorithm.
 ** - PATHS: Prints all paths found from start to end.
+** - FLOWS: Prints the flows during each iteration of the Edmonds Karp process.
 ** - LEAKS: Prints a memory leak report.
 */
 
@@ -30,6 +31,7 @@
 # define ROOMS 0
 # define QUEUE 0
 # define PATHS 1
+# define FLOWS 1
 # define LEAKS 1
 
 # include "ft_printf.h"
@@ -39,6 +41,8 @@
 
 # define INT_MAX 2147483647
 # define INT_MIN -2147483648
+# define LONG_MAX 9223372036854775807
+# define LONG_MIN -9223372036854775808
 
 typedef struct data
 {
@@ -57,6 +61,7 @@ typedef struct rooms
 	bool			start;
 	bool			end;
 	int				ants;
+	int				flow;
 	int				coord_x;
 	int				coord_y;
 	struct links	*links;
@@ -97,7 +102,7 @@ typedef struct heads
 	struct rooms	*rooms_head;
 	struct queue	*queue_head;
 	struct ants		*ants_head;
-	struct stack	*stack_head;
+	struct stack	*stack;
 }				t_heads;
 
 typedef struct ants
@@ -116,6 +121,7 @@ typedef struct stack_node
 {
 	int					id;
 	char				name[MAX_NAME_LENGTH];
+	int					flow;
 	bool				start;
 	bool				end;
 	struct stack_node	*next;
@@ -163,7 +169,7 @@ void	create_new_path(t_heads *heads, t_node *start_node);
 void	store_path_data(t_heads *heads, t_node *node);
 
 // BFS functionality:
-int		find_max_flow(t_heads *heads, t_data *data);
+int		calculate_flow(t_heads *heads, t_data *data);
 t_paths	*backtrack_queue(t_heads *heads, t_data *data);
 
 //DFS

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: swilliam <swilliam@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sam <sam@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/05 13:26:59 by swilliam          #+#    #+#             */
-/*   Updated: 2022/11/21 17:01:30 by swilliam         ###   ########.fr       */
+/*   Updated: 2023/01/16 21:23:38 by sam              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,6 +108,7 @@ void	ft_lstiter(t_list *lst, void (*f)(t_list *elem));
 int		ft_isnumber(char *string);
 int		ft_isoddspace(int c);
 int		ft_iswhitespace(size_t c);
+int		ft_min(int a, int b);
 size_t	ft_lstlen(t_list *lst);
 size_t	ft_wordcount(char const *s, char c);
 void	ft_arrdel(char **array);

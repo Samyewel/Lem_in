@@ -6,7 +6,7 @@
 /*   By: sam <sam@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/28 13:51:24 by sam               #+#    #+#             */
-/*   Updated: 2023/01/16 13:34:55 by sam              ###   ########.fr       */
+/*   Updated: 2023/01/16 22:27:21 by sam              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,37 +69,49 @@ static t_paths	*bfs_process(t_heads *heads, t_data *data)
 ** -
 */
 
-static void	update_flow(t_paths *path, int flow)
+static int	find_min_flow_on_path(t_queue *path)
 {
-	t_queue	*temp_queue;
+	int		min_flow;
+	t_queue	*temp_node;
 
-	if (!path)
-		return ;
-	temp_queue = path->path;
-	while (temp_queue)
+	min_flow = INT_MAX;
+	temp_node = path;
+	while (temp_node)
 	{
-		temp_queue->flow = flow;
-		temp_queue = temp_queue->next;
+		if (!temp_node->start && !temp_node->end)
+			min_flow = ft_min(min_flow, temp_node->flow);
+		if (DEBUG == true && FLOWS == true)
+		{
+			ft_printf("%s[%d]", temp_node->name, temp_node->flow);
+			if (!temp_node->end)
+				ft_printf("->");
+			else
+				ft_printf("\n");
+		}
+		temp_node = temp_node->next;
 	}
+	return (min_flow);
 }
 
 static int	edmonds_karp(t_heads *heads, t_data *data)
 {
-	t_paths	*backtracked_path;
-	int		max_flow;
+	t_paths		*backtracked_paths;
+	t_paths		*temp_path;
+	int			min_flow;
+	int			path_flow;
 
-	backtracked_path = NULL;
-	max_flow = 0;
-	while (1)
+	backtracked_paths = bfs_process(heads, data);
+	if (!backtracked_paths)
+		ft_printf_strerror("No paths created in edmonds_karp.");
+	temp_path = backtracked_paths;
+	min_flow = INT_MAX;
+	while (temp_path)
 	{
-		backtracked_path = bfs_process(heads, data);
-		if (!backtracked_path)
-			break ;
-		update_flow(backtracked_path, max_flow + 1);
-		max_flow++;
-		clean_paths(heads);
+		path_flow = find_min_flow_on_path(temp_path->path);
+		min_flow = ft_min(min_flow, path_flow);
+		temp_path = temp_path->next;
 	}
-	return (max_flow);
+	return (min_flow);
 }
 
 /*
@@ -107,10 +119,11 @@ static int	edmonds_karp(t_heads *heads, t_data *data)
 ** -
 */
 
-int	find_max_flow(t_heads *heads, t_data *data)
+int	calculate_flow(t_heads *heads, t_data *data)
 {
-	int	max_flow;
+	int	min_flow;
 
-	max_flow = edmonds_karp(heads, data);
-	return (max_flow);
+	min_flow = edmonds_karp(heads, data);
+	ft_printf("Minimum flow = %lld\n", min_flow);
+	return (min_flow);
 }
