@@ -6,7 +6,7 @@
 /*   By: sam <sam@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/07 16:28:47 by swilliam          #+#    #+#             */
-/*   Updated: 2023/01/17 13:09:35 by sam              ###   ########.fr       */
+/*   Updated: 2023/01/17 13:31:58 by sam              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,9 +39,7 @@
 # include <stdbool.h>
 
 # define INT_MAX 2147483647
-# define INT_MIN -2147483647
-# define LONG_MAX 9223372036854775807
-# define LONG_MIN -9223372036854775808
+# define INT_MIN -2147483648
 
 typedef struct data
 {
@@ -167,7 +165,7 @@ void	reset_visted(t_queue **queue);
 void	create_new_path(t_heads *heads, t_node *start_node);
 void	store_path_data(t_heads *heads, t_node *node);
 
-// BFS functionality:
+// Max flow calculation:
 int		calculate_flow(t_heads *heads, t_data *data);
 void	backtrack_queue(t_heads *heads, t_data *data);
 

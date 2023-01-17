@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lem_in.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: swilliam <swilliam@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sam <sam@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/07 16:28:47 by swilliam          #+#    #+#             */
-/*   Updated: 2023/01/05 15:50:02 by swilliam         ###   ########.fr       */
+/*   Updated: 2023/01/17 13:32:12 by sam              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,21 +15,22 @@
 
 /*
 ** Debug toggles:
-** - DEBUG: Enables the printing of debug messages.
-** - INPUT: Prints the contents of the file being input into the program.
-** - EXTRA: Prints the contents of the data struct.
-** - ROOMS: Prints all rooms and all relevant data.
-** - QUEUE: Prints the queue used for the BFS algorithm.
-** - PATHS: Prints all paths found from start to end.
-** - LEAKS: Prints a memory leak report.
 */
-
+// DEBUG: Enables the printing of debug messages.
 # define DEBUG 1
+// INPUT: Prints the contents of the file being input into the program.
 # define INPUT 0
-# define EXTRA 0
+// EXTRA: Prints the contents of the data struct.
+# define DATA 0
+// ROOMS: Prints all rooms and all relevant data.
 # define ROOMS 0
+// QUEUE: Prints the queue used for the BFS algorithm.
 # define QUEUE 0
-# define PATHS 1
+// PATHS: Prints all paths found from start to end.
+# define PATHS 0
+// FLOWS: Prints the flows during each iteration of the Edmonds Karp process.
+# define FLOWS 1
+// LEAKS: Prints a memory leak report.
 # define LEAKS 1
 
 # include "ft_printf.h"
@@ -37,10 +38,14 @@
 # include "libft.h"
 # include <stdbool.h>
 
+# define INT_MAX 2147483647
+# define INT_MIN -2147483648
+
 typedef struct data
 {
 	int				ant_count;
 	int				room_count;
+	int				max_flow;
 	int				finished;
 	int				ant_num;
 	bool			starting_search;
@@ -49,6 +54,7 @@ typedef struct data
 
 typedef struct rooms
 {
+	int				id;
 	char			*name;
 	bool			start;
 	bool			end;
@@ -72,9 +78,9 @@ typedef struct queue
 	bool			end;
 	bool			visited;
 	bool			checked;
-	bool			valid;
-	int				flow;
 	int				depth;
+	int				edge_flow;
+	int				capacity;
 	struct queue	*next;
 	struct queue	*previous;
 }				t_queue;
@@ -82,8 +88,9 @@ typedef struct queue
 typedef struct paths
 {
 	int				path_nb;
+	int				path_flow;
+	struct queue	*path;
 	struct paths	*next;
-	struct queue	path;
 }				t_paths;
 
 typedef struct heads
@@ -92,6 +99,7 @@ typedef struct heads
 	struct rooms	*rooms_head;
 	struct queue	*queue_head;
 	struct ants		*ants_head;
+	struct stack	*stack;
 }				t_heads;
 
 typedef struct ants
@@ -104,12 +112,30 @@ typedef struct ants
 	bool			has_finished;
 }				t_ants;
 
+# define MAX_NAME_LENGTH 100
+
+typedef struct stack_node
+{
+	int					id;
+	char				name[MAX_NAME_LENGTH];
+	int					flow;
+	bool				start;
+	bool				end;
+	struct stack_node	*next;
+}	t_node;
+
+typedef struct stack
+{
+	struct stack_node	*nodes;
+	int					top;
+}				t_stack;
+
 // Debugging:
 void	print_data(t_data *data);
 void	print_rooms(t_rooms **rooms);
 void	print_queue(t_queue **queue);
-void	print_path_name(t_queue *path_node);
 void	print_paths(t_paths **path_list);
+void	print_flows(t_queue *path);
 
 // Initialisation:
 t_data	*initialise_data(t_data *data);
@@ -136,14 +162,19 @@ void	explore_room(t_queue **queue_head, t_queue *queue, t_rooms *room);
 void	reset_visted(t_queue **queue);
 
 // Paths:
-void	create_new_path(t_heads *heads, t_rooms *room);
-void	store_path_data(t_heads *heads, t_rooms *room);
+void	create_new_path(t_heads *heads, t_node *start_node);
+void	store_path_data(t_heads *heads, t_node *node);
 
-// BFS functionality:
-int		find_max_flow(t_heads *heads);
-t_paths	*backtrack_queue(t_heads *heads);
+// Max flow calculation:
+int		calculate_flow(t_heads *heads, t_data *data);
+void	backtrack_queue(t_heads *heads, t_data *data);
+
+//DFS
+void	push(t_stack *stack, t_rooms *room);
+t_node	*pop(t_stack *stack);
 
 // Data cleaning:
 void	clean_queue(t_queue **queue);
+void	clean_paths(t_heads *heads);
 
 #endif

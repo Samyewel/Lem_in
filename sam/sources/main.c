@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: egaliber <egaliber@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sam <sam@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/07 16:16:16 by swilliam          #+#    #+#             */
-/*   Updated: 2023/01/05 15:23:23 by egaliber         ###   ########.fr       */
+/*   Updated: 2023/01/17 13:06:56 by sam              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ t_data	*initialise_data(t_data *data)
 		ft_printf_strerror("Memory allocation failure in initialise_data");
 	data->ant_count = 0;
 	data->room_count = 0;
+	data->max_flow = 0;
 	data->finished = 0;
 	data->ant_num = 0;
 	data->starting_search = false;
@@ -47,6 +48,7 @@ t_heads	*initialise_heads(t_heads *heads)
 	heads->queue_head = NULL;
 	heads->paths_head = NULL;
 	heads->ants_head = NULL;
+	heads->stack = NULL;
 	return (heads);
 }
 
@@ -69,11 +71,11 @@ int	main(void)
 	read_input(data, heads);
 	if (DEBUG == true && ROOMS == true)
 		print_rooms(&heads->rooms_head);
-	if (DEBUG == true && EXTRA == true)
-		print_data(data);
-	if (find_max_flow(heads) > 0)
+	print_data(data);
+	if (calculate_flow(heads, data) > 0)
 		ft_printf("");
 	if (DEBUG == true && LEAKS == true)
+		//system("leaks lem-in");
 		system("leaks lem-in | grep 'leaks for'");
 	exit(EXIT_SUCCESS);
 	return (0);

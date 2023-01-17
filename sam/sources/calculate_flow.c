@@ -1,13 +1,13 @@
 /* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   calculate_flow.c                                   :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: swilliam <swilliam@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/11/28 13:51:24 by sam               #+#    #+#             */
-/*   Updated: 2023/01/05 14:51:29 by swilliam         ###   ########.fr       */
-/*                                                                            */
+/*																			*/
+/*														:::	  ::::::::   */
+/*   calculate_flow.c								   :+:	  :+:	:+:   */
+/*													+:+ +:+		 +:+	 */
+/*   By: sam <sam@student.42.fr>					+#+  +:+	   +#+		*/
+/*												+#+#+#+#+#+   +#+		   */
+/*   Created: 2022/11/28 13:51:24 by sam			   #+#	#+#			 */
+/*   Updated: 2023/01/17 12:27:04 by sam			  ###   ########.fr	   */
+/*																			*/
 /* ************************************************************************** */
 
 #include "lem_in.h"
@@ -45,67 +45,71 @@ static t_queue	*bfs(t_rooms **rooms)
 	return (queue);
 }
 
+static void	find_path_flow(t_queue *path, int flow)
+{
+	t_queue	*temp_node;
+
+	temp_node = path;
+	while (temp_node)
+	{
+		if (!temp_node->start && !temp_node->end)
+			flow = ft_min(flow, temp_node->capacity - temp_node->edge_flow);
+		temp_node = temp_node->next;
+	}
+}
+
 /*
-** bfs_process:
-** -
+** find_max_flow:
+** - Finds the maximum flow of the graph using all possible path solutions.
 */
 
-static t_paths	*bfs_process(t_heads *heads)
+static int	find_max_flow(t_paths **paths, t_data *data)
 {
-	t_paths	*backtracked_queue;
+	t_paths	*temp_path;
+	t_queue	*temp_node;
+
+	temp_path = *paths;
+	while (temp_path)
+	{
+		temp_path->path_flow = 1;
+		find_path_flow(temp_path->path, temp_path->path_flow);
+		temp_node = temp_path->path;
+		if (DEBUG == true && FLOWS == true)
+			ft_printf("Path[%d]:\n", temp_path->path_nb);
+		while (temp_node)
+		{
+			temp_node->edge_flow += temp_path->path_flow;
+			if (!temp_node->start)
+				temp_node->previous->edge_flow -= temp_path->path_flow;
+			print_flows(temp_path->path);
+			temp_node = temp_node->next;
+		}
+		data->max_flow += temp_path->path_flow;
+		temp_path = temp_path->next;
+	}
+	return (data->max_flow);
+}
+
+/*
+** calculate_flow
+** - Uses the bfs to confirm a path through the start and end nodes.
+** - Stores all possible paths by backtracking the graph.
+** - Calls find_max_flow to calculate the max flow of the graph to later
+**   find the optimal combinations of paths from start to end.
+*/
+
+int	calculate_flow(t_heads *heads, t_data *data)
+{
+	int		max_flow;
 
 	heads->queue_head = bfs(&heads->rooms_head);
 	if (!heads->queue_head)
 		ft_printf_strerror("No end found.");
-	if (DEBUG == true && QUEUE == true)
-		print_queue(&heads->queue_head);
-	reset_visted(&heads->queue_head);
-	backtracked_queue = backtrack_queue(heads);
+	print_queue(&heads->queue_head);
+	backtrack_queue(heads, data);
 	clean_queue(&heads->queue_head);
-	return (backtracked_queue);
-}
-
-/*
-** edmonds_karp:
-** -
-*/
-
-static int	edmonds_karp(t_heads *heads)
-{
-	t_paths	*queue;
-	t_paths	*paths;
-	int		flow;
-
-	queue = NULL;
-	paths = NULL;
-	if (paths == NULL)
-		ft_printf(""); // Surpress warnings
-	flow = 0;
-	while (1)
-	{
-		queue = bfs_process(heads);
-		if (flow == 0) // Prevent infinite loop until functional
-			break ;
-		flow++;
-		//save paths here
-		clean_queue(&heads->queue_head);
-	}
-	return (flow);
-}
-
-/*
-** find_max_flow
-** -
-*/
-
-int	find_max_flow(t_heads *heads)
-{
-	int	max_flow;
-
-	max_flow = edmonds_karp(heads);
-	if (max_flow <= 0)
-	{
-		return (0);
-	}
-	return (1);
+	max_flow = find_max_flow(&heads->paths_head, data);
+	if (DEBUG == true && FLOWS == true)
+		ft_printf("Max flow = %d\n", max_flow);
+	return (max_flow);
 }

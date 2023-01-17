@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   queue_creation.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: swilliam <swilliam@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sam <sam@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/21 17:03:20 by swilliam          #+#    #+#             */
-/*   Updated: 2023/01/05 14:24:48 by swilliam         ###   ########.fr       */
+/*   Updated: 2023/01/17 11:31:10 by sam              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,5 @@ t_queue	*create_queue(t_queue *queue, char *room_name, t_queue *prev, int depth)
 	queue->start = false;
 	queue->end = false;
 	queue->visited = false;
-	queue->valid = true;
 	return (queue);
 }

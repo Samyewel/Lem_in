@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   list_creation.c                                    :+:      :+:    :+:   */
+/*   room_creation.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: swilliam <swilliam@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sam <sam@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/21 13:53:38 by swilliam          #+#    #+#             */
-/*   Updated: 2022/12/21 17:00:31 by swilliam         ###   ########.fr       */
+/*   Updated: 2023/01/17 11:39:44 by sam              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ t_rooms	*create_room(t_rooms *room)
 	room = (t_rooms *)malloc(sizeof(t_rooms));
 	if (!room)
 		ft_printf_strerror("Memory allocation failure in create_room.");
+	room->id = 0;
 	room->name = NULL;
 	room->start = false;
 	room->end = false;
@@ -41,13 +42,14 @@ t_rooms	*create_room(t_rooms *room)
 
 t_rooms	*store_room_data(t_data *data, t_rooms *room, char *line)
 {
-	char	**line_split;
+	char		**line_split;
 
 	line_split = ft_strsplit(line, ' ');
 	if (!line_split)
 		ft_printf_strerror("Memory allocation failure in store_room_data.");
 	if (!ft_isnumber(line_split[1]) || !ft_isnumber(line_split[2]))
 		ft_printf_strerror("Coordinates given are not numbers.");
+	room->id = data->room_count;
 	room->name = ft_strdup(line_split[0]);
 	if (!room->name)
 		ft_printf_strerror("Memory allocation failure in store_room_data.");

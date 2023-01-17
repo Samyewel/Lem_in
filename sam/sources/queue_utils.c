@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   queue_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: swilliam <swilliam@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sam <sam@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/28 16:22:53 by sam               #+#    #+#             */
-/*   Updated: 2023/01/05 14:53:03 by swilliam         ###   ########.fr       */
+/*   Updated: 2023/01/17 11:40:08 by sam              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,6 @@ void	explore_room(t_queue **queue_head, t_queue *queue, t_rooms *room)
 {
 	t_queue	*temp_queue;
 	t_links	*temp_link;
-	int		links;
 
 	temp_queue = *queue_head;
 	temp_link = room->links;
@@ -89,11 +88,8 @@ void	explore_room(t_queue **queue_head, t_queue *queue, t_rooms *room)
 		return ;
 	queue->start = room->start;
 	queue->end = room->end;
-	links = 0;
 	while (temp_link)
 	{
-		if (++links == 1 && !temp_link->next && (!queue->start && !queue->end))
-			queue->valid = false;
 		if (!is_dupe(queue_head, temp_link->name))
 		{
 			while (temp_queue->next != NULL)

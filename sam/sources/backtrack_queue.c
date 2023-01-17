@@ -3,156 +3,107 @@
 /*                                                        :::      ::::::::   */
 /*   backtrack_queue.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: swilliam <swilliam@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sam <sam@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/08 17:28:33 by swilliam          #+#    #+#             */
-/*   Updated: 2023/01/05 16:12:08 by swilliam         ###   ########.fr       */
+/*   Updated: 2023/01/17 13:05:51 by sam              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lem_in.h"
 
 /*
-** is_valid:
-** - Checks that the room being checked is meets the criteria to allow
-**   the backtrack algorithm to continue.
-** - A room is valid if:
-**   - It has more than one link.
-**   - It is not coming from the start room.
-**   - It is not returning to the parent.
+** is_visited
+** - Cross-references the boolean array with the room ID to check
+**   if that room has been visited yet.
 */
 
-// !start, !1, !6, !8, !2, !12, !7, !9, !3, !4, !10, !end, !11, !5
-// #        12     4 - 5
-// #         |    /     \
-// # start - 1 - 2 - 3 - end
-// #    | \     /    |
-// #    |  6 - 7     |
-// #    |            |
-// #    8 - 9 - 10 - 11
-// PATH [1] = start -> 1 -> 2 -> 4 -> 5 -> end
-// PATH [2] = start -> 8 -> 9 -> 10 -> 11 -> 3 -> end
-
-static int	is_valid(
-t_queue **queue,
-t_rooms *parent,
-t_rooms *current,
-char *link_name)
+static bool	is_visited(t_heads *heads, bool *visited, char *link_name)
 {
-	t_queue	*temp_queue;
+	t_rooms	*temp_room;
 
-	temp_queue = *queue;
+	temp_room = find_room(&heads->rooms_head, link_name);
+	return (visited[temp_room->id]);
+}
 
-	if (parent->end \
-		|| ft_strcmp(parent->name, link_name) == 0)
-		return (0);
-	while (temp_queue)
-	{
-		if (ft_strcmp(temp_queue->name, current->name) == 0 \
-			&& temp_queue->valid && temp_queue->visited == false)
-			{
-				temp_queue->visited = true;
-				return (1);
-			}
-		temp_queue = temp_queue->next;
-	}
-	return (0);
+/*
+** store_stack_reverse:
+** - Since the rooms stored in the stack are in reverse order, we can
+**   recursively traverse the list, storing them in reverse, therefore
+**   they are sorted in regular order.
+*/
+
+static void	store_stack_reverse(t_heads *heads, t_node *current)
+{
+	if (!current)
+		return ;
+	store_stack_reverse(heads, current->next);
+	if (current->start)
+		create_new_path(heads, current);
+	else
+		store_path_data(heads, current);
 }
 
 /*
 ** trace_path:
-** - Recursively checks all valid rooms to find a path from end to start.
-** - Once start is found, a linked-list is created with that node, and
-**   returns true back up the recursion path, adding each node into the list.
+** - Recursively checks all valid rooms to find a path from start to end.
+** - Pushes the current room to the stack for path storage purposes.
+** - Sets the current room as visited in the boolean array for validation
+**   purposes further down the exploration path.
+** - When the end room is found, a linked-list is created using all the
+**   nodes still stored in the stack.
 */
 
-// !start, !1, !6, !8, !2, !12, !7, !9, !3, !4, !10, !end, !11, !5
-// #        12     4 - 5
-// #         |    /     \
-// # start - 1 - 2 - 3 - end
-// #    | \     /    |
-// #    |  6 - 7     |
-// #    |            |
-// #    8 - 9 - 10 - 11
-// PATH [1] = start -> 1 -> 2 -> 4 -> 5 -> end
-// PATH [2] = start -> 8 -> 9 -> 10 -> 11 -> 3 -> end
-
-static int	trace_path(
+static void	trace_path(
 t_heads *heads,
-t_rooms *parent,
-char *link
-)
+bool *visited,
+char *current_name)
 {
 	t_rooms	*temp_room;
 	t_links	*temp_links;
 
-	temp_room = NULL;
+	temp_room = find_room(&heads->rooms_head, current_name);
+	push(heads->stack, temp_room);
+	visited[temp_room->id] = true;
 	temp_links = NULL;
-	temp_room = find_room(&heads->rooms_head, link);
-	if (!is_valid(&heads->queue_head, parent, temp_room, link))
-		return (0);
 	if (temp_room->end)
+		store_stack_reverse(heads, heads->stack->nodes);
+	else
 	{
-		reset_visted(&heads->queue_head);
-		create_new_path(heads, temp_room);
-		return (1);
-	}
-	temp_links = temp_room->links;
-	while (temp_links)
-	{
-		if (trace_path(heads, temp_room, temp_links->name))
+		temp_links = temp_room->links;
+		while (temp_links)
 		{
-			store_path_data(heads, temp_room);
-			return (1);
+			if (!is_visited(heads, visited, temp_links->name))
+				trace_path(heads, visited, temp_links->name);
+			temp_links = temp_links->next;
 		}
-		temp_links = temp_links->next;
 	}
-	return (0);
+	visited[temp_room->id] = false;
+	pop(heads->stack);
 }
-
-// !start, !1, !6, !8, !2, !12, !7, !9, !3, !4, !10, !end, !11, !5
-// #        12     4 - 5
-// #         |    /     \
-// # start - 1 - 2 - 3 - end
-// #    | \     /    |
-// #    |  6 - 7     |
-// #    |            |
-// #    8 - 9 - 10 - 11
-// PATH [1] = start -> 1 -> 2 -> 4 -> 5 -> end
-// PATH [2] = start -> 8 -> 9 -> 10 -> 11 -> 3 -> end
 
 /*
 ** backtrack_queue:
-** - Searches each link from the end node, recursively tracing each link
-**   for any paths leading to the start node, storing them in a linked-list.
+** - Creates a boolean array to check each which rooms have been visited.
+** - Creates a stack with the value "top". This stack stores rooms that are
+**	 visited to later see the path made to reach the end room.
+** - calls trace_path, which recursively explores each path to find every
+**	 possible path from the start room to the end room.
 */
 
-t_paths	*backtrack_queue(t_heads *heads)
+void	backtrack_queue(t_heads *heads, t_data *data)
 {
-	t_paths				*result;
-	t_rooms				*start_room;
-	t_links				*temp_links;
+	t_rooms	*start_room;
+	bool	*visited;
 
-	result = NULL;
 	start_room = find_start_room(&heads->rooms_head);
-	temp_links = start_room->links;
-	while (temp_links)
-	{
-		if (trace_path(heads, start_room, temp_links->name))
-			store_path_data(heads, start_room);
-		temp_links = temp_links->next;
-	}
-	if (DEBUG == true && PATHS == true)
-		print_paths(&heads->paths_head);
-	return (result);
+	visited = (bool *) malloc(sizeof(bool) * data->room_count);
+	if (!visited)
+		ft_printf_strerror("Memory allocation failure in backtrack_queue");
+	heads->stack = (t_stack *)malloc(sizeof(t_stack));
+	heads->stack->top = 0;
+	ft_memset(visited, false, data->room_count);
+	trace_path(heads, visited, start_room->name);
+	print_paths(&heads->paths_head);
+	free(visited);
 }
-
-/*
-create graph to store all possible outputs:
-start->1->2->4->5->end
-start->1->2->3->end
-start->6->7->2->4->5->end
-start->6->7->2->3->end
-start->8->9->10->11->3->end
-start->8->9->10->11->3->2->4->5->end
-*/
