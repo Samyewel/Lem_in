@@ -6,7 +6,7 @@
 /*   By: sam <sam@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/07 16:16:16 by swilliam          #+#    #+#             */
-/*   Updated: 2023/01/16 21:07:37 by sam              ###   ########.fr       */
+/*   Updated: 2023/01/17 13:06:56 by sam              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ t_data	*initialise_data(t_data *data)
 		ft_printf_strerror("Memory allocation failure in initialise_data");
 	data->ant_count = 0;
 	data->room_count = 0;
+	data->max_flow = 0;
 	data->finished = 0;
 	data->ant_num = 0;
 	data->starting_search = false;
@@ -70,8 +71,7 @@ int	main(void)
 	read_input(data, heads);
 	if (DEBUG == true && ROOMS == true)
 		print_rooms(&heads->rooms_head);
-	if (DEBUG == true && EXTRA == true)
-		print_data(data);
+	print_data(data);
 	if (calculate_flow(heads, data) > 0)
 		ft_printf("");
 	if (DEBUG == true && LEAKS == true)

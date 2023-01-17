@@ -1,13 +1,13 @@
 /* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   calculate_flow.c                                   :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: sam <sam@student.42.fr>                    +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/11/28 13:51:24 by sam               #+#    #+#             */
-/*   Updated: 2023/01/16 22:27:21 by sam              ###   ########.fr       */
-/*                                                                            */
+/*																			*/
+/*														:::	  ::::::::   */
+/*   calculate_flow.c								   :+:	  :+:	:+:   */
+/*													+:+ +:+		 +:+	 */
+/*   By: sam <sam@student.42.fr>					+#+  +:+	   +#+		*/
+/*												+#+#+#+#+#+   +#+		   */
+/*   Created: 2022/11/28 13:51:24 by sam			   #+#	#+#			 */
+/*   Updated: 2023/01/17 12:27:04 by sam			  ###   ########.fr	   */
+/*																			*/
 /* ************************************************************************** */
 
 #include "lem_in.h"
@@ -45,85 +45,71 @@ static t_queue	*bfs(t_rooms **rooms)
 	return (queue);
 }
 
-/*
-** bfs_process:
-** -
-*/
-
-static t_paths	*bfs_process(t_heads *heads, t_data *data)
+static void	find_path_flow(t_queue *path, int flow)
 {
-	t_paths	*backtracked_queue;
-
-	heads->queue_head = bfs(&heads->rooms_head);
-	if (!heads->queue_head)
-		ft_printf_strerror("No end found.");
-	if (DEBUG == true && QUEUE == true)
-		print_queue(&heads->queue_head);
-	backtracked_queue = backtrack_queue(heads, data);
-	clean_queue(&heads->queue_head);
-	return (backtracked_queue);
-}
-
-/*
-** edmonds_karp:
-** -
-*/
-
-static int	find_min_flow_on_path(t_queue *path)
-{
-	int		min_flow;
 	t_queue	*temp_node;
 
-	min_flow = INT_MAX;
 	temp_node = path;
 	while (temp_node)
 	{
 		if (!temp_node->start && !temp_node->end)
-			min_flow = ft_min(min_flow, temp_node->flow);
-		if (DEBUG == true && FLOWS == true)
-		{
-			ft_printf("%s[%d]", temp_node->name, temp_node->flow);
-			if (!temp_node->end)
-				ft_printf("->");
-			else
-				ft_printf("\n");
-		}
+			flow = ft_min(flow, temp_node->capacity - temp_node->edge_flow);
 		temp_node = temp_node->next;
 	}
-	return (min_flow);
-}
-
-static int	edmonds_karp(t_heads *heads, t_data *data)
-{
-	t_paths		*backtracked_paths;
-	t_paths		*temp_path;
-	int			min_flow;
-	int			path_flow;
-
-	backtracked_paths = bfs_process(heads, data);
-	if (!backtracked_paths)
-		ft_printf_strerror("No paths created in edmonds_karp.");
-	temp_path = backtracked_paths;
-	min_flow = INT_MAX;
-	while (temp_path)
-	{
-		path_flow = find_min_flow_on_path(temp_path->path);
-		min_flow = ft_min(min_flow, path_flow);
-		temp_path = temp_path->next;
-	}
-	return (min_flow);
 }
 
 /*
-** find_max_flow
-** -
+** find_max_flow:
+** - Finds the maximum flow of the graph using all possible path solutions.
+*/
+
+static int	find_max_flow(t_paths **paths, t_data *data)
+{
+	t_paths	*temp_path;
+	t_queue	*temp_node;
+
+	temp_path = *paths;
+	while (temp_path)
+	{
+		temp_path->path_flow = 1;
+		find_path_flow(temp_path->path, temp_path->path_flow);
+		temp_node = temp_path->path;
+		if (DEBUG == true && FLOWS == true)
+			ft_printf("Path[%d]:\n", temp_path->path_nb);
+		while (temp_node)
+		{
+			temp_node->edge_flow += temp_path->path_flow;
+			if (!temp_node->start)
+				temp_node->previous->edge_flow -= temp_path->path_flow;
+			print_flows(temp_path->path);
+			temp_node = temp_node->next;
+		}
+		data->max_flow += temp_path->path_flow;
+		temp_path = temp_path->next;
+	}
+	return (data->max_flow);
+}
+
+/*
+** calculate_flow
+** - Uses the bfs to confirm a path through the start and end nodes.
+** - Stores all possible paths by backtracking the graph.
+** - Calls find_max_flow to calculate the max flow of the graph to later
+**   find the optimal combinations of paths from start to end.
 */
 
 int	calculate_flow(t_heads *heads, t_data *data)
 {
-	int	min_flow;
+	int		max_flow;
 
-	min_flow = edmonds_karp(heads, data);
-	ft_printf("Minimum flow = %lld\n", min_flow);
-	return (min_flow);
+	heads->queue_head = bfs(&heads->rooms_head);
+	if (!heads->queue_head)
+		ft_printf_strerror("No end found.");
+	print_queue(&heads->queue_head);
+	backtrack_queue(heads, data);
+	clean_queue(&heads->queue_head);
+	max_flow = find_max_flow(&heads->paths_head, data);
+	if (DEBUG == true && FLOWS == true)
+		ft_printf("Max flow = %d\n", max_flow);
+	return (max_flow);
 }

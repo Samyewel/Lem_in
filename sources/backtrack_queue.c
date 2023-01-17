@@ -6,7 +6,7 @@
 /*   By: sam <sam@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/08 17:28:33 by swilliam          #+#    #+#             */
-/*   Updated: 2023/01/16 22:09:28 by sam              ###   ########.fr       */
+/*   Updated: 2023/01/17 13:05:51 by sam              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,7 +91,7 @@ char *current_name)
 **	 possible path from the start room to the end room.
 */
 
-t_paths	*backtrack_queue(t_heads *heads, t_data *data)
+void	backtrack_queue(t_heads *heads, t_data *data)
 {
 	t_rooms	*start_room;
 	bool	*visited;
@@ -104,8 +104,6 @@ t_paths	*backtrack_queue(t_heads *heads, t_data *data)
 	heads->stack->top = 0;
 	ft_memset(visited, false, data->room_count);
 	trace_path(heads, visited, start_room->name);
-	if (DEBUG == true && PATHS == true)
-		print_paths(&heads->paths_head);
+	print_paths(&heads->paths_head);
 	free(visited);
-	return (heads->paths_head);
 }

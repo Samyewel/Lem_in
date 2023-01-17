@@ -6,7 +6,7 @@
 /*   By: sam <sam@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/21 17:09:45 by swilliam          #+#    #+#             */
-/*   Updated: 2023/01/16 21:56:30 by sam              ###   ########.fr       */
+/*   Updated: 2023/01/17 12:43:38 by sam              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,8 @@ static t_queue	*create_path_node(t_rooms *room, t_queue *previous)
 	new_node->start = room->start;
 	new_node->end = room->end;
 	new_node->visited = false;
-	new_node->valid = true;
-	new_node->flow = 0 + (room->start == false && room->end == false);
+	new_node->edge_flow = 0;
+	new_node->capacity = 0 + (room->start == false && room->end == false);
 	new_node->depth = 0;
 	new_node->next = NULL;
 	new_node->previous = previous;
@@ -51,7 +51,7 @@ static t_paths	*create_path(int i, t_queue *path_start)
 		ft_printf_strerror("Memory allocation failure in create_path_node");
 	new_path->path_nb = i;
 	new_path->path = path_start;
-	new_path->flow = 0;
+	new_path->path_flow = 0;
 	new_path->next = NULL;
 	return (new_path);
 }

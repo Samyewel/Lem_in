@@ -6,7 +6,7 @@
 /*   By: sam <sam@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/07 16:28:47 by swilliam          #+#    #+#             */
-/*   Updated: 2023/01/16 21:43:36 by sam              ###   ########.fr       */
+/*   Updated: 2023/01/17 13:09:35 by sam              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,23 +15,22 @@
 
 /*
 ** Debug toggles:
-** - DEBUG: Enables the printing of debug messages.
-** - INPUT: Prints the contents of the file being input into the program.
-** - EXTRA: Prints the contents of the data struct.
-** - ROOMS: Prints all rooms and all relevant data.
-** - QUEUE: Prints the queue used for the BFS algorithm.
-** - PATHS: Prints all paths found from start to end.
-** - FLOWS: Prints the flows during each iteration of the Edmonds Karp process.
-** - LEAKS: Prints a memory leak report.
 */
-
+// DEBUG: Enables the printing of debug messages.
 # define DEBUG 1
+// INPUT: Prints the contents of the file being input into the program.
 # define INPUT 0
-# define EXTRA 0
+// EXTRA: Prints the contents of the data struct.
+# define DATA 0
+// ROOMS: Prints all rooms and all relevant data.
 # define ROOMS 0
+// QUEUE: Prints the queue used for the BFS algorithm.
 # define QUEUE 0
-# define PATHS 1
+// PATHS: Prints all paths found from start to end.
+# define PATHS 0
+// FLOWS: Prints the flows during each iteration of the Edmonds Karp process.
 # define FLOWS 1
+// LEAKS: Prints a memory leak report.
 # define LEAKS 1
 
 # include "ft_printf.h"
@@ -40,7 +39,7 @@
 # include <stdbool.h>
 
 # define INT_MAX 2147483647
-# define INT_MIN -2147483648
+# define INT_MIN -2147483647
 # define LONG_MAX 9223372036854775807
 # define LONG_MIN -9223372036854775808
 
@@ -48,6 +47,7 @@ typedef struct data
 {
 	int				ant_count;
 	int				room_count;
+	int				max_flow;
 	int				finished;
 	int				ant_num;
 	bool			starting_search;
@@ -61,7 +61,6 @@ typedef struct rooms
 	bool			start;
 	bool			end;
 	int				ants;
-	int				flow;
 	int				coord_x;
 	int				coord_y;
 	struct links	*links;
@@ -81,9 +80,9 @@ typedef struct queue
 	bool			end;
 	bool			visited;
 	bool			checked;
-	bool			valid;
-	long long		flow;
 	int				depth;
+	int				edge_flow;
+	int				capacity;
 	struct queue	*next;
 	struct queue	*previous;
 }				t_queue;
@@ -91,9 +90,9 @@ typedef struct queue
 typedef struct paths
 {
 	int				path_nb;
-	int				flow;
-	struct paths	*next;
+	int				path_flow;
 	struct queue	*path;
+	struct paths	*next;
 }				t_paths;
 
 typedef struct heads
@@ -137,8 +136,8 @@ typedef struct stack
 void	print_data(t_data *data);
 void	print_rooms(t_rooms **rooms);
 void	print_queue(t_queue **queue);
-void	print_path_name(t_queue *path_node);
 void	print_paths(t_paths **path_list);
+void	print_flows(t_queue *path);
 
 // Initialisation:
 t_data	*initialise_data(t_data *data);
@@ -170,7 +169,7 @@ void	store_path_data(t_heads *heads, t_node *node);
 
 // BFS functionality:
 int		calculate_flow(t_heads *heads, t_data *data);
-t_paths	*backtrack_queue(t_heads *heads, t_data *data);
+void	backtrack_queue(t_heads *heads, t_data *data);
 
 //DFS
 void	push(t_stack *stack, t_rooms *room);
