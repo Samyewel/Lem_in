@@ -6,7 +6,7 @@
 /*   By: egaliber <egaliber@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/18 16:19:17 by egaliber          #+#    #+#             */
-/*   Updated: 2023/01/18 17:04:18 by egaliber         ###   ########.fr       */
+/*   Updated: 2023/01/18 17:15:41 by egaliber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,10 +38,10 @@ void	first_move(t_ants *ants, t_paths *paths, t_data *data, int i, \
 			ants = ants->next;
 	}
 	if (paths->temp == 0)
-		{
-			data->number_of_paths--;
-			i--;
-		}
+	{
+		data->number_of_paths--;
+		i--;
+	}
 	if (paths->next != NULL)
 		paths = paths->next;
 	else
@@ -53,36 +53,37 @@ void	move_played(t_ants *ants, t_paths *paths, t_result *res, t_data *data, \
 					t_heads *heads)
 {
 	if (ants->has_moved == true && ants->has_finished == false)
+	{
+		move_ants_alrdy_in_play(res, ants, data, paths);
+		if (ants->room == NULL)
 		{
-			move_ants_alrdy_in_play(res, ants, data, paths);
-			if  (ants->room == NULL)//== 0)
-			{
-				ants->has_finished = true;
-				res->finished++;
-			}
-			if (ants->ant_number == data->ant_count)
-			{
-				ants = heads->ants_head;
-				printf("\n");
-			}
-			else
-				ants = ants->next;
+			ants->has_finished = true;
+			res->finished++;
 		}
+		if (ants->ant_number == data->ant_count)
+		{
+			ants = heads->ants_head;
+			ft_printf("\n");
+		}
+		else
+			ants = ants->next;
+	}
 	else
 		if (ants->ant_number == data->ant_count)
 			ants = heads->ants_head;
-		else
-			ants = ants->next;
+	else
+		ants = ants->next;
 }
 
-void	move_ants_alrdy_in_play(t_result *res, t_ants *ants, t_data *data, t_paths *paths)
+void	move_ants_alrdy_in_play(t_result *res, t_ants *ants, t_data *data, \
+								t_paths *paths)
 {
 	while (ants->room != NULL)
 	{
 		ants->room_location = ft_itoa(ants->room->room);
 		ants->room = ants->room->next;
 		ft_printf("L%d-%s ", ants->ant_number, ants->room_location);
-		break;
+		break ;
 	}
 }
 

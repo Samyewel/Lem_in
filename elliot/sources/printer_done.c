@@ -6,9 +6,11 @@
 /*   By: egaliber <egaliber@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/18 16:16:43 by egaliber          #+#    #+#             */
-/*   Updated: 2023/01/18 17:05:12 by egaliber         ###   ########.fr       */
+/*   Updated: 2023/01/18 17:10:51 by egaliber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+#include "lem_in.h"
 
 /*
 	Need to sort:
@@ -16,17 +18,14 @@
 	does paths have a head that points to first room
 	paths_usage_time
 	paths need a temp
+	change res to be in data?
 */
 
 typedef struct s_result
 {
 	int		finished;
 	int		ant_number;
-	//size_t	moves;
-	//size_t	left;
 }	t_result;
-
-#include "lem_in.h"
 
 void	give_first_path(t_ants *ants, t_paths *paths, t_data *data, int i, \
 						t_heads *heads)
@@ -45,7 +44,7 @@ void	give_first_path(t_ants *ants, t_paths *paths, t_data *data, int i, \
 void	printer(t_ants *ants, t_heads *heads, t_paths *paths, t_data *data, \
 				t_result *res)
 {
-	int i;
+	int	i;
 
 	while (res->finished != data->ant_count)
 	{
@@ -59,8 +58,8 @@ void	printer(t_ants *ants, t_heads *heads, t_paths *paths, t_data *data, \
 		if (heads->ants_head->has_moved == true)
 		{
 			ants = heads->ants_head;
-			while (ants->has_moved == true && \ 
-					res->finished != data->ant_count)
+			while (ants->has_moved == true \
+					&& res->finished != data->ant_count)
 				move_played(ants, paths, res, data, heads);
 		}
 	}
@@ -101,8 +100,8 @@ void	init_res(t_result *res)
 
 void	ant_mover(t_paths *paths, t_queue *queue, t_heads *heads, t_data *data)
 {
-	t_ants	*ants;
-	t_ants	*temp;
+	t_ants		*ants;
+	t_ants		*temp;
 	t_result	*res;
 
 	while (data->ant_num < data->ant_count)
