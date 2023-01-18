@@ -6,13 +6,14 @@
 /*   By: egaliber <egaliber@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/18 16:19:17 by egaliber          #+#    #+#             */
-/*   Updated: 2023/01/18 16:36:53 by egaliber         ###   ########.fr       */
+/*   Updated: 2023/01/18 17:04:18 by egaliber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lem_in.h"
 
-void	give_rest_paths(t_ants *ants, t_paths *paths, t_data *data)
+void	give_rest_paths(t_ants *ants, t_paths *paths, t_data *data, int i, \
+						t_heads *heads)
 {
 	ants->room = paths->head;
 	if (ants->next != NULL)
@@ -22,14 +23,15 @@ void	give_rest_paths(t_ants *ants, t_paths *paths, t_data *data)
 	if (paths->path_usage_times == 0)
 		i++;
 	if (paths->next == NULL)
-		paths = data->head2;
+		paths = heads->paths_head;
 	else
 		paths = paths->next;
 }
 
-void	first_move(t_ants *ants, t_paths *paths, t_result *res, t_data *data)
+void	first_move(t_ants *ants, t_paths *paths, t_data *data, int i, \
+					t_heads *heads)
 {
-	send_ants(res, ants, data, paths);
+	send_ants(ants, data, paths);
 	if (ants->next != NULL)
 	{
 		if (ants->room_location != ants->next->room_location)
@@ -43,11 +45,12 @@ void	first_move(t_ants *ants, t_paths *paths, t_result *res, t_data *data)
 	if (paths->next != NULL)
 		paths = paths->next;
 	else
-		paths = data->head2;
+		paths = heads->paths_head;
 	i++;
 }
 
-void	move_played(t_ants *ants, t_paths *paths, t_result *res, t_data *data)
+void	move_played(t_ants *ants, t_paths *paths, t_result *res, t_data *data, \
+					t_heads *heads)
 {
 	if (ants->has_moved == true && ants->has_finished == false)
 		{
@@ -57,17 +60,17 @@ void	move_played(t_ants *ants, t_paths *paths, t_result *res, t_data *data)
 				ants->has_finished = true;
 				res->finished++;
 			}
-			if (ants->ant_number == data->number_of_ants)
+			if (ants->ant_number == data->ant_count)
 			{
-				ants = data->head_ants;
+				ants = heads->ants_head;
 				printf("\n");
 			}
 			else
 				ants = ants->next;
 		}
 	else
-		if (ants->ant_number == data->number_of_ants)
-			ants = data->head_ants;
+		if (ants->ant_number == data->ant_count)
+			ants = heads->ants_head;
 		else
 			ants = ants->next;
 }
