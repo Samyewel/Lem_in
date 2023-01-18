@@ -6,7 +6,7 @@
 /*   By: egaliber <egaliber@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/18 16:16:43 by egaliber          #+#    #+#             */
-/*   Updated: 2023/01/18 17:10:51 by egaliber         ###   ########.fr       */
+/*   Updated: 2023/01/18 17:19:21 by egaliber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,8 +27,7 @@ typedef struct s_result
 	int		ant_number;
 }	t_result;
 
-void	give_first_path(t_ants *ants, t_paths *paths, t_data *data, int i, \
-						t_heads *heads)
+void	give_first_path(t_ants *ants, t_paths *paths, int i)
 {
 	ants->room = paths->head;
 	if (ants->next != NULL)
@@ -78,9 +77,9 @@ void	give_ants_paths(t_ants *ants, t_paths *paths, t_data *data, \
 		while (paths->path_usage_times > 0)
 		{
 			if (paths == heads->paths_head && paths->path_usage_times > 0)
-				give_first_path(ants, paths, data, i, heads);
+				give_first_path(ants, paths, i);
 			if (paths != heads->paths_head && paths->path_usage_times > 0)
-				give_rest_paths(ants, paths, data, i, heads);
+				give_rest_paths(ants, paths, i, heads);
 			while (paths->path_usage_times == 0 && i < data->number_of_paths)
 			{
 				if (paths->next == NULL)

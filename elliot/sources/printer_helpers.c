@@ -6,14 +6,13 @@
 /*   By: egaliber <egaliber@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/18 16:19:17 by egaliber          #+#    #+#             */
-/*   Updated: 2023/01/18 17:15:41 by egaliber         ###   ########.fr       */
+/*   Updated: 2023/01/18 17:19:11 by egaliber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lem_in.h"
 
-void	give_rest_paths(t_ants *ants, t_paths *paths, t_data *data, int i, \
-						t_heads *heads)
+void	give_rest_paths(t_ants *ants, t_paths *paths, int i, t_heads *heads)
 {
 	ants->room = paths->head;
 	if (ants->next != NULL)
