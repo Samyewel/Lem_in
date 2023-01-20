@@ -6,7 +6,7 @@
 #    By: sam <sam@student.42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/11/05 13:26:33 by swilliam          #+#    #+#              #
-#    Updated: 2023/01/16 21:18:40 by sam              ###   ########.fr        #
+#    Updated: 2023/01/20 12:54:50 by sam              ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,7 +20,8 @@ ft_striteri.c ft_memalloc.c ft_strnew.c ft_strclr.c ft_memdel.c ft_strdel.c \
 ft_strmap.c ft_strmapi.c ft_itoa.c ft_strjoin.c ft_putchar_fd.c ft_putendl_fd.c \
 ft_putnbr_fd.c ft_putstr_fd.c ft_strtrim.c ft_strsub.c ft_strsplit.c ft_lstadd.c \
 ft_lstnew.c ft_lstdel.c ft_lstdelone.c ft_lstiter.c ft_lstmap.c ft_isnumber.c \
-ft_isoddspace.c ft_iswhitespace.c ft_arrdel.c ft_wordcount.c ft_min.c \
+ft_isoddspace.c ft_iswhitespace.c ft_arrdel.c ft_wordcount.c ft_max.c ft_min.c \
+ft_make_grid.c ft_itoa_base.c ft_sort_int_tab.c \
 get_next_line.c \
 ft_printf.c \
 print_char.c print_integer.c print_string.c print_octal.c \

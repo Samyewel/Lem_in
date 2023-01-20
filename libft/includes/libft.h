@@ -6,7 +6,7 @@
 /*   By: sam <sam@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/05 13:26:59 by swilliam          #+#    #+#             */
-/*   Updated: 2023/01/16 21:23:38 by sam              ###   ########.fr       */
+/*   Updated: 2023/01/20 12:54:40 by sam              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,13 +105,17 @@ void	ft_lstiter(t_list *lst, void (*f)(t_list *elem));
 /*
 ** extra
 */
+char	*ft_itoa_base(int value, int base);
 int		ft_isnumber(char *string);
 int		ft_isoddspace(int c);
 int		ft_iswhitespace(size_t c);
+int		ft_max(int a, int b);
 int		ft_min(int a, int b);
+int		**ft_make_grid(int rows, int columns);
 size_t	ft_lstlen(t_list *lst);
 size_t	ft_wordcount(char const *s, char c);
 void	ft_arrdel(char **array);
+void	ft_sort_int_tab(int *tab, unsigned int size);
 void	ft_strrev(char *str);
 
 #endif
