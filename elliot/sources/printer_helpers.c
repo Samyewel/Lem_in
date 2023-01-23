@@ -6,7 +6,7 @@
 /*   By: egaliber <egaliber@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/18 16:19:17 by egaliber          #+#    #+#             */
-/*   Updated: 2023/01/18 17:19:11 by egaliber         ###   ########.fr       */
+/*   Updated: 2023/01/23 15:23:36 by egaliber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	give_rest_paths(t_ants *ants, t_paths *paths, int i, t_heads *heads)
 {
-	ants->room = paths->head;
+	ants->room = heads->paths_head;
 	if (ants->next != NULL)
 		ants = ants->next;
 	paths->path_usage_times--;
@@ -48,12 +48,12 @@ void	first_move(t_ants *ants, t_paths *paths, t_data *data, int i, \
 	i++;
 }
 
-void	move_played(t_ants *ants, t_paths *paths, t_result *res, t_data *data, \
+void	move_played(t_ants *ants, t_paths *paths, t_data *data, \
 					t_heads *heads)
 {
 	if (ants->has_moved == true && ants->has_finished == false)
 	{
-		move_ants_alrdy_in_play(res, ants, data, paths);
+		move_ants_alrdy_in_play(ants, data, paths);
 		if (ants->room == NULL)
 		{
 			ants->has_finished = true;
@@ -74,7 +74,7 @@ void	move_played(t_ants *ants, t_paths *paths, t_result *res, t_data *data, \
 		ants = ants->next;
 }
 
-void	move_ants_alrdy_in_play(t_result *res, t_ants *ants, t_data *data, \
+void	move_ants_alrdy_in_play(t_ants *ants, t_data *data, \
 								t_paths *paths)
 {
 	while (ants->room != NULL)
@@ -86,7 +86,7 @@ void	move_ants_alrdy_in_play(t_result *res, t_ants *ants, t_data *data, \
 	}
 }
 
-void	send_ants(t_result *res, t_ants *ants, t_data *data, t_paths *paths)
+void	send_ants(t_ants *ants, t_data *data, t_paths *paths)
 {
 	ants->room_location = ft_itoa(ants->room->room);
 	ants->room = ants->room->next;
