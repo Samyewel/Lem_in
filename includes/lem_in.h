@@ -6,7 +6,7 @@
 /*   By: sam <sam@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/07 16:28:47 by swilliam          #+#    #+#             */
-/*   Updated: 2023/01/17 13:31:58 by sam              ###   ########.fr       */
+/*   Updated: 2023/01/25 18:58:39 by sam              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,9 +27,11 @@
 // QUEUE: Prints the queue used for the BFS algorithm.
 # define QUEUE 0
 // PATHS: Prints all paths found from start to end.
-# define PATHS 0
+# define PATHS 1
 // FLOWS: Prints the flows during each iteration of the Edmonds Karp process.
-# define FLOWS 1
+# define FLOWS 0
+// HASH: Prints the contents of the paths stored in the hash table.
+# define HASH 1
 // LEAKS: Prints a memory leak report.
 # define LEAKS 1
 
@@ -38,6 +40,7 @@
 # include "libft.h"
 # include <stdbool.h>
 
+# define MAX_SIZE 1024
 # define INT_MAX 2147483647
 # define INT_MIN -2147483648
 
@@ -45,6 +48,7 @@ typedef struct data
 {
 	int				ant_count;
 	int				room_count;
+	int				longest_path;
 	int				max_flow;
 	int				finished;
 	int				ant_num;
@@ -55,14 +59,18 @@ typedef struct data
 typedef struct rooms
 {
 	int				id;
+	unsigned int	index;
 	char			*name;
 	bool			start;
 	bool			end;
+	bool			visited;
+	int				is_room;
 	int				ants;
 	int				coord_x;
 	int				coord_y;
 	struct links	*links;
 	struct rooms	*next;
+	struct rooms	*previous;
 }				t_rooms;
 
 typedef struct links
@@ -71,36 +79,32 @@ typedef struct links
 	struct links	*next;
 }				t_links;
 
-typedef struct queue
-{
-	char			*name;
-	bool			start;
-	bool			end;
-	bool			visited;
-	bool			checked;
-	int				depth;
-	int				edge_flow;
-	int				capacity;
-	struct queue	*next;
-	struct queue	*previous;
-}				t_queue;
-
 typedef struct paths
 {
 	int				path_nb;
 	int				path_flow;
-	struct queue	*path;
+	struct rooms	*path;
 	struct paths	*next;
 }				t_paths;
 
-typedef struct heads
+typedef struct queue
 {
-	struct paths	*paths_head;
-	struct rooms	*rooms_head;
-	struct queue	*queue_head;
-	struct ants		*ants_head;
-	struct stack	*stack;
-}				t_heads;
+    int				*data;
+    int				head;
+    int				tail;
+}				t_queue;
+
+typedef struct hash_node
+{
+	t_rooms				*data;
+	unsigned int		index;
+}				t_hash_node;
+
+typedef struct hash_table
+{
+	t_hash_node	**table;
+	int			size;
+}				t_hash_table;
 
 typedef struct ants
 {
@@ -111,6 +115,16 @@ typedef struct ants
 	bool			has_moved;
 	bool			has_finished;
 }				t_ants;
+
+typedef struct heads
+{
+	struct rooms		*rooms;
+	struct stack		*stack;
+	struct hash_table	*hash_table;
+	struct queue		*queue;
+	struct paths		*paths;
+	struct ants			*ants;
+}				t_heads;
 
 # define MAX_NAME_LENGTH 100
 
@@ -133,9 +147,10 @@ typedef struct stack
 // Debugging:
 void	print_data(t_data *data);
 void	print_rooms(t_rooms **rooms);
-void	print_queue(t_queue **queue);
+void	print_queue(t_queue *queue, int size);
 void	print_paths(t_paths **path_list);
-void	print_flows(t_queue *path);
+void	print_hash_table(t_hash_table *hash_table);
+void	print_graph(t_heads *heads, int **graph, int rows, int columns);
 
 // Initialisation:
 t_data	*initialise_data(t_data *data);
@@ -155,26 +170,43 @@ t_rooms	*find_room(t_rooms **rooms, char *link_name);
 t_links	*store_link(t_rooms **rooms, char *link_a, char *link_b);
 
 // Queue:
-t_queue	*create_queue(t_queue *queue, char *room, t_queue *prev, int depth);
-int		is_empty(t_queue **queue);
-t_rooms	*visit_next(t_queue **queue, t_rooms **rooms);
-void	explore_room(t_queue **queue_head, t_queue *queue, t_rooms *room);
-void	reset_visted(t_queue **queue);
+t_queue	*init_queue(int size);
+int		is_empty(t_queue *queue);
+void	dequeue(t_queue *queue);
+void	enqueue(t_queue *queue, int size, int value);
+// t_queue	*create_queue(t_queue *queue, char *room, t_queue *prev);
+// int		is_empty(t_queue **queue);
+// t_rooms	*visit_next(t_queue **queue, t_rooms **rooms);
+// void	explore_room(t_queue **queue_head, t_queue *queue, t_rooms *room);
+// void	reset_visted(t_queue **queue);
 
 // Paths:
 void	create_new_path(t_heads *heads, t_node *start_node);
 void	store_path_data(t_heads *heads, t_node *node);
 
 // Max flow calculation:
-int		calculate_flow(t_heads *heads, t_data *data);
-void	backtrack_queue(t_heads *heads, t_data *data);
+void	calculate_flow(t_heads *heads, t_data *data);
+void	backtrack(t_heads *heads, t_data *data);
+t_queue	*bfs_confirm_path(t_rooms **rooms);
+int	bfs(t_heads *heads, int **graph, int start, int end);
 
 //DFS
 void	push(t_stack *stack, t_rooms *room);
 t_node	*pop(t_stack *stack);
 
+//Hash table
+void	store_paths_in_hash_table(t_heads *heads);
+t_hash_table	*initialise_hash_table(int size);
+void	add_to_table(t_hash_table *hash_table, t_rooms *node, int index);
+unsigned int	hash_function(char *str, int size);
+void	rehash_table(t_heads *heads, t_hash_table *hash_table);
+int	get_index(t_hash_table *hash_table, char *name);
+
+
 // Data cleaning:
-void	clean_queue(t_queue **queue);
+void	clean_path_nodes(t_rooms **nodes);
 void	clean_paths(t_heads *heads);
+void	clean_hash_table(t_hash_table *hash_table);
+void	clean_adjacency_matrix(int **graph, int rows);
 
 #endif

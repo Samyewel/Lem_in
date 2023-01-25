@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   backtrack_queue.c                                  :+:      :+:    :+:   */
+/*   backtrack.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sam <sam@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/08 17:28:33 by swilliam          #+#    #+#             */
-/*   Updated: 2023/01/17 13:05:51 by sam              ###   ########.fr       */
+/*   Updated: 2023/01/25 16:41:21 by sam              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ static bool	is_visited(t_heads *heads, bool *visited, char *link_name)
 {
 	t_rooms	*temp_room;
 
-	temp_room = find_room(&heads->rooms_head, link_name);
+	temp_room = find_room(&heads->rooms, link_name);
 	return (visited[temp_room->id]);
 }
 
@@ -62,7 +62,7 @@ char *current_name)
 	t_rooms	*temp_room;
 	t_links	*temp_links;
 
-	temp_room = find_room(&heads->rooms_head, current_name);
+	temp_room = find_room(&heads->rooms, current_name);
 	push(heads->stack, temp_room);
 	visited[temp_room->id] = true;
 	temp_links = NULL;
@@ -91,12 +91,12 @@ char *current_name)
 **	 possible path from the start room to the end room.
 */
 
-void	backtrack_queue(t_heads *heads, t_data *data)
+void	backtrack(t_heads *heads, t_data *data)
 {
 	t_rooms	*start_room;
 	bool	*visited;
 
-	start_room = find_start_room(&heads->rooms_head);
+	start_room = find_start_room(&heads->rooms);
 	visited = (bool *) malloc(sizeof(bool) * data->room_count);
 	if (!visited)
 		ft_printf_strerror("Memory allocation failure in backtrack_queue");
@@ -104,6 +104,5 @@ void	backtrack_queue(t_heads *heads, t_data *data)
 	heads->stack->top = 0;
 	ft_memset(visited, false, data->room_count);
 	trace_path(heads, visited, start_room->name);
-	print_paths(&heads->paths_head);
 	free(visited);
 }
