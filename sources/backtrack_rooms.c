@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   backtrack.c                                        :+:      :+:    :+:   */
+/*   backtrack_rooms.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sam <sam@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/08 17:28:33 by swilliam          #+#    #+#             */
-/*   Updated: 2023/01/25 16:41:21 by sam              ###   ########.fr       */
+/*   Updated: 2023/01/27 15:22:21 by sam              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,7 +91,7 @@ char *current_name)
 **	 possible path from the start room to the end room.
 */
 
-void	backtrack(t_heads *heads, t_data *data)
+void	backtrack_rooms(t_heads *heads, t_data *data)
 {
 	t_rooms	*start_room;
 	bool	*visited;
@@ -105,4 +105,7 @@ void	backtrack(t_heads *heads, t_data *data)
 	ft_memset(visited, false, data->room_count);
 	trace_path(heads, visited, start_room->name);
 	free(visited);
+	if (heads->paths == NULL)
+		ft_printf_strerror("No paths found.");
+	print_paths(&heads->paths);
 }

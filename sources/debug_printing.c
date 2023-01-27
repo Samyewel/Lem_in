@@ -6,7 +6,7 @@
 /*   By: sam <sam@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/16 16:29:43 by swilliam          #+#    #+#             */
-/*   Updated: 2023/01/25 18:46:21 by sam              ###   ########.fr       */
+/*   Updated: 2023/01/27 15:11:34 by sam              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ void	print_paths(t_paths **path_list)
 	{
 		while (temp_path_list)
 		{
-			ft_printf("Path[%d]: ", temp_path_list->path_nb);
+			ft_printf("Path[%d]: ", temp_path_list->nb);
 			temp_path = temp_path_list->path;
 			while (temp_path)
 			{
@@ -81,67 +81,29 @@ void	print_paths(t_paths **path_list)
 	}
 }
 
-void	print_hash_table(t_hash_table *hash_table)
+void	print_solutions(t_heads *heads)
 {
+	t_solutions	*temp_solution;
 	int			i;
-	t_hash_node	*temp_node;
 
 	i = 0;
-	if (DEBUG == true && HASH == true)
+	temp_solution = heads->solutions;
+	if (DEBUG == true && SOLUTIONS == true)
 	{
-		ft_printf("Hash table[%d]\n", hash_table->size);
-		while (i < hash_table->size)
+		while (temp_solution)
 		{
-			ft_printf("[%d] ", i);
-			temp_node = hash_table->table[i];
-			if (temp_node->data)
-				ft_printf("%s", temp_node->data->name);
+			i = -1;
+			ft_printf("Solution[%d], length: %d, Paths:\n", \
+			temp_solution->nb, temp_solution->total_length);
+			while (++i < MAX_SIZE)
+			{
+				if (temp_solution->paths[i] >= 0)
+					ft_printf("%d ", temp_solution->paths[i]);
+				else
+					break ;
+			}
 			ft_printf("\n");
-			i++;
+			temp_solution = temp_solution->next;
 		}
 	}
-}
-
-void	print_graph(t_heads *heads, int **graph, int rows, int columns)
-{
-	int	y;
-	int	x;
-
-	y = 0;
-	x = 0;
-	ft_printf("   ");
-	while (x < columns)
-	{
-		if (heads->hash_table->table[x]->data)
-			ft_printf("%3.3s", heads->hash_table->table[x]->data->name);
-		else
-			ft_printf("%3.3c", ' ');
-		x++;
-	}
-	ft_printf("\n");
-	while (y < rows)
-	{
-		x = 0;
-		if (heads->hash_table->table[y]->data)
-			ft_printf("%3.3s", heads->hash_table->table[y]->data->name);
-		else
-			ft_printf("   ");
-		while (x < columns)
-			ft_printf("%3d", graph[y][x++]);
-		ft_printf("\n");
-		y++;
-	}
-}
-
-void	print_queue(t_queue *queue, int size)
-{
-	int	i;
-
-	i = 0;
-	while (i < size)
-	{
-		ft_printf("[%d]%d\n", i, queue->data[i]);
-		i++;
-	}
-	ft_printf("\n");
 }

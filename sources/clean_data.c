@@ -6,14 +6,14 @@
 /*   By: sam <sam@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/28 20:30:16 by sam               #+#    #+#             */
-/*   Updated: 2023/01/25 18:22:11 by sam              ###   ########.fr       */
+/*   Updated: 2023/01/27 15:03:11 by sam              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lem_in.h"
 
 /*
-** clean_queue:
+** clean_path_nodes:
 ** - Flushes the contents of the queue.
 */
 
@@ -47,28 +47,4 @@ void	clean_paths(t_heads *heads)
 		current_path = next_path;
 	}
 	heads->paths = NULL;
-}
-
-void	clean_hash_table(t_hash_table *hash_table)
-{
-	int	i;
-
-	i = -1;
-	while (++i < hash_table->size)
-		free(hash_table->table[i]);
-	free(hash_table->table);
-	free(hash_table);
-}
-
-void	clean_adjacency_matrix(int **graph, int rows)
-{
-	int	y;
-
-	y = 0;
-	while (y < rows)
-	{
-		free(graph[y]);
-		y++;
-	}
-	free(graph);
 }
