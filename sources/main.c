@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sam <sam@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: swilliam <swilliam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/07 16:16:16 by swilliam          #+#    #+#             */
-/*   Updated: 2023/01/27 15:20:16 by sam              ###   ########.fr       */
+/*   Updated: 2023/01/28 13:42:52 by swilliam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ t_data	*initialise_data(t_data *data)
 	data->ant_count = 0;
 	data->room_count = 0;
 	data->longest_path = 0;
-	data->max_flow = 0;
+	data->best_solution = -1;
 	data->finished = 0;
 	data->ant_num = 0;
 	data->starting_search = false;
@@ -75,6 +75,9 @@ int	main(void)
 	print_data(data);
 	backtrack_rooms(heads, data);
 	backtrack_paths(heads);
+	data->best_solution = calculate_best_solution(heads, data);
+	if (data->best_solution < 0)
+		ft_printf_strerror("No solution found.");
 	if (DEBUG == true && LEAKS == true) // REMOVE BEFORE SUBMISSION
 		system("leaks lem-in");
 		//system("leaks lem-in | grep 'leaks for'");
