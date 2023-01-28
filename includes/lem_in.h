@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lem_in.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sam <sam@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: swilliam <swilliam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/07 16:28:47 by swilliam          #+#    #+#             */
-/*   Updated: 2023/01/27 15:19:21 by sam              ###   ########.fr       */
+/*   Updated: 2023/01/28 13:41:40 by swilliam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@
 # include "libft.h"
 # include <stdbool.h>
 
+# define INT_MAX 2147483647
 # define MAX_SIZE 1024
 
 typedef struct data
@@ -43,7 +44,7 @@ typedef struct data
 	int				ant_count;
 	int				room_count;
 	int				longest_path;
-	int				max_flow;
+	int				best_solution;
 	int				finished;
 	int				ant_num;
 	bool			starting_search;
@@ -157,9 +158,12 @@ void		store_path_data(t_heads *heads, t_node *node);
 void		calculate_flow(t_heads *heads, t_data *data);
 void		backtrack_rooms(t_heads *heads, t_data *data);
 void		backtrack_paths(t_heads *heads);
-t_solutions	*initialise_solution(t_paths *path);
 
-//DFS
+// Solutions
+t_solutions	*initialise_solution(t_paths *path);
+int			calculate_best_solution(t_heads *heads, t_data *data);
+
+// DFS
 void		push(t_stack *stack, t_rooms *room);
 t_node		*pop(t_stack *stack);
 
