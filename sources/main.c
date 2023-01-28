@@ -6,7 +6,7 @@
 /*   By: swilliam <swilliam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/07 16:16:16 by swilliam          #+#    #+#             */
-/*   Updated: 2023/01/28 13:42:52 by swilliam         ###   ########.fr       */
+/*   Updated: 2023/01/28 14:30:23 by swilliam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ t_data	*initialise_data(t_data *data)
 	data->ant_num = 0;
 	data->starting_search = false;
 	data->ending_search = false;
+	data->solution = NULL;
 	return (data);
 }
 
@@ -75,9 +76,8 @@ int	main(void)
 	print_data(data);
 	backtrack_rooms(heads, data);
 	backtrack_paths(heads);
-	data->best_solution = calculate_best_solution(heads, data);
-	if (data->best_solution < 0)
-		ft_printf_strerror("No solution found.");
+	store_solution(heads, data);
+	ant_mover(heads, data);
 	if (DEBUG == true && LEAKS == true) // REMOVE BEFORE SUBMISSION
 		system("leaks lem-in");
 		//system("leaks lem-in | grep 'leaks for'");

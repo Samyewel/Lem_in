@@ -6,7 +6,7 @@
 /*   By: swilliam <swilliam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/07 16:28:47 by swilliam          #+#    #+#             */
-/*   Updated: 2023/01/28 13:54:34 by swilliam         ###   ########.fr       */
+/*   Updated: 2023/01/28 15:10:11 by swilliam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,14 +41,15 @@
 
 typedef struct data
 {
-	int				ant_count;
-	int				room_count;
-	int				longest_path;
-	int				best_solution;
-	int				finished;
-	int				ant_num;
-	bool			starting_search;
-	bool			ending_search;
+	int					ant_count;
+	int					room_count;
+	int					longest_path;
+	int					best_solution;
+	int					finished;
+	int					ant_num;
+	bool				starting_search;
+	bool				ending_search;
+	struct solutions	*solution;
 }				t_data;
 
 typedef struct rooms
@@ -78,6 +79,8 @@ typedef struct paths
 {
 	int				nb;
 	int				length;
+	int				usage_times;
+	int				temp;
 	struct rooms	*path;
 	struct paths	*next;
 }				t_paths;
@@ -85,14 +88,16 @@ typedef struct paths
 typedef struct solutions
 {
 	int					nb;
-	int					*paths;
+	int					*path_indexes;
+	int					path_count;
 	int					total_length;
+	struct paths		*paths;
 	struct solutions	*next;
 }				t_solutions;
 
 typedef struct ants
 {
-	struct queue	*next_room;
+	struct rooms	*room;
 	int				ant_number;
 	struct ants		*next;
 	char			*room_location;
@@ -161,7 +166,7 @@ void		backtrack_paths(t_heads *heads);
 
 // Solutions
 t_solutions	*initialise_solution(t_paths *path);
-int			calculate_best_solution(t_heads *heads, t_data *data);
+void		store_solution(t_heads *heads, t_data *data);
 
 // DFS
 void		push(t_stack *stack, t_rooms *room);
@@ -172,9 +177,15 @@ void		clean_path_nodes(t_rooms **nodes);
 void		clean_paths(t_heads *heads);
 
 // Printer
-void	ant_mover(t_paths *paths, t_heads *heads, t_data *data);
-void	give_rest_paths(t_ants *ants, t_paths *paths, int i, t_heads *heads);
-void	move_played(t_ants *ants, t_paths *paths, t_data *data, \
-					t_heads *heads);
-t_ants	*make_ants(t_data *data, t_ants *ants, t_heads *heads);
+void		ant_mover(t_heads *heads, t_data *data);
+void		give_rest_paths(
+				t_ants *ants, t_paths *paths, int i, t_heads *heads);
+void		move_played(t_ants *ants, t_data *data, t_heads *heads);
+void		first_move(
+				t_ants *ants, t_paths *paths, t_data *data, int i, \
+				t_heads *heads);
+void		send_ants(t_ants *ants, t_data *data, t_paths *paths);
+void		move_ants_already_in_play(t_ants *ants);
+t_ants		*make_ants(t_data *data, t_ants *ants, t_heads *heads);
+
 #endif

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sam <sam@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: swilliam <swilliam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/05 13:26:59 by swilliam          #+#    #+#             */
-/*   Updated: 2023/01/20 12:54:40 by sam              ###   ########.fr       */
+/*   Updated: 2023/01/28 11:50:41 by swilliam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,7 +111,7 @@ int		ft_isoddspace(int c);
 int		ft_iswhitespace(size_t c);
 int		ft_max(int a, int b);
 int		ft_min(int a, int b);
-int		**ft_make_grid(int rows, int columns);
+//int		**ft_make_grid(int rows, int columns);
 size_t	ft_lstlen(t_list *lst);
 size_t	ft_wordcount(char const *s, char c);
 void	ft_arrdel(char **array);

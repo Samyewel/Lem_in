@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   debug_printing.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sam <sam@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: swilliam <swilliam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/16 16:29:43 by swilliam          #+#    #+#             */
-/*   Updated: 2023/01/27 15:11:34 by sam              ###   ########.fr       */
+/*   Updated: 2023/01/28 15:03:01 by swilliam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,8 +97,8 @@ void	print_solutions(t_heads *heads)
 			temp_solution->nb, temp_solution->total_length);
 			while (++i < MAX_SIZE)
 			{
-				if (temp_solution->paths[i] >= 0)
-					ft_printf("%d ", temp_solution->paths[i]);
+				if (temp_solution->path_indexes[i] >= 0)
+					ft_printf("%d ", temp_solution->path_indexes[i]);
 				else
 					break ;
 			}

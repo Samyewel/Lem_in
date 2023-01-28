@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   backtrack_paths.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sam <sam@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: swilliam <swilliam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/26 17:00:15 by sam               #+#    #+#             */
-/*   Updated: 2023/01/27 15:11:00 by sam              ###   ########.fr       */
+/*   Updated: 2023/01/28 14:54:36 by swilliam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,10 +30,11 @@ static void	add_to_solution(t_heads *heads, t_paths *path, t_paths *add_path)
 		{
 			while (++i < MAX_SIZE)
 			{
-				if (temp_solutions->paths[i] < 0)
+				if (temp_solutions->path_indexes[i] < 0)
 				{
-					temp_solutions->paths[i] = add_path->nb;
+					temp_solutions->path_indexes[i] = add_path->nb;
 					temp_solutions->total_length += add_path->length;
+					temp_solutions->path_count++;
 					break ;
 				}
 			}

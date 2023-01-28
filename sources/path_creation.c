@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   path_creation.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sam <sam@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: swilliam <swilliam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/21 17:09:45 by swilliam          #+#    #+#             */
-/*   Updated: 2023/01/27 13:48:26 by sam              ###   ########.fr       */
+/*   Updated: 2023/01/28 14:03:45 by swilliam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,8 @@ static t_paths	*create_path(int i, t_rooms *path_start)
 	new_path->nb = i;
 	new_path->path = path_start;
 	new_path->length = 0;
+	new_path->usage_times = 0;
+	new_path->temp = 0;
 	new_path->next = NULL;
 	return (new_path);
 }
@@ -111,7 +113,7 @@ void	store_path_data(t_heads *heads, t_node *node)
 			if (temp_node->next == NULL && temp_node->end == false)
 			{
 				temp_node->next = create_path_node(temp_room, temp_node);
-				temp_path->length += (temp_node->is_room);
+				temp_path->length++;
 				return ;
 			}
 			temp_node = temp_node->next;
