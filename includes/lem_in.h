@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lem_in.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: swilliam <swilliam@student.42.fr>          +#+  +:+       +#+        */
+/*   By: egaliber <egaliber@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/07 16:28:47 by swilliam          #+#    #+#             */
-/*   Updated: 2023/01/28 13:41:40 by swilliam         ###   ########.fr       */
+/*   Updated: 2023/01/28 13:51:36 by egaliber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -171,4 +171,10 @@ t_node		*pop(t_stack *stack);
 void		clean_path_nodes(t_rooms **nodes);
 void		clean_paths(t_heads *heads);
 
+// Printer
+void	ant_mover(t_paths *paths, t_rooms *rooms, t_heads *heads, t_data *data);
+void	give_rest_paths(t_ants *ants, t_paths *paths, int i, t_heads *heads);
+void	move_played(t_ants *ants, t_paths *paths, t_data *data, \
+					t_heads *heads);
+t_ants	*make_ants(t_data *data, t_ants *ants, t_heads *heads);
 #endif
