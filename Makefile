@@ -6,7 +6,7 @@
 #    By: swilliam <swilliam@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/11/05 13:26:33 by swilliam          #+#    #+#              #
-#    Updated: 2023/01/12 15:08:27 by swilliam         ###   ########.fr        #
+#    Updated: 2023/01/28 13:45:11 by swilliam         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,14 +14,16 @@
 LEM_IN_DIR = ./sources/
 LEM_IN_FILES = \
 main.c read_input.c \
-calculate_flow.c backtrack_queue.c \
+backtrack_rooms.c backtrack_paths.c \
 debug_printing.c \
 clean_data.c \
 room_creation.c room_utils.c \
 link_creation.c \
-queue_creation.c queue_utils.c \
 path_creation.c \
-dfs_stack.c
+solution_creation.c \
+dfs_stack.c best_solution.c \
+printer.c printing_utils.c \
+ant_creation.c
 
 # Libft
 LIBFT_DIR = ./libft/
@@ -83,5 +85,14 @@ test1:		all
 
 test2:		all
 			@$(TEST_CMD)2.map
+
+test3:		all
+			@$(TEST_CMD)3.map
+
+test4:		all
+			@$(TEST_CMD)4.map
+
+test5:		all
+			@$(TEST_CMD)5.map
 
 .PHONY: all clean fclean re

@@ -6,7 +6,7 @@
 /*   By: sam <sam@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/16 16:29:43 by swilliam          #+#    #+#             */
-/*   Updated: 2023/01/17 13:09:25 by sam              ###   ########.fr       */
+/*   Updated: 2023/01/27 15:11:34 by sam              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,44 +56,17 @@ void	print_rooms(t_rooms **rooms)
 	}
 }
 
-/*
-** print_queue:
-** - Prints the contents of the queue.
-*/
-
-void	print_queue(t_queue **queue)
-{
-	t_queue	*temp_queue;
-
-	temp_queue = *queue;
-	if (DEBUG == true && QUEUE == true)
-	{
-		ft_printf("Queue:\n");
-		while (temp_queue)
-		{
-			if (temp_queue->visited)
-				ft_printf("!");
-			ft_printf("%s", temp_queue->name);
-			ft_printf(" [%d]", temp_queue->depth);
-			if (temp_queue->next != NULL)
-				ft_printf(", ");
-			temp_queue = temp_queue->next;
-		}
-		ft_printf("\n");
-	}
-}
-
 void	print_paths(t_paths **path_list)
 {
 	t_paths	*temp_path_list;
-	t_queue	*temp_path;
+	t_rooms	*temp_path;
 
 	temp_path_list = *path_list;
 	if (DEBUG == true && PATHS == true)
 	{
 		while (temp_path_list)
 		{
-			ft_printf("Path[%d]: ", temp_path_list->path_nb);
+			ft_printf("Path[%d]: ", temp_path_list->nb);
 			temp_path = temp_path_list->path;
 			while (temp_path)
 			{
@@ -108,21 +81,29 @@ void	print_paths(t_paths **path_list)
 	}
 }
 
-void	print_flows(t_queue *path)
+void	print_solutions(t_heads *heads)
 {
-	t_queue	*temp_path;
+	t_solutions	*temp_solution;
+	int			i;
 
-	temp_path = path;
-	if (DEBUG == true && FLOWS == true)
+	i = 0;
+	temp_solution = heads->solutions;
+	if (DEBUG == true && SOLUTIONS == true)
 	{
-		while (temp_path)
+		while (temp_solution)
 		{
-			ft_printf("%s[%d]", temp_path->name, temp_path->edge_flow);
-			if (temp_path->end)
-				ft_printf("\n");
-			else
-				ft_printf("->");
-			temp_path = temp_path->next;
+			i = -1;
+			ft_printf("Solution[%d], length: %d, Paths:\n", \
+			temp_solution->nb, temp_solution->total_length);
+			while (++i < MAX_SIZE)
+			{
+				if (temp_solution->paths[i] >= 0)
+					ft_printf("%d ", temp_solution->paths[i]);
+				else
+					break ;
+			}
+			ft_printf("\n");
+			temp_solution = temp_solution->next;
 		}
 	}
 }
