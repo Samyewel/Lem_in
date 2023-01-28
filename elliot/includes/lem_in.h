@@ -6,7 +6,7 @@
 /*   By: egaliber <egaliber@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/07 16:28:47 by swilliam          #+#    #+#             */
-/*   Updated: 2023/01/05 15:21:13 by egaliber         ###   ########.fr       */
+/*   Updated: 2023/01/23 15:26:08 by egaliber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,6 +84,7 @@ typedef struct paths
 	int				path_nb;
 	struct paths	*next;
 	struct queue	path;
+	int				temp;
 }				t_paths;
 
 typedef struct heads
@@ -94,15 +95,16 @@ typedef struct heads
 	struct ants		*ants_head;
 }				t_heads;
 
-	typedef struct s_ants
+	typedef struct ants
 {
-	struct s_queue			*next_room;
+	struct queue			*room;
 	int						ant_number;
-	struct s_ants			*next;
+	struct ants				*next;
 	char					*room_location;
 	bool					has_moved;
 	bool					has_finished;
 }				t_ants;
+
 // Debugging:
 void	print_data(t_data *data);
 void	print_rooms(t_rooms **rooms);
@@ -144,5 +146,13 @@ t_paths	*backtrack_queue(t_heads *heads);
 
 // Data cleaning:
 void	clean_queue(t_queue **queue);
+t_ants	*make_ants(t_data *data, t_ants *ants, t_heads *heads);
+
+// Printer
+void	ant_mover(t_paths *paths, t_queue *queue, t_heads *heads, t_data *data);
+t_ants	*make_ants(t_data *data, t_ants *ants, t_heads *heads);
+void	give_rest_paths(t_ants *ants, t_paths *paths, int i, t_heads *heads);
+void	move_played(t_ants *ants, t_paths *paths, t_data *data, \
+					t_heads *heads);
 
 #endif
