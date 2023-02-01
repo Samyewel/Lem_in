@@ -3,73 +3,68 @@
 /*                                                        :::      ::::::::   */
 /*   printer.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: swilliam <swilliam@student.42.fr>          +#+  +:+       +#+        */
+/*   By: egaliber <egaliber@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/18 16:16:43 by egaliber          #+#    #+#             */
-/*   Updated: 2023/01/28 15:01:32 by swilliam         ###   ########.fr       */
+/*   Updated: 2023/01/31 15:55:05 by egaliber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+//#include "includes/lem_in.h"
 #include "lem_in.h"
 
-static void	give_first_path(t_ants *ants, t_paths *paths, t_heads *heads, int i)
+void	give_first_path(t_ants *ants, t_paths *paths, t_data *data)
 {
-	ants->room = heads->paths->path;
+	ants->room = paths->path;
 	if (ants->next != NULL)
 		ants = ants->next;
 	paths->usage_times--;
 	paths->temp++;
-	i += (paths->usage_times == 0);
-	if (paths->next != NULL)
-		paths = paths->next;
+	if (paths->usage_times == 0)
+		data->counter++;
 }
 
-void	printer(t_ants *ants, t_heads *heads, t_paths *paths, t_data *data)
+void	printer(t_heads *heads, t_data *data)
 {
-	int	i;
+	t_paths	*paths;
+	t_ants	*ants;
 
+	ants = heads->ants;
 	while (data->finished != data->ant_count)
 	{
-		i = 0;
-		paths = heads->paths;
-		ants = heads->ants;
-		while (i < data->solution->path_count && ants->has_moved == false \
-				&& ants->has_finished == false)
-			first_move(ants, paths, data, i, heads);
+		data->counter = 0;
+		paths = data->solution->paths;
+		first_move(ants, paths, data);
 		ft_printf("\n");
 		if (heads->ants->has_moved == true)
 		{
 			ants = heads->ants;
-			while (ants->has_moved == true \
-					&& data->finished != data->ant_count)
-				move_played(ants, data, heads);
+			move_played(ants, data, heads);
+			while (ants->has_moved == true && data->finished != data->ant_count)
+			{
+				if (ants->next != NULL)
+					ants = ants->next;
+			}
 		}
 	}
 }
 
-void	give_ants_paths(t_ants *ants, t_paths *paths, t_data *data, \
+void	give_ants_paths(t_ants *ants, t_data *data, \
 						t_heads *heads)
 {
-	int	i;
+	t_paths	*paths;
 
-	i = 0;
-	paths = heads->paths;
+	paths = data->solution->paths;
 	ants = heads->ants;
-	while (i < data->solution->path_count)
+	while (data->counter < data->solution->path_count)
 	{
-		while (paths->usage_times > 0)
+		paths = data->solution->paths;
+		while (paths != NULL && paths->usage_times > 0)
 		{
-			if (paths == heads->paths && paths->usage_times > 0)
-				give_first_path(ants, paths, heads, i);
-			if (paths != heads->paths && paths->usage_times > 0)
-				give_rest_paths(ants, paths, i, heads);
-			while (paths->usage_times == 0 && i < data->solution->path_count)
-			{
-				if (paths->next == NULL)
-					paths = heads->paths;
-				else
-					paths = paths->next;
-			}
+			give_rest_paths(ants, paths, data);
+			paths = paths->next;
+			if (ants->next != NULL)
+				ants = ants->next;
 		}
 	}
 }
@@ -79,11 +74,10 @@ void	ant_mover(t_heads *heads, t_data *data)
 	t_ants		*ants;
 	t_ants		*temp;
 
-	ft_printf("Printing\n");
 	while (data->ant_num < data->ant_count)
 		ants = make_ants(data, ants, heads);
 	temp = heads->ants;
 	ants = temp;
-	give_ants_paths(ants, data->solution->paths, data, heads);
-	printer(ants, heads, data->solution->paths, data);
+	give_ants_paths(ants, data, heads);
+	printer(heads, data);
 }

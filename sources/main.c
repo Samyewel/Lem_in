@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: swilliam <swilliam@student.42.fr>          +#+  +:+       +#+        */
+/*   By: egaliber <egaliber@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/07 16:16:16 by swilliam          #+#    #+#             */
-/*   Updated: 2023/01/28 14:30:23 by swilliam         ###   ########.fr       */
+/*   Updated: 2023/01/31 09:56:09 by egaliber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ t_data	*initialise_data(t_data *data)
 	data->starting_search = false;
 	data->ending_search = false;
 	data->solution = NULL;
+	data->counter = 0;
 	return (data);
 }
 
@@ -77,6 +78,7 @@ int	main(void)
 	backtrack_rooms(heads, data);
 	backtrack_paths(heads);
 	store_solution(heads, data);
+	calculate_path_usage_times(data);
 	ant_mover(heads, data);
 	if (DEBUG == true && LEAKS == true) // REMOVE BEFORE SUBMISSION
 		system("leaks lem-in");
