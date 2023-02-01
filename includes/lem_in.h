@@ -3,10 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   lem_in.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
+<<<<<<< HEAD
 /*   By: egaliber <egaliber@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/07 16:28:47 by swilliam          #+#    #+#             */
 /*   Updated: 2023/01/31 10:14:55 by egaliber         ###   ########.fr       */
+=======
+/*   By: sam <sam@student.42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/11/07 16:28:47 by swilliam          #+#    #+#             */
+/*   Updated: 2023/02/01 14:48:48 by sam              ###   ########.fr       */
+>>>>>>> 985538a71517901e25216d21f0f95e118bbc33f8
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,6 +91,8 @@ typedef struct paths
 	int				temp;
 	struct rooms	*path;
 	struct paths	*next;
+	struct paths	*previous;
+	struct paths	*temp_previous;
 }				t_paths;
 
 typedef struct solutions
