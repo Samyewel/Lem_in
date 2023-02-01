@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   best_solution.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: swilliam <swilliam@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sam <sam@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/28 13:05:45 by swilliam          #+#    #+#             */
-/*   Updated: 2023/01/28 15:09:14 by swilliam         ###   ########.fr       */
+/*   Updated: 2023/02/01 14:52:55 by sam              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ static int	calculate_best_solution(t_heads *heads, t_data *data)
 	return (closest_index);
 }
 
-static t_paths	*create_duplicate_path(t_paths *path)
+static t_paths	*create_duplicate_path(t_paths *path, t_paths *previous)
 {
 	t_paths	*new_path;
 
@@ -52,6 +52,10 @@ static t_paths	*create_duplicate_path(t_paths *path)
 	new_path->temp = path->temp;
 	new_path->path = path->path;
 	new_path->next = NULL;
+	if (previous == NULL)
+		new_path->previous = NULL;
+	else
+		new_path->previous = previous;
 	return (new_path);
 }
 
@@ -60,7 +64,10 @@ static void	duplicate_path(t_data *data, t_paths *path)
 	t_paths		*temp_path;
 	t_paths		*temp_solution_path;
 
-	temp_path = create_duplicate_path(path);
+	if (data->solution->temp_previous == NULL)
+		temp_path = create_duplicate_path(path, NULL);
+	else
+		temp_path = create_duplicate_path(path, data->solution->temp_previous);
 	temp_solution_path = data->solution->paths;
 	if (!temp_path)
 		ft_printf_strerror("Memory allocation failure in duplicate_path.");
@@ -72,6 +79,7 @@ static void	duplicate_path(t_data *data, t_paths *path)
 			temp_solution_path = temp_solution_path->next;
 		temp_solution_path->next = temp_path;
 	}
+	data->solution->temp_previous = temp_path;
 }
 
 static void	store_paths_in_solution(t_heads *heads, t_data *data)

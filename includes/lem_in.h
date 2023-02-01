@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lem_in.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: swilliam <swilliam@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sam <sam@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/07 16:28:47 by swilliam          #+#    #+#             */
-/*   Updated: 2023/01/28 15:10:11 by swilliam         ###   ########.fr       */
+/*   Updated: 2023/02/01 14:48:48 by sam              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,6 +83,8 @@ typedef struct paths
 	int				temp;
 	struct rooms	*path;
 	struct paths	*next;
+	struct paths	*previous;
+	struct paths	*temp_previous;
 }				t_paths;
 
 typedef struct solutions
