@@ -6,7 +6,7 @@
 /*   By: sam <sam@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/07 16:28:47 by swilliam          #+#    #+#             */
-/*   Updated: 2023/02/01 14:48:48 by sam              ###   ########.fr       */
+/*   Updated: 2023/02/01 15:05:01 by sam              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,6 @@ typedef struct paths
 	struct rooms	*path;
 	struct paths	*next;
 	struct paths	*previous;
-	struct paths	*temp_previous;
 }				t_paths;
 
 typedef struct solutions
@@ -94,6 +93,7 @@ typedef struct solutions
 	int					path_count;
 	int					total_length;
 	struct paths		*paths;
+	struct paths		*temp_previous;
 	struct solutions	*next;
 }				t_solutions;
 
