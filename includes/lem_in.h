@@ -3,10 +3,21 @@
 /*                                                        :::      ::::::::   */
 /*   lem_in.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
+<<<<<<< HEAD
+/*   By: egaliber <egaliber@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/11/07 16:28:47 by swilliam          #+#    #+#             */
+/*   Updated: 2023/01/31 10:14:55 by egaliber         ###   ########.fr       */
+=======
 /*   By: sam <sam@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/07 16:28:47 by swilliam          #+#    #+#             */
+<<<<<<< HEAD
 /*   Updated: 2023/02/01 15:05:01 by sam              ###   ########.fr       */
+=======
+/*   Updated: 2023/02/01 14:48:48 by sam              ###   ########.fr       */
+>>>>>>> 985538a71517901e25216d21f0f95e118bbc33f8
+>>>>>>> 1980012193407edd6c72f43af356f677869bc790
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +58,7 @@ typedef struct data
 	int					best_solution;
 	int					finished;
 	int					ant_num;
+	int					counter;
 	bool				starting_search;
 	bool				ending_search;
 	struct solutions	*solution;
@@ -169,6 +181,7 @@ void		backtrack_paths(t_heads *heads);
 // Solutions
 t_solutions	*initialise_solution(t_paths *path);
 void		store_solution(t_heads *heads, t_data *data);
+void		calculate_path_usage_times(t_data *data);
 
 // DFS
 void		push(t_stack *stack, t_rooms *room);
@@ -181,11 +194,10 @@ void		clean_paths(t_heads *heads);
 // Printer
 void		ant_mover(t_heads *heads, t_data *data);
 void		give_rest_paths(
-				t_ants *ants, t_paths *paths, int i, t_heads *heads);
+				t_ants *ants, t_paths *paths, t_data *data);
 void		move_played(t_ants *ants, t_data *data, t_heads *heads);
 void		first_move(
-				t_ants *ants, t_paths *paths, t_data *data, int i, \
-				t_heads *heads);
+				t_ants *ants, t_paths *paths, t_data *data);
 void		send_ants(t_ants *ants, t_data *data, t_paths *paths);
 void		move_ants_already_in_play(t_ants *ants);
 t_ants		*make_ants(t_data *data, t_ants *ants, t_heads *heads);
