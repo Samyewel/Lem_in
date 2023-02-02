@@ -6,63 +6,58 @@
 /*   By: egaliber <egaliber@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/05 14:29:46 by egaliber          #+#    #+#             */
-/*   Updated: 2023/02/01 14:33:47 by egaliber         ###   ########.fr       */
+/*   Updated: 2023/02/02 15:27:30 by egaliber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lem_in.h"
 //#include "includes/lem_in.h"
 
-void	calculate_path_usage_times(t_data *data)
+int	calculate_min_for_path(t_paths *paths)
 {
-	int	paths_l;
-	int total_l;
-	//int remain;
-	t_paths *temp;
-	
-	ft_printf("number of paths = %d\n", data->solution->path_count);
-	temp = data->solution->paths;
-	paths_l = 0;
-	total_l = 0;
+	t_paths	*temp;
+	int		edge;
+	int		res;
 
-	ft_printf("temp lenght = %d\n", temp->length);
-	ft_printf("temp lenght = %d\n", temp->next->length);
-	while (temp)
-	{
-		paths_l += temp->length;
+	res = 1;
+	temp = paths;
+	while (temp->next)
 		temp = temp->next;
-	}
-	ft_printf("paths combined lenght is = %d\n", paths_l);
-	ft_printf("total lenght is = %d\n", total_l);
-	total_l = (data->ant_count / paths_l) * data->solution->paths->length;
-	ft_printf("total lenght is = %d\n", total_l);
-	ft_printf("lenght of paths->length = %d\n", data->solution->paths->length);
-	temp = data->solution->paths;
-	//remain = data->ant_count - paths_l;
-	while (temp->usage_times == 0)
+	edge = temp->length + 1;
+	while (temp->previous)
 	{
-		if (temp->next == NULL)
-		{
-			ft_printf("does it neter if#1\n");
-			temp->usage_times = total_l;
-			temp = data->solution->paths;
-		}
-		if (temp == data->solution->paths)
-		{
-			temp->usage_times = data->ant_count - total_l;
-			temp = temp->next;
-		}
+		temp = temp->previous;
+		res += (edge - temp->length);
 	}
-	ft_printf("usage times is now = %d\n", data->solution->paths->usage_times);
-	ft_printf("usage times for next is now = %d\n", data->solution->paths->next->usage_times);
+	return (res);
 }
-/*
-void	calculate_path_usage_times2(t_data *data)
+
+void	deploy_first_round(t_paths *option, int nb_paths)
+{
+	t_paths	*paths;
+	int		edge;
+
+	paths = option;
+	while (paths->next)
+		paths = paths->next;
+	paths->usage_times = 1;
+	edge = paths->length + 1;
+	while (paths && nb_paths > 0)
+	{
+		paths = paths->previous;
+		paths->usage_times = edge - paths->length;
+		nb_paths--;
+		if (!paths->previous)
+			break ;
+	}
+	paths = NULL;
+}
+
+void	calculate_path_usage_times(t_data *data)
 {
 	t_paths	*temp;
 	t_paths	*paths;
 	int		remain;
-
 	paths = data->solution->paths;
 	while(paths)
 	{
@@ -71,12 +66,25 @@ void	calculate_path_usage_times2(t_data *data)
 	temp = paths;
 	if (data->solution->path_count > 1)
 	{
-		
+		deploy_first_round(data->solution->paths, data->solution->path_count);
+		remain = data->ant_count - calculate_min_for_path(data->solution->paths);
+		temp = data->solution->paths;
+		while (temp)
+		{
+			temp->usage_times += remain / data->solution->path_count;
+			temp = temp->next;
+		}
+		remain = remain % data->solution->path_count;
+		temp = data->solution->paths;
+		while (remain--)
+		{
+			temp->usage_times++;
+			temp = temp->next;
+		}
 	}
 	else
-		data->solution->paths = data->ant_count;
+		data->solution->paths->usage_times = data->ant_count;
 }
-*/
 void	init_ants(t_ants *new)
 {
 	new->ant_number = 0;
