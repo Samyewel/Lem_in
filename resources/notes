@@ -12,3 +12,22 @@ To-do:
 	- Save paths found on each iteration of bfs in edmonds_karp
 - Look into how to store the path data from the flow algorithm.
   Perhaps look into building a dynamic array system?
+
+
+Lem_in tester errors:
+
+err_dup -> prints double
+err_empty.map -> seg fault
+err_link_to_unk -> seg fault
+err_no_ants -> no solution
+err_no_end.map -> seg fault
+err_no_rooms.map -> seg fault
+err_no_start and 2.map -> seg fault
+
+Needed:
+
+Print the map_info before
+add Turn counter
+add any other flags if wanted
+ft_strerror doesnt work with .sh tests
+read_ants separetly?
