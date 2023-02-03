@@ -6,14 +6,14 @@
 /*   By: egaliber <egaliber@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/05 14:29:46 by egaliber          #+#    #+#             */
-/*   Updated: 2023/02/02 15:27:30 by egaliber         ###   ########.fr       */
+/*   Updated: 2023/02/03 13:02:27 by egaliber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lem_in.h"
 //#include "includes/lem_in.h"
 
-int	calculate_min_for_path(t_paths *paths)
+int	calculate_path(t_paths *paths)
 {
 	t_paths	*temp;
 	int		edge;
@@ -32,12 +32,12 @@ int	calculate_min_for_path(t_paths *paths)
 	return (res);
 }
 
-void	deploy_first_round(t_paths *option, int nb_paths)
+void	test_round(t_paths *head, int nb_paths)
 {
 	t_paths	*paths;
 	int		edge;
 
-	paths = option;
+	paths = head;
 	while (paths->next)
 		paths = paths->next;
 	paths->usage_times = 1;
@@ -58,16 +58,17 @@ void	calculate_path_usage_times(t_data *data)
 	t_paths	*temp;
 	t_paths	*paths;
 	int		remain;
+
 	paths = data->solution->paths;
-	while(paths)
+	while (paths)
 	{
 		paths = paths->next;
 	}
 	temp = paths;
 	if (data->solution->path_count > 1)
 	{
-		deploy_first_round(data->solution->paths, data->solution->path_count);
-		remain = data->ant_count - calculate_min_for_path(data->solution->paths);
+		test_round(data->solution->paths, data->solution->path_count);
+		remain = data->ant_count - calculate_path(data->solution->paths);
 		temp = data->solution->paths;
 		while (temp)
 		{
@@ -85,6 +86,7 @@ void	calculate_path_usage_times(t_data *data)
 	else
 		data->solution->paths->usage_times = data->ant_count;
 }
+
 void	init_ants(t_ants *new)
 {
 	new->ant_number = 0;
