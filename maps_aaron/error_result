@@ -1,0 +1,803 @@
+result:
+big_ant_nbr:
+Path[0]: a->b
+Solution[0], length: 1, Paths:
+0 
+Storing solution
+leaks Report Version: 4.0
+Process 38514: 231 nodes malloced for 17 KB
+Process 38514: 0 leaks for 0 total leaked bytes.
+
+
+comment_in_link:
+leaks Report Version: 4.0
+Process 38520: 245 nodes malloced for 13 KB
+Process 38520: 0 leaks for 0 total leaked bytes.
+
+
+comment_in_room:
+leaks Report Version: 4.0
+Process 38526: 220 nodes malloced for 12 KB
+Process 38526: 0 leaks for 0 total leaked bytes.
+
+
+corrupted_command:
+leaks Report Version: 4.0
+Process 38532: 268 nodes malloced for 14 KB
+Process 38532: 0 leaks for 0 total leaked bytes.
+
+
+duplicate_room:
+Path[0]: start->1->2->3->end
+Path[1]: start->1->2->4->5->end
+Path[2]: start->6->7->2->3->end
+Path[3]: start->6->7->2->4->5->end
+Path[4]: start->8->9->10->11->3->2->4->5->end
+Path[5]: start->8->9->10->11->3->end
+Solution[0], length: 4, Paths:
+0 
+Solution[1], length: 11, Paths:
+1 5 
+Solution[2], length: 5, Paths:
+2 
+Solution[3], length: 12, Paths:
+3 5 
+Solution[4], length: 9, Paths:
+4 
+Solution[5], length: 17, Paths:
+5 1 3 
+Storing solution
+Stored successfully
+Stored successfully
+L1-1 L2-8 
+L1-2 L2-9 L3-1 L4-8 
+L1-4 L2-10 L3-2 L4-9 L5-1 L6-8 
+L1-5 L2-11 L3-4 L4-10 L5-2 L6-9 L7-1 L8-8 
+L1-end L2-3 L3-5 L4-11 L5-4 L6-10 L7-2 L8-9 L9-1 L10-8 
+L2-end L3-end L4-3 L5-5 L6-11 L7-4 L8-10 L9-2 L10-9 L11-1 
+L4-end L5-end L6-3 L7-5 L8-11 L9-4 L10-10 L11-2 
+L6-end L7-end L8-3 L9-5 L10-11 L11-4 
+L8-end L9-end L10-3 L11-5 
+L10-end L11-end 
+Process:         lem-in [38538]
+Path:            /Users/USER/*/lem-in
+Load Address:    0x1025d4000
+Identifier:      lem-in
+Version:         ???
+Code Type:       ARM64
+Platform:        macOS
+Parent Process:  leaks [38537]
+
+Date/Time:       2023-02-02 18:11:06.806 +0200
+Launch Time:     2023-02-02 18:11:06.751 +0200
+OS Version:      macOS 12.5.1 (21G83)
+Report Version:  7
+Analysis Tool:   /usr/bin/leaks
+
+Physical footprint:         7105K
+Physical footprint (peak):  7105K
+----
+
+leaks Report Version: 4.0
+Process 38538: 419 nodes malloced for 44 KB
+Process 38538: 0 leaks for 0 total leaked bytes.
+
+leaks Report Version: 4.0
+Process 38538: 331 nodes malloced for 40 KB
+Process 38538: 0 leaks for 0 total leaked bytes.
+
+
+empty_file:
+
+empty_line_after_ants:
+leaks Report Version: 4.0
+Process 38551: 216 nodes malloced for 12 KB
+Process 38551: 0 leaks for 0 total leaked bytes.
+
+
+empty_line_between_rooms_and_links:
+leaks Report Version: 4.0
+Process 38557: 228 nodes malloced for 12 KB
+Process 38557: 0 leaks for 0 total leaked bytes.
+
+
+empty_line_in_links:
+leaks Report Version: 4.0
+Process 38563: 252 nodes malloced for 13 KB
+Process 38563: 0 leaks for 0 total leaked bytes.
+
+
+empty_line_in_rooms:
+leaks Report Version: 4.0
+Process 38569: 222 nodes malloced for 12 KB
+Process 38569: 0 leaks for 0 total leaked bytes.
+
+
+invalid_ants:
+leaks Report Version: 4.0
+Process 38575: 216 nodes malloced for 12 KB
+Process 38575: 0 leaks for 0 total leaked bytes.
+
+
+invalid_room_coordinate:
+leaks Report Version: 4.0
+Process 38583: 225 nodes malloced for 12 KB
+Process 38583: 0 leaks for 0 total leaked bytes.
+
+
+invalid_room_in_link_0:
+
+invalid_room_in_link_1:
+leaks Report Version: 4.0
+Process 38595: 236 nodes malloced for 13 KB
+Process 38595: 0 leaks for 0 total leaked bytes.
+
+
+invalid_room_in_link_2:
+leaks Report Version: 4.0
+Process 38601: 244 nodes malloced for 13 KB
+Process 38601: 0 leaks for 0 total leaked bytes.
+
+
+invalid_room_name_0:
+
+invalid_room_name_1:
+
+invalid_room_spaces:
+Path[0]: a->b
+Solution[0], length: 1, Paths:
+0 
+Storing solution
+Stored successfully
+L1-b 
+L2-b 
+L3-b 
+L4-b 
+L5-b 
+
+Process:         lem-in [38619]
+Path:            /Users/USER/*/lem-in
+Load Address:    0x10242c000
+Identifier:      lem-in
+Version:         ???
+Code Type:       ARM64
+Platform:        macOS
+Parent Process:  leaks [38618]
+
+Date/Time:       2023-02-02 18:11:07.499 +0200
+Launch Time:     2023-02-02 18:11:07.441 +0200
+OS Version:      macOS 12.5.1 (21G83)
+Report Version:  7
+Analysis Tool:   /usr/bin/leaks
+
+Physical footprint:         7121K
+Physical footprint (peak):  7121K
+----
+
+leaks Report Version: 4.0
+Process 38619: 237 nodes malloced for 17 KB
+Process 38619: 0 leaks for 0 total leaked bytes.
+
+leaks Report Version: 4.0
+Process 38619: 232 nodes malloced for 17 KB
+Process 38619: 0 leaks for 0 total leaked bytes.
+
+
+link_after_end:
+
+link_after_start:
+
+link_among_rooms:
+Path[0]: start->a->d->c->b->sink
+Path[1]: start->a->d->c->sink
+Path[2]: start->a->c->b->sink
+Path[3]: start->a->c->sink
+Path[4]: start->a->b->c->sink
+Path[5]: start->a->b->sink
+Path[6]: start->d->a->c->b->sink
+Path[7]: start->d->a->c->sink
+Path[8]: start->d->a->b->c->sink
+Path[9]: start->d->a->b->sink
+Path[10]: start->d->c->a->b->sink
+Path[11]: start->d->c->b->sink
+Path[12]: start->d->c->sink
+Solution[0], length: 5, Paths:
+0 
+Solution[1], length: 4, Paths:
+1 
+Solution[2], length: 4, Paths:
+2 
+Solution[3], length: 3, Paths:
+3 
+Solution[4], length: 4, Paths:
+4 
+Solution[5], length: 6, Paths:
+5 12 
+Solution[6], length: 5, Paths:
+6 
+Solution[7], length: 4, Paths:
+7 
+Solution[8], length: 5, Paths:
+8 
+Solution[9], length: 4, Paths:
+9 
+Solution[10], length: 5, Paths:
+10 
+Solution[11], length: 4, Paths:
+11 
+Solution[12], length: 6, Paths:
+12 5 
+Storing solution
+Stored successfully
+L1-a 
+L1-d L2-a 
+L1-c L2-d L3-a 
+L1-b L2-c L3-d L4-a 
+L1-sink L2-b L3-c L4-d L5-a 
+L2-sink L3-b L4-c L5-d 
+L3-sink L4-b L5-c 
+L4-sink L5-b 
+L5-sink 
+Process:         lem-in [38638]
+Path:            /Users/USER/*/lem-in
+Load Address:    0x104288000
+Identifier:      lem-in
+Version:         ???
+Code Type:       ARM64
+Platform:        macOS
+Parent Process:  leaks [38637]
+
+Date/Time:       2023-02-02 18:11:07.657 +0200
+Launch Time:     2023-02-02 18:11:07.600 +0200
+OS Version:      macOS 12.5.1 (21G83)
+Report Version:  7
+Analysis Tool:   /usr/bin/leaks
+
+Physical footprint:         7169K
+Physical footprint (peak):  7169K
+----
+
+leaks Report Version: 4.0
+Process 38638: 441 nodes malloced for 73 KB
+Process 38638: 0 leaks for 0 total leaked bytes.
+
+leaks Report Version: 4.0
+Process 38638: 296 nodes malloced for 67 KB
+Process 38638: 0 leaks for 0 total leaked bytes.
+
+
+missing_room_coordinate:
+leaks Report Version: 4.0
+Process 38646: 220 nodes malloced for 12 KB
+Process 38646: 0 leaks for 0 total leaked bytes.
+
+
+mixed_room_edge:
+
+negative_ants:
+leaks Report Version: 4.0
+Process 38659: 216 nodes malloced for 12 KB
+Process 38659: 0 leaks for 0 total leaked bytes.
+
+
+no_ants:
+Path[0]: start->1->5->6->end
+Path[1]: start->1->2->end
+Path[2]: start->3->4->2->1->5->6->end
+Path[3]: start->3->4->2->end
+Solution[0], length: 8, Paths:
+0 3 
+Solution[1], length: 3, Paths:
+1 
+Solution[2], length: 7, Paths:
+2 
+Solution[3], length: 8, Paths:
+3 0 
+Storing solution
+leaks Report Version: 4.0
+Process 38665: 324 nodes malloced for 32 KB
+Process 38665: 0 leaks for 0 total leaked bytes.
+
+
+no_end:
+leaks Report Version: 4.0
+Process 38671: 264 nodes malloced for 14 KB
+Process 38671: 0 leaks for 0 total leaked bytes.
+
+
+no_links:
+leaks Report Version: 4.0
+Process 38677: 228 nodes malloced for 12 KB
+Process 38677: 0 leaks for 0 total leaked bytes.
+
+
+no_path_from_start_to_end:
+leaks Report Version: 4.0
+Process 38683: 266 nodes malloced for 14 KB
+Process 38683: 0 leaks for 0 total leaked bytes.
+
+
+no_rooms:
+
+no_start:
+
+room_among_links:
+Path[0]: start->a->d->c->b->sink
+Path[1]: start->a->d->c->sink
+Path[2]: start->a->c->b->sink
+Path[3]: start->a->c->sink
+Path[4]: start->a->b->c->sink
+Path[5]: start->a->b->sink
+Path[6]: start->d->a->c->b->sink
+Path[7]: start->d->a->c->sink
+Path[8]: start->d->a->b->c->sink
+Path[9]: start->d->a->b->sink
+Path[10]: start->d->c->a->b->sink
+Path[11]: start->d->c->b->sink
+Path[12]: start->d->c->sink
+Solution[0], length: 5, Paths:
+0 
+Solution[1], length: 4, Paths:
+1 
+Solution[2], length: 4, Paths:
+2 
+Solution[3], length: 3, Paths:
+3 
+Solution[4], length: 4, Paths:
+4 
+Solution[5], length: 6, Paths:
+5 12 
+Solution[6], length: 5, Paths:
+6 
+Solution[7], length: 4, Paths:
+7 
+Solution[8], length: 5, Paths:
+8 
+Solution[9], length: 4, Paths:
+9 
+Solution[10], length: 5, Paths:
+10 
+Solution[11], length: 4, Paths:
+11 
+Solution[12], length: 6, Paths:
+12 5 
+Storing solution
+Stored successfully
+L1-a 
+L1-d L2-a 
+L1-c L2-d L3-a 
+L1-b L2-c L3-d L4-a 
+L1-sink L2-b L3-c L4-d L5-a 
+L2-sink L3-b L4-c L5-d 
+L3-sink L4-b L5-c 
+L4-sink L5-b 
+L5-sink 
+Process:         lem-in [38701]
+Path:            /Users/USER/*/lem-in
+Load Address:    0x102610000
+Identifier:      lem-in
+Version:         ???
+Code Type:       ARM64
+Platform:        macOS
+Parent Process:  leaks [38700]
+
+Date/Time:       2023-02-02 18:11:08.204 +0200
+Launch Time:     2023-02-02 18:11:08.148 +0200
+OS Version:      macOS 12.5.1 (21G83)
+Report Version:  7
+Analysis Tool:   /usr/bin/leaks
+
+Physical footprint:         7185K
+Physical footprint (peak):  7185K
+----
+
+leaks Report Version: 4.0
+Process 38701: 443 nodes malloced for 73 KB
+Process 38701: 0 leaks for 0 total leaked bytes.
+
+leaks Report Version: 4.0
+Process 38701: 298 nodes malloced for 67 KB
+Process 38701: 0 leaks for 0 total leaked bytes.
+
+
+same_room_twice:
+Path[0]: start->a->d->c->b->sink
+Path[1]: start->a->d->c->sink
+Path[2]: start->a->c->b->sink
+Path[3]: start->a->c->sink
+Path[4]: start->a->b->c->sink
+Path[5]: start->a->b->sink
+Path[6]: start->d->a->c->b->sink
+Path[7]: start->d->a->c->sink
+Path[8]: start->d->a->b->c->sink
+Path[9]: start->d->a->b->sink
+Path[10]: start->d->c->a->b->sink
+Path[11]: start->d->c->b->sink
+Path[12]: start->d->c->sink
+Solution[0], length: 5, Paths:
+0 
+Solution[1], length: 4, Paths:
+1 
+Solution[2], length: 4, Paths:
+2 
+Solution[3], length: 3, Paths:
+3 
+Solution[4], length: 4, Paths:
+4 
+Solution[5], length: 6, Paths:
+5 12 
+Solution[6], length: 5, Paths:
+6 
+Solution[7], length: 4, Paths:
+7 
+Solution[8], length: 5, Paths:
+8 
+Solution[9], length: 4, Paths:
+9 
+Solution[10], length: 5, Paths:
+10 
+Solution[11], length: 4, Paths:
+11 
+Solution[12], length: 6, Paths:
+12 5 
+Storing solution
+Stored successfully
+L1-a 
+L1-d L2-a 
+L1-c L2-d L3-a 
+L1-b L2-c L3-d L4-a 
+L1-sink L2-b L3-c L4-d L5-a 
+L2-sink L3-b L4-c L5-d 
+L3-sink L4-b L5-c 
+L4-sink L5-b 
+L5-sink 
+Process:         lem-in [38708]
+Path:            /Users/USER/*/lem-in
+Load Address:    0x102d5c000
+Identifier:      lem-in
+Version:         ???
+Code Type:       ARM64
+Platform:        macOS
+Parent Process:  leaks [38707]
+
+Date/Time:       2023-02-02 18:11:08.340 +0200
+Launch Time:     2023-02-02 18:11:08.270 +0200
+OS Version:      macOS 12.5.1 (21G83)
+Report Version:  7
+Analysis Tool:   /usr/bin/leaks
+
+Physical footprint:         7169K
+Physical footprint (peak):  7169K
+----
+
+leaks Report Version: 4.0
+Process 38708: 443 nodes malloced for 73 KB
+Process 38708: 0 leaks for 0 total leaked bytes.
+
+leaks Report Version: 4.0
+Process 38708: 298 nodes malloced for 67 KB
+Process 38708: 0 leaks for 0 total leaked bytes.
+
+
+start_after_end:
+leaks Report Version: 4.0
+Process 38715: 264 nodes malloced for 14 KB
+Process 38715: 0 leaks for 0 total leaked bytes.
+
+
+start_after_start:
+Path[0]: start->a->d->c->b->sink
+Path[1]: start->a->d->c->sink
+Path[2]: start->a->c->b->sink
+Path[3]: start->a->c->sink
+Path[4]: start->a->b->c->sink
+Path[5]: start->a->b->sink
+Path[6]: start->d->a->c->b->sink
+Path[7]: start->d->a->c->sink
+Path[8]: start->d->a->b->c->sink
+Path[9]: start->d->a->b->sink
+Path[10]: start->d->c->a->b->sink
+Path[11]: start->d->c->b->sink
+Path[12]: start->d->c->sink
+Solution[0], length: 5, Paths:
+0 
+Solution[1], length: 4, Paths:
+1 
+Solution[2], length: 4, Paths:
+2 
+Solution[3], length: 3, Paths:
+3 
+Solution[4], length: 4, Paths:
+4 
+Solution[5], length: 6, Paths:
+5 12 
+Solution[6], length: 5, Paths:
+6 
+Solution[7], length: 4, Paths:
+7 
+Solution[8], length: 5, Paths:
+8 
+Solution[9], length: 4, Paths:
+9 
+Solution[10], length: 5, Paths:
+10 
+Solution[11], length: 4, Paths:
+11 
+Solution[12], length: 6, Paths:
+12 5 
+Storing solution
+Stored successfully
+L1-a 
+L1-d L2-a 
+L1-c L2-d L3-a 
+L1-b L2-c L3-d L4-a 
+L1-sink L2-b L3-c L4-d L5-a 
+L2-sink L3-b L4-c L5-d 
+L3-sink L4-b L5-c 
+L4-sink L5-b 
+L5-sink 
+Process:         lem-in [38721]
+Path:            /Users/USER/*/lem-in
+Load Address:    0x1006e4000
+Identifier:      lem-in
+Version:         ???
+Code Type:       ARM64
+Platform:        macOS
+Parent Process:  leaks [38720]
+
+Date/Time:       2023-02-02 18:11:08.513 +0200
+Launch Time:     2023-02-02 18:11:08.456 +0200
+OS Version:      macOS 12.5.1 (21G83)
+Report Version:  7
+Analysis Tool:   /usr/bin/leaks
+
+Physical footprint:         7185K
+Physical footprint (peak):  7185K
+----
+
+leaks Report Version: 4.0
+Process 38721: 441 nodes malloced for 73 KB
+Process 38721: 0 leaks for 0 total leaked bytes.
+
+leaks Report Version: 4.0
+Process 38721: 296 nodes malloced for 67 KB
+Process 38721: 0 leaks for 0 total leaked bytes.
+
+
+two_ends:
+Path[0]: start->a->d->c->b->sink
+Path[1]: start->a->d->c->sink
+Path[2]: start->a->c->b->sink
+Path[3]: start->a->c->sink
+Path[4]: start->a->b->c->sink
+Path[5]: start->a->b->sink
+Path[6]: start->d->a->c->b->sink
+Path[7]: start->d->a->c->sink
+Path[8]: start->d->a->b->c->sink
+Path[9]: start->d->a->b->sink
+Path[10]: start->d->c->a->b->sink
+Path[11]: start->d->c->b->sink
+Path[12]: start->d->c->sink
+Solution[0], length: 5, Paths:
+0 
+Solution[1], length: 4, Paths:
+1 
+Solution[2], length: 4, Paths:
+2 
+Solution[3], length: 3, Paths:
+3 
+Solution[4], length: 4, Paths:
+4 
+Solution[5], length: 6, Paths:
+5 12 
+Solution[6], length: 5, Paths:
+6 
+Solution[7], length: 4, Paths:
+7 
+Solution[8], length: 5, Paths:
+8 
+Solution[9], length: 4, Paths:
+9 
+Solution[10], length: 5, Paths:
+10 
+Solution[11], length: 4, Paths:
+11 
+Solution[12], length: 6, Paths:
+12 5 
+Storing solution
+Stored successfully
+L1-a 
+L1-d L2-a 
+L1-c L2-d L3-a 
+L1-b L2-c L3-d L4-a 
+L1-sink L2-b L3-c L4-d L5-a 
+L2-sink L3-b L4-c L5-d 
+L3-sink L4-b L5-c 
+L4-sink L5-b 
+L5-sink 
+Process:         lem-in [38728]
+Path:            /Users/USER/*/lem-in
+Load Address:    0x1000f4000
+Identifier:      lem-in
+Version:         ???
+Code Type:       ARM64
+Platform:        macOS
+Parent Process:  leaks [38727]
+
+Date/Time:       2023-02-02 18:11:08.630 +0200
+Launch Time:     2023-02-02 18:11:08.573 +0200
+OS Version:      macOS 12.5.1 (21G83)
+Report Version:  7
+Analysis Tool:   /usr/bin/leaks
+
+Physical footprint:         7185K
+Physical footprint (peak):  7185K
+----
+
+leaks Report Version: 4.0
+Process 38728: 443 nodes malloced for 73 KB
+Process 38728: 0 leaks for 0 total leaked bytes.
+
+leaks Report Version: 4.0
+Process 38728: 298 nodes malloced for 67 KB
+Process 38728: 0 leaks for 0 total leaked bytes.
+
+
+two_ends_in_row:
+Path[0]: start->a->d->c->b->sink
+Path[1]: start->a->d->c->sink
+Path[2]: start->a->c->b->sink
+Path[3]: start->a->c->sink
+Path[4]: start->a->b->c->sink
+Path[5]: start->a->b->sink
+Path[6]: start->d->a->c->b->sink
+Path[7]: start->d->a->c->sink
+Path[8]: start->d->a->b->c->sink
+Path[9]: start->d->a->b->sink
+Path[10]: start->d->c->a->b->sink
+Path[11]: start->d->c->b->sink
+Path[12]: start->d->c->sink
+Solution[0], length: 5, Paths:
+0 
+Solution[1], length: 4, Paths:
+1 
+Solution[2], length: 4, Paths:
+2 
+Solution[3], length: 3, Paths:
+3 
+Solution[4], length: 4, Paths:
+4 
+Solution[5], length: 6, Paths:
+5 12 
+Solution[6], length: 5, Paths:
+6 
+Solution[7], length: 4, Paths:
+7 
+Solution[8], length: 5, Paths:
+8 
+Solution[9], length: 4, Paths:
+9 
+Solution[10], length: 5, Paths:
+10 
+Solution[11], length: 4, Paths:
+11 
+Solution[12], length: 6, Paths:
+12 5 
+Storing solution
+Stored successfully
+L1-a 
+L1-d L2-a 
+L1-c L2-d L3-a 
+L1-b L2-c L3-d L4-a 
+L1-sink L2-b L3-c L4-d L5-a 
+L2-sink L3-b L4-c L5-d 
+L3-sink L4-b L5-c 
+L4-sink L5-b 
+L5-sink 
+Process:         lem-in [38735]
+Path:            /Users/USER/*/lem-in
+Load Address:    0x102054000
+Identifier:      lem-in
+Version:         ???
+Code Type:       ARM64
+Platform:        macOS
+Parent Process:  leaks [38734]
+
+Date/Time:       2023-02-02 18:11:08.775 +0200
+Launch Time:     2023-02-02 18:11:08.713 +0200
+OS Version:      macOS 12.5.1 (21G83)
+Report Version:  7
+Analysis Tool:   /usr/bin/leaks
+
+Physical footprint:         7185K
+Physical footprint (peak):  7185K
+----
+
+leaks Report Version: 4.0
+Process 38735: 441 nodes malloced for 73 KB
+Process 38735: 0 leaks for 0 total leaked bytes.
+
+leaks Report Version: 4.0
+Process 38735: 296 nodes malloced for 67 KB
+Process 38735: 0 leaks for 0 total leaked bytes.
+
+
+two_starts:
+Path[0]: start->a->d->c->b->sink
+Path[1]: start->a->d->c->sink
+Path[2]: start->a->c->b->sink
+Path[3]: start->a->c->sink
+Path[4]: start->a->b->c->sink
+Path[5]: start->a->b->sink
+Path[6]: start->d->a->c->b->sink
+Path[7]: start->d->a->c->sink
+Path[8]: start->d->a->b->c->sink
+Path[9]: start->d->a->b->sink
+Path[10]: start->d->c->a->b->sink
+Path[11]: start->d->c->b->sink
+Path[12]: start->d->c->sink
+Solution[0], length: 5, Paths:
+0 
+Solution[1], length: 4, Paths:
+1 
+Solution[2], length: 4, Paths:
+2 
+Solution[3], length: 3, Paths:
+3 
+Solution[4], length: 4, Paths:
+4 
+Solution[5], length: 6, Paths:
+5 12 
+Solution[6], length: 5, Paths:
+6 
+Solution[7], length: 4, Paths:
+7 
+Solution[8], length: 5, Paths:
+8 
+Solution[9], length: 4, Paths:
+9 
+Solution[10], length: 5, Paths:
+10 
+Solution[11], length: 4, Paths:
+11 
+Solution[12], length: 6, Paths:
+12 5 
+Storing solution
+Stored successfully
+L1-a 
+L1-d L2-a 
+L1-c L2-d L3-a 
+L1-b L2-c L3-d L4-a 
+L1-sink L2-b L3-c L4-d L5-a 
+L2-sink L3-b L4-c L5-d 
+L3-sink L4-b L5-c 
+L4-sink L5-b 
+L5-sink 
+Process:         lem-in [38742]
+Path:            /Users/USER/*/lem-in
+Load Address:    0x100e48000
+Identifier:      lem-in
+Version:         ???
+Code Type:       ARM64
+Platform:        macOS
+Parent Process:  leaks [38741]
+
+Date/Time:       2023-02-02 18:11:08.900 +0200
+Launch Time:     2023-02-02 18:11:08.838 +0200
+OS Version:      macOS 12.5.1 (21G83)
+Report Version:  7
+Analysis Tool:   /usr/bin/leaks
+
+Physical footprint:         7137K
+Physical footprint (peak):  7137K
+----
+
+leaks Report Version: 4.0
+Process 38742: 443 nodes malloced for 73 KB
+Process 38742: 0 leaks for 0 total leaked bytes.
+
+leaks Report Version: 4.0
+Process 38742: 298 nodes malloced for 67 KB
+Process 38742: 0 leaks for 0 total leaked bytes.
+
+
