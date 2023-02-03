@@ -6,7 +6,7 @@
 /*   By: swilliam <swilliam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/21 17:09:45 by swilliam          #+#    #+#             */
-/*   Updated: 2023/01/28 14:03:45 by swilliam         ###   ########.fr       */
+/*   Updated: 2023/02/03 14:30:38 by swilliam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,10 @@ static t_rooms	*create_path_node(t_rooms *room, t_rooms *previous)
 ** - Allocates a fresh
 */
 
-static t_paths	*create_path(int i, t_rooms *path_start)
+static t_paths	*create_path(
+t_heads *heads,
+int i,
+t_rooms *path_start)
 {
 	t_paths	*new_path;
 
@@ -54,6 +57,7 @@ static t_paths	*create_path(int i, t_rooms *path_start)
 	new_path->usage_times = 0;
 	new_path->temp = 0;
 	new_path->next = NULL;
+	heads->data->path_count++;
 	return (new_path);
 }
 
@@ -77,7 +81,7 @@ void	create_new_path(t_heads *heads, t_node *start_node)
 	temp_paths = heads->paths;
 	if (heads->paths == NULL)
 	{
-		path = create_path(0, path_start);
+		path = create_path(heads, 0, path_start);
 		heads->paths = path;
 		temp_paths = heads->paths;
 	}
@@ -85,7 +89,7 @@ void	create_new_path(t_heads *heads, t_node *start_node)
 	{
 		while (++i && temp_paths->next != NULL)
 			temp_paths = temp_paths->next;
-		path = create_path(i, path_start);
+		path = create_path(heads, i, path_start);
 		temp_paths->next = path;
 		temp_paths = temp_paths->next;
 	}

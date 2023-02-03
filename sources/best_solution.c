@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   best_solution.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: egaliber <egaliber@student.42.fr>          +#+  +:+       +#+        */
+/*   By: swilliam <swilliam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/28 13:05:45 by swilliam          #+#    #+#             */
-/*   Updated: 2023/02/02 17:29:53 by egaliber         ###   ########.fr       */
+/*   Updated: 2023/02/03 15:26:37 by swilliam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,26 +14,25 @@
 
 static int	calculate_best_solution(t_heads *heads, t_data *data)
 {
-	t_solutions	*temp_solution;
 	int			closest_length;
 	int			closest_index;
 	int			diff;
+	int			i;
 
-	temp_solution = heads->solutions;
 	closest_length = INT_MAX;
-	closest_index = -1;
-	while (temp_solution)
+	closest_index = 0;
+	i = -1;
+	while (++i < data->path_count)
 	{
-		if (temp_solution->total_length <= data->ant_count)
+		if (heads->solutions[i]->total_length <= data->ant_count)
 		{
-			diff = data->ant_count - temp_solution->total_length;
+			diff = data->ant_count - heads->solutions[i]->total_length;
 			if (diff < closest_length)
 			{
 				closest_length = diff;
-				closest_index = temp_solution->nb;
+				closest_index = heads->solutions[i]->nb;
 			}
 		}
-		temp_solution = temp_solution->next;
 	}
 	return (closest_index);
 }
@@ -82,52 +81,42 @@ static void	duplicate_path(t_data *data, t_paths *path)
 	data->solution->temp_previous = temp_path;
 }
 
-static void	store_paths_in_solution(t_heads *heads, t_data *data)
+/*
+** store_paths_in_solution:
+** -
+*/
+
+static void	store_paths_in_solution(
+	t_heads *heads,
+	t_data *data)
 {
 	t_paths	*temp_path;
 	int		i;
 
-	temp_path = heads->paths;
+	temp_path = NULL;
 	i = -1;
+	ft_printf("");
 	while (++i < MAX_SIZE)
 	{
 		if (data->solution->path_indexes[i] >= 0)
 		{
-			//ft_printf("Storing path %d\n", data->solution->path_indexes[i]);
-			temp_path = heads->paths;
-			while (temp_path)
-			{
-				if (temp_path->nb == data->solution->path_indexes[i])
-					duplicate_path(data, temp_path);
-				temp_path = temp_path->next;
-			}
-			//ft_printf("Stored successfully\n");
+			temp_path = get_path(heads, data->solution->path_indexes[i]);
+			duplicate_path(data, temp_path);
 		}
 		else
 			break ;
 	}
 }
 
-void	store_solution(t_heads *heads, t_data *data)
+void	store_solution(t_data *data, t_heads *heads)
 {
-	t_solutions	*temp_solution;
 	int			solution_index;
 
 	ft_printf("Storing solution\n");
 	solution_index = calculate_best_solution(heads, data);
 	if (solution_index < 0)
 		ft_printf_strerror("No solution found.");
-	temp_solution = heads->solutions;
-	if (!temp_solution)
-		ft_printf_strerror("No solution stored.");
-	while (temp_solution)
-	{
-		if (temp_solution->nb == solution_index)
-		{
-			data->solution = temp_solution;
-			store_paths_in_solution(heads, data);
-			break ;
-		}
-		temp_solution = temp_solution->next;
-	}
+	data->solution = heads->solutions[solution_index];
+	store_paths_in_solution(heads, data);
+	ft_printf("Finished storing\n");
 }

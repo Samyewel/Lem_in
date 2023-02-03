@@ -6,7 +6,7 @@
 #    By: swilliam <swilliam@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/11/05 13:26:33 by swilliam          #+#    #+#              #
-#    Updated: 2023/01/28 13:45:11 by swilliam         ###   ########.fr        #
+#    Updated: 2023/02/03 13:09:33 by swilliam         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,7 +19,7 @@ debug_printing.c \
 clean_data.c \
 room_creation.c room_utils.c \
 link_creation.c \
-path_creation.c \
+path_creation.c path_utils.c \
 solution_creation.c \
 dfs_stack.c best_solution.c \
 printer.c printing_utils.c \

@@ -6,7 +6,7 @@
 /*   By: swilliam <swilliam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/03 11:56:26 by swilliam          #+#    #+#             */
-/*   Updated: 2023/02/03 11:56:29 by swilliam         ###   ########.fr       */
+/*   Updated: 2023/02/03 15:23:15 by swilliam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,9 +25,9 @@
 // ROOMS: Prints all rooms and all relevant data.
 # define ROOMS 0
 // PATHS: Prints all paths found from start to end.
-# define PATHS 1
+# define PATHS 0
 // SOLUTIONS:
-# define SOLUTIONS 1
+# define SOLUTIONS 0
 // LEAKS: Prints a memory leak report.
 # define LEAKS 1
 
@@ -43,6 +43,7 @@ typedef struct data
 {
 	int					ant_count;
 	int					room_count;
+	int					path_count;
 	int					longest_path;
 	int					best_solution;
 	int					finished;
@@ -110,10 +111,11 @@ typedef struct ants
 
 typedef struct heads
 {
+	struct data			*data;
 	struct rooms		*rooms;
 	struct stack		*stack;
 	struct paths		*paths;
-	struct solutions	*solutions;
+	struct solutions	**solutions;
 	struct ants			*ants;
 }				t_heads;
 
@@ -138,12 +140,9 @@ typedef struct stack
 // Debugging:
 void		print_data(t_data *data);
 void		print_rooms(t_rooms **rooms);
-void		print_paths(t_paths **path_list);
-void		print_solutions(t_heads *heads);
-
-// Initialisation:
-t_data		*initialise_data(t_data *data);
-t_heads		*initialise_heads(t_heads *heads);
+void		print_paths(t_paths **path_list, int path_nb);
+void		print_path(t_paths *path);
+void		print_solutions(t_data *data, t_heads *heads);
 
 // Reading:
 void		read_input(t_data *data, t_heads *heads);
@@ -161,15 +160,15 @@ t_links		*store_link(t_rooms **rooms, char *link_a, char *link_b);
 // Paths:
 void		create_new_path(t_heads *heads, t_node *start_node);
 void		store_path_data(t_heads *heads, t_node *node);
+t_paths		*get_path(t_heads *heads, int path_nb);
 
 // Path calculation:
-void		calculate_flow(t_heads *heads, t_data *data);
-void		backtrack_rooms(t_heads *heads, t_data *data);
-void		backtrack_paths(t_heads *heads);
+void		backtrack_rooms(t_data *data, t_heads *heads);
+void		backtrack_paths(t_data *data, t_heads *heads);
 
 // Solutions
 t_solutions	*initialise_solution(t_paths *path);
-void		store_solution(t_heads *heads, t_data *data);
+void		store_solution(t_data *data, t_heads *heads);
 void		calculate_path_usage_times(t_data *data);
 
 // DFS

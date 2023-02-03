@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   solution_creation.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sam <sam@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: swilliam <swilliam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/27 15:09:20 by sam               #+#    #+#             */
-/*   Updated: 2023/02/01 14:49:07 by sam              ###   ########.fr       */
+/*   Updated: 2023/02/03 14:48:47 by swilliam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,8 +35,6 @@ t_solutions	*initialise_solution(t_paths *path)
 	new_solution->paths = NULL;
 	new_solution->total_length = (0 + path->length);
 	new_solution->next = NULL;
-	new_solution->previous = NULL;
 	new_solution->temp_previous = NULL;
-	//ft_printf("Returning solution\n");
 	return (new_solution);
 }
