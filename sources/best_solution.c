@@ -6,7 +6,7 @@
 /*   By: swilliam <swilliam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/28 13:05:45 by swilliam          #+#    #+#             */
-/*   Updated: 2023/02/03 15:26:37 by swilliam         ###   ########.fr       */
+/*   Updated: 2023/02/03 16:10:46 by swilliam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,4 +119,5 @@ void	store_solution(t_data *data, t_heads *heads)
 	data->solution = heads->solutions[solution_index];
 	store_paths_in_solution(heads, data);
 	ft_printf("Finished storing\n");
+	print_paths(&data->solution->paths);
 }

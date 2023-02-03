@@ -6,7 +6,7 @@
 /*   By: swilliam <swilliam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/07 16:16:16 by swilliam          #+#    #+#             */
-/*   Updated: 2023/02/03 15:27:54 by swilliam         ###   ########.fr       */
+/*   Updated: 2023/02/03 16:58:58 by swilliam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ static t_data	*initialise_data(t_data *data)
 	data->room_count = 0;
 	data->path_count = 0;
 	data->longest_path = 0;
+	data->line_count = 0;
 	data->best_solution = -1;
 	data->finished = 0;
 	data->ant_num = 0;
@@ -84,6 +85,7 @@ int	main(void)
 	calculate_path_usage_times(data);
 	ft_printf("Printing\n");
 	ant_mover(heads, data);
+	ft_printf("Line count = %d\n", data->line_count);
 	ft_printf("DONE\n");
 	if (DEBUG == true && LEAKS == true) // REMOVE BEFORE SUBMISSION
 		system("leaks lem-in");

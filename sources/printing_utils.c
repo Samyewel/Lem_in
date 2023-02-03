@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   printing_utils.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: egaliber <egaliber@student.42.fr>          +#+  +:+       +#+        */
+/*   By: swilliam <swilliam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/18 16:19:17 by egaliber          #+#    #+#             */
-/*   Updated: 2023/02/03 11:49:33 by egaliber         ###   ########.fr       */
+/*   Updated: 2023/02/03 16:58:34 by swilliam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ void	give_rest_paths(t_ants *ants, t_paths *paths, t_data *data)
 }
 
 void	first_move(t_ants *ants, t_paths *paths, t_data *data)
-{	
+{
 	while (data->counter < data->solution->path_count \
 			&& ants->has_moved == false && ants->has_finished == false)
 	{
@@ -65,6 +65,7 @@ void	move_played(t_ants *ants, t_data *data, t_heads *heads)
 			{
 				ants = heads->ants;
 				ft_printf("\n");
+				data->line_count++;
 			}
 		}
 		else if (ants->ant_number == data->ant_count)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   printer.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: egaliber <egaliber@student.42.fr>          +#+  +:+       +#+        */
+/*   By: swilliam <swilliam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/18 16:16:43 by egaliber          #+#    #+#             */
-/*   Updated: 2023/01/31 15:55:05 by egaliber         ###   ########.fr       */
+/*   Updated: 2023/02/03 16:58:15 by swilliam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@ void	printer(t_heads *heads, t_data *data)
 		paths = data->solution->paths;
 		first_move(ants, paths, data);
 		ft_printf("\n");
+		data->line_count++;
 		if (heads->ants->has_moved == true)
 		{
 			ants = heads->ants;

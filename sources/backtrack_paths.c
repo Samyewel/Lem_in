@@ -6,7 +6,7 @@
 /*   By: swilliam <swilliam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/26 17:00:15 by sam               #+#    #+#             */
-/*   Updated: 2023/02/03 15:24:29 by swilliam         ###   ########.fr       */
+/*   Updated: 2023/02/03 17:00:42 by swilliam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,7 +96,7 @@ t_solutions *solution)
 ** -
 */
 
-static void	check_intersections(t_heads *heads, t_solutions *solution)
+static void	check_intersections(t_heads *heads, t_solutions *solution, int nb)
 {
 	t_paths	*temp_path;
 	t_rooms	*temp_node;
@@ -107,7 +107,7 @@ static void	check_intersections(t_heads *heads, t_solutions *solution)
 	{
 		add = false;
 		temp_node = temp_path->path;
-		while (temp_node && solution->nb != temp_path->nb)
+		while (temp_node && nb != temp_path->nb)
 		{
 			if (temp_node->is_room)
 			{
@@ -144,9 +144,10 @@ void	backtrack_paths(t_data *data, t_heads *heads)
 	while (temp_path)
 	{
 		heads->solutions[i] = create_solution(heads, temp_path, i);
-		check_intersections(heads, heads->solutions[i]);
+		check_intersections(heads, heads->solutions[i], temp_path->nb);
+		if (heads->solutions[i]->path_count > 1)
+			sort_solution_array(heads, heads->solutions[i]->path_indexes);
 		temp_path = temp_path->next;
 		i++;
 	}
-	print_solutions(data, heads);
 }

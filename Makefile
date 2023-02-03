@@ -6,7 +6,7 @@
 #    By: swilliam <swilliam@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/11/05 13:26:33 by swilliam          #+#    #+#              #
-#    Updated: 2023/02/03 13:09:33 by swilliam         ###   ########.fr        #
+#    Updated: 2023/02/03 17:02:04 by swilliam         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,7 +20,7 @@ clean_data.c \
 room_creation.c room_utils.c \
 link_creation.c \
 path_creation.c path_utils.c \
-solution_creation.c \
+solution_creation.c solution_utils.c \
 dfs_stack.c best_solution.c \
 printer.c printing_utils.c \
 ant_creation.c
@@ -78,21 +78,21 @@ fclean: 	clean
 re:			fclean all
 
 test0:		all
-			@$(TEST_CMD)0.map
+			@time $(TEST_CMD)0.map
 
 test1:		all
-			@$(TEST_CMD)1.map
+			@time $(TEST_CMD)1.map
 
 test2:		all
-			@$(TEST_CMD)2.map
+			@time $(TEST_CMD)2.map
 
 test3:		all
-			@$(TEST_CMD)3.map
+			@time $(TEST_CMD)3.map
 
 test4:		all
-			@$(TEST_CMD)4.map
+			@time $(TEST_CMD)4.map
 
 test5:		all
-			@$(TEST_CMD)5.map
+			@time $(TEST_CMD)5.map
 
 .PHONY: all clean fclean re

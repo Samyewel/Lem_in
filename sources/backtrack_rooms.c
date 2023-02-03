@@ -6,7 +6,7 @@
 /*   By: swilliam <swilliam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/08 17:28:33 by swilliam          #+#    #+#             */
-/*   Updated: 2023/02/03 15:24:15 by swilliam         ###   ########.fr       */
+/*   Updated: 2023/02/03 16:11:07 by swilliam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,5 +108,5 @@ void	backtrack_rooms(t_data *data, t_heads *heads)
 	free(visited);
 	if (heads->paths == NULL)
 		ft_printf_strerror("No paths found.");
-	print_paths(&heads->paths, -1);
+	//print_paths(&heads->paths);
 }

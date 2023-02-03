@@ -6,7 +6,7 @@
 /*   By: swilliam <swilliam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/03 11:56:26 by swilliam          #+#    #+#             */
-/*   Updated: 2023/02/03 15:23:15 by swilliam         ###   ########.fr       */
+/*   Updated: 2023/02/03 16:57:50 by swilliam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,9 +25,9 @@
 // ROOMS: Prints all rooms and all relevant data.
 # define ROOMS 0
 // PATHS: Prints all paths found from start to end.
-# define PATHS 0
+# define PATHS 1
 // SOLUTIONS:
-# define SOLUTIONS 0
+# define SOLUTIONS 1
 // LEAKS: Prints a memory leak report.
 # define LEAKS 1
 
@@ -45,6 +45,7 @@ typedef struct data
 	int					room_count;
 	int					path_count;
 	int					longest_path;
+	int					line_count;
 	int					best_solution;
 	int					finished;
 	int					ant_num;
@@ -140,9 +141,9 @@ typedef struct stack
 // Debugging:
 void		print_data(t_data *data);
 void		print_rooms(t_rooms **rooms);
-void		print_paths(t_paths **path_list, int path_nb);
+void		print_paths(t_paths **path_list);
 void		print_path(t_paths *path);
-void		print_solutions(t_data *data, t_heads *heads);
+void		print_solution(t_solutions *solution);
 
 // Reading:
 void		read_input(t_data *data, t_heads *heads);
@@ -170,6 +171,7 @@ void		backtrack_paths(t_data *data, t_heads *heads);
 t_solutions	*initialise_solution(t_paths *path);
 void		store_solution(t_data *data, t_heads *heads);
 void		calculate_path_usage_times(t_data *data);
+void		sort_solution_array(t_heads *heads, int *array);
 
 // DFS
 void		push(t_stack *stack, t_rooms *room);

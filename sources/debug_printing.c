@@ -6,7 +6,7 @@
 /*   By: swilliam <swilliam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/16 16:29:43 by swilliam          #+#    #+#             */
-/*   Updated: 2023/02/03 15:23:32 by swilliam         ###   ########.fr       */
+/*   Updated: 2023/02/03 16:37:00 by swilliam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ void	print_path(t_paths *path)
 	}
 }
 
-void	print_paths(t_paths **path_list, int path_nb)
+void	print_paths(t_paths **path_list)
 {
 	t_paths	*temp_path;
 
@@ -84,42 +84,27 @@ void	print_paths(t_paths **path_list, int path_nb)
 	{
 		while (temp_path)
 		{
-			if (path_nb > 0)
-			{
-				if (temp_path->nb == path_nb)
-				{
-					print_path(temp_path);
-					return ;
-				}
-			}
-			else
-				print_path(temp_path);
+			print_path(temp_path);
 			temp_path = temp_path->next;
 		}
 	}
 }
 
-void	print_solutions(t_data *data, t_heads *heads)
+void	print_solution(t_solutions *solution)
 {
 	int	i;
-	int	x;
 
 	i = -1;
-	x = -1;
 	if (DEBUG == true && SOLUTIONS == true)
 	{
-		while (++i < data->path_count)
+		ft_printf("Solution[%d], length: %d, Paths:\n", \
+			solution->nb, solution->total_length);
+		while (++i < MAX_SIZE)
 		{
-			x = -1;
-			ft_printf("Solution[%d], length: %d, Paths:\n", \
-			heads->solutions[i]->nb, heads->solutions[i]->total_length);
-			while (++x < MAX_SIZE)
-			{
-				if (heads->solutions[i]->path_indexes[x] >= 0)
-					ft_printf("%d ", heads->solutions[i]->path_indexes[x]);
-				else
-					break ;
-			}
+			if (solution->path_indexes[i] >= 0)
+				ft_printf("%d ", solution->path_indexes[i]);
+			else
+				break ;
 			ft_printf("\n");
 		}
 	}
