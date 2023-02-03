@@ -6,7 +6,7 @@
 /*   By: egaliber <egaliber@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/18 16:19:17 by egaliber          #+#    #+#             */
-/*   Updated: 2023/02/03 11:43:17 by egaliber         ###   ########.fr       */
+/*   Updated: 2023/02/03 11:49:33 by egaliber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,6 @@ void	move_ants_already_in_play(t_ants *ants)
 		write(1, "-", 1);
 		ft_putstr(ants->room_location);
 		write(1, " ", 1);
-		
 	}
 }
 
