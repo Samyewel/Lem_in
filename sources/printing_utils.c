@@ -6,7 +6,7 @@
 /*   By: egaliber <egaliber@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/18 16:19:17 by egaliber          #+#    #+#             */
-/*   Updated: 2023/02/02 18:02:45 by egaliber         ###   ########.fr       */
+/*   Updated: 2023/02/03 11:43:17 by egaliber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,7 @@ void	move_ants_already_in_play(t_ants *ants)
 		write(1, "L", 1);
 		ft_putnbr(ants->ant_number);
 		write(1, "-", 1);
-		ft_putstr(ants->room_rocation);
+		ft_putstr(ants->room_location);
 		write(1, " ", 1);
 		
 	}
@@ -100,7 +100,7 @@ void	send_ants(t_ants *ants, t_data *data, t_paths *paths)
 	write(1, "L", 1);
 	ft_putnbr(ants->ant_number);
 	write(1, "-", 1);
-	ft_putstr(ants->room_rocation);
+	ft_putstr(ants->room_location);
 	write(1, " ", 1);
 	ants->has_moved = true;
 	paths->temp--;
