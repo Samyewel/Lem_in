@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   read_input.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sam <sam@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: swilliam <swilliam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/16 14:13:08 by swilliam          #+#    #+#             */
-/*   Updated: 2023/01/25 16:36:01 by sam              ###   ########.fr       */
+/*   Updated: 2023/02/03 17:09:06 by swilliam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -139,8 +139,8 @@ void	read_input(t_data *data, t_heads *heads)
 	line_n = 0;
 	while (get_next_line(0, &line))
 	{
-		if (DEBUG == true && INPUT == true)
-			ft_printf("%s\n", line);
+		//if (DEBUG == true && INPUT == true)
+		ft_printf("%s\n", line);
 		read_ants(data, line, line_n);
 		read_comments(data, line, line_n);
 		read_rooms(data, heads, line, line_n);

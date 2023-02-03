@@ -6,7 +6,7 @@
 /*   By: swilliam <swilliam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/27 15:09:20 by sam               #+#    #+#             */
-/*   Updated: 2023/02/03 14:48:47 by swilliam         ###   ########.fr       */
+/*   Updated: 2023/02/03 18:38:54 by swilliam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,4 +37,19 @@ t_solutions	*initialise_solution(t_paths *path)
 	new_solution->next = NULL;
 	new_solution->temp_previous = NULL;
 	return (new_solution);
+}
+
+t_solutions	**initialise_solutions(t_data *data)
+{
+	t_solutions	**solutions_index;
+
+	solutions_index = NULL;
+	if (data->ant_count == 1)
+		solutions_index = (t_solutions **)malloc(sizeof(t_solutions *) * 1);
+	else
+		solutions_index = \
+			(t_solutions **)malloc(sizeof(t_solutions *) * data->path_count);
+	if (!solutions_index)
+		return (NULL);
+	return (solutions_index);
 }

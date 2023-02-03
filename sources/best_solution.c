@@ -6,7 +6,7 @@
 /*   By: swilliam <swilliam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/28 13:05:45 by swilliam          #+#    #+#             */
-/*   Updated: 2023/02/03 16:10:46 by swilliam         ###   ########.fr       */
+/*   Updated: 2023/02/03 18:21:03 by swilliam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,8 @@ static int	calculate_best_solution(t_heads *heads, t_data *data)
 	closest_length = INT_MAX;
 	closest_index = 0;
 	i = -1;
+	if (data->ant_count == 1)
+		return (closest_index);
 	while (++i < data->path_count)
 	{
 		if (heads->solutions[i]->total_length <= data->ant_count)
@@ -95,7 +97,6 @@ static void	store_paths_in_solution(
 
 	temp_path = NULL;
 	i = -1;
-	ft_printf("");
 	while (++i < MAX_SIZE)
 	{
 		if (data->solution->path_indexes[i] >= 0)

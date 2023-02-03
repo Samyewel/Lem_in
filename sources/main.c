@@ -6,7 +6,7 @@
 /*   By: swilliam <swilliam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/07 16:16:16 by swilliam          #+#    #+#             */
-/*   Updated: 2023/02/03 16:58:58 by swilliam         ###   ########.fr       */
+/*   Updated: 2023/02/03 18:35:33 by swilliam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,8 +75,7 @@ int	main(void)
 	if (!data || !heads)
 		ft_printf_strerror("Memory allocation failure in main.");
 	read_input(data, heads);
-	if (DEBUG == true && ROOMS == true)
-		print_rooms(&heads->rooms);
+	print_rooms(&heads->rooms);
 	print_data(data);
 	backtrack_rooms(data, heads);
 	backtrack_paths(data, heads);
@@ -86,7 +85,6 @@ int	main(void)
 	ft_printf("Printing\n");
 	ant_mover(heads, data);
 	ft_printf("Line count = %d\n", data->line_count);
-	ft_printf("DONE\n");
 	if (DEBUG == true && LEAKS == true) // REMOVE BEFORE SUBMISSION
 		system("leaks lem-in");
 		//system("leaks lem-in | grep 'leaks for'");

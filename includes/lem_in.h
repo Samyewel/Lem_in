@@ -6,7 +6,7 @@
 /*   By: swilliam <swilliam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/03 11:56:26 by swilliam          #+#    #+#             */
-/*   Updated: 2023/02/03 16:57:50 by swilliam         ###   ########.fr       */
+/*   Updated: 2023/02/03 18:38:48 by swilliam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -166,12 +166,14 @@ t_paths		*get_path(t_heads *heads, int path_nb);
 // Path calculation:
 void		backtrack_rooms(t_data *data, t_heads *heads);
 void		backtrack_paths(t_data *data, t_heads *heads);
+t_paths		*find_shortest_path(t_heads *heads);
 
 // Solutions
 t_solutions	*initialise_solution(t_paths *path);
 void		store_solution(t_data *data, t_heads *heads);
 void		calculate_path_usage_times(t_data *data);
 void		sort_solution_array(t_heads *heads, int *array);
+t_solutions	**initialise_solutions(t_data *data);
 
 // DFS
 void		push(t_stack *stack, t_rooms *room);

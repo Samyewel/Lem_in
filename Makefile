@@ -6,7 +6,7 @@
 #    By: swilliam <swilliam@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/11/05 13:26:33 by swilliam          #+#    #+#              #
-#    Updated: 2023/02/03 17:02:04 by swilliam         ###   ########.fr        #
+#    Updated: 2023/02/03 18:14:49 by swilliam         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -76,6 +76,26 @@ fclean: 	clean
 			@printf "\rAll created files removed.\n"
 
 re:			fclean all
+
+f1:			all
+			@./resources/generator --flow-one > ./resources/flow1.map
+			@time ./lem-in < ./resources/flow1.map
+
+f10:		all
+			@./resources/generator --flow-ten > ./resources/flow10.map
+			@time ./lem-in < ./resources/flow10.map
+
+f1000:		all
+			@./resources/generator --flow-thousand > ./resources/flow1000.map
+			@time ./lem-in < ./resources/flow1000.map
+
+big:		all
+			@./resources/generator --big > ./resources/big.map
+			@time ./lem-in < ./resources/big.map
+
+super:		all
+			@./resources/generator --big-superposition > ./resources/big-superposition.map
+			@time ./lem-in < ./resources/big-superposition.map
 
 test0:		all
 			@time $(TEST_CMD)0.map

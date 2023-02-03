@@ -6,7 +6,7 @@
 /*   By: swilliam <swilliam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/16 16:29:43 by swilliam          #+#    #+#             */
-/*   Updated: 2023/02/03 16:37:00 by swilliam         ###   ########.fr       */
+/*   Updated: 2023/02/03 18:25:25 by swilliam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ void	print_path(t_paths *path)
 	temp_node = path->path;
 	if (DEBUG == true && PATHS == true)
 	{
-		ft_printf("Path[%d]: ", path->nb);
+		ft_printf("Path %d [%d] ", path->nb, path->length);
 		while (temp_node)
 		{
 			if (temp_node->end)
@@ -105,7 +105,7 @@ void	print_solution(t_solutions *solution)
 				ft_printf("%d ", solution->path_indexes[i]);
 			else
 				break ;
-			ft_printf("\n");
 		}
+		ft_printf("\n");
 	}
 }

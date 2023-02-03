@@ -6,12 +6,11 @@
 /*   By: swilliam <swilliam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/18 16:19:17 by egaliber          #+#    #+#             */
-/*   Updated: 2023/02/03 16:58:34 by swilliam         ###   ########.fr       */
+/*   Updated: 2023/02/03 17:33:45 by swilliam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lem_in.h"
-//#include "includes/lem_in.h"
 
 void	give_rest_paths(t_ants *ants, t_paths *paths, t_data *data)
 {

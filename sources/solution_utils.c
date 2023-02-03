@@ -6,16 +6,35 @@
 /*   By: swilliam <swilliam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/03 16:17:07 by swilliam          #+#    #+#             */
-/*   Updated: 2023/02/03 16:55:19 by swilliam         ###   ########.fr       */
+/*   Updated: 2023/02/03 18:34:43 by swilliam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lem_in.h"
 
+t_paths	*find_shortest_path(t_heads *heads)
+{
+	t_paths	*temp_path;
+	t_paths	*shortest_path;
+	int		shortest_length;
+
+	temp_path = heads->paths;
+	shortest_length = INT_MAX;
+	shortest_path = 0;
+	while (temp_path)
+	{
+		if (temp_path->length < shortest_length)
+		{
+			shortest_length = temp_path->length;
+			shortest_path = temp_path;
+		}
+		temp_path = temp_path->next;
+	}
+	return (shortest_path);
+}
+
 void	sort_solution_array(t_heads *heads, int *array)
 {
-	t_paths *path1;
-	t_paths *path2;
 	int		i;
 	int		temp;
 	bool	swapped;
@@ -28,9 +47,8 @@ void	sort_solution_array(t_heads *heads, int *array)
 		if (array[i] < 0)
 			break ;
 		swapped = 0;
-		path1 = get_path(heads, array[i - 1]);
-		path2 = get_path(heads, array[i]);
-		if (get_path(heads, array[i])->length < get_path(heads, array[i - 1])->length && i > 0)
+		if (get_path(heads, array[i])->length < \
+				get_path(heads, array[i - 1])->length && i > 0)
 		{
 			temp = array[i];
 			array[i] = array[i - 1];

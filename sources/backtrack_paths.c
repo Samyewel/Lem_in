@@ -6,7 +6,7 @@
 /*   By: swilliam <swilliam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/26 17:00:15 by sam               #+#    #+#             */
-/*   Updated: 2023/02/03 17:00:42 by swilliam         ###   ########.fr       */
+/*   Updated: 2023/02/03 18:39:03 by swilliam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -134,20 +134,26 @@ void	backtrack_paths(t_data *data, t_heads *heads)
 	t_paths		*temp_path;
 	int			i;
 
-	ft_printf("backtracking paths\n");
-	heads->solutions = \
-			(t_solutions **)malloc(sizeof(t_solutions *) * data->path_count);
+	i = 0;
+	heads->solutions = initialise_solutions(data);
 	if (!heads->solutions)
 		ft_printf_strerror("Memory allocation failure in backtrack_paths.");
-	i = 0;
-	temp_path = heads->paths;
-	while (temp_path)
+	if (data->ant_count == 1)
 	{
-		heads->solutions[i] = create_solution(heads, temp_path, i);
-		check_intersections(heads, heads->solutions[i], temp_path->nb);
-		if (heads->solutions[i]->path_count > 1)
-			sort_solution_array(heads, heads->solutions[i]->path_indexes);
-		temp_path = temp_path->next;
-		i++;
+		temp_path = find_shortest_path(heads);
+		heads->solutions[0] = create_solution(heads, temp_path, 0);
+	}
+	else
+	{
+		temp_path = heads->paths;
+		while (temp_path)
+		{
+			heads->solutions[i] = create_solution(heads, temp_path, i);
+			check_intersections(heads, heads->solutions[i], temp_path->nb);
+			if (heads->solutions[i]->path_count > 1)
+				sort_solution_array(heads, heads->solutions[i]->path_indexes);
+			temp_path = temp_path->next;
+			i++;
+		}
 	}
 }
