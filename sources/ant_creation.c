@@ -6,7 +6,7 @@
 /*   By: egaliber <egaliber@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/05 14:29:46 by egaliber          #+#    #+#             */
-/*   Updated: 2023/02/03 12:41:12 by egaliber         ###   ########.fr       */
+/*   Updated: 2023/02/03 13:02:27 by egaliber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,8 +58,9 @@ void	calculate_path_usage_times(t_data *data)
 	t_paths	*temp;
 	t_paths	*paths;
 	int		remain;
+
 	paths = data->solution->paths;
-	while(paths)
+	while (paths)
 	{
 		paths = paths->next;
 	}
@@ -85,6 +86,7 @@ void	calculate_path_usage_times(t_data *data)
 	else
 		data->solution->paths->usage_times = data->ant_count;
 }
+
 void	init_ants(t_ants *new)
 {
 	new->ant_number = 0;
