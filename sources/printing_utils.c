@@ -6,7 +6,7 @@
 /*   By: egaliber <egaliber@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/18 16:19:17 by egaliber          #+#    #+#             */
-/*   Updated: 2023/01/31 16:00:24 by egaliber         ###   ########.fr       */
+/*   Updated: 2023/02/02 18:02:45 by egaliber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,13 @@ void	move_ants_already_in_play(t_ants *ants)
 	{
 		ants->room_location = ants->room->name;
 		ants->room = ants->room->next;
-		ft_printf("L%d-%s ", ants->ant_number, ants->room_location);
+		//ft_printf("L%d-%s ", ants->ant_number, ants->room_location);
+		write(1, "L", 1);
+		ft_putnbr(ants->ant_number);
+		write(1, "-", 1);
+		ft_putstr(ants->room_rocation);
+		write(1, " ", 1);
+		
 	}
 }
 
@@ -90,7 +96,12 @@ void	send_ants(t_ants *ants, t_data *data, t_paths *paths)
 		ft_printf("");
 	ants->room_location = ants->room->name;
 	ants->room = ants->room->next;
-	ft_printf("L%d-%s ", ants->ant_number, ants->room_location);
+	//ft_printf("L%d-%s ", ants->ant_number, ants->room_location);
+	write(1, "L", 1);
+	ft_putnbr(ants->ant_number);
+	write(1, "-", 1);
+	ft_putstr(ants->room_rocation);
+	write(1, " ", 1);
 	ants->has_moved = true;
 	paths->temp--;
 }

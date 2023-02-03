@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   best_solution.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sam <sam@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: egaliber <egaliber@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/28 13:05:45 by swilliam          #+#    #+#             */
-/*   Updated: 2023/02/01 14:52:55 by sam              ###   ########.fr       */
+/*   Updated: 2023/02/02 17:29:53 by egaliber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,7 +93,7 @@ static void	store_paths_in_solution(t_heads *heads, t_data *data)
 	{
 		if (data->solution->path_indexes[i] >= 0)
 		{
-			ft_printf("Storing path %d\n", data->solution->path_indexes[i]);
+			//ft_printf("Storing path %d\n", data->solution->path_indexes[i]);
 			temp_path = heads->paths;
 			while (temp_path)
 			{
@@ -101,7 +101,7 @@ static void	store_paths_in_solution(t_heads *heads, t_data *data)
 					duplicate_path(data, temp_path);
 				temp_path = temp_path->next;
 			}
-			ft_printf("Stored successfully\n");
+			//ft_printf("Stored successfully\n");
 		}
 		else
 			break ;
