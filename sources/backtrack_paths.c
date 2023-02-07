@@ -6,7 +6,7 @@
 /*   By: swilliam <swilliam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/26 17:00:15 by sam               #+#    #+#             */
-/*   Updated: 2023/02/07 12:54:08 by swilliam         ###   ########.fr       */
+/*   Updated: 2023/02/07 16:49:51 by swilliam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,7 +103,6 @@ static void	check_intersections(t_heads *heads, t_solutions *solution, int nb)
 	bool	add;
 
 	i = -1;
-	ft_printf("Checking intersections...\n");
 	while (++i < MAX_SIZE)
 	{
 		if (heads->path_array[i] == NULL)
@@ -134,7 +133,7 @@ void	backtrack_paths(t_data *data, t_heads *heads)
 {
 	int	i;
 
-	i = 0;
+	i = -1;
 	ft_printf("Backtracking paths...\n");
 	heads->solutions = initialise_solutions(data);
 	if (!heads->solutions)
@@ -145,6 +144,8 @@ void	backtrack_paths(t_data *data, t_heads *heads)
 	{
 		while (++i < MAX_SIZE)
 		{
+			if (heads->path_array[i] == NULL)
+				break ;
 			heads->solutions[i] = create_solution(heads, heads->path_array[i], i);
 			check_intersections(heads, heads->solutions[i], heads->path_array[i]->nb);
 			if (heads->solutions[i]->path_count > 1)

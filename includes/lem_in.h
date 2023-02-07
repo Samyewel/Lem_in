@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lem_in.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sam <sam@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: swilliam <swilliam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/03 11:56:26 by swilliam          #+#    #+#             */
-/*   Updated: 2023/02/06 15:18:48 by sam              ###   ########.fr       */
+/*   Updated: 2023/02/07 17:11:04 by swilliam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,13 +23,13 @@
 // EXTRA: Prints the contents of the data struct.
 # define DATA 0
 // ROOMS: Prints all rooms and all relevant data.
-# define ROOMS 1
+# define ROOMS 0
 // PATHS: Prints all paths found from start to end.
-# define PATHS 1
+# define PATHS 0
 // SOLUTIONS:
-# define SOLUTIONS 1
+# define SOLUTIONS 0
 // LEAKS: Prints a memory leak report.
-# define LEAKS 1
+# define LEAKS 0
 
 # include "ft_printf.h"
 # include "get_next_line.h"
@@ -37,7 +37,7 @@
 # include <stdbool.h>
 
 # define INT_MAX 2147483647
-# define MAX_SIZE 1024
+# define MAX_SIZE 30000
 
 typedef struct data
 {
@@ -181,8 +181,9 @@ t_rooms		**room_list_to_array(t_heads *heads);
 t_paths		**path_list_to_array(t_heads *heads);
 
 // Data cleaning:
-void		clean_path_nodes(t_rooms **nodes);
-void		clean_paths(t_heads *heads);
+void		clean_lem_in(t_data *data, t_heads *heads, char *str);
+void		clean_path_list(t_heads *heads);
+void		clean_path_array(t_heads *heads);
 
 // Printer
 void		ant_mover(t_heads *heads, t_data *data);

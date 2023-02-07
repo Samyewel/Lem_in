@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   room_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sam <sam@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: swilliam <swilliam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/21 13:53:38 by swilliam          #+#    #+#             */
-/*   Updated: 2023/02/06 14:20:19 by sam              ###   ########.fr       */
+/*   Updated: 2023/02/07 16:41:16 by swilliam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ int	find_start_room(t_heads *heads)
 ** - Points to the room that is identified as the end.
 */
 
-int		find_end_room(t_heads *heads)
+int	find_end_room(t_heads *heads)
 {
 	int		i;
 
@@ -69,14 +69,14 @@ t_rooms	*find_room(t_rooms **rooms, int room_id)
 ** -
 */
 
-t_rooms *find_room_name(t_rooms **rooms, char *name)
+t_rooms	*find_room_name(t_rooms **rooms, char *name)
 {
-	t_rooms *temp_room;
+	t_rooms	*temp_room;
 
 	temp_room = *rooms;
 	while (temp_room)
 	{
-		if (ft_strcmp(temp_room->name, name) == 0)
+		if (ft_strequ(name, temp_room->name))
 			return (temp_room);
 		temp_room = temp_room->next;
 	}

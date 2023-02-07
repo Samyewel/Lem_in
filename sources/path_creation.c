@@ -6,7 +6,7 @@
 /*   By: swilliam <swilliam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/21 17:09:45 by swilliam          #+#    #+#             */
-/*   Updated: 2023/02/07 12:49:53 by swilliam         ###   ########.fr       */
+/*   Updated: 2023/02/07 16:58:09 by swilliam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,7 +95,6 @@ void	create_new_path(t_heads *heads, t_node *start_node)
 		if (!temp_paths->next)
 			ft_printf_strerror("Memory allocation failure in create_new_path");
 	}
-	//print_paths(heads);
 }
 
 /*
@@ -119,9 +118,9 @@ void	store_path_data(t_heads *heads, t_node *node)
 			{
 				if (temp_path->path[i]->end == false)
 				{
-					temp_path->path[i + 1] = create_path_node(heads->room_array[node->id], temp_path->path[i]);
+					temp_path->path[i + 1] = create_path_node \
+						(heads->room_array[node->id], temp_path->path[i]);
 					temp_path->length++;
-					ft_printf("Stored %s onto path %d\n", temp_path->path[i + 1]->name, temp_path->nb);
 					return ;
 				}
 				else
@@ -130,5 +129,4 @@ void	store_path_data(t_heads *heads, t_node *node)
 			}
 		}
 	}
-	return ;
 }

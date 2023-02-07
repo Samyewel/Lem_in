@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   debug_printing.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sam <sam@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: swilliam <swilliam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/16 16:29:43 by swilliam          #+#    #+#             */
-/*   Updated: 2023/02/06 15:19:50 by sam              ###   ########.fr       */
+/*   Updated: 2023/02/07 16:45:09 by swilliam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,15 +44,20 @@ void	print_rooms(t_heads *heads)
 		{
 			if (heads->room_array[i] == NULL)
 				break ;
-			ft_printf("Name: %s\n", heads->room_array[i]->name);
+			ft_printf("[%d]: %s\n", heads->room_array[i]->id, heads->room_array[i]->name);
 			ft_printf("x: %d\ny: %d\n", heads->room_array[i]->coord_x, heads->room_array[i]->coord_y);
 			ft_printf("Start? %d\nEnd? %d\n", heads->room_array[i]->start, heads->room_array[i]->end);
 			x = -1;
+			ft_printf("Links:\n");
 			while (++x < MAX_SIZE)
 			{
 				if (heads->room_array[i]->links[x] == NULL)
 					break ;
-				ft_printf("Links to: %s\n", heads->room_array[i]->links[x]->name);
+				ft_printf("%s", heads->room_array[i]->links[x]->name);
+				if (heads->room_array[i]->links[x + 1] == NULL)
+					ft_printf("\n");
+				else
+					ft_printf(", ");
 			}
 			ft_printf("\n");
 		}

@@ -6,7 +6,7 @@
 /*   By: swilliam <swilliam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/07 16:16:16 by swilliam          #+#    #+#             */
-/*   Updated: 2023/02/07 12:53:47 by swilliam         ###   ########.fr       */
+/*   Updated: 2023/02/07 17:08:40 by swilliam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,25 +78,21 @@ int	main(void)
 		ft_printf_strerror("Memory allocation failure in main.");
 	read_input(data, heads);
 	print_data(data);
-	heads->room_array =	room_list_to_array(heads);
+	heads->room_array = room_list_to_array(heads);
+	if (!heads->room_array)
+		ft_printf_strerror("Memory allocation failure in main");
 	backtrack_rooms(data, heads);
 	heads->path_array = path_list_to_array(heads);
 	if (!heads->path_array)
-		ft_printf_strerror("Memory allocation failure in \
-		path_list_to_array");
+		ft_printf_strerror("Memory allocation failure in main");
 	backtrack_paths(data, heads);
-	print_rooms(heads);
-	ft_printf("Storing solution...\n");
 	store_solution(data, heads);
-	ft_printf("Calculating usage time...\n");
 	calculate_path_usage_times(data);
-	ft_printf("Printing...\n");
 	ant_mover(heads, data);
 	ft_printf("\nLine count = %d\n", data->line_count);
+	clean_path_list(heads);
 	if (DEBUG == true && LEAKS == true) // REMOVE BEFORE SUBMISSION
 		system("leaks lem-in");
-		//system("leaks lem-in | grep 'leaks for'");
-	clean_paths(heads);
 	exit(EXIT_SUCCESS);
 	return (0);
 }

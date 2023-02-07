@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   best_solution.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sam <sam@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: swilliam <swilliam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/28 13:05:45 by swilliam          #+#    #+#             */
-/*   Updated: 2023/02/06 15:22:37 by sam              ###   ########.fr       */
+/*   Updated: 2023/02/07 16:51:04 by swilliam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,12 +113,10 @@ void	store_solution(t_data *data, t_heads *heads)
 {
 	int			solution_index;
 
-	ft_printf("Storing solution\n");
+	ft_printf("Calculating solution...\n");
 	solution_index = calculate_best_solution(heads, data);
 	if (solution_index < 0)
 		ft_printf_strerror("No solution found.");
 	data->solution = heads->solutions[solution_index];
 	store_paths_in_solution(heads, data);
-	ft_printf("Finished storing\n");
-	print_paths(heads);
 }
