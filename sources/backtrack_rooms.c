@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   backtrack_rooms.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sam <sam@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: swilliam <swilliam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/08 17:28:33 by swilliam          #+#    #+#             */
-/*   Updated: 2023/02/06 15:15:34 by sam              ###   ########.fr       */
+/*   Updated: 2023/02/07 12:51:23 by swilliam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,6 @@ static bool	is_visited(bool *visited, t_rooms *room)
 
 static void	store_stack_reverse(t_heads *heads, t_node *current)
 {
-	ft_printf("Storing path...\n");
 	if (!current)
 		return ;
 	store_stack_reverse(heads, current->next);
@@ -59,7 +58,6 @@ int current_room)
 {
 	int		i;
 
-	ft_printf("tracing path %s\n", heads->room_array[current_room]->name);
 	i = -1;
 	push(heads->stack, heads->room_array[current_room]);
 	visited[heads->room_array[current_room]->id] = true;
@@ -105,5 +103,5 @@ void	backtrack_rooms(t_data *data, t_heads *heads)
 	free(visited);
 	if (heads->paths == NULL)
 		ft_printf_strerror("No paths found.");
-	print_paths(heads);
+	//print_paths(heads);
 }

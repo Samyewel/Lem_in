@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   backtrack_paths.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sam <sam@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: swilliam <swilliam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/26 17:00:15 by sam               #+#    #+#             */
-/*   Updated: 2023/02/06 15:11:09 by sam              ###   ########.fr       */
+/*   Updated: 2023/02/07 12:54:08 by swilliam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,6 +103,7 @@ static void	check_intersections(t_heads *heads, t_solutions *solution, int nb)
 	bool	add;
 
 	i = -1;
+	ft_printf("Checking intersections...\n");
 	while (++i < MAX_SIZE)
 	{
 		if (heads->path_array[i] == NULL)
@@ -131,9 +132,10 @@ static void	check_intersections(t_heads *heads, t_solutions *solution, int nb)
 
 void	backtrack_paths(t_data *data, t_heads *heads)
 {
-	int			i;
+	int	i;
 
 	i = 0;
+	ft_printf("Backtracking paths...\n");
 	heads->solutions = initialise_solutions(data);
 	if (!heads->solutions)
 		ft_printf_strerror("Memory allocation failure in backtrack_paths.");

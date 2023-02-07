@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sam <sam@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: swilliam <swilliam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/07 16:16:16 by swilliam          #+#    #+#             */
-/*   Updated: 2023/02/06 15:26:28 by sam              ###   ########.fr       */
+/*   Updated: 2023/02/07 12:53:47 by swilliam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ static t_data	*initialise_data(t_data *data)
 {
 	data = (t_data *)malloc(sizeof(t_data));
 	if (!data)
-		ft_printf_strerror("Memory allocation failure in initialise_data");
+		return (NULL);
 	data->ant_count = 0;
 	data->room_count = 0;
 	data->path_count = 0;
@@ -86,10 +86,11 @@ int	main(void)
 		path_list_to_array");
 	backtrack_paths(data, heads);
 	print_rooms(heads);
+	ft_printf("Storing solution...\n");
 	store_solution(data, heads);
-	ft_printf("Calculating usage time\n");
+	ft_printf("Calculating usage time...\n");
 	calculate_path_usage_times(data);
-	ft_printf("Printing\n");
+	ft_printf("Printing...\n");
 	ant_mover(heads, data);
 	ft_printf("\nLine count = %d\n", data->line_count);
 	if (DEBUG == true && LEAKS == true) // REMOVE BEFORE SUBMISSION
