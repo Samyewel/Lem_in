@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   path_creation.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: swilliam <swilliam@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sam <sam@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/21 17:09:45 by swilliam          #+#    #+#             */
-/*   Updated: 2023/02/03 14:30:38 by swilliam         ###   ########.fr       */
+/*   Updated: 2023/02/06 15:52:56 by sam              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ static t_rooms	*create_path_node(t_rooms *room, t_rooms *previous)
 {
 	t_rooms	*new_node;
 
+	ft_printf("Adding %s.\n", room->name);
 	new_node = (t_rooms *)malloc(sizeof(t_rooms));
 	if (!new_node)
 		ft_printf_strerror("Memory allocation failure in create_path_node");
@@ -32,6 +33,7 @@ static t_rooms	*create_path_node(t_rooms *room, t_rooms *previous)
 	new_node->index = 0;
 	new_node->next = NULL;
 	new_node->previous = previous;
+	ft_printf("Added.\n");
 	return (new_node);
 }
 
@@ -52,7 +54,11 @@ t_rooms *path_start)
 	if (!new_path)
 		ft_printf_strerror("Memory allocation failure in create_path_node");
 	new_path->nb = i;
-	new_path->path = path_start;
+	new_path->path = (t_rooms **)malloc(sizeof(t_rooms *) * MAX_SIZE);
+	if (!new_path->path)
+		ft_printf_strerror("Memory allocation failure in create_path_node");
+	ft_memset(new_path->path, 0, MAX_SIZE);
+	new_path->path[0] = path_start;
 	new_path->length = 0;
 	new_path->usage_times = 0;
 	new_path->temp = 0;
@@ -75,7 +81,9 @@ void	create_new_path(t_heads *heads, t_node *start_node)
 	int		i;
 
 	i = 0;
-	start_room = find_room(&heads->rooms, start_node->name);
+	ft_printf("start_node->id = %d\n", start_node->id);
+	start_room = find_room(heads->room_array, start_node->id);
+	ft_printf("Start room = %s\n", start_room->name);
 	path = NULL;
 	path_start = create_path_node(start_room, NULL);
 	temp_paths = heads->paths;
@@ -103,24 +111,25 @@ void	create_new_path(t_heads *heads, t_node *start_node)
 void	store_path_data(t_heads *heads, t_node *node)
 {
 	t_paths	*temp_path;
-	t_rooms	*temp_node;
-	t_rooms	*temp_room;
+	int		i;
 
-	temp_room = find_room(&heads->rooms, node->name);
+	ft_printf("Storing %s\n", heads->room_array[node->id]->name);
+	i = -1;
 	temp_path = heads->paths;
-	temp_node = NULL;
 	while (temp_path)
 	{
-		temp_node = temp_path->path;
-		while (temp_node)
+		ft_printf("Path %d:\n", temp_path->nb);
+		i = -1;
+		while (++i < MAX_SIZE)
 		{
-			if (temp_node->next == NULL && temp_node->end == false)
+			ft_printf("[%d] %s\n", i, temp_path->path[i]->name);
+			if (temp_path->path[i]->end == false && temp_path->path[i + 1] == NULL)
 			{
-				temp_node->next = create_path_node(temp_room, temp_node);
+				temp_path->path[i + 1] = create_path_node(heads->room_array[node->id], temp_path->path[i]);
 				temp_path->length++;
+				ft_printf("Stored\n");
 				return ;
 			}
-			temp_node = temp_node->next;
 		}
 		temp_path = temp_path->next;
 	}

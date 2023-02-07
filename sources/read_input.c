@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   read_input.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: swilliam <swilliam@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sam <sam@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/16 14:13:08 by swilliam          #+#    #+#             */
-/*   Updated: 2023/02/03 17:09:06 by swilliam         ###   ########.fr       */
+/*   Updated: 2023/02/06 14:33:45 by sam              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -149,4 +149,5 @@ void	read_input(t_data *data, t_heads *heads)
 		if (line != NULL)
 			ft_strdel(&line);
 	}
+	heads->room_array = room_list_to_array(heads);
 }

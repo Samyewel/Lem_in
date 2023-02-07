@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lem_in.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: swilliam <swilliam@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sam <sam@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/03 11:56:26 by swilliam          #+#    #+#             */
-/*   Updated: 2023/02/03 18:38:48 by swilliam         ###   ########.fr       */
+/*   Updated: 2023/02/06 15:18:48 by sam              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@
 // EXTRA: Prints the contents of the data struct.
 # define DATA 0
 // ROOMS: Prints all rooms and all relevant data.
-# define ROOMS 0
+# define ROOMS 1
 // PATHS: Prints all paths found from start to end.
 # define PATHS 1
 // SOLUTIONS:
@@ -67,16 +67,10 @@ typedef struct rooms
 	int				ants;
 	int				coord_x;
 	int				coord_y;
-	struct links	*links;
+	struct rooms	**links;
 	struct rooms	*next;
 	struct rooms	*previous;
 }				t_rooms;
-
-typedef struct links
-{
-	char			*name;
-	struct links	*next;
-}				t_links;
 
 typedef struct paths
 {
@@ -84,7 +78,7 @@ typedef struct paths
 	int				length;
 	int				usage_times;
 	int				temp;
-	struct rooms	*path;
+	struct rooms	**path;
 	struct paths	*next;
 	struct paths	*previous;
 }				t_paths;
@@ -114,8 +108,10 @@ typedef struct heads
 {
 	struct data			*data;
 	struct rooms		*rooms;
+	struct rooms		**room_array;
 	struct stack		*stack;
 	struct paths		*paths;
+	struct paths		**path_array;
 	struct solutions	**solutions;
 	struct ants			*ants;
 }				t_heads;
@@ -140,8 +136,8 @@ typedef struct stack
 
 // Debugging:
 void		print_data(t_data *data);
-void		print_rooms(t_rooms **rooms);
-void		print_paths(t_paths **path_list);
+void		print_rooms(t_heads *heads);
+void		print_paths(t_heads *heads);
 void		print_path(t_paths *path);
 void		print_solution(t_solutions *solution);
 
@@ -151,12 +147,13 @@ void		read_input(t_data *data, t_heads *heads);
 // Rooms
 t_rooms		*create_room(t_rooms *rooms);
 t_rooms		*store_room_data(t_data *data, t_rooms *rooms, char *line);
-t_rooms		*find_start_room(t_rooms **rooms);
-t_rooms		*find_end_room(t_rooms **rooms);
-t_rooms		*find_room(t_rooms **rooms, char *link_name);
+int			find_start_room(t_heads *heads);
+int			find_end_room(t_heads *heads);
+t_rooms		*find_room(t_rooms **rooms, int room_id);
+t_rooms 	*find_room_name(t_rooms **rooms, char *name);
 
 // Links:
-t_links		*store_link(t_rooms **rooms, char *link_a, char *link_b);
+void		store_link(t_rooms **rooms, char *link_a, char *link_b);
 
 // Paths:
 void		create_new_path(t_heads *heads, t_node *start_node);
@@ -166,7 +163,7 @@ t_paths		*get_path(t_heads *heads, int path_nb);
 // Path calculation:
 void		backtrack_rooms(t_data *data, t_heads *heads);
 void		backtrack_paths(t_data *data, t_heads *heads);
-t_paths		*find_shortest_path(t_heads *heads);
+t_paths		*find_shortest_path(t_data *data, t_heads *heads);
 
 // Solutions
 t_solutions	*initialise_solution(t_paths *path);
@@ -178,6 +175,10 @@ t_solutions	**initialise_solutions(t_data *data);
 // DFS
 void		push(t_stack *stack, t_rooms *room);
 t_node		*pop(t_stack *stack);
+
+// Optimisation
+t_rooms		**room_list_to_array(t_heads *heads);
+t_paths		**path_list_to_array(t_heads *heads);
 
 // Data cleaning:
 void		clean_path_nodes(t_rooms **nodes);

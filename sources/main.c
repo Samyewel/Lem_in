@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: egaliber <egaliber@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sam <sam@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/07 16:16:16 by swilliam          #+#    #+#             */
-/*   Updated: 2023/02/03 19:22:07 by egaliber         ###   ########.fr       */
+/*   Updated: 2023/02/06 15:26:28 by sam              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,9 @@ static t_heads	*initialise_heads(t_data *data, t_heads *heads)
 		return (NULL);
 	heads->data = data;
 	heads->rooms = NULL;
+	heads->room_array = NULL;
 	heads->paths = NULL;
+	heads->path_array = NULL;
 	heads->solutions = NULL;
 	heads->ants = NULL;
 	heads->stack = NULL;
@@ -75,10 +77,15 @@ int	main(void)
 	if (!data || !heads)
 		ft_printf_strerror("Memory allocation failure in main.");
 	read_input(data, heads);
-	print_rooms(&heads->rooms);
 	print_data(data);
+	heads->room_array =	room_list_to_array(heads);
 	backtrack_rooms(data, heads);
+	heads->path_array = path_list_to_array(heads);
+	if (!heads->path_array)
+		ft_printf_strerror("Memory allocation failure in \
+		path_list_to_array");
 	backtrack_paths(data, heads);
+	print_rooms(heads);
 	store_solution(data, heads);
 	ft_printf("Calculating usage time\n");
 	calculate_path_usage_times(data);

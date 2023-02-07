@@ -3,32 +3,31 @@
 /*                                                        :::      ::::::::   */
 /*   solution_utils.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: swilliam <swilliam@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sam <sam@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/03 16:17:07 by swilliam          #+#    #+#             */
-/*   Updated: 2023/02/03 18:34:43 by swilliam         ###   ########.fr       */
+/*   Updated: 2023/02/06 15:22:15 by sam              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lem_in.h"
 
-t_paths	*find_shortest_path(t_heads *heads)
+t_paths	*find_shortest_path(t_data *data, t_heads *heads)
 {
-	t_paths	*temp_path;
 	t_paths	*shortest_path;
 	int		shortest_length;
+	int		i;
 
-	temp_path = heads->paths;
 	shortest_length = INT_MAX;
 	shortest_path = 0;
-	while (temp_path)
+	i = -1;
+	while (++i < data->path_count)
 	{
-		if (temp_path->length < shortest_length)
+		if (heads->path_array[i]->length < shortest_length)
 		{
-			shortest_length = temp_path->length;
-			shortest_path = temp_path;
+			shortest_length = heads->path_array[i]->length;
+			shortest_path = heads->path_array[i];
 		}
-		temp_path = temp_path->next;
 	}
 	return (shortest_path);
 }

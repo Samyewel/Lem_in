@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   backtrack_rooms.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: swilliam <swilliam@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sam <sam@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/08 17:28:33 by swilliam          #+#    #+#             */
-/*   Updated: 2023/02/03 18:36:02 by swilliam         ###   ########.fr       */
+/*   Updated: 2023/02/06 15:15:34 by sam              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,12 +18,9 @@
 **   if that room has been visited yet.
 */
 
-static bool	is_visited(t_heads *heads, bool *visited, char *link_name)
+static bool	is_visited(bool *visited, t_rooms *room)
 {
-	t_rooms	*temp_room;
-
-	temp_room = find_room(&heads->rooms, link_name);
-	return (visited[temp_room->id]);
+	return (visited[room->id]);
 }
 
 /*
@@ -35,6 +32,7 @@ static bool	is_visited(t_heads *heads, bool *visited, char *link_name)
 
 static void	store_stack_reverse(t_heads *heads, t_node *current)
 {
+	ft_printf("Storing path...\n");
 	if (!current)
 		return ;
 	store_stack_reverse(heads, current->next);
@@ -57,28 +55,27 @@ static void	store_stack_reverse(t_heads *heads, t_node *current)
 static void	trace_path(
 t_heads *heads,
 bool *visited,
-char *current_name)
+int current_room)
 {
-	t_rooms	*temp_room;
-	t_links	*temp_links;
+	int		i;
 
-	temp_room = find_room(&heads->rooms, current_name);
-	push(heads->stack, temp_room);
-	visited[temp_room->id] = true;
-	temp_links = NULL;
-	if (temp_room->end)
+	ft_printf("tracing path %s\n", heads->room_array[current_room]->name);
+	i = -1;
+	push(heads->stack, heads->room_array[current_room]);
+	visited[heads->room_array[current_room]->id] = true;
+	if (heads->room_array[current_room]->end)
 		store_stack_reverse(heads, heads->stack->nodes);
 	else
 	{
-		temp_links = temp_room->links;
-		while (temp_links)
+		while (++i < MAX_SIZE)
 		{
-			if (!is_visited(heads, visited, temp_links->name))
-				trace_path(heads, visited, temp_links->name);
-			temp_links = temp_links->next;
+			if (heads->room_array[current_room]->links[i] == NULL)
+				break ;
+			if (!is_visited(visited, heads->room_array[current_room]->links[i]))
+				trace_path(heads, visited, heads->room_array[current_room]->links[i]->id);
 		}
 	}
-	visited[temp_room->id] = false;
+	visited[heads->room_array[current_room]->id] = false;
 	pop(heads->stack);
 }
 
@@ -93,20 +90,20 @@ char *current_name)
 
 void	backtrack_rooms(t_data *data, t_heads *heads)
 {
-	t_rooms	*start_room;
+	int		start_room;
 	bool	*visited;
 
 	ft_printf("backtracking rooms\n");
-	start_room = find_start_room(&heads->rooms);
+	start_room = find_start_room(heads);
 	visited = (bool *) malloc(sizeof(bool) * data->room_count);
 	if (!visited)
 		ft_printf_strerror("Memory allocation failure in backtrack_queue");
 	heads->stack = (t_stack *)malloc(sizeof(t_stack));
 	heads->stack->top = 0;
 	ft_memset(visited, false, data->room_count);
-	trace_path(heads, visited, start_room->name);
+	trace_path(heads, visited, start_room);
 	free(visited);
 	if (heads->paths == NULL)
 		ft_printf_strerror("No paths found.");
-	print_paths(&heads->paths);
+	print_paths(heads);
 }

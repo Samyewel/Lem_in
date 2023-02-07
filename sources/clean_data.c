@@ -6,7 +6,7 @@
 /*   By: sam <sam@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/28 20:30:16 by sam               #+#    #+#             */
-/*   Updated: 2023/01/27 15:03:11 by sam              ###   ########.fr       */
+/*   Updated: 2023/02/06 15:20:35 by sam              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ void	clean_paths(t_heads *heads)
 	while (current_path != NULL)
 	{
 		next_path = current_path->next;
-		clean_path_nodes(&current_path->path);
+		clean_path_nodes(current_path->path);
 		free(current_path);
 		current_path = next_path;
 	}

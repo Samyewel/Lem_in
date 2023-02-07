@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   backtrack_paths.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: swilliam <swilliam@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sam <sam@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/26 17:00:15 by sam               #+#    #+#             */
-/*   Updated: 2023/02/03 18:39:03 by swilliam         ###   ########.fr       */
+/*   Updated: 2023/02/06 15:11:09 by sam              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,26 +63,26 @@ int i
 
 static int	paths_intersect(
 t_heads *heads,
-char *node_name,
+int node_id,
 t_solutions *solution)
 {
 	t_paths	*temp_path;
-	t_rooms	*temp_node;
 	int		i;
+	int		x;
 
-	temp_node = NULL;
 	i = -1;
 	while (++i < MAX_SIZE)
 	{
 		if (solution->path_indexes[i] >= 0)
 		{
 			temp_path = get_path(heads, solution->path_indexes[i]);
-			temp_node = temp_path->path;
-			while (temp_node)
+			x = -1;
+			while (++x < MAX_SIZE)
 			{
-				if (ft_strcmp(node_name, temp_node->name) == 0)
+				if (temp_path->path[x] == NULL)
+					break ;
+				if (temp_path->path[x]->id == node_id)
 					return (1);
-				temp_node = temp_node->next;
 			}
 		}
 		else
@@ -98,28 +98,28 @@ t_solutions *solution)
 
 static void	check_intersections(t_heads *heads, t_solutions *solution, int nb)
 {
-	t_paths	*temp_path;
-	t_rooms	*temp_node;
+	int	i;
+	int	x;
 	bool	add;
 
-	temp_path = heads->paths;
-	while (temp_path)
+	i = -1;
+	while (++i < MAX_SIZE)
 	{
+		if (heads->path_array[i] == NULL)
+			break ;
 		add = false;
-		temp_node = temp_path->path;
-		while (temp_node && nb != temp_path->nb)
+		x = -1;
+		while (++x < MAX_SIZE && nb != heads->path_array[i]->nb)
 		{
-			if (temp_node->is_room)
+			if (heads->path_array[i]->path[x]->is_room)
 			{
-				add = (!paths_intersect(heads, temp_node->name, solution));
+				add = (!paths_intersect(heads, heads->path_array[i]->path[x]->id, solution));
 				if (add == false)
 					break ;
 			}
-			temp_node = temp_node->next;
 		}
 		if (add == true)
-			add_to_solution(solution, temp_path);
-		temp_path = temp_path->next;
+			add_to_solution(solution, heads->path_array[i]);
 	}
 }
 
@@ -131,7 +131,6 @@ static void	check_intersections(t_heads *heads, t_solutions *solution, int nb)
 
 void	backtrack_paths(t_data *data, t_heads *heads)
 {
-	t_paths		*temp_path;
 	int			i;
 
 	i = 0;
@@ -139,21 +138,15 @@ void	backtrack_paths(t_data *data, t_heads *heads)
 	if (!heads->solutions)
 		ft_printf_strerror("Memory allocation failure in backtrack_paths.");
 	if (data->ant_count == 1)
-	{
-		temp_path = find_shortest_path(heads);
-		heads->solutions[0] = create_solution(heads, temp_path, 0);
-	}
+		heads->solutions[0] = create_solution(heads, find_shortest_path(data, heads), 0);
 	else
 	{
-		temp_path = heads->paths;
-		while (temp_path)
+		while (++i < MAX_SIZE)
 		{
-			heads->solutions[i] = create_solution(heads, temp_path, i);
-			check_intersections(heads, heads->solutions[i], temp_path->nb);
+			heads->solutions[i] = create_solution(heads, heads->path_array[i], i);
+			check_intersections(heads, heads->solutions[i], heads->path_array[i]->nb);
 			if (heads->solutions[i]->path_count > 1)
 				sort_solution_array(heads, heads->solutions[i]->path_indexes);
-			temp_path = temp_path->next;
-			i++;
 		}
 	}
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   debug_printing.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: swilliam <swilliam@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sam <sam@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/16 16:29:43 by swilliam          #+#    #+#             */
-/*   Updated: 2023/02/03 18:25:25 by swilliam         ###   ########.fr       */
+/*   Updated: 2023/02/06 15:19:50 by sam              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,61 +31,66 @@ void	print_data(t_data *data)
 ** - Prints all stored rooms and relevant links.
 */
 
-void	print_rooms(t_rooms **rooms)
+void	print_rooms(t_heads *heads)
 {
-	t_rooms	*ptr;
-	t_links	*link;
+	int	i;
+	int	x;
 
-	ptr = *rooms;
+	i = -1;
 	if (DEBUG == true && ROOMS == true)
 	{
-		while (ptr)
+		ft_printf("Printing rooms...\n");
+		while (++i < MAX_SIZE)
 		{
-			ft_printf("Name: %s\n", ptr->name);
-			ft_printf("x: %d\ny: %d\n", ptr->coord_x, ptr->coord_y);
-			ft_printf("Start? %d\nEnd? %d\n", ptr->start, ptr->end);
-			link = ptr->links;
-			while (link)
+			if (heads->room_array[i] == NULL)
+				break ;
+			ft_printf("Name: %s\n", heads->room_array[i]->name);
+			ft_printf("x: %d\ny: %d\n", heads->room_array[i]->coord_x, heads->room_array[i]->coord_y);
+			ft_printf("Start? %d\nEnd? %d\n", heads->room_array[i]->start, heads->room_array[i]->end);
+			x = -1;
+			while (++x < MAX_SIZE)
 			{
-				ft_printf("Links to: %s\n", link->name);
-				link = link->next;
+				if (heads->room_array[i]->links[x] == NULL)
+					break ;
+				ft_printf("Links to: %s\n", heads->room_array[i]->links[x]->name);
 			}
 			ft_printf("\n");
-			ptr = ptr->next;
 		}
 	}
 }
 
 void	print_path(t_paths *path)
 {
-	t_rooms	*temp_node;
+	int	i;
 
-	temp_node = path->path;
+	i = -1;
 	if (DEBUG == true && PATHS == true)
 	{
 		ft_printf("Path %d [%d] ", path->nb, path->length);
-		while (temp_node)
+		while (++i < MAX_SIZE)
 		{
-			if (temp_node->end)
-				ft_printf("%s\n", temp_node->name);
+			if (path->path[i] == NULL)
+				return ;
+			if (path->path[i]->end)
+				ft_printf("%s\n", path->path[i]->name);
 			else
-				ft_printf("%s->", temp_node->name);
-			temp_node = temp_node->next;
+				ft_printf("%s->", path->path[i]->name);
 		}
 	}
 }
 
-void	print_paths(t_paths **path_list)
+void	print_paths(t_heads *heads)
 {
-	t_paths	*temp_path;
+	int	i;
 
-	temp_path = *path_list;
+	i = -1;
 	if (DEBUG == true && PATHS == true)
 	{
-		while (temp_path)
+		while (++i < MAX_SIZE)
 		{
-			print_path(temp_path);
-			temp_path = temp_path->next;
+			if (heads->path_array[i] == NULL)
+				return ;
+			print_path(heads->path_array[i]);
 		}
 	}
 }

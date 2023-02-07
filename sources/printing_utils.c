@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   printing_utils.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: swilliam <swilliam@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sam <sam@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/18 16:19:17 by egaliber          #+#    #+#             */
-/*   Updated: 2023/02/03 17:33:45 by swilliam         ###   ########.fr       */
+/*   Updated: 2023/02/06 15:28:44 by sam              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	give_rest_paths(t_ants *ants, t_paths *paths, t_data *data)
 {
-	ants->room = paths->path;
+	ants->room = paths->path[0];
 	paths->usage_times--;
 	paths->temp++;
 	if (paths->usage_times == 0)
