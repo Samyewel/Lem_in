@@ -6,7 +6,7 @@
 /*   By: sam <sam@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/03 11:56:26 by swilliam          #+#    #+#             */
-/*   Updated: 2023/02/08 14:37:23 by sam              ###   ########.fr       */
+/*   Updated: 2023/02/08 15:25:15 by sam              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,6 @@
 # define DEBUG 1
 // INPUT: Prints the contents of the file being input into the program.
 # define INPUT 0
-// EXTRA: Prints the contents of the data struct.
-# define DATA 0
 // ROOMS: Prints all rooms and all relevant data.
 # define ROOMS 0
 // PATHS: Prints all paths found from start to end.
@@ -112,7 +110,7 @@ typedef struct heads
 	struct stack		*stack;
 	struct paths		*path_list;
 	struct paths		**path;
-	struct solutions	**solutions;
+	struct solutions	**solution;
 	struct ants			*ants;
 }				t_heads;
 
@@ -135,7 +133,6 @@ typedef struct stack
 }				t_stack;
 
 // Debugging:
-void		print_data(t_data *data);
 void		print_rooms(t_heads *heads);
 void		print_paths(t_paths **paths);
 void		print_path(t_paths *path);
@@ -163,13 +160,13 @@ t_paths		*get_path(t_heads *heads, int path_nb);
 // Path calculation:
 void		backtrack_rooms(t_data *data, t_heads *heads);
 void		backtrack_paths(t_data *data, t_heads *heads);
-t_paths		*find_shortest_path(t_data *data, t_heads *heads);
+t_paths		*shortest_path(t_data *data, t_heads *heads);
 
 // Solutions
 t_solutions	*initialise_solution(t_paths *path);
 void		store_solution(t_data *data, t_heads *heads);
 void		calculate_path_usage_times(t_data *data);
-void		sort_solution_array(t_heads *heads, int *array);
+void		sort_solution(t_heads *heads, int *array);
 t_solutions	**initialise_solutions(t_data *data);
 
 // DFS
@@ -177,8 +174,8 @@ void		push(t_stack *stack, t_rooms *room);
 t_node		*pop(t_stack *stack);
 
 // Optimisation
-t_rooms		**room_list_to_array(t_heads *heads);
-t_paths		**path_list_to_array(t_heads *heads);
+void		room_list_to_array(t_heads *heads);
+void		path_list_to_array(t_heads *heads);
 
 // Data cleaning:
 void		clean_lem_in(t_data *data, t_heads *heads, char *str);

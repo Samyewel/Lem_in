@@ -6,7 +6,7 @@
 /*   By: sam <sam@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/16 14:13:08 by swilliam          #+#    #+#             */
-/*   Updated: 2023/02/08 14:17:16 by sam              ###   ########.fr       */
+/*   Updated: 2023/02/08 15:22:11 by sam              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -139,7 +139,6 @@ void	read_input(t_data *data, t_heads *heads)
 	line_n = 0;
 	while (get_next_line(0, &line))
 	{
-		//if (DEBUG == true && INPUT == true)
 		ft_printf("%s\n", line);
 		read_ants(data, line, line_n);
 		read_comments(data, line, line_n);

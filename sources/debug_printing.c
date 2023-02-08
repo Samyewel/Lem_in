@@ -6,25 +6,11 @@
 /*   By: sam <sam@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/16 16:29:43 by swilliam          #+#    #+#             */
-/*   Updated: 2023/02/08 14:38:24 by sam              ###   ########.fr       */
+/*   Updated: 2023/02/08 15:08:02 by sam              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lem_in.h"
-
-/*
-** print_data:
-** - Prints all data that has been stored.
-*/
-
-void	print_data(t_data *data)
-{
-	if (DEBUG == true && DATA == true)
-	{
-		ft_printf("\nAnt count: %d\n", data->ant_count);
-		ft_printf("\nRoom count: %d\n", data->room_count);
-	}
-}
 
 /*
 ** print_rooms:
@@ -63,6 +49,11 @@ void	print_rooms(t_heads *heads)
 	}
 }
 
+/*
+** print_path:
+** - Prints all nodes of the given path.
+*/
+
 void	print_path(t_paths *path)
 {
 	int	i;
@@ -83,6 +74,11 @@ void	print_path(t_paths *path)
 	}
 }
 
+/*
+** print_paths:
+** - Prints all paths given.
+*/
+
 void	print_paths(t_paths **paths)
 {
 	int	i;
@@ -98,6 +94,11 @@ void	print_paths(t_paths **paths)
 		}
 	}
 }
+
+/*
+** print_solution:
+** - Prints the solution containing their non-intersecting paths.
+*/
 
 void	print_solution(t_solutions *solution)
 {

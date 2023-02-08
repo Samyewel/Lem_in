@@ -6,11 +6,17 @@
 /*   By: sam <sam@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/28 20:30:16 by sam               #+#    #+#             */
-/*   Updated: 2023/02/08 14:27:47 by sam              ###   ########.fr       */
+/*   Updated: 2023/02/08 14:59:12 by sam              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lem_in.h"
+
+/*
+** clean_path_list:
+** - Frees all data within the path_list, different from the array that is
+**   created by duplicating the list.
+*/
 
 void	clean_path_list(t_heads *heads)
 {
@@ -37,6 +43,12 @@ void	clean_path_list(t_heads *heads)
 	}
 	heads->path_list = NULL;
 }
+
+/*
+** clean_lem_in:
+** - Upon finding an error, all necessary data is cleaned before exiting the
+**   program.
+*/
 
 void	clean_lem_in(t_data *data, t_heads *heads, char *str)
 {

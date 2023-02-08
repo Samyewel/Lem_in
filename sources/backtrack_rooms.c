@@ -6,7 +6,7 @@
 /*   By: sam <sam@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/08 17:28:33 by swilliam          #+#    #+#             */
-/*   Updated: 2023/02/08 14:23:40 by sam              ###   ########.fr       */
+/*   Updated: 2023/02/08 15:06:33 by sam              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ static void	store_stack_reverse(t_heads *heads, t_node *current)
 ** - Pushes the current room to the stack for path storage purposes.
 ** - Sets the current room as visited in the boolean array for validation
 **   purposes further down the exploration path.
-** - When the end room is found, a linked-list is created using all the
+** - When the end room is found, an array is created using all the
 **   nodes still stored in the stack.
 */
 
@@ -90,7 +90,6 @@ void	backtrack_rooms(t_data *data, t_heads *heads)
 	int		start_room;
 	bool	*visited;
 
-	ft_printf("Backtracking rooms...\n");
 	start_room = find_start_room(heads);
 	visited = (bool *) malloc(sizeof(bool) * data->room_count);
 	if (!visited)

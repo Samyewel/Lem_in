@@ -6,13 +6,19 @@
 /*   By: sam <sam@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/06 12:44:02 by sam               #+#    #+#             */
-/*   Updated: 2023/02/08 14:16:11 by sam              ###   ########.fr       */
+/*   Updated: 2023/02/08 15:04:58 by sam              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lem_in.h"
 
-t_rooms	**room_list_to_array(t_heads *heads)
+/*
+** room_list_to_array:
+** - Converts the linked-list containing rooms into an array for easier data
+**   access.
+*/
+
+void	room_list_to_array(t_heads *heads)
 {
 	t_rooms	**array;
 	t_rooms	*temp_room;
@@ -23,17 +29,23 @@ t_rooms	**room_list_to_array(t_heads *heads)
 	i = -1;
 	array = (t_rooms **)malloc(sizeof(t_rooms *) * MAX_SIZE);
 	if (!array)
-		return (NULL);
+		ft_printf_strerror("Memory allocation failure in path_list_to_array");
 	ft_memset(array, 0, MAX_SIZE);
 	while (temp_room)
 	{
 		array[++i] = temp_room;
 		temp_room = temp_room->next;
 	}
-	return (array);
+	heads->room = array;
 }
 
-t_paths	**path_list_to_array(t_heads *heads)
+/*
+** path_list_to_array:
+** - Converts the linked-list containing paths into an array for easier data
+**   access.
+*/
+
+void	path_list_to_array(t_heads *heads)
 {
 	t_paths	**array;
 	t_paths	*temp_path;
@@ -44,12 +56,12 @@ t_paths	**path_list_to_array(t_heads *heads)
 	i = -1;
 	array = (t_paths **)malloc(sizeof(t_rooms *) * MAX_SIZE);
 	if (!array)
-		return (NULL);
+		ft_printf_strerror("Memory allocation failure in path_list_to_array");
 	ft_memset(array, 0, MAX_SIZE);
 	while (temp_path)
 	{
 		array[++i] = temp_path;
 		temp_path = temp_path->next;
 	}
-	return (array);
+	heads->path = array;
 }

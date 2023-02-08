@@ -6,7 +6,7 @@
 /*   By: sam <sam@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/07 16:16:16 by swilliam          #+#    #+#             */
-/*   Updated: 2023/02/08 14:21:35 by sam              ###   ########.fr       */
+/*   Updated: 2023/02/08 15:23:51 by sam              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ static t_heads	*initialise_heads(t_data *data, t_heads *heads)
 	heads->room = NULL;
 	heads->path_list = NULL;
 	heads->path = NULL;
-	heads->solutions = NULL;
+	heads->solution = NULL;
 	heads->ants = NULL;
 	heads->stack = NULL;
 	return (heads);
@@ -77,21 +77,16 @@ int	main(void)
 	if (!data || !heads)
 		ft_printf_strerror("Memory allocation failure in main.");
 	read_input(data, heads);
-	print_data(data);
-	heads->room = room_list_to_array(heads);
-	if (!heads->room)
-		ft_printf_strerror("Memory allocation failure in main");
+	room_list_to_array(heads);
+	print_rooms(heads);
 	backtrack_rooms(data, heads);
-	heads->path = path_list_to_array(heads);
-	if (!heads->path)
-		ft_printf_strerror("Memory allocation failure in main");
-	//print_rooms(heads);
+	path_list_to_array(heads);
+	print_paths(heads->path);
 	backtrack_paths(data, heads);
 	store_solution(data, heads);
 	// calculate_path_usage_times(data);
 	// ant_mover(heads, data);
-	ft_printf("\nLine count = %d\n", data->line_count);
-	clean_path_list(heads);
+	//ft_printf("\nLine count = %d\n", data->line_count);
 	if (DEBUG == true && LEAKS == true) // REMOVE BEFORE SUBMISSION
 		system("leaks lem-in");
 	exit(EXIT_SUCCESS);

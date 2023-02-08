@@ -6,7 +6,7 @@
 /*   By: sam <sam@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/21 17:09:45 by swilliam          #+#    #+#             */
-/*   Updated: 2023/02/08 14:22:01 by sam              ###   ########.fr       */
+/*   Updated: 2023/02/08 15:16:48 by sam              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,8 @@
 
 /*
 ** create_path_node:
-** -
+** - Duplicates the room with necessary data to be used when accessing the
+**   path later.
 */
 
 static t_rooms	*create_path_node(t_rooms *room, t_rooms *previous)
@@ -38,7 +39,7 @@ static t_rooms	*create_path_node(t_rooms *room, t_rooms *previous)
 
 /*
 ** create_path:
-** - Allocates a fresh
+** - Allocates a fresh array with the start path at the beginning.
 */
 
 static t_paths	*create_path(
@@ -68,7 +69,8 @@ t_rooms *path_start)
 
 /*
 ** create_new_path:
-** -
+** - Creates a fresh path containing the start node at the beginning, storing
+**   it at the end of the list of paths.
 */
 
 void	create_new_path(t_heads *heads, t_node *start_node)
@@ -100,7 +102,8 @@ void	create_new_path(t_heads *heads, t_node *start_node)
 
 /*
 ** add_to_path:
-** -
+** - Loops through the paths until it finds an unfinished one, adding the
+**   room onto the end of it.
 */
 
 void	store_path_data(t_heads *heads, t_node *node)

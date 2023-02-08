@@ -6,11 +6,16 @@
 /*   By: sam <sam@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/03 12:39:05 by swilliam          #+#    #+#             */
-/*   Updated: 2023/02/08 14:22:37 by sam              ###   ########.fr       */
+/*   Updated: 2023/02/08 15:17:35 by sam              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lem_in.h"
+
+/*
+** get_path:
+** - Returns a pointer to a path using its path_nb.
+*/
 
 t_paths	*get_path(t_heads *heads, int path_nb)
 {

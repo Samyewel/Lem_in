@@ -6,7 +6,7 @@
 /*   By: sam <sam@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/26 17:00:15 by sam               #+#    #+#             */
-/*   Updated: 2023/02/08 14:38:00 by sam              ###   ########.fr       */
+/*   Updated: 2023/02/08 15:27:24 by sam              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,14 +14,19 @@
 
 /*
 ** add_to_solution:
-** -
+** - Adds the path number to the array stored within the solution struct.
+** - Adds the path length onto the total length of the solution.
+** - Increases the count to indicate how many paths are stored within the
+**   solution.
 */
 
-static void	add_to_solution(t_solutions *solution, t_paths *add_path)
+static void	add_to_solution(bool b, t_solutions *solution, t_paths *add_path)
 {
 	int	i;
 
 	i = -1;
+	if (b == true)
+		return ;
 	while (++i < MAX_SIZE)
 	{
 		if (solution->path_indexes[i] < 0)
@@ -52,16 +57,17 @@ int i
 	if (!new_solution)
 		ft_printf_strerror("Memory allocation failure in create_solution.");
 	if (i > 0)
-		heads->solutions[i - 1]->next = new_solution;
+		heads->solution[i - 1]->next = new_solution;
 	return (new_solution);
 }
 
 /*
-** paths_intersect:
-** -
+** intersect:
+** - Takes the id of a room from a path, and loops through all paths within
+**   the given solution to ensure it does not intersect with any of them.
 */
 
-static int	intersect(
+static int	intersects(
 t_heads *heads,
 int node_id,
 t_solutions *solution)
@@ -94,7 +100,10 @@ t_solutions *solution)
 
 /*
 ** check_intersections:
-** -
+** - Loops through all paths stored from backtrack_rooms to find all paths
+**   that do not intersect with any paths in the current solution.
+** - Calls add_to_solution if a path does not intersect, storing it in the
+**   array of path indexes inside the solution.
 */
 
 static void	check_intersections(t_heads *heads, t_solutions *solution, int nb)
@@ -118,13 +127,12 @@ static void	check_intersections(t_heads *heads, t_solutions *solution, int nb)
 					break ;
 				if (heads->path[i]->room[x]->is_room)
 				{
-					b = intersect(heads, heads->path[i]->room[x]->id, solution);
+					b = intersects(heads, heads->path[i]->room[x]->id, solution);
 					if (b == true)
 						break ;
 				}
 			}
-			if (b == false)
-				add_to_solution(solution, heads->path[i]);
+			add_to_solution(b, solution, heads->path[i]);
 		}
 	}
 }
@@ -132,7 +140,10 @@ static void	check_intersections(t_heads *heads, t_solutions *solution, int nb)
 /*
 ** backtrack_paths:
 ** - Opens each path individually, creating a solution struct containing the
-**   path and all paths that do not intersect with it.
+**   path index and all those that do not intersect with it or others within
+**   that solution.
+** - Calls sort_solution_array to sort the array of path indexes in ascending
+**   length order.
 */
 
 void	backtrack_paths(t_data *data, t_heads *heads)
@@ -140,23 +151,22 @@ void	backtrack_paths(t_data *data, t_heads *heads)
 	int	i;
 
 	i = -1;
-	ft_printf("Backtracking paths...\n");
-	heads->solutions = initialise_solutions(data);
-	if (!heads->solutions)
+	heads->solution = initialise_solutions(data);
+	if (!heads->solution)
 		ft_printf_strerror("Memory allocation failure in backtrack_paths.");
 	if (data->ant_count == 1)
-		heads->solutions[0] = create_solution(heads, find_shortest_path(data, heads), 0);
+		heads->solution[0] = create_solution(heads, shortest_path(data, heads), 0);
 	else
 	{
 		while (++i < MAX_SIZE)
 		{
 			if (heads->path[i] == NULL)
 				break ;
-			heads->solutions[i] = create_solution(heads, heads->path[i], i);
-			check_intersections(heads, heads->solutions[i], heads->path[i]->nb);
-			if (heads->solutions[i]->path_count > 1)
-				sort_solution_array(heads, heads->solutions[i]->path_indexes);
-			print_solution(heads->solutions[i]);
+			heads->solution[i] = create_solution(heads, heads->path[i], i);
+			check_intersections(heads, heads->solution[i], heads->path[i]->nb);
+			if (heads->solution[i]->path_count > 1)
+				sort_solution(heads, heads->solution[i]->path_indexes);
+			print_solution(heads->solution[i]);
 		}
 	}
 }

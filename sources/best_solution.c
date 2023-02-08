@@ -6,11 +6,18 @@
 /*   By: sam <sam@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/28 13:05:45 by swilliam          #+#    #+#             */
-/*   Updated: 2023/02/08 14:38:58 by sam              ###   ########.fr       */
+/*   Updated: 2023/02/08 15:27:55 by sam              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lem_in.h"
+
+/*
+** calculate_best_solution:
+** - Finds the solution that has the closest length to the amount of ants.
+** - If the ant count is 1, we return 0, as that path index will be the
+**   shortest in the array.
+*/
 
 static int	calculate_best_solution(t_heads *heads, t_data *data)
 {
@@ -26,18 +33,23 @@ static int	calculate_best_solution(t_heads *heads, t_data *data)
 		return (closest_index);
 	while (++i < data->path_count)
 	{
-		if (heads->solutions[i]->total_length <= data->ant_count)
+		if (heads->solution[i]->total_length <= data->ant_count)
 		{
-			diff = data->ant_count - heads->solutions[i]->total_length;
+			diff = data->ant_count - heads->solution[i]->total_length;
 			if (diff < closest_length)
 			{
 				closest_length = diff;
-				closest_index = heads->solutions[i]->nb;
+				closest_index = heads->solution[i]->nb;
 			}
 		}
 	}
 	return (closest_index);
 }
+
+/*
+** create_duplicate_path:
+** - Duplicates the path to be stored in the solution array.
+*/
 
 static t_paths	*create_duplicate_path(t_paths *path, t_paths *previous)
 {
@@ -59,6 +71,12 @@ static t_paths	*create_duplicate_path(t_paths *path, t_paths *previous)
 		new_path->previous = previous;
 	return (new_path);
 }
+
+/*
+** duplicate_path:
+** - Locates the place in the array where the duplicated path will go.
+** - Gives a pointer to the previous path for movement in later functions.
+*/
 
 static void	duplicate_path(t_data *data, t_paths *path)
 {
@@ -84,7 +102,9 @@ static void	duplicate_path(t_data *data, t_paths *path)
 
 /*
 ** store_paths_in_solution:
-** -
+** - Takes the path indexes stored in the solution struct, and uses get_path
+**   to return the pointer so that it can be duplicated and stored within
+**   the solution struct itself.
 */
 
 static void	store_paths_in_solution(
@@ -114,15 +134,23 @@ static void	store_paths_in_solution(
 	}
 }
 
+/*
+** store_solution:
+** - Finds the index that would be best to accomdate the amount of ants
+**   given.
+** - Stored the best solution in the data struct for easy access.
+** - Duplicates all paths using their indexes, storing them in the best
+**   solution.
+*/
+
 void	store_solution(t_data *data, t_heads *heads)
 {
 	int			solution_index;
 
-	ft_printf("Calculating solution...\n");
 	solution_index = calculate_best_solution(heads, data);
 	if (solution_index < 0)
 		ft_printf_strerror("No solution found.");
-	data->solution = heads->solutions[solution_index];
+	data->solution = heads->solution[solution_index];
 	store_paths_in_solution(heads, data);
 	print_solution(data->solution);
 }

@@ -6,7 +6,7 @@
 /*   By: sam <sam@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/27 15:09:20 by sam               #+#    #+#             */
-/*   Updated: 2023/02/08 14:38:37 by sam              ###   ########.fr       */
+/*   Updated: 2023/02/08 15:20:50 by sam              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,8 @@
 
 /*
 ** initialise_solution:
-** -
+** - Initialises a fresh solution with necessary data for calculating the best
+**   solution.
 */
 
 t_solutions	*initialise_solution(t_paths *path)
@@ -38,6 +39,11 @@ t_solutions	*initialise_solution(t_paths *path)
 	new_solution->temp_previous = NULL;
 	return (new_solution);
 }
+
+/*
+** initialise_solutions:
+** - Initialises the array solutions head.
+*/
 
 t_solutions	**initialise_solutions(t_data *data)
 {
