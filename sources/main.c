@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sam <sam@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: egaliber <egaliber@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/07 16:16:16 by swilliam          #+#    #+#             */
-/*   Updated: 2023/02/08 15:23:51 by sam              ###   ########.fr       */
+/*   Updated: 2023/02/08 23:32:41 by egaliber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,8 +84,8 @@ int	main(void)
 	print_paths(heads->path);
 	backtrack_paths(data, heads);
 	store_solution(data, heads);
-	// calculate_path_usage_times(data);
-	// ant_mover(heads, data);
+	calculate_path_usage_times(data);
+	ant_mover(heads, data);
 	//ft_printf("\nLine count = %d\n", data->line_count);
 	if (DEBUG == true && LEAKS == true) // REMOVE BEFORE SUBMISSION
 		system("leaks lem-in");

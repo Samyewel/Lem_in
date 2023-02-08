@@ -3,38 +3,30 @@
 /*                                                        :::      ::::::::   */
 /*   printer.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: swilliam <swilliam@student.42.fr>          +#+  +:+       +#+        */
+/*   By: egaliber <egaliber@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/18 16:16:43 by egaliber          #+#    #+#             */
-/*   Updated: 2023/02/07 16:51:18 by swilliam         ###   ########.fr       */
+/*   Updated: 2023/02/08 23:31:29 by egaliber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 //#include "includes/lem_in.h"
 #include "lem_in.h"
 
-void	give_first_path(t_ants *ants, t_paths *paths, t_data *data)
-{
-	ants->room = paths->path[0];
-	if (ants->next != NULL)
-		ants = ants->next;
-	paths->usage_times--;
-	paths->temp++;
-	if (paths->usage_times == 0)
-		data->counter++;
-}
-
 void	printer(t_heads *heads, t_data *data)
 {
-	t_paths	*paths;
+	int i;
+	
+	t_paths	**paths;
 	t_ants	*ants;
 
 	ants = heads->ants;
+	paths = data->solution->path;
 	while (data->finished != data->ant_count)
 	{
 		data->counter = 0;
-		paths = data->solution->paths;
-		first_move(ants, paths, data);
+		i = 0;
+		first_move(ants, paths, data, i);
 		ft_printf("\n");
 		data->line_count++;
 		if (heads->ants->has_moved == true)
@@ -53,17 +45,18 @@ void	printer(t_heads *heads, t_data *data)
 void	give_ants_paths(t_ants *ants, t_data *data, \
 						t_heads *heads)
 {
-	t_paths	*paths;
+	t_paths	**paths;
+	int i;
 
-	paths = data->solution->paths;
+	paths = data->solution->path;
 	ants = heads->ants;
 	while (data->counter < data->solution->path_count)
 	{
-		paths = data->solution->paths;
-		while (paths != NULL && paths->usage_times > 0)
+		i = 0;
+		while (i < data->solution->path_count)
 		{
-			give_rest_paths(ants, paths, data);
-			paths = paths->next;
+			give_rest_paths(ants, paths, data, i);
+			i++;
 			if (ants->next != NULL)
 				ants = ants->next;
 		}

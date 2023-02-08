@@ -3,45 +3,46 @@
 /*                                                        :::      ::::::::   */
 /*   printing_utils.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sam <sam@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: egaliber <egaliber@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/18 16:19:17 by egaliber          #+#    #+#             */
-/*   Updated: 2023/02/06 15:28:44 by sam              ###   ########.fr       */
+/*   Updated: 2023/02/08 23:32:17 by egaliber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lem_in.h"
 
-void	give_rest_paths(t_ants *ants, t_paths *paths, t_data *data)
+void	give_rest_paths(t_ants *ants, t_paths **paths, t_data *data, int i)
 {
-	ants->room = paths->path[0];
-	paths->usage_times--;
-	paths->temp++;
-	if (paths->usage_times == 0)
+	ants->room = paths[i]->room;
+	ants->index_end = paths[i]->length;
+	paths[i]->usage_times--;
+	paths[i]->temp++;
+	if (paths[i]->usage_times == 0)
 		data->counter++;
 }
 
-void	first_move(t_ants *ants, t_paths *paths, t_data *data)
+void	first_move(t_ants *ants, t_paths **paths, t_data *data, int i)
 {
 	while (data->counter < data->solution->path_count \
 			&& ants->has_moved == false && ants->has_finished == false)
 	{
-		ants->room = ants->room->next;
-		send_ants(ants, data, paths);
+		ants->index++;
+		send_ants(ants, data, paths, i);
 		if (ants->next != NULL)
 		{
 			if (ants->room_location != ants->next->room_location)
 				ants = ants->next;
 		}
-		if (paths->temp == 0)
+		if (paths[i]->temp == 0)
 		{
 			data->solution->path_count--;
 			data->counter--;
 		}
-		if (paths->next != NULL)
-			paths = paths->next;
+		if (i < data->solution->path_count)
+			i++;
 		else
-			paths = data->solution->paths;
+			i = 0;
 		data->counter++;
 	}
 }
@@ -53,7 +54,7 @@ void	move_played(t_ants *ants, t_data *data, t_heads *heads)
 		if (ants->has_finished == false)
 		{
 			move_ants_already_in_play(ants);
-			if (ants->room == NULL)
+			if (ants->index == ants->index_end)
 			{
 				ants->has_finished = true;
 				data->finished++;
@@ -76,11 +77,10 @@ void	move_played(t_ants *ants, t_data *data, t_heads *heads)
 
 void	move_ants_already_in_play(t_ants *ants)
 {
-	if (ants->room != NULL)
+	if (ants->index < ants->index_end)
 	{
-		ants->room_location = ants->room->name;
-		ants->room = ants->room->next;
-		//ft_printf("L%d-%s ", ants->ant_number, ants->room_location);
+		ants->room_location = ants->room[ants->index]->name;
+		ants->index++;
 		write(1, "L", 1);
 		ft_putnbr(ants->ant_number);
 		write(1, "-", 1);
@@ -89,18 +89,17 @@ void	move_ants_already_in_play(t_ants *ants)
 	}
 }
 
-void	send_ants(t_ants *ants, t_data *data, t_paths *paths)
+void	send_ants(t_ants *ants, t_data *data, t_paths **paths, int i)
 {
 	if (data)
 		ft_printf("");
-	ants->room_location = ants->room->name;
-	ants->room = ants->room->next;
-	//ft_printf("L%d-%s ", ants->ant_number, ants->room_location);
+	ants->room_location = ants->room[ants->index]->name;
+	ants->index++;
 	write(1, "L", 1);
 	ft_putnbr(ants->ant_number);
 	write(1, "-", 1);
 	ft_putstr(ants->room_location);
 	write(1, " ", 1);
 	ants->has_moved = true;
-	paths->temp--;
+	paths[i]->temp--;
 }

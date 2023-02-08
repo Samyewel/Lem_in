@@ -6,85 +6,72 @@
 /*   By: egaliber <egaliber@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/05 14:29:46 by egaliber          #+#    #+#             */
-/*   Updated: 2023/02/03 13:02:27 by egaliber         ###   ########.fr       */
+/*   Updated: 2023/02/08 23:22:23 by egaliber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lem_in.h"
 //#include "includes/lem_in.h"
 
-int	calculate_path(t_paths *paths)
+int	calculate_path(t_paths **path, int last)
 {
-	t_paths	*temp;
 	int		edge;
 	int		res;
 
 	res = 1;
-	temp = paths;
-	while (temp->next)
-		temp = temp->next;
-	edge = temp->length + 1;
-	while (temp->previous)
+	edge = path[last]->length + 1;
+	while (last > 0)
 	{
-		temp = temp->previous;
-		res += (edge - temp->length);
+		last--;
+		res += (edge - path[last]->length);
 	}
 	return (res);
 }
 
-void	test_round(t_paths *head, int nb_paths)
+void	test_round(t_paths **paths, int nb_paths, int last)
 {
-	t_paths	*paths;
 	int		edge;
 
-	paths = head;
-	while (paths->next)
-		paths = paths->next;
-	paths->usage_times = 1;
-	edge = paths->length + 1;
-	while (paths && nb_paths > 0)
+	paths[last]->usage_times = 1;
+	edge = paths[last]->length + 1;
+	while (last > 0 && nb_paths > 0)
 	{
-		paths = paths->previous;
-		paths->usage_times = edge - paths->length;
+		last--;
+		paths[last]->usage_times = edge - paths[last]->length;
 		nb_paths--;
-		if (!paths->previous)
-			break ;
 	}
-	paths = NULL;
 }
 
 void	calculate_path_usage_times(t_data *data)
 {
-	t_paths	*temp;
-	t_paths	*paths;
+	t_paths	**paths;
 	int		remain;
+	int 	last;
+	int		i;
 
-	paths = data->solution->paths;
-	while (paths)
-	{
-		paths = paths->next;
-	}
-	temp = paths;
+	i = 0;
+	paths = data->solution->path;
+	last = data->solution->path_count - 1;
 	if (data->solution->path_count > 1)
 	{
-		test_round(data->solution->paths, data->solution->path_count);
-		remain = data->ant_count - calculate_path(data->solution->paths);
-		temp = data->solution->paths;
-		while (temp)
+		test_round(paths, data->solution->path_count, last);
+		remain = data->ant_count - calculate_path(paths, last);
+		i = 0;
+		while (i < data->solution->path_count)
 		{
-			temp->usage_times += remain / data->solution->path_count;
-			temp = temp->next;
+			paths[i]->usage_times += remain / data->solution->path_count;
+			i++;
 		}
 		remain = remain % data->solution->path_count;
-		temp = data->solution->paths;
+		i = 0;
 		while (remain--)
 		{
-			temp->usage_times++;
-			temp = temp->next;
+			paths[i]->usage_times++;
+			i++;
 		}
 	}
 	else
-		data->solution->paths->usage_times = data->ant_count;
+		data->solution->path[0]->usage_times = data->ant_count;
 }
 
 void	init_ants(t_ants *new)
@@ -95,6 +82,8 @@ void	init_ants(t_ants *new)
 	new->room_location = NULL;
 	new->has_moved = false;
 	new->has_finished = false;
+	new->index = 0;
+	new->index_end = 0;
 }
 
 t_ants	*make_new_ant(t_data *data, t_ants *new)
