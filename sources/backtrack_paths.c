@@ -6,7 +6,7 @@
 /*   By: sam <sam@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/26 17:00:15 by sam               #+#    #+#             */
-/*   Updated: 2023/02/08 14:26:04 by sam              ###   ########.fr       */
+/*   Updated: 2023/02/08 14:38:00 by sam              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,19 +111,19 @@ static void	check_intersections(t_heads *heads, t_solutions *solution, int nb)
 		if (heads->path[i]->nb != nb)
 		{
 			x = -1;
-			intersect = false;
+			b = false;
 			while (++x < MAX_SIZE)
 			{
 				if (heads->path[i]->room[x] == NULL)
 					break ;
 				if (heads->path[i]->room[x]->is_room)
 				{
-					intersect = intersect(heads, heads->path[i]->room[x]->id, solution);
-					if (intersect == true)
+					b = intersect(heads, heads->path[i]->room[x]->id, solution);
+					if (b == true)
 						break ;
 				}
 			}
-			if (intersect == false)
+			if (b == false)
 				add_to_solution(solution, heads->path[i]);
 		}
 	}

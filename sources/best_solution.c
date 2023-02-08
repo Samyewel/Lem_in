@@ -6,7 +6,7 @@
 /*   By: sam <sam@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/28 13:05:45 by swilliam          #+#    #+#             */
-/*   Updated: 2023/02/08 14:09:07 by sam              ###   ########.fr       */
+/*   Updated: 2023/02/08 14:38:58 by sam              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,14 +67,14 @@ static void	duplicate_path(t_data *data, t_paths *path)
 	i = -1;
 	while (++i < MAX_SIZE)
 	{
-		if (data->solution->paths[i] == NULL)
+		if (data->solution->path[i] == NULL)
 		{
 			if (i == 0)
-				data->solution->paths[i] = create_duplicate_path(path, NULL);
+				data->solution->path[i] = create_duplicate_path(path, NULL);
 			else
-				data->solution->paths[i] = \
-				create_duplicate_path(path, data->solution->paths[i - 1]);
-			if (!data->solution->paths[i])
+				data->solution->path[i] = \
+				create_duplicate_path(path, data->solution->path[i - 1]);
+			if (!data->solution->path[i])
 				ft_printf_strerror("Memory \
 				allocation failure in duplicate_path.");
 			break ;
@@ -96,10 +96,10 @@ static void	store_paths_in_solution(
 
 	temp_path = NULL;
 	i = -1;
-	if (data->solution->paths == NULL)
-		data->solution->paths = (t_paths **)malloc(sizeof (t_paths *) * \
+	if (data->solution->path == NULL)
+		data->solution->path = (t_paths **)malloc(sizeof (t_paths *) * \
 			MAX_SIZE);
-	if (!data->solution->paths)
+	if (!data->solution->path)
 		ft_printf_strerror("Memory allocation failure in \
 			store_paths_in_solution.");
 	while (++i < MAX_SIZE)

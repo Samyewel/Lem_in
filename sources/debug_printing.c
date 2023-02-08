@@ -6,7 +6,7 @@
 /*   By: sam <sam@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/16 16:29:43 by swilliam          #+#    #+#             */
-/*   Updated: 2023/02/08 14:27:58 by sam              ###   ########.fr       */
+/*   Updated: 2023/02/08 14:38:24 by sam              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,7 +108,7 @@ void	print_solution(t_solutions *solution)
 	{
 		ft_printf("Solution[%d], length: %d, Paths:\n", \
 			solution->nb, solution->total_length);
-		if (solution->paths == NULL)
+		if (solution->path == NULL)
 		{
 			while (++i < MAX_SIZE)
 			{
@@ -120,6 +120,6 @@ void	print_solution(t_solutions *solution)
 			ft_printf("\n");
 		}
 		else
-			print_paths(solution->paths);
+			print_paths(solution->path);
 	}
 }
