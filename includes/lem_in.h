@@ -6,7 +6,7 @@
 /*   By: sam <sam@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/03 11:56:26 by swilliam          #+#    #+#             */
-/*   Updated: 2023/02/08 15:25:15 by sam              ###   ########.fr       */
+/*   Updated: 2023/02/08 15:29:09 by sam              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -147,7 +147,7 @@ t_rooms		*store_room_data(t_data *data, t_rooms *rooms, char *line);
 int			find_start_room(t_heads *heads);
 int			find_end_room(t_heads *heads);
 t_rooms		*find_room(t_rooms **rooms, int room_id);
-t_rooms 	*find_room_name(t_rooms **rooms, char *name);
+t_rooms		*find_room_name(t_rooms **rooms, char *name);
 
 // Links:
 void		store_link(t_rooms **rooms, char *link_a, char *link_b);
