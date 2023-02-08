@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   debug_printing.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: swilliam <swilliam@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sam <sam@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/16 16:29:43 by swilliam          #+#    #+#             */
-/*   Updated: 2023/02/07 16:45:09 by swilliam         ###   ########.fr       */
+/*   Updated: 2023/02/08 12:22:36 by sam              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,12 +74,12 @@ void	print_path(t_paths *path)
 		ft_printf("Path %d [%d] ", path->nb, path->length);
 		while (++i < MAX_SIZE)
 		{
-			if (path->path[i] == NULL)
+			if (path->room[i] == NULL)
 				return ;
-			if (path->path[i]->end)
-				ft_printf("%s\n", path->path[i]->name);
+			if (path->room[i]->end)
+				ft_printf("%s\n", path->room[i]->name);
 			else
-				ft_printf("%s->", path->path[i]->name);
+				ft_printf("%s->", path->room[i]->name);
 		}
 	}
 }

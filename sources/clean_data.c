@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   clean_data.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: swilliam <swilliam@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sam <sam@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/28 20:30:16 by sam               #+#    #+#             */
-/*   Updated: 2023/02/07 17:12:15 by swilliam         ###   ########.fr       */
+/*   Updated: 2023/02/08 12:10:15 by sam              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,20 +17,19 @@ void	clean_path_list(t_heads *heads)
 	t_paths	*current_path;
 	t_paths	*next_path;
 	t_rooms	*temp_room;
-	t_rooms	*temp_data;
 	int		i;
 
 	current_path = heads->paths;
 	next_path = NULL;
 	temp_room = NULL;
-	temp_data = NULL;
-	while (current_path != NULL)
+	while (current_path)
 	{
 		next_path = current_path->next;
 		i = -1;
 		while (++i < MAX_SIZE)
 		{
-			ft_strdel(&temp_room->name);
+			if (temp_room->name)
+				ft_strdel(&temp_room->name);
 			free(temp_room);
 		}
 		free(current_path);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   backtrack_paths.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: swilliam <swilliam@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sam <sam@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/26 17:00:15 by sam               #+#    #+#             */
-/*   Updated: 2023/02/07 16:49:51 by swilliam         ###   ########.fr       */
+/*   Updated: 2023/02/08 12:23:02 by sam              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,9 +79,9 @@ t_solutions *solution)
 			x = -1;
 			while (++x < MAX_SIZE)
 			{
-				if (temp_path->path[x] == NULL)
+				if (temp_path->room[x] == NULL)
 					break ;
-				if (temp_path->path[x]->id == node_id)
+				if (temp_path->room[x]->id == node_id)
 					return (1);
 			}
 		}
@@ -111,9 +111,9 @@ static void	check_intersections(t_heads *heads, t_solutions *solution, int nb)
 		x = -1;
 		while (++x < MAX_SIZE && nb != heads->path_array[i]->nb)
 		{
-			if (heads->path_array[i]->path[x]->is_room)
+			if (heads->path_array[i]->room[x]->is_room)
 			{
-				add = (!paths_intersect(heads, heads->path_array[i]->path[x]->id, solution));
+				add = (!paths_intersect(heads, heads->path_array[i]->room[x]->id, solution));
 				if (add == false)
 					break ;
 			}

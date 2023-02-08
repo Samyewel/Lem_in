@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   path_creation.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: swilliam <swilliam@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sam <sam@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/21 17:09:45 by swilliam          #+#    #+#             */
-/*   Updated: 2023/02/07 16:58:09 by swilliam         ###   ########.fr       */
+/*   Updated: 2023/02/08 12:23:54 by sam              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,11 +52,11 @@ t_rooms *path_start)
 	if (!new_path)
 		ft_printf_strerror("Memory allocation failure in create_path_node");
 	new_path->nb = i;
-	new_path->path = (t_rooms **)malloc(sizeof(t_rooms *) * MAX_SIZE);
-	if (!new_path->path)
+	new_path->room = (t_rooms **)malloc(sizeof(t_rooms *) * MAX_SIZE);
+	if (!new_path->room)
 		ft_printf_strerror("Memory allocation failure in create_path_node");
-	ft_memset(new_path->path, 0, MAX_SIZE);
-	new_path->path[0] = path_start;
+	ft_memset(new_path->room, 0, MAX_SIZE);
+	new_path->room[0] = path_start;
 	new_path->length = 0;
 	new_path->usage_times = 0;
 	new_path->temp = 0;
@@ -114,12 +114,12 @@ void	store_path_data(t_heads *heads, t_node *node)
 		i = -1;
 		while (++i < MAX_SIZE)
 		{
-			if (temp_path->path[i + 1] == NULL)
+			if (temp_path->room[i + 1] == NULL)
 			{
-				if (temp_path->path[i]->end == false)
+				if (temp_path->room[i]->end == false)
 				{
-					temp_path->path[i + 1] = create_path_node \
-						(heads->room_array[node->id], temp_path->path[i]);
+					temp_path->room[i + 1] = create_path_node \
+						(heads->room_array[node->id], temp_path->room[i]);
 					temp_path->length++;
 					return ;
 				}
