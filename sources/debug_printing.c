@@ -6,7 +6,7 @@
 /*   By: sam <sam@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/16 16:29:43 by swilliam          #+#    #+#             */
-/*   Updated: 2023/02/08 15:08:02 by sam              ###   ########.fr       */
+/*   Updated: 2023/02/08 15:36:43 by sam              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,22 +29,19 @@ void	print_rooms(t_heads *heads)
 		{
 			if (heads->room[i] == NULL)
 				break ;
-			ft_printf("[%d]: %s\n", heads->room[i]->id, heads->room[i]->name);
-			ft_printf("x: %d\ny: %d\n", heads->room[i]->coord_x, heads->room[i]->coord_y);
-			ft_printf("Start? %d\nEnd? %d\n", heads->room[i]->start, heads->room[i]->end);
+			ft_printf("ID: %d: Name: %s\n", heads->room[i]->id, heads->room[i]->name);
+			ft_printf("x: %d\ny: %d\n", heads->room[i]->x, heads->room[i]->y);
+			ft_printf("Start? %d\n", heads->room[i]->start);
+			ft_printf("End? %d\n", heads->room[i]->end);
 			x = -1;
 			ft_printf("Links:\n");
 			while (++x < MAX_SIZE)
 			{
 				if (heads->room[i]->links[x] == NULL)
 					break ;
-				ft_printf("%s", heads->room[i]->links[x]->name);
-				if (heads->room[i]->links[x + 1] == NULL)
-					ft_printf("\n");
-				else
-					ft_printf(", ");
+				ft_printf("%s ", heads->room[i]->links[x]->name);
 			}
-			ft_printf("\n");
+			ft_printf("\n\n");
 		}
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: sam <sam@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/03 11:56:26 by swilliam          #+#    #+#             */
-/*   Updated: 2023/02/08 15:29:09 by sam              ###   ########.fr       */
+/*   Updated: 2023/02/08 15:35:45 by sam              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@
 // INPUT: Prints the contents of the file being input into the program.
 # define INPUT 0
 // ROOMS: Prints all rooms and all relevant data.
-# define ROOMS 0
+# define ROOMS 1
 // PATHS: Prints all paths found from start to end.
 # define PATHS 0
 // SOLUTIONS:
@@ -63,8 +63,8 @@ typedef struct rooms
 	bool			visited;
 	int				is_room;
 	int				ants;
-	int				coord_x;
-	int				coord_y;
+	int				x;
+	int				y;
 	struct rooms	**links;
 	struct rooms	*next;
 	struct rooms	*previous;
