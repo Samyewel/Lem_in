@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   backtrack_rooms.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: swilliam <swilliam@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sam <sam@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/08 17:28:33 by swilliam          #+#    #+#             */
-/*   Updated: 2023/02/07 16:53:29 by swilliam         ###   ########.fr       */
+/*   Updated: 2023/02/08 14:23:40 by sam              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ static void	store_stack_reverse(t_heads *heads, t_node *current)
 {
 	if (current->next)
 		store_stack_reverse(heads, current->next);
-	if (heads->room_array[current->id]->start)
+	if (heads->room[current->id]->start)
 		create_new_path(heads, current);
 	else
 		store_path_data(heads, current);
@@ -53,26 +53,26 @@ static void	store_stack_reverse(t_heads *heads, t_node *current)
 static void	trace_path(
 t_heads *heads,
 bool *visited,
-int current_room)
+int current)
 {
 	int	i;
 
 	i = -1;
-	push(heads->stack, heads->room_array[current_room]);
-	visited[heads->room_array[current_room]->id] = true;
-	if (heads->room_array[current_room]->end)
+	push(heads->stack, heads->room[current]);
+	visited[heads->room[current]->id] = true;
+	if (heads->room[current]->end)
 		store_stack_reverse(heads, heads->stack->nodes);
 	else
 	{
 		while (++i < MAX_SIZE)
 		{
-			if (heads->room_array[current_room]->links[i] == NULL)
+			if (heads->room[current]->links[i] == NULL)
 				break ;
-			if (!is_visited(visited, heads->room_array[current_room]->links[i]))
-				trace_path(heads, visited, heads->room_array[current_room]->links[i]->id);
+			if (!is_visited(visited, heads->room[current]->links[i]))
+				trace_path(heads, visited, heads->room[current]->links[i]->id);
 		}
 	}
-	visited[current_room] = false;
+	visited[current] = false;
 	pop(heads->stack);
 }
 
@@ -100,6 +100,6 @@ void	backtrack_rooms(t_data *data, t_heads *heads)
 	ft_memset(visited, false, data->room_count);
 	trace_path(heads, visited, start_room);
 	free(visited);
-	if (heads->paths == NULL)
+	if (heads->path_list == NULL)
 		ft_printf_strerror("No paths found.");
 }

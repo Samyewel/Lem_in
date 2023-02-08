@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   room_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: swilliam <swilliam@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sam <sam@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/21 13:53:38 by swilliam          #+#    #+#             */
-/*   Updated: 2023/02/07 16:41:16 by swilliam         ###   ########.fr       */
+/*   Updated: 2023/02/08 14:22:26 by sam              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,9 +24,9 @@ int	find_start_room(t_heads *heads)
 	i = -1;
 	while (++i < MAX_SIZE)
 	{
-		if (heads->room_array[i] == NULL)
+		if (heads->room[i] == NULL)
 			return (-1);
-		if (heads->room_array[i]->start == true)
+		if (heads->room[i]->start == true)
 			return (i);
 	}
 	return (-1);
@@ -44,9 +44,9 @@ int	find_end_room(t_heads *heads)
 	i = -1;
 	while (++i < MAX_SIZE)
 	{
-		if (heads->room_array[i] == NULL)
+		if (heads->room[i] == NULL)
 			return (-1);
-		if (heads->room_array[i]->end == true)
+		if (heads->room[i]->end == true)
 			return (i);
 	}
 	return (-1);

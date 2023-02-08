@@ -6,7 +6,7 @@
 /*   By: sam <sam@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/16 16:29:43 by swilliam          #+#    #+#             */
-/*   Updated: 2023/02/08 12:22:36 by sam              ###   ########.fr       */
+/*   Updated: 2023/02/08 14:27:58 by sam              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,22 +39,21 @@ void	print_rooms(t_heads *heads)
 	i = -1;
 	if (DEBUG == true && ROOMS == true)
 	{
-		ft_printf("Printing rooms...\n");
 		while (++i < MAX_SIZE)
 		{
-			if (heads->room_array[i] == NULL)
+			if (heads->room[i] == NULL)
 				break ;
-			ft_printf("[%d]: %s\n", heads->room_array[i]->id, heads->room_array[i]->name);
-			ft_printf("x: %d\ny: %d\n", heads->room_array[i]->coord_x, heads->room_array[i]->coord_y);
-			ft_printf("Start? %d\nEnd? %d\n", heads->room_array[i]->start, heads->room_array[i]->end);
+			ft_printf("[%d]: %s\n", heads->room[i]->id, heads->room[i]->name);
+			ft_printf("x: %d\ny: %d\n", heads->room[i]->coord_x, heads->room[i]->coord_y);
+			ft_printf("Start? %d\nEnd? %d\n", heads->room[i]->start, heads->room[i]->end);
 			x = -1;
 			ft_printf("Links:\n");
 			while (++x < MAX_SIZE)
 			{
-				if (heads->room_array[i]->links[x] == NULL)
+				if (heads->room[i]->links[x] == NULL)
 					break ;
-				ft_printf("%s", heads->room_array[i]->links[x]->name);
-				if (heads->room_array[i]->links[x + 1] == NULL)
+				ft_printf("%s", heads->room[i]->links[x]->name);
+				if (heads->room[i]->links[x + 1] == NULL)
 					ft_printf("\n");
 				else
 					ft_printf(", ");
@@ -71,7 +70,7 @@ void	print_path(t_paths *path)
 	i = -1;
 	if (DEBUG == true && PATHS == true)
 	{
-		ft_printf("Path %d [%d] ", path->nb, path->length);
+		ft_printf("Path[%d], Length: %d ", path->nb, path->length);
 		while (++i < MAX_SIZE)
 		{
 			if (path->room[i] == NULL)
@@ -84,7 +83,7 @@ void	print_path(t_paths *path)
 	}
 }
 
-void	print_paths(t_heads *heads)
+void	print_paths(t_paths **paths)
 {
 	int	i;
 
@@ -93,9 +92,9 @@ void	print_paths(t_heads *heads)
 	{
 		while (++i < MAX_SIZE)
 		{
-			if (heads->path_array[i] == NULL)
+			if (paths[i] == NULL)
 				return ;
-			print_path(heads->path_array[i]);
+			print_path(paths[i]);
 		}
 	}
 }
@@ -109,13 +108,18 @@ void	print_solution(t_solutions *solution)
 	{
 		ft_printf("Solution[%d], length: %d, Paths:\n", \
 			solution->nb, solution->total_length);
-		while (++i < MAX_SIZE)
+		if (solution->paths == NULL)
 		{
-			if (solution->path_indexes[i] >= 0)
-				ft_printf("%d ", solution->path_indexes[i]);
-			else
-				break ;
+			while (++i < MAX_SIZE)
+			{
+				if (solution->path_indexes[i] >= 0)
+					ft_printf("%d ", solution->path_indexes[i]);
+				else
+					break ;
+			}
+			ft_printf("\n");
 		}
-		ft_printf("\n");
+		else
+			print_paths(solution->paths);
 	}
 }

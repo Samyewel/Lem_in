@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lem_in.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: swilliam <swilliam@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sam <sam@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/03 11:56:26 by swilliam          #+#    #+#             */
-/*   Updated: 2023/02/07 17:11:04 by swilliam         ###   ########.fr       */
+/*   Updated: 2023/02/08 14:20:44 by sam              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ typedef struct paths
 	int				length;
 	int				usage_times;
 	int				temp;
-	struct rooms	**path;
+	struct rooms	**room;
 	struct paths	*next;
 	struct paths	*previous;
 }				t_paths;
@@ -90,7 +90,7 @@ typedef struct solutions
 	int					path_count;
 	int					total_length;
 	struct paths		*temp_previous;
-	struct paths		*paths;
+	struct paths		**paths;
 	struct solutions	*next;
 }				t_solutions;
 
@@ -107,11 +107,11 @@ typedef struct ants
 typedef struct heads
 {
 	struct data			*data;
-	struct rooms		*rooms;
-	struct rooms		**room_array;
+	struct rooms		*room_list;
+	struct rooms		**room;
 	struct stack		*stack;
-	struct paths		*paths;
-	struct paths		**path_array;
+	struct paths		*path_list;
+	struct paths		**path;
 	struct solutions	**solutions;
 	struct ants			*ants;
 }				t_heads;
@@ -137,7 +137,7 @@ typedef struct stack
 // Debugging:
 void		print_data(t_data *data);
 void		print_rooms(t_heads *heads);
-void		print_paths(t_heads *heads);
+void		print_paths(t_paths **paths);
 void		print_path(t_paths *path);
 void		print_solution(t_solutions *solution);
 

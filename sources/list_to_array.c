@@ -6,7 +6,7 @@
 /*   By: sam <sam@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/06 12:44:02 by sam               #+#    #+#             */
-/*   Updated: 2023/02/06 14:35:42 by sam              ###   ########.fr       */
+/*   Updated: 2023/02/08 14:16:11 by sam              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ t_rooms	**room_list_to_array(t_heads *heads)
 	int		i;
 
 	array = NULL;
-	temp_room = heads->rooms;
+	temp_room = heads->room_list;
 	i = -1;
 	array = (t_rooms **)malloc(sizeof(t_rooms *) * MAX_SIZE);
 	if (!array)
@@ -40,7 +40,7 @@ t_paths	**path_list_to_array(t_heads *heads)
 	int		i;
 
 	array = NULL;
-	temp_path = heads->paths;
+	temp_path = heads->path_list;
 	i = -1;
 	array = (t_paths **)malloc(sizeof(t_rooms *) * MAX_SIZE);
 	if (!array)

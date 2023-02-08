@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: swilliam <swilliam@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sam <sam@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/07 16:16:16 by swilliam          #+#    #+#             */
-/*   Updated: 2023/02/07 17:08:40 by swilliam         ###   ########.fr       */
+/*   Updated: 2023/02/08 14:21:35 by sam              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,10 +50,10 @@ static t_heads	*initialise_heads(t_data *data, t_heads *heads)
 	if (!heads)
 		return (NULL);
 	heads->data = data;
-	heads->rooms = NULL;
-	heads->room_array = NULL;
-	heads->paths = NULL;
-	heads->path_array = NULL;
+	heads->room_list = NULL;
+	heads->room = NULL;
+	heads->path_list = NULL;
+	heads->path = NULL;
 	heads->solutions = NULL;
 	heads->ants = NULL;
 	heads->stack = NULL;
@@ -78,17 +78,18 @@ int	main(void)
 		ft_printf_strerror("Memory allocation failure in main.");
 	read_input(data, heads);
 	print_data(data);
-	heads->room_array = room_list_to_array(heads);
-	if (!heads->room_array)
+	heads->room = room_list_to_array(heads);
+	if (!heads->room)
 		ft_printf_strerror("Memory allocation failure in main");
 	backtrack_rooms(data, heads);
-	heads->path_array = path_list_to_array(heads);
-	if (!heads->path_array)
+	heads->path = path_list_to_array(heads);
+	if (!heads->path)
 		ft_printf_strerror("Memory allocation failure in main");
+	//print_rooms(heads);
 	backtrack_paths(data, heads);
 	store_solution(data, heads);
-	calculate_path_usage_times(data);
-	ant_mover(heads, data);
+	// calculate_path_usage_times(data);
+	// ant_mover(heads, data);
 	ft_printf("\nLine count = %d\n", data->line_count);
 	clean_path_list(heads);
 	if (DEBUG == true && LEAKS == true) // REMOVE BEFORE SUBMISSION

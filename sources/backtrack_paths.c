@@ -6,7 +6,7 @@
 /*   By: sam <sam@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/26 17:00:15 by sam               #+#    #+#             */
-/*   Updated: 2023/02/08 12:23:02 by sam              ###   ########.fr       */
+/*   Updated: 2023/02/08 14:26:04 by sam              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ int i
 ** -
 */
 
-static int	paths_intersect(
+static int	intersect(
 t_heads *heads,
 int node_id,
 t_solutions *solution)
@@ -81,7 +81,8 @@ t_solutions *solution)
 			{
 				if (temp_path->room[x] == NULL)
 					break ;
-				if (temp_path->room[x]->id == node_id)
+				if (temp_path->room[x]->is_room \
+				&& temp_path->room[x]->id == node_id)
 					return (1);
 			}
 		}
@@ -98,28 +99,33 @@ t_solutions *solution)
 
 static void	check_intersections(t_heads *heads, t_solutions *solution, int nb)
 {
-	int	i;
-	int	x;
-	bool	add;
+	int		i;
+	int		x;
+	bool	b;
 
 	i = -1;
 	while (++i < MAX_SIZE)
 	{
-		if (heads->path_array[i] == NULL)
+		if (heads->path[i] == NULL)
 			break ;
-		add = false;
-		x = -1;
-		while (++x < MAX_SIZE && nb != heads->path_array[i]->nb)
+		if (heads->path[i]->nb != nb)
 		{
-			if (heads->path_array[i]->room[x]->is_room)
+			x = -1;
+			intersect = false;
+			while (++x < MAX_SIZE)
 			{
-				add = (!paths_intersect(heads, heads->path_array[i]->room[x]->id, solution));
-				if (add == false)
+				if (heads->path[i]->room[x] == NULL)
 					break ;
+				if (heads->path[i]->room[x]->is_room)
+				{
+					intersect = intersect(heads, heads->path[i]->room[x]->id, solution);
+					if (intersect == true)
+						break ;
+				}
 			}
+			if (intersect == false)
+				add_to_solution(solution, heads->path[i]);
 		}
-		if (add == true)
-			add_to_solution(solution, heads->path_array[i]);
 	}
 }
 
@@ -144,12 +150,13 @@ void	backtrack_paths(t_data *data, t_heads *heads)
 	{
 		while (++i < MAX_SIZE)
 		{
-			if (heads->path_array[i] == NULL)
+			if (heads->path[i] == NULL)
 				break ;
-			heads->solutions[i] = create_solution(heads, heads->path_array[i], i);
-			check_intersections(heads, heads->solutions[i], heads->path_array[i]->nb);
+			heads->solutions[i] = create_solution(heads, heads->path[i], i);
+			check_intersections(heads, heads->solutions[i], heads->path[i]->nb);
 			if (heads->solutions[i]->path_count > 1)
 				sort_solution_array(heads, heads->solutions[i]->path_indexes);
+			print_solution(heads->solutions[i]);
 		}
 	}
 }

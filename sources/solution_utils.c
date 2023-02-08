@@ -6,7 +6,7 @@
 /*   By: sam <sam@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/03 16:17:07 by swilliam          #+#    #+#             */
-/*   Updated: 2023/02/06 15:22:15 by sam              ###   ########.fr       */
+/*   Updated: 2023/02/08 14:22:49 by sam              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,10 +23,10 @@ t_paths	*find_shortest_path(t_data *data, t_heads *heads)
 	i = -1;
 	while (++i < data->path_count)
 	{
-		if (heads->path_array[i]->length < shortest_length)
+		if (heads->path[i]->length < shortest_length)
 		{
-			shortest_length = heads->path_array[i]->length;
-			shortest_path = heads->path_array[i];
+			shortest_length = heads->path[i]->length;
+			shortest_path = heads->path[i];
 		}
 	}
 	return (shortest_path);

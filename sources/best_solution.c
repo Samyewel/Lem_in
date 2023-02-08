@@ -6,7 +6,7 @@
 /*   By: sam <sam@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/28 13:05:45 by swilliam          #+#    #+#             */
-/*   Updated: 2023/02/08 12:24:18 by sam              ###   ########.fr       */
+/*   Updated: 2023/02/08 14:09:07 by sam              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,25 +62,24 @@ static t_paths	*create_duplicate_path(t_paths *path, t_paths *previous)
 
 static void	duplicate_path(t_data *data, t_paths *path)
 {
-	t_paths		*temp_path;
-	t_paths		*temp_solution_path;
+	int			i;
 
-	if (data->solution->temp_previous == NULL)
-		temp_path = create_duplicate_path(path, NULL);
-	else
-		temp_path = create_duplicate_path(path, data->solution->temp_previous);
-	temp_solution_path = data->solution->paths;
-	if (!temp_path)
-		ft_printf_strerror("Memory allocation failure in duplicate_path.");
-	if (data->solution->paths == NULL)
-		data->solution->paths = temp_path;
-	else
+	i = -1;
+	while (++i < MAX_SIZE)
 	{
-		while (temp_solution_path->next != NULL)
-			temp_solution_path = temp_solution_path->next;
-		temp_solution_path->next = temp_path;
+		if (data->solution->paths[i] == NULL)
+		{
+			if (i == 0)
+				data->solution->paths[i] = create_duplicate_path(path, NULL);
+			else
+				data->solution->paths[i] = \
+				create_duplicate_path(path, data->solution->paths[i - 1]);
+			if (!data->solution->paths[i])
+				ft_printf_strerror("Memory \
+				allocation failure in duplicate_path.");
+			break ;
+		}
 	}
-	data->solution->temp_previous = temp_path;
 }
 
 /*
@@ -97,6 +96,12 @@ static void	store_paths_in_solution(
 
 	temp_path = NULL;
 	i = -1;
+	if (data->solution->paths == NULL)
+		data->solution->paths = (t_paths **)malloc(sizeof (t_paths *) * \
+			MAX_SIZE);
+	if (!data->solution->paths)
+		ft_printf_strerror("Memory allocation failure in \
+			store_paths_in_solution.");
 	while (++i < MAX_SIZE)
 	{
 		if (data->solution->path_indexes[i] >= 0)
@@ -119,4 +124,5 @@ void	store_solution(t_data *data, t_heads *heads)
 		ft_printf_strerror("No solution found.");
 	data->solution = heads->solutions[solution_index];
 	store_paths_in_solution(heads, data);
+	print_solution(data->solution);
 }

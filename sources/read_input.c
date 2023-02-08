@@ -6,7 +6,7 @@
 /*   By: sam <sam@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/16 14:13:08 by swilliam          #+#    #+#             */
-/*   Updated: 2023/02/06 14:33:45 by sam              ###   ########.fr       */
+/*   Updated: 2023/02/08 14:17:16 by sam              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,17 +73,17 @@ static void	read_rooms(t_data *data, t_heads *heads, char *line, int line_n)
 	t_rooms	*temp;
 
 	room = NULL;
-	temp = heads->rooms;
+	temp = heads->room_list;
 	if (line_n == 0 || (line[0] == 'L' || line[0] == '#'))
 		return ;
 	if (ft_strchr(line, ' ') == NULL && ft_strchr(line, '-') != NULL)
 		return ;
 	if (ft_wordcount(line, ' ') != 3)
 		ft_printf_strerror("Invalid coordinate input.");
-	room = create_room(heads->rooms);
+	room = create_room(heads->room_list);
 	room = store_room_data(data, room, line);
 	if (temp == NULL)
-		heads->rooms = room;
+		heads->room_list = room;
 	else
 	{
 		while (temp->next != NULL)
@@ -115,8 +115,8 @@ static void	read_links(t_heads *heads, char *line, int line_n)
 	line_split = ft_strsplit(line, '-');
 	if (!line_split)
 		ft_printf_strerror("Memory allocation failure in read_links.");
-	store_link(&heads->rooms, line_split[0], line_split[1]);
-	store_link(&heads->rooms, line_split[1], line_split[0]);
+	store_link(&heads->room_list, line_split[0], line_split[1]);
+	store_link(&heads->room_list, line_split[1], line_split[0]);
 	ft_arrdel(line_split);
 }
 
@@ -149,5 +149,4 @@ void	read_input(t_data *data, t_heads *heads)
 		if (line != NULL)
 			ft_strdel(&line);
 	}
-	heads->room_array = room_list_to_array(heads);
 }

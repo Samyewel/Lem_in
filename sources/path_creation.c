@@ -6,7 +6,7 @@
 /*   By: sam <sam@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/21 17:09:45 by swilliam          #+#    #+#             */
-/*   Updated: 2023/02/08 12:23:54 by sam              ###   ########.fr       */
+/*   Updated: 2023/02/08 14:22:01 by sam              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,12 +24,13 @@ static t_rooms	*create_path_node(t_rooms *room, t_rooms *previous)
 	new_node = (t_rooms *)malloc(sizeof(t_rooms));
 	if (!new_node)
 		ft_printf_strerror("Memory allocation failure in create_path_node");
+	new_node->id = room->id;
 	new_node->name = ft_strdup(room->name);
 	new_node->start = room->start;
 	new_node->end = room->end;
-	new_node->is_room = 0 + (room->start == false && room->end == false);
+	new_node->is_room = (room->start == false && room->end == false);
 	new_node->visited = false;
-	new_node->index = 0;
+	new_node->ants = 0;
 	new_node->next = NULL;
 	new_node->previous = previous;
 	return (new_node);
@@ -78,13 +79,13 @@ void	create_new_path(t_heads *heads, t_node *start_node)
 	int		i;
 
 	i = 0;
-	start_room = find_room(heads->room_array, start_node->id);
+	start_room = find_room(heads->room, start_node->id);
 	path_start = create_path_node(start_room, NULL);
-	temp_paths = heads->paths;
-	if (heads->paths == NULL)
+	temp_paths = heads->path_list;
+	if (heads->path_list == NULL)
 	{
-		heads->paths = create_path(heads, 0, path_start);
-		if (!heads->paths)
+		heads->path_list = create_path(heads, 0, path_start);
+		if (!heads->path_list)
 			ft_printf_strerror("Memory allocation failure in create_new_path");
 	}
 	else
@@ -108,7 +109,7 @@ void	store_path_data(t_heads *heads, t_node *node)
 	int		i;
 
 	i = -1;
-	temp_path = heads->paths;
+	temp_path = heads->path_list;
 	while (temp_path)
 	{
 		i = -1;
@@ -119,7 +120,7 @@ void	store_path_data(t_heads *heads, t_node *node)
 				if (temp_path->room[i]->end == false)
 				{
 					temp_path->room[i + 1] = create_path_node \
-						(heads->room_array[node->id], temp_path->room[i]);
+						(heads->room[node->id], temp_path->room[i]);
 					temp_path->length++;
 					return ;
 				}

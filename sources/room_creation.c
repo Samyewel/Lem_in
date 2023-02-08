@@ -6,7 +6,7 @@
 /*   By: sam <sam@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/21 13:53:38 by swilliam          #+#    #+#             */
-/*   Updated: 2023/01/17 11:39:44 by sam              ###   ########.fr       */
+/*   Updated: 2023/02/08 13:37:09 by sam              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ t_rooms	*create_room(t_rooms *room)
 	room->name = NULL;
 	room->start = false;
 	room->end = false;
+	room->is_room = 0;
 	room->ants = 0;
 	room->coord_x = 0;
 	room->coord_y = 0;
@@ -60,5 +61,6 @@ t_rooms	*store_room_data(t_data *data, t_rooms *room, char *line)
 	data->starting_search = false;
 	room->end = data->ending_search;
 	data->ending_search = false;
+	room->is_room = 0 + (room->end == false && room->start == false);
 	return (room);
 }
