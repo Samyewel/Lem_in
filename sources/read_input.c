@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   read_input.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: egaliber <egaliber@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sam <sam@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/16 14:13:08 by swilliam          #+#    #+#             */
-/*   Updated: 2023/02/09 16:15:39 by egaliber         ###   ########.fr       */
+/*   Updated: 2023/02/09 20:23:52 by sam              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,8 +92,10 @@ static void	read_rooms(t_data *data, t_heads *heads, char *line, int line_n)
 	if (ft_strchr(line, ' ') == NULL && ft_strchr(line, '-') != NULL)
 		return ;
 	room_errors(line, data, heads);
-	room = create_room(heads->room_list);
-	room = store_room_data(data, room, line, heads);
+	room = create_room();
+	room = store_room(data, heads, room, line);
+	if (!room)
+		clean_lem_in(heads, "Memory allocation failure in read_rooms.");
 	if (temp == NULL)
 		heads->room_list = room;
 	else

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   best_solution.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: egaliber <egaliber@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sam <sam@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/28 13:05:45 by swilliam          #+#    #+#             */
-/*   Updated: 2023/02/09 16:01:35 by egaliber         ###   ########.fr       */
+/*   Updated: 2023/02/09 19:47:16 by sam              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,8 +61,7 @@ static t_paths	*create_duplicate_path(t_paths *path, t_paths *previous)
 		return (NULL);
 	new_path->nb = path->nb;
 	new_path->length = path->length;
-	new_path->usage_times = path->usage_times;
-	new_path->temp_usage = path->temp_usage;
+	new_path->usage = path->usage;
 	new_path->temp = path->temp;
 	new_path->room = path->room;
 	new_path->next = NULL;
@@ -153,5 +152,7 @@ void	store_solution(t_data *data, t_heads *heads)
 		ft_printf_strerror("No solution found.");
 	data->solution = heads->solution[solution_index];
 	store_paths_in_solution(heads, data);
+	if (DEBUG == true && SOLUTIONS == true)
+		ft_printf("\nBest solution:\n");
 	print_solution(data->solution);
 }

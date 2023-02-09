@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   debug_printing.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: swilliam <swilliam@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sam <sam@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/16 16:29:43 by swilliam          #+#    #+#             */
-/*   Updated: 2023/02/09 12:32:59 by swilliam         ###   ########.fr       */
+/*   Updated: 2023/02/09 20:05:53 by sam              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,10 +29,8 @@ void	print_rooms(t_heads *heads)
 		{
 			if (heads->room[i] == NULL)
 				break ;
-			ft_printf("ID: %d", heads->room[i]->id);
-			ft_printf(" Name: %s\n", heads->room[i]->name);
-			ft_printf("x: %d ", heads->room[i]->y);
-			ft_printf("y: %d\n", heads->room[i]->y);
+			ft_printf("ID: %d ", heads->room[i]->id);
+			ft_printf("Name: %s\n", heads->room[i]->name);
 			ft_printf("Start? %d\n", heads->room[i]->start);
 			ft_printf("End? %d\n", heads->room[i]->end);
 			x = -1;

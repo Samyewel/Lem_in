@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   printing_utils.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: egaliber <egaliber@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sam <sam@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/18 16:19:17 by egaliber          #+#    #+#             */
-/*   Updated: 2023/02/08 23:32:17 by egaliber         ###   ########.fr       */
+/*   Updated: 2023/02/09 19:50:48 by sam              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,15 +16,15 @@ void	give_rest_paths(t_ants *ants, t_paths **paths, t_data *data, int i)
 {
 	ants->room = paths[i]->room;
 	ants->index_end = paths[i]->length;
-	paths[i]->usage_times--;
+	paths[i]->usage--;
 	paths[i]->temp++;
-	if (paths[i]->usage_times == 0)
+	if (paths[i]->usage == 0)
 		data->counter++;
 }
 
 void	first_move(t_ants *ants, t_paths **paths, t_data *data, int i)
 {
-	while (data->counter < data->solution->path_count \
+	while (data->counter < data->solution->paths_used \
 			&& ants->has_moved == false && ants->has_finished == false)
 	{
 		ants->index++;
@@ -36,10 +36,10 @@ void	first_move(t_ants *ants, t_paths **paths, t_data *data, int i)
 		}
 		if (paths[i]->temp == 0)
 		{
-			data->solution->path_count--;
+			data->solution->paths_used--;
 			data->counter--;
 		}
-		if (i < data->solution->path_count)
+		if (i < data->solution->paths_used)
 			i++;
 		else
 			i = 0;

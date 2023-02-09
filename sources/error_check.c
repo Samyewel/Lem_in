@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   error_check.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: egaliber <egaliber@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sam <sam@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/06 12:50:45 by egaliber          #+#    #+#             */
-/*   Updated: 2023/02/09 15:22:28 by egaliber         ###   ########.fr       */
+/*   Updated: 2023/02/09 19:53:59 by sam              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,10 +48,9 @@ void	verify_rooms(t_heads *heads, t_data *data)
 {
 	t_rooms	**temp;
 	int		counter;
-	int 	i;
+	int		i;
 
 	i = 0;
-
 	counter = 0;
 	temp = heads->room;
 	while (i < data->room_count)

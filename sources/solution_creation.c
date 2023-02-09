@@ -6,7 +6,7 @@
 /*   By: sam <sam@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/27 15:09:20 by sam               #+#    #+#             */
-/*   Updated: 2023/02/08 15:20:50 by sam              ###   ########.fr       */
+/*   Updated: 2023/02/09 19:46:27 by sam              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ t_solutions	*initialise_solution(t_paths *path)
 	new_solution->path_indexes[0] = path->nb;
 	new_solution->nb = path->nb;
 	new_solution->path_count = 1;
+	new_solution->paths_used = 0;
 	new_solution->path = NULL;
 	new_solution->total_length = (0 + path->length);
 	new_solution->next = NULL;

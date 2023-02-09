@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   printer.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: swilliam <swilliam@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sam <sam@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/18 16:16:43 by egaliber          #+#    #+#             */
-/*   Updated: 2023/02/09 12:35:48 by swilliam         ###   ########.fr       */
+/*   Updated: 2023/02/09 19:54:37 by sam              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,10 +15,9 @@
 
 void	printer(t_heads *heads, t_data *data)
 {
-	int i;
-
 	t_paths	**paths;
 	t_ants	*ants;
+	int		i;
 
 	ants = heads->ants;
 	paths = data->solution->path;
@@ -46,14 +45,14 @@ void	give_ants_paths(t_ants *ants, t_data *data, \
 						t_heads *heads)
 {
 	t_paths	**paths;
-	int i;
+	int		i;
 
 	paths = data->solution->path;
 	ants = heads->ants;
-	while (data->counter < data->solution->path_count)
+	while (data->counter < data->solution->paths_used)
 	{
 		i = 0;
-		while (i < data->solution->path_count)
+		while (i < data->solution->paths_used)
 		{
 			give_rest_paths(ants, paths, data, i);
 			i++;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: egaliber <egaliber@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sam <sam@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/07 16:16:16 by swilliam          #+#    #+#             */
-/*   Updated: 2023/02/09 16:03:55 by egaliber         ###   ########.fr       */
+/*   Updated: 2023/02/09 20:44:07 by sam              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,13 +82,11 @@ int	main(void)
 		ft_printf_strerror("Memory allocation failure in main.");
 	read_input(data, heads);
 	room_list_to_array(heads);
-	print_rooms(heads);
 	backtrack_rooms(data, heads);
 	path_list_to_array(heads);
-	print_paths(heads->path);
 	backtrack_paths(data, heads);
 	store_solution(data, heads);
-	calculate_path_usage_times(data);
+	calculate_usage(data, heads, data->solution);
 	ant_mover(heads, data);
 	//ft_printf("\nLine count = %d\n", data->line_count);
 	if (DEBUG == true && LEAKS == true) // REMOVE BEFORE SUBMISSION

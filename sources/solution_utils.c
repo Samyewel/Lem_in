@@ -3,34 +3,19 @@
 /*                                                        :::      ::::::::   */
 /*   solution_utils.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: swilliam <swilliam@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sam <sam@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/03 16:17:07 by swilliam          #+#    #+#             */
-/*   Updated: 2023/02/09 15:27:03 by swilliam         ###   ########.fr       */
+/*   Updated: 2023/02/09 20:51:16 by sam              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lem_in.h"
 
-t_paths	*shortest_path(t_data *data, t_heads *heads)
-{
-	t_paths	*shortest_path;
-	int		shortest_length;
-	int		i;
-
-	shortest_length = INT_MAX;
-	shortest_path = 0;
-	i = -1;
-	while (++i < data->path_count)
-	{
-		if (heads->path[i]->length < shortest_length)
-		{
-			shortest_length = heads->path[i]->length;
-			shortest_path = heads->path[i];
-		}
-	}
-	return (shortest_path);
-}
+/*
+** sort_solution:
+** - Sorts the solution path index array in ascending length order.
+*/
 
 void	sort_solution(t_heads *heads, int *array)
 {
@@ -60,45 +45,87 @@ void	sort_solution(t_heads *heads, int *array)
 	}
 }
 
-static int	test_round(t_data *data)
+static void	reset_usage(t_solutions *solution)
 {
-	int	most_moves;
 	int	i;
 
 	i = -1;
-	most_moves = 0;
-	while (++i < data->solution->path_count)
+	while (++i < solution->path_count)
 	{
-		if (data->solution->path[i]->temp_usage > 0)
-		{
-			if (data->solution->path[i]->length + data->solution->path[i]->temp_usage > most_moves)
-				most_moves = data->solution->path[i]->length + data->solution->path[i]->temp_usage;
-		}
-
+		if (solution->path[i]->usage != 0)
+			solution->path[i]->usage = 0;
 	}
-	return (most_moves);
 }
 
-void	calculate_usage_times(t_data *data)
+static int	longest_move(int *turns, int path_count)
+{
+	int	most_turns;
+	int	i;
+
+	most_turns = 0;
+	i = -1;
+	while (++i < path_count)
+	{
+		if (most_turns < turns[i])
+			most_turns = turns[i];
+	}
+	return (most_turns);
+}
+
+static int	distribute_usage(
+	t_data *data,
+	t_heads *heads,
+	t_solutions *solution,
+	int path_count)
 {
 	int	i;
-	int	best;
-	int	moves;
+	int	*turns;
+	int	ants_left;
 
-	i = -1;
-	moves = 0;
-	best = INT_MAX;
-	data->solution->path[0]->temp_usage = data->ant_count;
-	if (data->solution->path_count > 1)
+	turns = (int *)malloc(sizeof(int) * path_count);
+	if (!turns)
+		clean_lem_in(heads, "Memory allocation failure in distribute_usage");
+	ants_left = data->ant_count;
+	reset_usage(solution);
+	while (ants_left > 0)
 	{
 		i = -1;
-		while (++i < data->ant_count)
+		while (++i < path_count)
+			turns[i] = solution->path[i]->length + solution->path[i]->usage;
+		i = -1;
+		while (++i < path_count && ants_left > 0)
 		{
-			moves = test_round(data);
-			if (moves > 0 && moves < best)
-			 	best = moves;
+			if (solution->path[i]->usage < turns[i])
+			{
+				solution->path[i]->usage++;
+				ants_left--;
+			}
 		}
-		print_solution(data->solution);
-		ft_printf("Best moves = %d\n", best);
 	}
+	return (longest_move(turns, path_count));
+}
+
+void	calculate_usage(t_data *data, t_heads *heads, t_solutions *solution)
+{
+	int	i;
+
+	i = -1;
+	ft_printf("\nCalculating usage with %d ants.\n", data->ant_count);
+	if (data->ant_count == 1 || solution->path_count == 1)
+	{
+		solution->path[0]->usage = data->ant_count;
+		return ;
+	}
+	while (++i < solution->path_count)
+	{
+		++solution->paths_used;
+		if (solution->path[i + 1] != NULL && \
+		distribute_usage(data, heads, solution, solution->paths_used + 1) > \
+		distribute_usage(data, heads, solution, solution->paths_used))
+			break ;
+	}
+	i = -1;
+	while (++i < data->solution->path_count)
+		ft_printf("Path %d used %d times.\n", \
+		data->solution->path[i]->nb, data->solution->path[i]->usage);
 }

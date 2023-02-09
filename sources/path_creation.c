@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   path_creation.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: egaliber <egaliber@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sam <sam@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/21 17:09:45 by swilliam          #+#    #+#             */
-/*   Updated: 2023/02/09 16:19:40 by egaliber         ###   ########.fr       */
+/*   Updated: 2023/02/09 20:41:41 by sam              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 **   path later.
 */
 
-static t_rooms	*create_path_node(t_rooms *room, t_rooms *previous, t_heads *heads)
+static t_rooms	*create_path_node(t_rooms *room, t_rooms *prev, t_heads *heads)
 {
 	t_rooms	*new_node;
 
@@ -33,7 +33,7 @@ static t_rooms	*create_path_node(t_rooms *room, t_rooms *previous, t_heads *head
 	new_node->visited = false;
 	new_node->ants = 0;
 	new_node->next = NULL;
-	new_node->previous = previous;
+	new_node->previous = prev;
 	return (new_node);
 }
 
@@ -60,7 +60,7 @@ t_rooms *path_start)
 	ft_memset(new_path->room, 0, MAX_SIZE);
 	new_path->room[0] = path_start;
 	new_path->length = 0;
-	new_path->usage_times = 0;
+	new_path->usage = 0;
 	new_path->temp = 0;
 	new_path->next = NULL;
 	heads->data->path_count++;

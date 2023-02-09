@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lem_in.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: egaliber <egaliber@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sam <sam@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/03 11:56:26 by swilliam          #+#    #+#             */
-/*   Updated: 2023/02/09 16:21:28 by egaliber         ###   ########.fr       */
+/*   Updated: 2023/02/09 20:44:32 by sam              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,8 +80,7 @@ typedef struct paths
 {
 	int				nb;
 	int				length;
-	int				usage_times;
-	int				temp_usage;
+	int				usage;
 	int				temp;
 	struct rooms	**room;
 	struct paths	*next;
@@ -93,6 +92,7 @@ typedef struct solutions
 	int					nb;
 	int					*path_indexes;
 	int					path_count;
+	int					paths_used;
 	int					total_length;
 	struct paths		*temp_previous;
 	struct paths		**path;
@@ -151,8 +151,8 @@ void		print_solution(t_solutions *solution);
 void		read_input(t_data *data, t_heads *heads);
 
 // Rooms
-t_rooms		*create_room(t_rooms *rooms);
-t_rooms		*store_room_data(t_data *data, t_rooms *rooms, char *line, t_heads *heads);
+t_rooms		*create_room(void);
+t_rooms		*store_room(t_data *data, t_heads *heads, t_rooms *room, char *line);
 int			find_start_room(t_heads *heads);
 int			find_end_room(t_heads *heads);
 t_rooms		*find_room(t_rooms **rooms, int room_id);
@@ -174,7 +174,8 @@ t_paths		*shortest_path(t_data *data, t_heads *heads);
 // Solutions
 t_solutions	*initialise_solution(t_paths *path);
 void		store_solution(t_data *data, t_heads *heads);
-void		calculate_path_usage_times(t_data *data);
+void		calculate_usage(t_data *data, t_heads *heads, \
+			t_solutions *solution);
 void		sort_solution(t_heads *heads, int *array);
 t_solutions	**initialise_solutions(t_data *data);
 
