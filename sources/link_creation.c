@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   link_creation.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sam <sam@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: egaliber <egaliber@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/21 17:00:10 by swilliam          #+#    #+#             */
-/*   Updated: 2023/02/08 15:35:22 by sam              ###   ########.fr       */
+/*   Updated: 2023/02/09 16:14:53 by egaliber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 **   to.
 */
 
-void	store_link(t_rooms **rooms, char *link_a, char *link_b)
+void	store_link(t_rooms **rooms, char *link_a, char *link_b, t_heads *heads)
 {
 	t_rooms	*temp_room;
 	t_rooms	*temp_link;
@@ -28,12 +28,12 @@ void	store_link(t_rooms **rooms, char *link_a, char *link_b)
 	temp_room = find_room_name(rooms, link_a);
 	temp_link = find_room_name(rooms, link_b);
 	if (!temp_room || !temp_link)
-		ft_printf_strerror("Invalid link name");
+		clean_lem_in(heads, "Invalid link name");
 	if (temp_room->links == NULL)
 	{
 		temp_room->links = (t_rooms **)malloc(sizeof(t_rooms *) * MAX_SIZE);
 		if (!temp_room->links)
-			ft_printf_strerror("Memory allocation failure in store_link");
+			clean_lem_in(heads, "Memory allocation failure in store_link");
 		ft_memset(temp_room->links, 0, MAX_SIZE);
 		temp_room->links[0] = temp_link;
 	}
@@ -44,3 +44,4 @@ void	store_link(t_rooms **rooms, char *link_a, char *link_b)
 		temp_room->links[i] = temp_link;
 	}
 }
+

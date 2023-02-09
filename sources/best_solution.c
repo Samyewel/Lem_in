@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   best_solution.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: swilliam <swilliam@student.42.fr>          +#+  +:+       +#+        */
+/*   By: egaliber <egaliber@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/28 13:05:45 by swilliam          #+#    #+#             */
-/*   Updated: 2023/02/09 14:06:41 by swilliam         ###   ########.fr       */
+/*   Updated: 2023/02/09 16:01:35 by egaliber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,7 +121,7 @@ static void	store_paths_in_solution(
 		data->solution->path = (t_paths **)malloc(sizeof (t_paths *) * \
 			MAX_SIZE);
 	if (!data->solution->path)
-		ft_printf_strerror("Memory allocation failure in \
+		clean_lem_in(heads, "Memory allocation failure in \
 			store_paths_in_solution.");
 	while (++i < MAX_SIZE)
 	{

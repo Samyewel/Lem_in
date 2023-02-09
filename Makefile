@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: sam <sam@student.42.fr>                    +#+  +:+       +#+         #
+#    By: egaliber <egaliber@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/11/05 13:26:33 by swilliam          #+#    #+#              #
-#    Updated: 2023/02/06 12:53:56 by sam              ###   ########.fr        #
+#    Updated: 2023/02/09 16:22:28 by egaliber         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,6 +24,8 @@ solution_creation.c solution_utils.c \
 dfs_stack.c best_solution.c \
 printer.c printing_utils.c \
 ant_creation.c list_to_array.c \
+error_check.c error_check2.c \
+utils.c
 
 # Libft
 LIBFT_DIR = ./libft/

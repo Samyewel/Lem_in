@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   list_to_array.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sam <sam@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: egaliber <egaliber@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/06 12:44:02 by sam               #+#    #+#             */
-/*   Updated: 2023/02/08 15:04:58 by sam              ###   ########.fr       */
+/*   Updated: 2023/02/09 16:03:13 by egaliber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ void	room_list_to_array(t_heads *heads)
 	i = -1;
 	array = (t_rooms **)malloc(sizeof(t_rooms *) * MAX_SIZE);
 	if (!array)
-		ft_printf_strerror("Memory allocation failure in path_list_to_array");
+		clean_lem_in(heads, "Memory allocation failure in path_list_to_array");
 	ft_memset(array, 0, MAX_SIZE);
 	while (temp_room)
 	{
@@ -56,7 +56,7 @@ void	path_list_to_array(t_heads *heads)
 	i = -1;
 	array = (t_paths **)malloc(sizeof(t_rooms *) * MAX_SIZE);
 	if (!array)
-		ft_printf_strerror("Memory allocation failure in path_list_to_array");
+		clean_lem_in(heads, "Memory allocation failure in path_list_to_array");
 	ft_memset(array, 0, MAX_SIZE);
 	while (temp_path)
 	{

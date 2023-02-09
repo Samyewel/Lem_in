@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lem_in.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: swilliam <swilliam@student.42.fr>          +#+  +:+       +#+        */
+/*   By: egaliber <egaliber@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/03 11:56:26 by swilliam          #+#    #+#             */
-/*   Updated: 2023/02/09 15:22:40 by swilliam         ###   ########.fr       */
+/*   Updated: 2023/02/09 16:21:28 by egaliber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@
 
 # define INT_MAX 2147483647
 # define MAX_SIZE 30000
+# define MAX_ANT 10000
 
 typedef struct data
 {
@@ -49,7 +50,12 @@ typedef struct data
 	int					ant_num;
 	int					counter;
 	bool				starting_search;
+	bool				start_found;
 	bool				ending_search;
+	bool				end_found;
+	bool				links_started;
+	char				*last_link_0;
+	char				*last_link_1;
 	struct solutions	*solution;
 }				t_data;
 
@@ -146,14 +152,14 @@ void		read_input(t_data *data, t_heads *heads);
 
 // Rooms
 t_rooms		*create_room(t_rooms *rooms);
-t_rooms		*store_room_data(t_data *data, t_rooms *rooms, char *line);
+t_rooms		*store_room_data(t_data *data, t_rooms *rooms, char *line, t_heads *heads);
 int			find_start_room(t_heads *heads);
 int			find_end_room(t_heads *heads);
 t_rooms		*find_room(t_rooms **rooms, int room_id);
 t_rooms		*find_room_name(t_rooms **rooms, char *name);
 
 // Links:
-void		store_link(t_rooms **rooms, char *link_a, char *link_b);
+void		store_link(t_rooms **rooms, char *link_a, char *link_b, t_heads *heads);
 
 // Paths:
 void		create_new_path(t_heads *heads, t_node *start_node);
@@ -168,12 +174,12 @@ t_paths		*shortest_path(t_data *data, t_heads *heads);
 // Solutions
 t_solutions	*initialise_solution(t_paths *path);
 void		store_solution(t_data *data, t_heads *heads);
-void		calculate_usage_times(t_data *data);
+void		calculate_path_usage_times(t_data *data);
 void		sort_solution(t_heads *heads, int *array);
 t_solutions	**initialise_solutions(t_data *data);
 
 // DFS
-void		push(t_stack *stack, t_rooms *room);
+void		push(t_stack *stack, t_rooms *room, t_heads *heads);
 t_node		*pop(t_stack *stack);
 
 // Optimisation
@@ -193,5 +199,17 @@ void		first_move(t_ants *ants, t_paths **paths, t_data *data, int i);
 void		send_ants(t_ants *ants, t_data *data, t_paths **paths, int i);
 void		move_ants_already_in_play(t_ants *ants);
 t_ants		*make_ants(t_data *data, t_ants *ants, t_heads *heads);
+
+//Errors
+void		room_errors(char *line, t_data *data, t_heads *heads);
+void		room_store_errors(char **line_split, t_heads *heads);
+void		check_link_errors(char **line_split, t_data *data, t_heads *heads);
+void		verify_rooms(t_heads *heads, t_data *data);
+void		file_errors(t_heads *heads, int line_n, t_data *data);
+void		start_and_end_verify(t_data *data, t_heads *heads);
+void		start_and_end_errors(t_data *data, char *line, t_heads *heads);
+int			ft_is_dash(char *str);
+int			ft_is_space(char *str);
+int			room_check(t_rooms *head, char *name);
 
 #endif

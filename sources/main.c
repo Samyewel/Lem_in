@@ -6,7 +6,7 @@
 /*   By: egaliber <egaliber@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/07 16:16:16 by swilliam          #+#    #+#             */
-/*   Updated: 2023/02/08 23:32:41 by egaliber         ###   ########.fr       */
+/*   Updated: 2023/02/09 16:03:55 by egaliber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,9 +32,13 @@ static t_data	*initialise_data(t_data *data)
 	data->finished = 0;
 	data->ant_num = 0;
 	data->starting_search = false;
+	data->start_found = false;
 	data->ending_search = false;
 	data->solution = NULL;
 	data->counter = 0;
+	data->links_started = false;
+	data->last_link_0 = NULL;
+	data->last_link_1 = NULL;
 	return (data);
 }
 

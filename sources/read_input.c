@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   read_input.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sam <sam@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: egaliber <egaliber@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/16 14:13:08 by swilliam          #+#    #+#             */
-/*   Updated: 2023/02/08 15:22:11 by sam              ###   ########.fr       */
+/*   Updated: 2023/02/09 16:15:39 by egaliber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,14 +19,19 @@
 ** - Stores the number of ants given into a struct.
 */
 
-static void	read_ants(t_data *data, char *line, int line_n)
+static void	read_ants(t_data *data, char *line, int line_n, t_heads *heads)
 {
 	if (line_n == 0)
 	{
 		if (ft_isnumber(line))
-			data->ant_count = ft_atoi(line);
+		{
+			if (ft_atoi(line) <= 0 || ft_atoi(line) > MAX_ANT)
+				clean_lem_in(heads, "Error in ants!");
+			else
+				data->ant_count = ft_atoi(line);
+		}
 		else
-			ft_printf_strerror("No ant count given.");
+			clean_lem_in(heads, "No ant count given!");
 	}
 }
 
@@ -40,18 +45,26 @@ static void	read_ants(t_data *data, char *line, int line_n)
 **   searching for the next line that contains a room.
 */
 
-static void	read_comments(t_data *data, char *line, int line_n)
+static void	read_comments(t_data *data, char *line, int line_n, t_heads *heads)
 {
 	if (line_n == 0)
 		return ;
 	if (line[0] == '#' && line[1] != '#')
+	{
+		if (data->ending_search == true || data->starting_search == true)
+			clean_lem_in(heads, "Invalid comment!");
 		return ;
+	}
 	if (line[0] == '#' && line[1] == '#')
 	{
+		start_and_end_errors(data, line, heads);
 		data->starting_search = (ft_strcmp(line, "##start") == 0);
+		if (data->starting_search == true)
+			data->start_found = true;
 		data->ending_search = (ft_strcmp(line, "##end") == 0);
-		if (data->starting_search && data->ending_search)
-			ft_printf_strerror("Start and end toggles both true.");
+		if (data->ending_search == true)
+			data->end_found = true;
+		start_and_end_verify(data, heads);
 	}
 }
 
@@ -78,10 +91,9 @@ static void	read_rooms(t_data *data, t_heads *heads, char *line, int line_n)
 		return ;
 	if (ft_strchr(line, ' ') == NULL && ft_strchr(line, '-') != NULL)
 		return ;
-	if (ft_wordcount(line, ' ') != 3)
-		ft_printf_strerror("Invalid coordinate input.");
+	room_errors(line, data, heads);
 	room = create_room(heads->room_list);
-	room = store_room_data(data, room, line);
+	room = store_room_data(data, room, line, heads);
 	if (temp == NULL)
 		heads->room_list = room;
 	else
@@ -103,7 +115,7 @@ static void	read_rooms(t_data *data, t_heads *heads, char *line, int line_n)
 **   between the two.
 */
 
-static void	read_links(t_heads *heads, char *line, int line_n)
+static void	read_links(t_heads *heads, char *line, int line_n, t_data *data)
 {
 	char	**line_split;
 
@@ -112,11 +124,15 @@ static void	read_links(t_heads *heads, char *line, int line_n)
 	line_split = NULL;
 	if (ft_strchr(line, '-') == NULL)
 		return ;
+	if (ft_is_dash(line) > 1)
+		clean_lem_in(heads, "Too Many dashes!");
 	line_split = ft_strsplit(line, '-');
-	if (!line_split)
-		ft_printf_strerror("Memory allocation failure in read_links.");
-	store_link(&heads->room_list, line_split[0], line_split[1]);
-	store_link(&heads->room_list, line_split[1], line_split[0]);
+	check_link_errors(line_split, data, heads);
+	store_link(&heads->room_list, line_split[0], line_split[1], heads);
+	store_link(&heads->room_list, line_split[1], line_split[0], heads);
+	data->links_started = true;
+	data->last_link_0 = line_split[0];
+	data->last_link_1 = line_split[1];
 	ft_arrdel(line_split);
 }
 
@@ -139,13 +155,14 @@ void	read_input(t_data *data, t_heads *heads)
 	line_n = 0;
 	while (get_next_line(0, &line))
 	{
-		ft_printf("%s\n", line);
-		read_ants(data, line, line_n);
-		read_comments(data, line, line_n);
+		//ft_printf("%s\n", line);
+		read_ants(data, line, line_n, heads);
+		read_comments(data, line, line_n, heads);
 		read_rooms(data, heads, line, line_n);
-		read_links(heads, line, line_n);
+		read_links(heads, line, line_n, data);
 		line_n++;
 		if (line != NULL)
 			ft_strdel(&line);
 	}
+	file_errors(heads, line_n, data);
 }

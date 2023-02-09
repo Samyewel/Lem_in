@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   clean_data.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: swilliam <swilliam@student.42.fr>          +#+  +:+       +#+        */
+/*   By: egaliber <egaliber@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/28 20:30:16 by sam               #+#    #+#             */
-/*   Updated: 2023/02/09 12:49:07 by swilliam         ###   ########.fr       */
+/*   Updated: 2023/02/09 16:13:49 by egaliber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ void	clean_path_array(t_heads *heads)
 	int	i;
 	int	x;
 
-	i = -1
+	i = -1;
 	while (++i < MAX_SIZE)
 	{
 		if (heads->path[i] == NULL)
@@ -79,14 +79,14 @@ void	clean_path_array(t_heads *heads)
 **   program.
 */
 
-void	clean_lem_in(t_data *data, t_heads *heads, char *str)
+void	clean_lem_in(t_heads *heads, char *str)
 {
-	ft_dprintf(2, "\e[4;31m[ERROR]\e[0m \e[4;37m%s\n\e[0m", str);
+	ft_dprintf(1, str);
 	if (heads->path_list)
 		clean_path_list(heads);
 	// if (heads->rooms)
 	// 	clean_rooms(heads);
-	if (data)
-		ft_printf("");
-	exit(EXIT_FAILURE);
+	//exit(EXIT_FAILURE);
+	exit(1);
 }
+

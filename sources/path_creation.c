@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   path_creation.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: swilliam <swilliam@student.42.fr>          +#+  +:+       +#+        */
+/*   By: egaliber <egaliber@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/21 17:09:45 by swilliam          #+#    #+#             */
-/*   Updated: 2023/02/09 14:06:54 by swilliam         ###   ########.fr       */
+/*   Updated: 2023/02/09 16:19:40 by egaliber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,13 +18,13 @@
 **   path later.
 */
 
-static t_rooms	*create_path_node(t_rooms *room, t_rooms *previous)
+static t_rooms	*create_path_node(t_rooms *room, t_rooms *previous, t_heads *heads)
 {
 	t_rooms	*new_node;
 
 	new_node = (t_rooms *)malloc(sizeof(t_rooms));
 	if (!new_node)
-		ft_printf_strerror("Memory allocation failure in create_path_node");
+		clean_lem_in(heads, "Memory allocation failure in create_path_node");
 	new_node->id = room->id;
 	new_node->name = ft_strdup(room->name);
 	new_node->start = room->start;
@@ -52,16 +52,15 @@ t_rooms *path_start)
 	new_path = NULL;
 	new_path = (t_paths *)malloc(sizeof(t_paths));
 	if (!new_path)
-		ft_printf_strerror("Memory allocation failure in create_path_node");
+		clean_lem_in(heads, "Memory allocation failure in create_path_node");
 	new_path->nb = i;
 	new_path->room = (t_rooms **)malloc(sizeof(t_rooms *) * MAX_SIZE);
 	if (!new_path->room)
-		ft_printf_strerror("Memory allocation failure in create_path_node");
+		clean_lem_in(heads, "Memory allocation failure in create_path_node");
 	ft_memset(new_path->room, 0, MAX_SIZE);
 	new_path->room[0] = path_start;
 	new_path->length = 0;
 	new_path->usage_times = 0;
-	new_path->temp_usage = 0;
 	new_path->temp = 0;
 	new_path->next = NULL;
 	heads->data->path_count++;
@@ -83,13 +82,13 @@ void	create_new_path(t_heads *heads, t_node *start_node)
 
 	i = 0;
 	start_room = find_room(heads->room, start_node->id);
-	path_start = create_path_node(start_room, NULL);
+	path_start = create_path_node(start_room, NULL, heads);
 	temp_paths = heads->path_list;
 	if (heads->path_list == NULL)
 	{
 		heads->path_list = create_path(heads, 0, path_start);
 		if (!heads->path_list)
-			ft_printf_strerror("Memory allocation failure in create_new_path");
+			clean_lem_in(heads, "Memory allocation failure in create_new_path");
 	}
 	else
 	{
@@ -97,7 +96,7 @@ void	create_new_path(t_heads *heads, t_node *start_node)
 			temp_paths = temp_paths->next;
 		temp_paths->next = create_path(heads, i, path_start);
 		if (!temp_paths->next)
-			ft_printf_strerror("Memory allocation failure in create_new_path");
+			clean_lem_in(heads, "Memory allocation failure in create_new_path");
 	}
 }
 
@@ -124,7 +123,7 @@ void	store_path_data(t_heads *heads, t_node *node)
 				if (temp_path->room[i]->end == false)
 				{
 					temp_path->room[i + 1] = create_path_node \
-						(heads->room[node->id], temp_path->room[i]);
+						(heads->room[node->id], temp_path->room[i], heads);
 					temp_path->length++;
 					return ;
 				}

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   backtrack_paths.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: swilliam <swilliam@student.42.fr>          +#+  +:+       +#+        */
+/*   By: egaliber <egaliber@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/26 17:00:15 by sam               #+#    #+#             */
-/*   Updated: 2023/02/09 12:31:45 by swilliam         ###   ########.fr       */
+/*   Updated: 2023/02/09 16:00:00 by egaliber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ int i
 
 	new_solution = initialise_solution(path);
 	if (!new_solution)
-		ft_printf_strerror("Memory allocation failure in create_solution.");
+		clean_lem_in(heads, "Memory allocation failure in create_solution.");
 	if (i > 0)
 		heads->solution[i - 1]->next = new_solution;
 	return (new_solution);
@@ -153,7 +153,7 @@ void	backtrack_paths(t_data *data, t_heads *heads)
 	i = -1;
 	heads->solution = initialise_solutions(data);
 	if (!heads->solution)
-		ft_printf_strerror("Memory allocation failure in backtrack_paths.");
+		clean_lem_in(heads,"Memory allocation failure in backtrack_paths.");
 	if (data->ant_count == 1)
 		heads->solution[0] = create_solution(heads, shortest_path(data, heads), 0);
 	else
