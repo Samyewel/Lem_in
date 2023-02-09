@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   backtrack_rooms.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sam <sam@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: swilliam <swilliam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/08 17:28:33 by swilliam          #+#    #+#             */
-/*   Updated: 2023/02/08 15:06:33 by sam              ###   ########.fr       */
+/*   Updated: 2023/02/09 13:09:48 by swilliam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,8 +58,9 @@ int current)
 	int	i;
 
 	i = -1;
+	//ft_printf("Tracing %s\n", heads->room[current]->name);
 	push(heads->stack, heads->room[current]);
-	visited[heads->room[current]->id] = true;
+	visited[current] = true;
 	if (heads->room[current]->end)
 		store_stack_reverse(heads, heads->stack->nodes);
 	else
@@ -73,6 +74,7 @@ int current)
 		}
 	}
 	visited[current] = false;
+	//ft_printf("Finished tracing %s\n", heads->room[current]->name);
 	pop(heads->stack);
 }
 

@@ -6,7 +6,7 @@
 /*   By: swilliam <swilliam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/03 11:56:26 by swilliam          #+#    #+#             */
-/*   Updated: 2023/02/09 12:41:24 by swilliam         ###   ########.fr       */
+/*   Updated: 2023/02/09 15:22:40 by swilliam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,9 +23,9 @@
 // ROOMS: Prints all rooms and all relevant data.
 # define ROOMS 0
 // PATHS: Prints all paths found from start to end.
-# define PATHS 0
+# define PATHS 1
 // SOLUTIONS:
-# define SOLUTIONS 0
+# define SOLUTIONS 1
 // LEAKS: Prints a memory leak report.
 # define LEAKS 0
 
@@ -75,6 +75,7 @@ typedef struct paths
 	int				nb;
 	int				length;
 	int				usage_times;
+	int				temp_usage;
 	int				temp;
 	struct rooms	**room;
 	struct paths	*next;
@@ -167,7 +168,7 @@ t_paths		*shortest_path(t_data *data, t_heads *heads);
 // Solutions
 t_solutions	*initialise_solution(t_paths *path);
 void		store_solution(t_data *data, t_heads *heads);
-void		calculate_path_usage_times(t_data *data);
+void		calculate_usage_times(t_data *data);
 void		sort_solution(t_heads *heads, int *array);
 t_solutions	**initialise_solutions(t_data *data);
 
@@ -180,7 +181,7 @@ void		room_list_to_array(t_heads *heads);
 void		path_list_to_array(t_heads *heads);
 
 // Data cleaning:
-void		clean_lem_in(t_data *data, t_heads *heads, char *str);
+void		clean_lem_in(t_heads *heads, char *str);
 void		clean_path_list(t_heads *heads);
 void		clean_path_array(t_heads *heads);
 

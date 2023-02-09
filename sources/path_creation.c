@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   path_creation.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sam <sam@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: swilliam <swilliam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/21 17:09:45 by swilliam          #+#    #+#             */
-/*   Updated: 2023/02/08 15:16:48 by sam              ###   ########.fr       */
+/*   Updated: 2023/02/09 14:06:54 by swilliam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,7 @@ t_rooms *path_start)
 	new_path->room[0] = path_start;
 	new_path->length = 0;
 	new_path->usage_times = 0;
+	new_path->temp_usage = 0;
 	new_path->temp = 0;
 	new_path->next = NULL;
 	heads->data->path_count++;

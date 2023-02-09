@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   best_solution.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sam <sam@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: swilliam <swilliam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/28 13:05:45 by swilliam          #+#    #+#             */
-/*   Updated: 2023/02/08 15:27:55 by sam              ###   ########.fr       */
+/*   Updated: 2023/02/09 14:06:41 by swilliam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,7 @@ static t_paths	*create_duplicate_path(t_paths *path, t_paths *previous)
 	new_path->nb = path->nb;
 	new_path->length = path->length;
 	new_path->usage_times = path->usage_times;
+	new_path->temp_usage = path->temp_usage;
 	new_path->temp = path->temp;
 	new_path->room = path->room;
 	new_path->next = NULL;

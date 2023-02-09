@@ -6,7 +6,7 @@
 /*   By: swilliam <swilliam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/03 16:17:07 by swilliam          #+#    #+#             */
-/*   Updated: 2023/02/09 12:41:05 by swilliam         ###   ########.fr       */
+/*   Updated: 2023/02/09 15:27:03 by swilliam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,5 +57,48 @@ void	sort_solution(t_heads *heads, int *array)
 		}
 		if (swapped == 0)
 			i++;
+	}
+}
+
+static int	test_round(t_data *data)
+{
+	int	most_moves;
+	int	i;
+
+	i = -1;
+	most_moves = 0;
+	while (++i < data->solution->path_count)
+	{
+		if (data->solution->path[i]->temp_usage > 0)
+		{
+			if (data->solution->path[i]->length + data->solution->path[i]->temp_usage > most_moves)
+				most_moves = data->solution->path[i]->length + data->solution->path[i]->temp_usage;
+		}
+
+	}
+	return (most_moves);
+}
+
+void	calculate_usage_times(t_data *data)
+{
+	int	i;
+	int	best;
+	int	moves;
+
+	i = -1;
+	moves = 0;
+	best = INT_MAX;
+	data->solution->path[0]->temp_usage = data->ant_count;
+	if (data->solution->path_count > 1)
+	{
+		i = -1;
+		while (++i < data->ant_count)
+		{
+			moves = test_round(data);
+			if (moves > 0 && moves < best)
+			 	best = moves;
+		}
+		print_solution(data->solution);
+		ft_printf("Best moves = %d\n", best);
 	}
 }
