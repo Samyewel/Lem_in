@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   room_creation.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sam <sam@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: swilliam <swilliam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/21 13:53:38 by swilliam          #+#    #+#             */
-/*   Updated: 2023/02/08 13:37:09 by sam              ###   ########.fr       */
+/*   Updated: 2023/02/09 12:33:22 by swilliam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,8 @@ t_rooms	*create_room(t_rooms *room)
 	room->end = false;
 	room->is_room = 0;
 	room->ants = 0;
-	room->coord_x = 0;
-	room->coord_y = 0;
+	room->x = 0;
+	room->y = 0;
 	room->next = NULL;
 	room->links = NULL;
 	return (room);
@@ -54,8 +54,8 @@ t_rooms	*store_room_data(t_data *data, t_rooms *room, char *line)
 	room->name = ft_strdup(line_split[0]);
 	if (!room->name)
 		ft_printf_strerror("Memory allocation failure in store_room_data.");
-	room->coord_x = ft_atoi(line_split[1]);
-	room->coord_y = ft_atoi(line_split[2]);
+	room->x = ft_atoi(line_split[1]);
+	room->y = ft_atoi(line_split[2]);
 	ft_arrdel(line_split);
 	room->start = data->starting_search;
 	data->starting_search = false;

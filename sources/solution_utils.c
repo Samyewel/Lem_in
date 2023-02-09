@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   solution_utils.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sam <sam@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: swilliam <swilliam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/03 16:17:07 by swilliam          #+#    #+#             */
-/*   Updated: 2023/02/08 14:22:49 by sam              ###   ########.fr       */
+/*   Updated: 2023/02/09 12:41:05 by swilliam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lem_in.h"
 
-t_paths	*find_shortest_path(t_data *data, t_heads *heads)
+t_paths	*shortest_path(t_data *data, t_heads *heads)
 {
 	t_paths	*shortest_path;
 	int		shortest_length;
@@ -32,7 +32,7 @@ t_paths	*find_shortest_path(t_data *data, t_heads *heads)
 	return (shortest_path);
 }
 
-void	sort_solution_array(t_heads *heads, int *array)
+void	sort_solution(t_heads *heads, int *array)
 {
 	int		i;
 	int		temp;

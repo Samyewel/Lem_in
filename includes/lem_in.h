@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lem_in.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sam <sam@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: swilliam <swilliam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/03 11:56:26 by swilliam          #+#    #+#             */
-/*   Updated: 2023/02/08 15:35:45 by sam              ###   ########.fr       */
+/*   Updated: 2023/02/09 12:41:24 by swilliam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@
 // INPUT: Prints the contents of the file being input into the program.
 # define INPUT 0
 // ROOMS: Prints all rooms and all relevant data.
-# define ROOMS 1
+# define ROOMS 0
 // PATHS: Prints all paths found from start to end.
 # define PATHS 0
 // SOLUTIONS:
@@ -94,8 +94,10 @@ typedef struct solutions
 
 typedef struct ants
 {
-	struct rooms	*room;
+	struct rooms	**room;
 	int				ant_number;
+	int				index;
+	int				index_end;
 	struct ants		*next;
 	char			*room_location;
 	bool			has_moved;
@@ -184,12 +186,10 @@ void		clean_path_array(t_heads *heads);
 
 // Printer
 void		ant_mover(t_heads *heads, t_data *data);
-void		give_rest_paths(
-				t_ants *ants, t_paths *paths, t_data *data);
+void		give_rest_paths(t_ants *ants, t_paths **paths, t_data *data, int i);
 void		move_played(t_ants *ants, t_data *data, t_heads *heads);
-void		first_move(
-				t_ants *ants, t_paths *paths, t_data *data);
-void		send_ants(t_ants *ants, t_data *data, t_paths *paths);
+void		first_move(t_ants *ants, t_paths **paths, t_data *data, int i);
+void		send_ants(t_ants *ants, t_data *data, t_paths **paths, int i);
 void		move_ants_already_in_play(t_ants *ants);
 t_ants		*make_ants(t_data *data, t_ants *ants, t_heads *heads);
 

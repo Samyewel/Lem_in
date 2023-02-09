@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   backtrack_paths.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: egaliber <egaliber@student.42.fr>          +#+  +:+       +#+        */
+/*   By: swilliam <swilliam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/26 17:00:15 by sam               #+#    #+#             */
-/*   Updated: 2023/02/08 18:00:46 by egaliber         ###   ########.fr       */
+/*   Updated: 2023/02/09 12:31:45 by swilliam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -155,7 +155,7 @@ void	backtrack_paths(t_data *data, t_heads *heads)
 	if (!heads->solution)
 		ft_printf_strerror("Memory allocation failure in backtrack_paths.");
 	if (data->ant_count == 1)
-		heads->solution[0] = create_solution(heads, find_shortest_path(data, heads), 0);
+		heads->solution[0] = create_solution(heads, shortest_path(data, heads), 0);
 	else
 	{
 		while (++i < MAX_SIZE)
@@ -165,7 +165,7 @@ void	backtrack_paths(t_data *data, t_heads *heads)
 			heads->solution[i] = create_solution(heads, heads->path[i], i);
 			check_intersections(heads, heads->solution[i], heads->path[i]->nb);
 			if (heads->solution[i]->path_count > 1)
-				sort_solution_array(heads, heads->solution[i]->path_indexes);
+				sort_solution(heads, heads->solution[i]->path_indexes);
 			print_solution(heads->solution[i]);
 		}
 	}

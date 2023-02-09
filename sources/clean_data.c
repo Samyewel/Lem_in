@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   clean_data.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sam <sam@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: swilliam <swilliam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/28 20:30:16 by sam               #+#    #+#             */
-/*   Updated: 2023/02/08 14:59:12 by sam              ###   ########.fr       */
+/*   Updated: 2023/02/09 12:49:07 by swilliam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,35 @@ void	clean_path_list(t_heads *heads)
 		current_path = next_path;
 	}
 	heads->path_list = NULL;
+}
+
+void	clean_path_array(t_heads *heads)
+{
+	int	i;
+	int	x;
+
+	i = -1
+	while (++i < MAX_SIZE)
+	{
+		if (heads->path[i] == NULL)
+			break ;
+		else
+		{
+			x = -1;
+			while (x < MAX_SIZE)
+			{
+				if (heads->path[i]->room[x] == NULL)
+					break ;
+				else
+				{
+					ft_strdel(&heads->path[i]->room[x]->name);
+					free(heads->path[i]->room[x]);
+				}
+			}
+			free(heads->path[i]);
+		}
+	}
+	free(heads->path);
 }
 
 /*
