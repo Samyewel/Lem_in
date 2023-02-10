@@ -6,7 +6,7 @@
 /*   By: sam <sam@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/26 17:00:15 by sam               #+#    #+#             */
-/*   Updated: 2023/02/09 20:02:03 by sam              ###   ########.fr       */
+/*   Updated: 2023/02/10 11:54:51 by sam              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,27 +113,21 @@ static void	check_intersections(t_heads *heads, t_solutions *solution, int nb)
 	bool	b;
 
 	i = -1;
-	while (++i < MAX_SIZE)
+	while (heads->path[++i] != NULL && i < MAX_SIZE)
 	{
-		if (heads->path[i] == NULL)
-			break ;
-		if (heads->path[i]->nb != nb)
+		if (heads->path[i]->nb == nb)
+			continue ;
+		x = -1;
+		b = false;
+		while (heads->path[i]->room[++x] != NULL && x < MAX_SIZE)
 		{
-			x = -1;
-			b = false;
-			while (++x < MAX_SIZE)
-			{
-				if (heads->path[i]->room[x] == NULL)
-					break ;
-				if (heads->path[i]->room[x]->is_room)
-				{
-					b = intersects(heads, heads->path[i]->room[x]->id, solution);
-					if (b == true)
-						break ;
-				}
-			}
-			add_to_solution(b, solution, heads->path[i]);
+			if (!heads->path[i]->room[x]->is_room)
+				continue ;
+			b = intersects(heads, heads->path[i]->room[x]->id, solution);
+			if (b == true)
+				break ;
 		}
+		add_to_solution(b, solution, heads->path[i]);
 	}
 }
 

@@ -6,7 +6,7 @@
 /*   By: sam <sam@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/03 16:17:07 by swilliam          #+#    #+#             */
-/*   Updated: 2023/02/10 10:47:55 by sam              ###   ########.fr       */
+/*   Updated: 2023/02/10 12:09:48 by sam              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,11 +123,12 @@ void	calculate_usage(t_data *data, t_heads *heads, t_solutions *solution)
 	ft_printf("\nCalculating usage with %d ants.\n", data->ant_count);
 	if (data->ant_count == 1 || solution->path_count == 1)
 	{
+		data->solution->paths_used = 1;
 		solution->path[0]->usage = data->ant_count;
 		return ;
 	}
 	if (solution->paths_used > 1)
-		previous = distribute(data, heads, solution, solution->paths_used - 1);
+		previous = distribute(data, heads, solution, solution->paths_used);
 	while (++i < solution->path_count)
 	{
 		++solution->paths_used;
@@ -136,8 +137,4 @@ void	calculate_usage(t_data *data, t_heads *heads, t_solutions *solution)
 			break ;
 		previous = current;
 	}
-	i = -1;
-	while (++i < data->solution->path_count)
-		ft_printf("Path %d used %d times.\n", \
-		data->solution->path[i]->nb, data->solution->path[i]->usage);
 }

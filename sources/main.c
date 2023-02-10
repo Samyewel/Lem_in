@@ -6,7 +6,7 @@
 /*   By: sam <sam@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/07 16:16:16 by swilliam          #+#    #+#             */
-/*   Updated: 2023/02/09 20:44:07 by sam              ###   ########.fr       */
+/*   Updated: 2023/02/10 11:59:14 by sam              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,9 +26,7 @@ static t_data	*initialise_data(t_data *data)
 	data->ant_count = 0;
 	data->room_count = 0;
 	data->path_count = 0;
-	data->longest_path = 0;
 	data->line_count = 0;
-	data->best_solution = -1;
 	data->finished = 0;
 	data->ant_num = 0;
 	data->starting_search = false;
@@ -87,8 +85,9 @@ int	main(void)
 	backtrack_paths(data, heads);
 	store_solution(data, heads);
 	calculate_usage(data, heads, data->solution);
+	print_solution(data->solution);
 	ant_mover(heads, data);
-	//ft_printf("\nLine count = %d\n", data->line_count);
+	ft_printf("\nLine count = %d\n", data->line_count);
 	if (DEBUG == true && LEAKS == true) // REMOVE BEFORE SUBMISSION
 		system("leaks lem-in");
 	exit(EXIT_SUCCESS);
