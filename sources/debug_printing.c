@@ -6,7 +6,7 @@
 /*   By: sam <sam@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/16 16:29:43 by swilliam          #+#    #+#             */
-/*   Updated: 2023/02/10 11:38:14 by sam              ###   ########.fr       */
+/*   Updated: 2023/02/10 12:12:06 by sam              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ void	print_path(t_paths *path)
 	i = -1;
 	if (DEBUG == true && PATHS == true)
 	{
-		ft_printf("Path: %d, Length: %d , usage: %d\n", path->nb, \
+		ft_printf("Path: %d, Length: %d, usage: %d\n", path->nb, \
 		path->length, path->usage);
 		while (++i < MAX_SIZE)
 		{
