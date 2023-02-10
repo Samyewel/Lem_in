@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   printing_utils.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sam <sam@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: egaliber <egaliber@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/18 16:19:17 by egaliber          #+#    #+#             */
-/*   Updated: 2023/02/09 19:50:48 by sam              ###   ########.fr       */
+/*   Updated: 2023/02/10 11:17:31 by egaliber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 void	give_rest_paths(t_ants *ants, t_paths **paths, t_data *data, int i)
 {
 	ants->room = paths[i]->room;
-	ants->index_end = paths[i]->length;
+	ants->index_end = paths[i]->length + 1;
 	paths[i]->usage--;
 	paths[i]->temp++;
 	if (paths[i]->usage == 0)
@@ -54,7 +54,7 @@ void	move_played(t_ants *ants, t_data *data, t_heads *heads)
 		if (ants->has_finished == false)
 		{
 			move_ants_already_in_play(ants);
-			if (ants->index == ants->index_end)
+			if (ants->index == ants->index_end )
 			{
 				ants->has_finished = true;
 				data->finished++;
