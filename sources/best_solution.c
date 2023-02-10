@@ -6,7 +6,7 @@
 /*   By: sam <sam@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/28 13:05:45 by swilliam          #+#    #+#             */
-/*   Updated: 2023/02/09 19:47:16 by sam              ###   ########.fr       */
+/*   Updated: 2023/02/10 12:32:56 by sam              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -152,7 +152,4 @@ void	store_solution(t_data *data, t_heads *heads)
 		ft_printf_strerror("No solution found.");
 	data->solution = heads->solution[solution_index];
 	store_paths_in_solution(heads, data);
-	if (DEBUG == true && SOLUTIONS == true)
-		ft_printf("\nBest solution:\n");
-	print_solution(data->solution);
 }

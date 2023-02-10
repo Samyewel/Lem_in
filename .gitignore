@@ -6,3 +6,4 @@ lem-in
 ./libft/libft.a
 *.o
 *.a
+./eval_tests/output

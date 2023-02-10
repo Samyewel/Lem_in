@@ -6,7 +6,7 @@
 /*   By: sam <sam@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/21 13:53:38 by swilliam          #+#    #+#             */
-/*   Updated: 2023/02/09 20:24:05 by sam              ###   ########.fr       */
+/*   Updated: 2023/02/10 12:47:11 by sam              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,11 @@ int	room_check(t_rooms *head, char *name)
 	return (0);
 }
 
+/*
+** create_room:
+** - Initialises a fresh room node.
+*/
+
 t_rooms	*create_room(void)
 {
 	t_rooms	*new_room;
@@ -53,7 +58,7 @@ t_rooms	*create_room(void)
 }
 
 /*
-** store_room_data:
+** store_room:
 ** - Stores the relevant data necessary to know a room's name and location, and
 **   whether it is a starting or ending point for the map.
 */

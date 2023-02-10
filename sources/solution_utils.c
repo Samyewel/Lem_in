@@ -6,7 +6,7 @@
 /*   By: sam <sam@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/03 16:17:07 by swilliam          #+#    #+#             */
-/*   Updated: 2023/02/10 12:09:48 by sam              ###   ########.fr       */
+/*   Updated: 2023/02/10 12:46:15 by sam              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,13 @@ void	sort_solution(t_heads *heads, int *array)
 	}
 }
 
+/*
+** reset_usage:
+** - Resets the usage of each path in the solution's array to 0 in preparation
+**   for another distribution attempt.
+** - Initialises the turns array to store how many turns each path will need.
+*/
+
 static int	*reset_usage(
 	t_heads *heads,
 	t_solutions *solution,
@@ -62,9 +69,14 @@ static int	*reset_usage(
 	}
 	new_turns = (int *)malloc(sizeof(int) * path_count);
 	if (!new_turns)
-		clean_lem_in(heads, "Memory allocation failure in reset_usage");
+		clean_lem_in(heads, "Memory allocation failure in reset_usage.");
 	return (new_turns);
 }
+
+/*
+** longest move:
+** - Finds which path contains the longest amount of moves.
+*/
 
 static int	longest_move(int *turns, int path_count)
 {
@@ -81,6 +93,11 @@ static int	longest_move(int *turns, int path_count)
 	free(turns);
 	return (most_turns);
 }
+
+/*
+** distribute:
+** - Distributes the path usage among the amount of necessary paths
+*/
 
 static int	distribute(
 	t_data *data,
@@ -113,6 +130,16 @@ static int	distribute(
 	return (longest_move(turns, path_count));
 }
 
+/*
+** calculate_usage:
+** - When there is either one ant or one path, the fastest method is to
+**   send all ants through the shortest path, which will always be the first
+**   path in the array.
+** - If there are more than one ant or path, we distribute the usages amongst
+**   the necessary paths, stopping before the next path would cause there
+**   to be too many turns used.
+*/
+
 void	calculate_usage(t_data *data, t_heads *heads, t_solutions *solution)
 {
 	int	i;
@@ -120,7 +147,6 @@ void	calculate_usage(t_data *data, t_heads *heads, t_solutions *solution)
 	int	previous;
 
 	i = -1;
-	ft_printf("\nCalculating usage with %d ants.\n", data->ant_count);
 	if (data->ant_count == 1 || solution->path_count == 1)
 	{
 		data->solution->paths_used = 1;

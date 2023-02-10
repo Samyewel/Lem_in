@@ -6,7 +6,7 @@
 /*   By: sam <sam@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/21 13:53:38 by swilliam          #+#    #+#             */
-/*   Updated: 2023/02/08 14:22:26 by sam              ###   ########.fr       */
+/*   Updated: 2023/02/10 12:46:38 by sam              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ t_rooms	*find_room(t_rooms **rooms, int room_id)
 
 /*
 ** find_room_name:
-** -
+** - Finds the room name that is equal to the given search name.
 */
 
 t_rooms	*find_room_name(t_rooms **rooms, char *name)

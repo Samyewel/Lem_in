@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: egaliber <egaliber@student.42.fr>          +#+  +:+       +#+         #
+#    By: sam <sam@student.42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/11/05 13:26:33 by swilliam          #+#    #+#              #
-#    Updated: 2023/02/09 16:22:28 by egaliber         ###   ########.fr        #
+#    Updated: 2023/02/10 13:07:50 by sam              ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -45,7 +45,10 @@ LEM_IN = lem-in
 
 # Utilities
 DELETE = $(LEM_IN) $(OBJ)
-TEST_CMD = ./lem-in < ./resources/maps/
+EVAL = ./eval_tests/
+OUT = ./eval_tests/output/
+TEST_CMD = ./lem-in < $(EVAL)maps/
+GENERATOR = $(EVAL)generator
 
 all:		$(LEM_IN)
 
@@ -67,6 +70,7 @@ clean:
 			@make clean -sC $(LIBFT_DIR)
 			@rm -f $(OBJ)
 			@rm -rf $(OBJ_DIR)
+			@rm -rf $(OUT)
 			@printf "\r                                       \r"
 			@printf "\rObjects cleaned.\n"
 
@@ -80,24 +84,29 @@ fclean: 	clean
 re:			fclean all
 
 f1:			all
-			@./resources/generator --flow-one > ./resources/flow1.map
-			@time ./lem-in < ./resources/flow1.map
+			@mkdir -p $(OUT)
+			@$(GENERATOR) --flow-one > $(OUT)flow1.map
+			@time ./lem-in < $(OUT)flow1.map
 
 f10:		all
-			@./resources/generator --flow-ten > ./resources/flow10.map
-			@time ./lem-in < ./resources/flow10.map
+			@mkdir -p $(OUT)
+			@$(GENERATOR) --flow-ten > $(OUT)flow10.map
+			@time ./lem-in < $(OUT)flow10.map
 
 f1000:		all
-			@./resources/generator --flow-thousand > ./resources/flow1000.map
-			@time ./lem-in < ./resources/flow1000.map
+			@mkdir -p $(OUT)
+			@$(GENERATOR) --flow-thousand > $(OUT)flow1000.map
+			@time ./lem-in < $(OUT)flow1000.map
 
 big:		all
-			@./resources/generator --big > ./resources/big.map
-			@time ./lem-in < ./resources/big.map
+			@mkdir -p $(OUT)
+			@$(GENERATOR) --big > $(OUT)big.map
+			@time ./lem-in < $(OUT)big.map
 
 super:		all
-			@./resources/generator --big-superposition > ./resources/big-superposition.map
-			@time ./lem-in < ./resources/big-superposition.map
+			@mkdir -p $(OUT)
+			@$(GENERATOR) --big-superposition > $(OUT)big-superposition.map
+			@time ./lem-in < $(OUT)big-superposition.map
 
 test0:		all
 			@time $(TEST_CMD)0.map

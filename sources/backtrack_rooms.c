@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   backtrack_rooms.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: egaliber <egaliber@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sam <sam@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/08 17:28:33 by swilliam          #+#    #+#             */
-/*   Updated: 2023/02/09 16:21:48 by egaliber         ###   ########.fr       */
+/*   Updated: 2023/02/10 12:39:30 by sam              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,6 @@ int current)
 	int	i;
 
 	i = -1;
-	//ft_printf("Tracing %s\n", heads->room[current]->name);
 	push(heads->stack, heads->room[current], heads);
 	visited[current] = true;
 	if (heads->room[current]->end)
@@ -74,7 +73,6 @@ int current)
 		}
 	}
 	visited[current] = false;
-	//ft_printf("Finished tracing %s\n", heads->room[current]->name);
 	pop(heads->stack);
 }
 
@@ -95,12 +93,12 @@ void	backtrack_rooms(t_data *data, t_heads *heads)
 	start_room = find_start_room(heads);
 	visited = (bool *) malloc(sizeof(bool) * data->room_count);
 	if (!visited)
-		clean_lem_in(heads, "Memory allocation failure in backtrack_queue");
+		clean_lem_in(heads, "Memory allocation failure in backtrack_queue.");
 	heads->stack = (t_stack *)malloc(sizeof(t_stack));
 	heads->stack->top = 0;
 	ft_memset(visited, false, data->room_count);
 	trace_path(heads, visited, start_room);
 	free(visited);
 	if (heads->path_list == NULL)
-		clean_lem_in(heads, "No Paths found!");
+		clean_lem_in(heads, "No paths found.");
 }

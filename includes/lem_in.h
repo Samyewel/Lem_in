@@ -6,7 +6,7 @@
 /*   By: sam <sam@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/03 11:56:26 by swilliam          #+#    #+#             */
-/*   Updated: 2023/02/10 11:57:19 by sam              ###   ########.fr       */
+/*   Updated: 2023/02/10 12:49:17 by sam              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -151,14 +151,16 @@ void		read_input(t_data *data, t_heads *heads);
 
 // Rooms
 t_rooms		*create_room(void);
-t_rooms		*store_room(t_data *data, t_heads *heads, t_rooms *room, char *line);
+t_rooms		*store_room(\
+			t_data *data, t_heads *heads, t_rooms *room, char *line);
 int			find_start_room(t_heads *heads);
 int			find_end_room(t_heads *heads);
 t_rooms		*find_room(t_rooms **rooms, int room_id);
 t_rooms		*find_room_name(t_rooms **rooms, char *name);
 
 // Links:
-void		store_link(t_rooms **rooms, char *link_a, char *link_b, t_heads *heads);
+void		store_link(\
+			t_rooms **rooms, char *link_a, char *link_b, t_heads *heads);
 
 // Paths:
 void		create_new_path(t_heads *heads, t_node *start_node);
@@ -173,7 +175,8 @@ t_paths		*shortest_path(t_data *data, t_heads *heads);
 // Solutions
 t_solutions	*initialise_solution(t_paths *path);
 void		store_solution(t_data *data, t_heads *heads);
-void		calculate_usage(t_data *data, t_heads *heads, t_solutions *solution);
+void		calculate_usage(\
+			t_data *data, t_heads *heads, t_solutions *solution);
 void		sort_solution(t_heads *heads, int *array);
 t_solutions	**initialise_solutions(t_data *data);
 

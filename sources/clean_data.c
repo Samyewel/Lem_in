@@ -6,7 +6,7 @@
 /*   By: sam <sam@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/28 20:30:16 by sam               #+#    #+#             */
-/*   Updated: 2023/02/10 12:04:43 by sam              ###   ########.fr       */
+/*   Updated: 2023/02/10 12:19:56 by sam              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,23 +73,29 @@ void	clean_path_array(t_heads *heads)
 	free(heads->path);
 }
 
-// static void	clean_room_list(t_heads *heads)
-// {
-// 	t_rooms	*temp_room;
-// 	t_rooms	*temp_data;
-// 	int		i;
+static void	clean_room_list(t_heads *heads)
+{
+	t_rooms	*temp_room;
+	t_rooms	*temp_data;
+	int		i;
 
-// 	i = -1;
-// 	temp_room = &heads->room_List;
-// 	while (temp_room)
-// 	{
-// 		temp_data = temp_room->next;
-// 		i = -1;
-// 		while (temp_room[++i] && i < MAX_SIZE)
-// 			free
-
-// 	}
-// }
+	i = -1;
+	temp_room = heads->room_list;
+	while (temp_room)
+	{
+		temp_data = temp_room->next;
+		if (temp_room->links)
+		{
+			i = -1;
+			while (i < MAX_SIZE)
+				free(temp_room->links);
+		}
+		ft_strdel(&temp_room->name);
+		free(temp_room);
+		temp_room = temp_data;
+	}
+	free(heads->room_list);
+}
 
 /*
 ** clean_lem_in:
@@ -104,8 +110,8 @@ void	clean_lem_in(t_heads *heads, char *str)
 		clean_path_list(heads);
 	if (heads->path)
 		clean_path_array(heads);
-	// if (heads->room_list)
-	// 	clean_room_list(heads);
+	if (heads->room_list)
+		clean_room_list(heads);
 	// if (heads->rooms)
 	// 	clean_room_array(heads);
 	exit(EXIT_FAILURE);

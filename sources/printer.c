@@ -6,12 +6,16 @@
 /*   By: sam <sam@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/18 16:16:43 by egaliber          #+#    #+#             */
-/*   Updated: 2023/02/09 19:54:37 by sam              ###   ########.fr       */
+/*   Updated: 2023/02/10 12:47:53 by sam              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-//#include "includes/lem_in.h"
 #include "lem_in.h"
+
+/*
+** :
+** -
+*/
 
 void	printer(t_heads *heads, t_data *data)
 {
@@ -41,6 +45,11 @@ void	printer(t_heads *heads, t_data *data)
 	}
 }
 
+/*
+** :
+** -
+*/
+
 void	give_ants_paths(t_ants *ants, t_data *data, \
 						t_heads *heads)
 {
@@ -61,6 +70,11 @@ void	give_ants_paths(t_ants *ants, t_data *data, \
 		}
 	}
 }
+
+/*
+** :
+** -
+*/
 
 void	ant_mover(t_heads *heads, t_data *data)
 {

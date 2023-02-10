@@ -6,7 +6,7 @@
 /*   By: sam <sam@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/21 17:09:45 by swilliam          #+#    #+#             */
-/*   Updated: 2023/02/09 20:41:41 by sam              ###   ########.fr       */
+/*   Updated: 2023/02/10 12:40:38 by sam              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,11 +52,11 @@ t_rooms *path_start)
 	new_path = NULL;
 	new_path = (t_paths *)malloc(sizeof(t_paths));
 	if (!new_path)
-		clean_lem_in(heads, "Memory allocation failure in create_path_node");
+		clean_lem_in(heads, "Memory allocation failure in create_path_node.");
 	new_path->nb = i;
 	new_path->room = (t_rooms **)malloc(sizeof(t_rooms *) * MAX_SIZE);
 	if (!new_path->room)
-		clean_lem_in(heads, "Memory allocation failure in create_path_node");
+		clean_lem_in(heads, "Memory allocation failure in create_path_node.");
 	ft_memset(new_path->room, 0, MAX_SIZE);
 	new_path->room[0] = path_start;
 	new_path->length = 0;

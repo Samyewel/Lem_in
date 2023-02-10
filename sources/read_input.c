@@ -6,7 +6,7 @@
 /*   By: sam <sam@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/16 14:13:08 by swilliam          #+#    #+#             */
-/*   Updated: 2023/02/09 20:23:52 by sam              ###   ########.fr       */
+/*   Updated: 2023/02/10 12:41:14 by sam              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,12 +26,12 @@ static void	read_ants(t_data *data, char *line, int line_n, t_heads *heads)
 		if (ft_isnumber(line))
 		{
 			if (ft_atoi(line) <= 0 || ft_atoi(line) > MAX_ANT)
-				clean_lem_in(heads, "Error in ants!");
+				clean_lem_in(heads, "Error in ants.");
 			else
 				data->ant_count = ft_atoi(line);
 		}
 		else
-			clean_lem_in(heads, "No ant count given!");
+			clean_lem_in(heads, "No ant count given.");
 	}
 }
 
@@ -52,7 +52,7 @@ static void	read_comments(t_data *data, char *line, int line_n, t_heads *heads)
 	if (line[0] == '#' && line[1] != '#')
 	{
 		if (data->ending_search == true || data->starting_search == true)
-			clean_lem_in(heads, "Invalid comment!");
+			clean_lem_in(heads, "Invalid comment.");
 		return ;
 	}
 	if (line[0] == '#' && line[1] == '#')
@@ -127,7 +127,7 @@ static void	read_links(t_heads *heads, char *line, int line_n, t_data *data)
 	if (ft_strchr(line, '-') == NULL)
 		return ;
 	if (ft_is_dash(line) > 1)
-		clean_lem_in(heads, "Too Many dashes!");
+		clean_lem_in(heads, "Too many dashes.");
 	line_split = ft_strsplit(line, '-');
 	check_link_errors(line_split, data, heads);
 	store_link(&heads->room_list, line_split[0], line_split[1], heads);

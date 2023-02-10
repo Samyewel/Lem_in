@@ -1,6 +1,5 @@
 MAP_DIR=./miro_tests
 
-
 for i in {1..10}
 do
 	printf "$MAP_DIR/map_$i" | rev | cut -d '/' -f 1 | rev >> test_results
