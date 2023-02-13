@@ -6,7 +6,7 @@
 /*   By: sam <sam@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/07 16:16:16 by swilliam          #+#    #+#             */
-/*   Updated: 2023/02/10 11:59:14 by sam              ###   ########.fr       */
+/*   Updated: 2023/02/13 13:55:14 by sam              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,10 +84,10 @@ int	main(void)
 	path_list_to_array(heads);
 	backtrack_paths(data, heads);
 	store_solution(data, heads);
-	calculate_usage(data, heads, data->solution);
 	print_solution(data->solution);
 	ant_mover(heads, data);
-	ft_printf("\nLine count = %d\n", data->line_count);
+	if (DEBUG == true && LINES == true)
+		ft_printf("\nLine count = %d\n", data->line_count);
 	if (DEBUG == true && LEAKS == true) // REMOVE BEFORE SUBMISSION
 		system("leaks lem-in");
 	exit(EXIT_SUCCESS);

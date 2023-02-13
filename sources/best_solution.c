@@ -6,45 +6,11 @@
 /*   By: sam <sam@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/28 13:05:45 by swilliam          #+#    #+#             */
-/*   Updated: 2023/02/10 12:32:56 by sam              ###   ########.fr       */
+/*   Updated: 2023/02/13 13:52:00 by sam              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lem_in.h"
-
-/*
-** calculate_best_solution:
-** - Finds the solution that has the closest length to the amount of ants.
-** - If the ant count is 1, we return 0, as that path index will be the
-**   shortest in the array.
-*/
-
-static int	calculate_best_solution(t_heads *heads, t_data *data)
-{
-	int			closest_length;
-	int			closest_index;
-	int			diff;
-	int			i;
-
-	closest_length = INT_MAX;
-	closest_index = 0;
-	i = -1;
-	if (data->ant_count == 1)
-		return (closest_index);
-	while (++i < data->path_count)
-	{
-		if (heads->solution[i]->total_length <= data->ant_count)
-		{
-			diff = data->ant_count - heads->solution[i]->total_length;
-			if (diff < closest_length)
-			{
-				closest_length = diff;
-				closest_index = heads->solution[i]->nb;
-			}
-		}
-	}
-	return (closest_index);
-}
 
 /*
 ** create_duplicate_path:
@@ -78,21 +44,21 @@ static t_paths	*create_duplicate_path(t_paths *path, t_paths *previous)
 ** - Gives a pointer to the previous path for movement in later functions.
 */
 
-static void	duplicate_path(t_data *data, t_paths *path)
+static void	duplicate_path(t_solutions *solution, t_paths *path)
 {
 	int			i;
 
 	i = -1;
 	while (++i < MAX_SIZE)
 	{
-		if (data->solution->path[i] == NULL)
+		if (solution->path[i] == NULL)
 		{
 			if (i == 0)
-				data->solution->path[i] = create_duplicate_path(path, NULL);
+				solution->path[i] = create_duplicate_path(path, NULL);
 			else
-				data->solution->path[i] = \
-				create_duplicate_path(path, data->solution->path[i - 1]);
-			if (!data->solution->path[i])
+				solution->path[i] = \
+				create_duplicate_path(path, solution->path[i - 1]);
+			if (!solution->path[i])
 				ft_printf_strerror("Memory \
 				allocation failure in duplicate_path.");
 			break ;
@@ -109,25 +75,25 @@ static void	duplicate_path(t_data *data, t_paths *path)
 
 static void	store_paths_in_solution(
 	t_heads *heads,
-	t_data *data)
+	t_solutions *solution)
 {
 	t_paths	*temp_path;
 	int		i;
 
 	temp_path = NULL;
 	i = -1;
-	if (data->solution->path == NULL)
-		data->solution->path = (t_paths **)malloc(sizeof (t_paths *) * \
+	if (solution->path == NULL)
+		solution->path = (t_paths **)malloc(sizeof (t_paths *) * \
 			MAX_SIZE);
-	if (!data->solution->path)
+	if (!solution->path)
 		clean_lem_in(heads, "Memory allocation failure in \
 			store_paths_in_solution.");
 	while (++i < MAX_SIZE)
 	{
-		if (data->solution->path_indexes[i] >= 0)
+		if (solution->path_indexes[i] >= 0)
 		{
-			temp_path = get_path(heads, data->solution->path_indexes[i]);
-			duplicate_path(data, temp_path);
+			temp_path = get_path(heads, solution->path_indexes[i]);
+			duplicate_path(solution, temp_path);
 		}
 		else
 			break ;
@@ -145,11 +111,26 @@ static void	store_paths_in_solution(
 
 void	store_solution(t_data *data, t_heads *heads)
 {
-	int			solution_index;
+	int	best_index;
+	int	turns;
+	int	i;
 
-	solution_index = calculate_best_solution(heads, data);
-	if (solution_index < 0)
-		ft_printf_strerror("No solution found.");
-	data->solution = heads->solution[solution_index];
-	store_paths_in_solution(heads, data);
+	best_index = 0;
+	turns = INT_MAX;
+	i = -1;
+	while (++i < data->path_count)
+	{
+		store_paths_in_solution(heads, heads->solution[i]);
+		if (data->ant_count == 1 || heads->solution[i]->path_count == 1)
+		{
+			heads->solution[i]->turns = \
+			data->ant_count + heads->solution[i]->path[0]->length;
+			heads->solution[i]->path[0]->usage = data->ant_count;
+		}
+		else
+			calculate_usage(data, heads, heads->solution[i]);
+		if (heads->solution[i]->turns < turns)
+			best_index = i;
+	}
+	data->solution = heads->solution[best_index];
 }

@@ -6,11 +6,44 @@
 /*   By: sam <sam@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/26 17:00:15 by sam               #+#    #+#             */
-/*   Updated: 2023/02/10 11:54:51 by sam              ###   ########.fr       */
+/*   Updated: 2023/02/13 13:36:04 by sam              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lem_in.h"
+
+/*
+** sort_solution:
+** - Sorts the solution path index array in ascending length order.
+*/
+
+static void	sort_solution(t_heads *heads, int *array)
+{
+	int		i;
+	int		temp;
+	bool	swapped;
+
+	i = 1;
+	temp = 0;
+	swapped = 0;
+	while (i < MAX_SIZE)
+	{
+		if (array[i] < 0)
+			break ;
+		swapped = 0;
+		if (get_path(heads, array[i])->length < \
+				get_path(heads, array[i - 1])->length && i > 0)
+		{
+			temp = array[i];
+			array[i] = array[i - 1];
+			array[i - 1] = temp;
+			i = 1;
+			swapped = 1;
+		}
+		if (swapped == 0)
+			i++;
+	}
+}
 
 /*
 ** add_to_solution:
@@ -38,27 +71,6 @@ static void	add_to_solution(bool b, t_solutions *solution, t_paths *add_path)
 		}
 	}
 	return ;
-}
-
-/*
-** create_solution:
-** -
-*/
-
-static t_solutions	*create_solution(
-t_heads *heads,
-t_paths *path,
-int i
-)
-{
-	t_solutions	*new_solution;
-
-	new_solution = initialise_solution(path);
-	if (!new_solution)
-		clean_lem_in(heads, "Memory allocation failure in create_solution.");
-	if (i > 0)
-		heads->solution[i - 1]->next = new_solution;
-	return (new_solution);
 }
 
 /*

@@ -6,7 +6,7 @@
 /*   By: sam <sam@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/27 15:09:20 by sam               #+#    #+#             */
-/*   Updated: 2023/02/10 12:09:34 by sam              ###   ########.fr       */
+/*   Updated: 2023/02/13 13:35:43 by sam              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,11 +33,34 @@ t_solutions	*initialise_solution(t_paths *path)
 	new_solution->path_indexes[0] = path->nb;
 	new_solution->nb = path->nb;
 	new_solution->path_count = 1;
-	new_solution->paths_used = 0;
+	new_solution->paths_used = 1;
+	new_solution->turns = 0;
 	new_solution->path = NULL;
 	new_solution->total_length = (0 + path->length);
 	new_solution->next = NULL;
 	new_solution->temp_previous = NULL;
+	return (new_solution);
+}
+
+/*
+** create_solution:
+** - Adds a freshly initialised solution pointer to the next empty space
+**   in the array.
+*/
+
+t_solutions	*create_solution(
+t_heads *heads,
+t_paths *path,
+int i
+)
+{
+	t_solutions	*new_solution;
+
+	new_solution = initialise_solution(path);
+	if (!new_solution)
+		clean_lem_in(heads, "Memory allocation failure in create_solution.");
+	if (i > 0)
+		heads->solution[i - 1]->next = new_solution;
 	return (new_solution);
 }
 

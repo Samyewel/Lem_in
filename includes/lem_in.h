@@ -6,7 +6,7 @@
 /*   By: sam <sam@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/03 11:56:26 by swilliam          #+#    #+#             */
-/*   Updated: 2023/02/10 12:49:17 by sam              ###   ########.fr       */
+/*   Updated: 2023/02/13 13:56:11 by sam              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,11 +23,13 @@
 // ROOMS: Prints all rooms and all relevant data.
 # define ROOMS 0
 // PATHS: Prints all paths found from start to end.
-# define PATHS 1
-// SOLUTIONS:
-# define SOLUTIONS 1
+# define PATHS 0
+// SOLUTIONS: Prints the contents of a solution.
+# define SOLUTIONS 0
+// LINES: Prints the total amount of lines used for printing ant moves.
+# define LINES 0
 // LEAKS: Prints a memory leak report.
-# define LEAKS 0
+# define LEAKS 1
 
 # include "ft_printf.h"
 # include "get_next_line.h"
@@ -80,6 +82,7 @@ typedef struct paths
 	int				nb;
 	int				length;
 	int				usage;
+	int				temp_usage;
 	int				temp;
 	struct rooms	**room;
 	struct paths	*next;
@@ -93,6 +96,7 @@ typedef struct solutions
 	int					path_count;
 	int					paths_used;
 	int					total_length;
+	int					turns;
 	struct paths		*temp_previous;
 	struct paths		**path;
 	struct solutions	*next;
@@ -173,11 +177,11 @@ void		backtrack_paths(t_data *data, t_heads *heads);
 t_paths		*shortest_path(t_data *data, t_heads *heads);
 
 // Solutions
+t_solutions	*create_solution(t_heads *heads, t_paths *path, int i);
 t_solutions	*initialise_solution(t_paths *path);
 void		store_solution(t_data *data, t_heads *heads);
 void		calculate_usage(\
 			t_data *data, t_heads *heads, t_solutions *solution);
-void		sort_solution(t_heads *heads, int *array);
 t_solutions	**initialise_solutions(t_data *data);
 
 // DFS

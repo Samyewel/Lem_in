@@ -6,7 +6,7 @@
 #    By: sam <sam@student.42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/11/05 13:26:33 by swilliam          #+#    #+#              #
-#    Updated: 2023/02/10 13:07:50 by sam              ###   ########.fr        #
+#    Updated: 2023/02/13 13:40:21 by sam              ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,16 +14,15 @@
 LEM_IN_DIR = ./sources/
 LEM_IN_FILES = \
 main.c read_input.c \
-backtrack_rooms.c backtrack_paths.c \
-debug_printing.c \
-clean_data.c \
-room_creation.c room_utils.c \
-link_creation.c \
+room_creation.c room_utils.c link_creation.c \
+backtrack_rooms.c dfs_stack.c \
 path_creation.c path_utils.c \
-solution_creation.c solution_utils.c \
-dfs_stack.c best_solution.c \
+list_to_array.c \
+backtrack_paths.c \
+solution_creation.c usage_calculation.c best_solution.c \
 printer.c printing_utils.c \
-ant_creation.c list_to_array.c \
+ant_creation.c \
+debug_printing.c clean_data.c \
 error_check.c error_check2.c \
 utils.c
 
@@ -38,6 +37,7 @@ OBJ = $(addprefix $(OBJ_DIR), $(LEM_IN_FILES:.c=.o))
 # Compilation
 CC = gcc
 FLAGS = -Wall -Wextra -Werror
+FS = -fsanitize=address
 DEBUG = -g
 INCLUDES = -I./includes -I$(LIBFT_DIR)includes -I./eval_tests
 ADD_LIB = -L. $(LIBFT)

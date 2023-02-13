@@ -6,7 +6,7 @@
 /*   By: sam <sam@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/28 20:30:16 by sam               #+#    #+#             */
-/*   Updated: 2023/02/10 12:19:56 by sam              ###   ########.fr       */
+/*   Updated: 2023/02/13 13:53:55 by sam              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,7 +112,5 @@ void	clean_lem_in(t_heads *heads, char *str)
 		clean_path_array(heads);
 	if (heads->room_list)
 		clean_room_list(heads);
-	// if (heads->rooms)
-	// 	clean_room_array(heads);
 	exit(EXIT_FAILURE);
 }
