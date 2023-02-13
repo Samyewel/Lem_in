@@ -6,7 +6,7 @@
 /*   By: sam <sam@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/08 17:28:33 by swilliam          #+#    #+#             */
-/*   Updated: 2023/02/13 14:41:07 by sam              ###   ########.fr       */
+/*   Updated: 2023/02/13 16:32:07 by sam              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,18 +85,18 @@ int current)
 **	 possible path from the start room to the end room.
 */
 
-void	backtrack_rooms(t_data *data, t_heads *heads)
+void	backtrack_rooms(t_heads *heads)
 {
 	int		start_room;
 	bool	*visited;
 
 	start_room = find_start_room(heads);
-	visited = (bool *) malloc(sizeof(bool) * data->room_count);
+	visited = (bool *) malloc(sizeof(bool) * MAX_SIZE);
 	if (!visited)
 		clean_lem_in(heads, "Memory allocation failure in backtrack_queue.");
 	heads->stack = (t_stack *)malloc(sizeof(t_stack));
 	heads->stack->top = 0;
-	ft_memset(visited, false, data->room_count);
+	ft_memset(visited, false, MAX_SIZE);
 	trace_path(heads, visited, start_room);
 	free(visited);
 	if (heads->path == NULL)

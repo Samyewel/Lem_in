@@ -6,7 +6,7 @@
 /*   By: sam <sam@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/07 16:16:16 by swilliam          #+#    #+#             */
-/*   Updated: 2023/02/13 16:03:31 by sam              ###   ########.fr       */
+/*   Updated: 2023/02/13 16:33:06 by sam              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ int	main(void)
 	ft_printf("Reading input...\n");
 	read_input(data, heads);
 	ft_printf("Backtracking rooms...\n");
-	backtrack_rooms(data, heads);
+	backtrack_rooms(heads);
 	ft_printf("Backtracking paths...\n");
 	backtrack_paths(data, heads);
 	ft_printf("Storing solution...\n");
