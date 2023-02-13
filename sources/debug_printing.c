@@ -6,7 +6,7 @@
 /*   By: sam <sam@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/16 16:29:43 by swilliam          #+#    #+#             */
-/*   Updated: 2023/02/10 12:12:06 by sam              ###   ########.fr       */
+/*   Updated: 2023/02/13 15:18:31 by sam              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ void	print_path(t_paths *path)
 	i = -1;
 	if (DEBUG == true && PATHS == true)
 	{
-		ft_printf("Path: %d, Length: %d, usage: %d\n", path->nb, \
+		ft_printf("Path[%d], length: %d, usage: %d\n", path->nb, \
 		path->length, path->usage);
 		while (++i < MAX_SIZE)
 		{
@@ -105,8 +105,8 @@ void	print_solution(t_solutions *solution)
 	i = -1;
 	if (DEBUG == true && SOLUTIONS == true)
 	{
-		ft_printf("Solution[%d], length: %d, Paths:\n", \
-			solution->nb, solution->total_length);
+		ft_printf("Solution[%d], length: %d, paths: %d\n", \
+			solution->nb, solution->total_length, solution->path_count);
 		if (solution->path == NULL)
 		{
 			while (++i < MAX_SIZE)

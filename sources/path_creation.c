@@ -6,7 +6,7 @@
 /*   By: sam <sam@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/21 17:09:45 by swilliam          #+#    #+#             */
-/*   Updated: 2023/02/13 12:16:52 by sam              ###   ########.fr       */
+/*   Updated: 2023/02/13 14:45:49 by sam              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 **   path later.
 */
 
-static t_rooms	*create_path_node(t_rooms *room, t_rooms *prev, t_heads *heads)
+static t_rooms	*create_path_node(t_heads *heads, t_rooms *room, t_rooms *prev)
 {
 	t_rooms	*new_node;
 
@@ -77,27 +77,25 @@ t_rooms *path_start)
 void	create_new_path(t_heads *heads, t_node *start_node)
 {
 	t_rooms	*start_room;
-	t_paths	*temp_paths;
 	t_rooms	*path_start;
 	int		i;
 
-	i = 0;
+	i = -1;
 	start_room = find_room(heads->room, start_node->id);
-	path_start = create_path_node(start_room, NULL, heads);
-	temp_paths = heads->path_list;
-	if (heads->path_list == NULL)
+	path_start = create_path_node(heads, start_room, NULL);
+	if (heads->path == NULL)
 	{
-		heads->path_list = create_path(heads, 0, path_start);
-		if (!heads->path_list)
+		heads->path = (t_paths **)malloc(sizeof(t_paths *) * MAX_SIZE);
+		if (!heads->path)
 			clean_lem_in(heads, "Memory allocation failure in create_new_path");
 	}
-	else
+	while (++i < MAX_SIZE)
 	{
-		while (++i && temp_paths->next != NULL)
-			temp_paths = temp_paths->next;
-		temp_paths->next = create_path(heads, i, path_start);
-		if (!temp_paths->next)
-			clean_lem_in(heads, "Memory allocation failure in create_new_path");
+		if (heads->path[i] == NULL)
+		{
+			heads->path[i] = create_path(heads, i, path_start);
+			break ;
+		}
 	}
 }
 
@@ -109,27 +107,25 @@ void	create_new_path(t_heads *heads, t_node *start_node)
 
 void	store_path_data(t_heads *heads, t_node *node)
 {
-	t_paths	*temp_path;
 	int		i;
+	int		x;
 
 	i = -1;
-	temp_path = heads->path_list;
-	while (temp_path)
+	x = -1;
+	while (++x < MAX_SIZE)
 	{
 		i = -1;
 		while (++i < MAX_SIZE)
 		{
-			if (temp_path->room[i + 1] == NULL)
+			if (heads->path[x]->room[i + 1] == NULL)
 			{
-				if (temp_path->room[i]->end == false)
+				if (heads->path[x]->room[i]->end == false)
 				{
-					temp_path->room[i + 1] = create_path_node \
-						(heads->room[node->id], temp_path->room[i], heads);
-					temp_path->length++;
+					heads->path[x]->room[i + 1] = create_path_node \
+						(heads, heads->room[node->id], heads->path[x]->room[i]);
+					heads->path[x]->length++;
 					return ;
 				}
-				else
-					temp_path = temp_path->next;
 				break ;
 			}
 		}

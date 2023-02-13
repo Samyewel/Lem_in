@@ -6,7 +6,7 @@
 /*   By: sam <sam@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/03 11:56:26 by swilliam          #+#    #+#             */
-/*   Updated: 2023/02/13 13:56:11 by sam              ###   ########.fr       */
+/*   Updated: 2023/02/13 16:06:14 by sam              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,13 +23,13 @@
 // ROOMS: Prints all rooms and all relevant data.
 # define ROOMS 0
 // PATHS: Prints all paths found from start to end.
-# define PATHS 0
+# define PATHS 1
 // SOLUTIONS: Prints the contents of a solution.
-# define SOLUTIONS 0
+# define SOLUTIONS 1
 // LINES: Prints the total amount of lines used for printing ant moves.
-# define LINES 0
+# define LINES 1
 // LEAKS: Prints a memory leak report.
-# define LEAKS 1
+# define LEAKS 0
 
 # include "ft_printf.h"
 # include "get_next_line.h"
@@ -117,10 +117,8 @@ typedef struct ants
 typedef struct heads
 {
 	struct data			*data;
-	struct rooms		*room_list;
 	struct rooms		**room;
 	struct stack		*stack;
-	struct paths		*path_list;
 	struct paths		**path;
 	struct solutions	**solution;
 	struct ants			*ants;
@@ -154,7 +152,8 @@ void		print_solution(t_solutions *solution);
 void		read_input(t_data *data, t_heads *heads);
 
 // Rooms
-t_rooms		*create_room(void);
+t_rooms		*create_room(\
+			t_data *data, t_heads *heads, t_rooms *room, char *line);
 t_rooms		*store_room(\
 			t_data *data, t_heads *heads, t_rooms *room, char *line);
 int			find_start_room(t_heads *heads);
@@ -216,6 +215,5 @@ void		start_and_end_verify(t_data *data, t_heads *heads);
 void		start_and_end_errors(t_data *data, char *line, t_heads *heads);
 int			ft_is_dash(char *str);
 int			ft_is_space(char *str);
-int			room_check(t_rooms *head, char *name);
 
 #endif

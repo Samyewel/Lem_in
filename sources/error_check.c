@@ -6,7 +6,7 @@
 /*   By: sam <sam@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/06 12:50:45 by egaliber          #+#    #+#             */
-/*   Updated: 2023/02/10 12:38:27 by sam              ###   ########.fr       */
+/*   Updated: 2023/02/13 15:04:19 by sam              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,20 +46,17 @@ void	room_errors(char *line, t_data *data, t_heads *heads)
 
 void	verify_rooms(t_heads *heads, t_data *data)
 {
-	t_rooms	**temp;
 	int		counter;
 	int		i;
 
-	i = 0;
+	i = -1;
 	counter = 0;
-	temp = heads->room;
-	while (i < data->room_count)
+	while (++i < data->room_count)
 	{
-		if (ft_strcmp(temp[i]->name, temp[i + 1]->name) == 0)
+		if (ft_strcmp(heads->room[i]->name, heads->room[i + 1]->name) == 0)
 			clean_lem_in(heads, "Duplicate room names.");
-		if (temp[i]->start == true || temp[i]->end == true)
+		if (heads->room[i]->start == true || heads->room[i]->end == true)
 			counter++;
-		i++;
 	}
 	if (data->ending_search == true || data->starting_search)
 		clean_lem_in(heads, "No start found.");
@@ -69,7 +66,7 @@ void	file_errors(t_heads *heads, int line_n, t_data *data)
 {
 	if (line_n == 0)
 		clean_lem_in(heads, "Empty file.");
-	if (heads->room_list == NULL)
+	if (heads->room == NULL)
 		clean_lem_in(heads, "Error in file.");
 	if (data->links_started == false)
 		clean_lem_in(heads, "No links.");

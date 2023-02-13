@@ -6,7 +6,7 @@
 /*   By: sam <sam@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/08 17:28:33 by swilliam          #+#    #+#             */
-/*   Updated: 2023/02/10 12:39:30 by sam              ###   ########.fr       */
+/*   Updated: 2023/02/13 14:41:07 by sam              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,6 +99,6 @@ void	backtrack_rooms(t_data *data, t_heads *heads)
 	ft_memset(visited, false, data->room_count);
 	trace_path(heads, visited, start_room);
 	free(visited);
-	if (heads->path_list == NULL)
+	if (heads->path == NULL)
 		clean_lem_in(heads, "No paths found.");
 }

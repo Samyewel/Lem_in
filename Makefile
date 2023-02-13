@@ -6,7 +6,7 @@
 #    By: sam <sam@student.42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/11/05 13:26:33 by swilliam          #+#    #+#              #
-#    Updated: 2023/02/13 13:40:21 by sam              ###   ########.fr        #
+#    Updated: 2023/02/13 16:06:42 by sam              ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,7 +17,6 @@ main.c read_input.c \
 room_creation.c room_utils.c link_creation.c \
 backtrack_rooms.c dfs_stack.c \
 path_creation.c path_utils.c \
-list_to_array.c \
 backtrack_paths.c \
 solution_creation.c usage_calculation.c best_solution.c \
 printer.c printing_utils.c \

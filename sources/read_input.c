@@ -6,7 +6,7 @@
 /*   By: sam <sam@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/16 14:13:08 by swilliam          #+#    #+#             */
-/*   Updated: 2023/02/10 12:41:14 by sam              ###   ########.fr       */
+/*   Updated: 2023/02/13 16:20:36 by sam              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,27 +83,27 @@ static void	read_comments(t_data *data, char *line, int line_n, t_heads *heads)
 static void	read_rooms(t_data *data, t_heads *heads, char *line, int line_n)
 {
 	t_rooms	*room;
-	t_rooms	*temp;
+	int		i;
 
 	room = NULL;
-	temp = heads->room_list;
+	i = -1;
 	if (line_n == 0 || (line[0] == 'L' || line[0] == '#'))
 		return ;
 	if (ft_strchr(line, ' ') == NULL && ft_strchr(line, '-') != NULL)
 		return ;
 	room_errors(line, data, heads);
-	room = create_room();
-	room = store_room(data, heads, room, line);
+	room = create_room(data, heads, room, line);
 	if (!room)
 		clean_lem_in(heads, "Memory allocation failure in read_rooms.");
-	if (temp == NULL)
-		heads->room_list = room;
-	else
+	if (heads->room == NULL)
 	{
-		while (temp->next != NULL)
-			temp = temp->next;
-		temp->next = room;
+		heads->room = (t_rooms **)malloc(sizeof(t_rooms *) * MAX_SIZE);
+		if (!heads->room)
+			clean_lem_in(heads, "Memory allocation failure in read_rooms.");
 	}
+	while (++i < MAX_SIZE && heads->room[i] != NULL)
+		;
+	heads->room[i] = room;
 	data->room_count++;
 }
 
@@ -130,8 +130,8 @@ static void	read_links(t_heads *heads, char *line, int line_n, t_data *data)
 		clean_lem_in(heads, "Too many dashes.");
 	line_split = ft_strsplit(line, '-');
 	check_link_errors(line_split, data, heads);
-	store_link(&heads->room_list, line_split[0], line_split[1], heads);
-	store_link(&heads->room_list, line_split[1], line_split[0], heads);
+	store_link(heads->room, line_split[0], line_split[1], heads);
+	store_link(heads->room, line_split[1], line_split[0], heads);
 	data->links_started = true;
 	data->last_link_0 = line_split[0];
 	data->last_link_1 = line_split[1];

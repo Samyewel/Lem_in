@@ -6,7 +6,7 @@
 /*   By: sam <sam@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/07 16:16:16 by swilliam          #+#    #+#             */
-/*   Updated: 2023/02/13 13:55:14 by sam              ###   ########.fr       */
+/*   Updated: 2023/02/13 16:03:31 by sam              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,9 +52,7 @@ static t_heads	*initialise_heads(t_data *data, t_heads *heads)
 	if (!heads)
 		return (NULL);
 	heads->data = data;
-	heads->room_list = NULL;
 	heads->room = NULL;
-	heads->path_list = NULL;
 	heads->path = NULL;
 	heads->solution = NULL;
 	heads->ants = NULL;
@@ -78,13 +76,15 @@ int	main(void)
 	heads = initialise_heads(data, heads);
 	if (!data || !heads)
 		ft_printf_strerror("Memory allocation failure in main.");
+	ft_printf("Reading input...\n");
 	read_input(data, heads);
-	room_list_to_array(heads);
+	ft_printf("Backtracking rooms...\n");
 	backtrack_rooms(data, heads);
-	path_list_to_array(heads);
+	ft_printf("Backtracking paths...\n");
 	backtrack_paths(data, heads);
+	ft_printf("Storing solution...\n");
 	store_solution(data, heads);
-	print_solution(data->solution);
+	ft_printf("Printing...\n");
 	ant_mover(heads, data);
 	if (DEBUG == true && LINES == true)
 		ft_printf("\nLine count = %d\n", data->line_count);

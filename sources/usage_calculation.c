@@ -6,7 +6,7 @@
 /*   By: sam <sam@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/03 16:17:07 by swilliam          #+#    #+#             */
-/*   Updated: 2023/02/13 13:51:09 by sam              ###   ########.fr       */
+/*   Updated: 2023/02/13 15:50:15 by sam              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -129,6 +129,7 @@ void	calculate_usage(t_data *data, t_heads *heads, t_solutions *solution)
 	i = -1;
 	previous = distribute(data, heads, solution, solution->paths_used);
 	swap_usages(solution, 1);
+	solution->turns = previous;
 	while (++i < solution->path_count)
 	{
 		if (solution->paths_used == solution->path_count)

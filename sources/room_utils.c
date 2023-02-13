@@ -6,7 +6,7 @@
 /*   By: sam <sam@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/21 13:53:38 by swilliam          #+#    #+#             */
-/*   Updated: 2023/02/10 12:46:38 by sam              ###   ########.fr       */
+/*   Updated: 2023/02/13 15:01:29 by sam              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,14 +71,13 @@ t_rooms	*find_room(t_rooms **rooms, int room_id)
 
 t_rooms	*find_room_name(t_rooms **rooms, char *name)
 {
-	t_rooms	*temp_room;
+	int	i;
 
-	temp_room = *rooms;
-	while (temp_room)
+	i = -1;
+	while (++i < MAX_SIZE)
 	{
-		if (ft_strequ(name, temp_room->name))
-			return (temp_room);
-		temp_room = temp_room->next;
+		if (ft_strequ(name, rooms[i]->name))
+			return (rooms[i]);
 	}
 	return (NULL);
 }

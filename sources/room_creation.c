@@ -6,7 +6,7 @@
 /*   By: sam <sam@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/21 13:53:38 by swilliam          #+#    #+#             */
-/*   Updated: 2023/02/10 12:47:11 by sam              ###   ########.fr       */
+/*   Updated: 2023/02/13 16:19:01 by sam              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,16 +17,19 @@
 ** - Creates a fresh room.
 */
 
-int	room_check(t_rooms *head, char *name)
+static int	room_check(t_rooms **rooms, char *name)
 {
-	t_rooms	*room;
+	int	i;
 
-	room = head;
-	while (room)
+	i = -1;
+	if (rooms == NULL)
+		return (0);
+	while (++i < MAX_SIZE)
 	{
-		if (ft_strequ(room->name, name))
+		if (rooms[i] == NULL)
+			break ;
+		if (ft_strequ(name, rooms[i]->name))
 			return (1);
-		room = room->next;
 	}
 	return (0);
 }
@@ -36,25 +39,27 @@ int	room_check(t_rooms *head, char *name)
 ** - Initialises a fresh room node.
 */
 
-t_rooms	*create_room(void)
+t_rooms	*create_room(
+	t_data *data,
+	t_heads *heads,
+	t_rooms *room,
+	char *line)
 {
-	t_rooms	*new_room;
-
-	new_room = NULL;
-	new_room = (t_rooms *)malloc(sizeof(t_rooms));
-	if (!new_room)
+	room = (t_rooms *)malloc(sizeof(t_rooms));
+	if (!room)
 		return (NULL);
-	new_room->id = 0;
-	new_room->name = NULL;
-	new_room->start = false;
-	new_room->end = false;
-	new_room->is_room = 0;
-	new_room->ants = 0;
-	new_room->x = 0;
-	new_room->y = 0;
-	new_room->next = NULL;
-	new_room->links = NULL;
-	return (new_room);
+	room->id = 0;
+	room->name = NULL;
+	room->start = false;
+	room->end = false;
+	room->is_room = 0;
+	room->ants = 0;
+	room->x = 0;
+	room->y = 0;
+	room->next = NULL;
+	room->links = NULL;
+	store_room(data, heads, room, line);
+	return (room);
 }
 
 /*
@@ -69,7 +74,7 @@ t_rooms	*store_room(t_data *data, t_heads *heads, t_rooms *room, char *line)
 
 	line_split = ft_strsplit(line, ' ');
 	room_store_errors(line_split, heads);
-	if (room_check(heads->room_list, line_split[0]))
+	if (room_check(heads->room, line_split[0]))
 		clean_lem_in(heads, "Duplicate rooms.");
 	room->id = data->room_count;
 	room->name = ft_strdup(line_split[0]);

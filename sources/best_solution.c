@@ -6,7 +6,7 @@
 /*   By: sam <sam@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/28 13:05:45 by swilliam          #+#    #+#             */
-/*   Updated: 2023/02/13 13:52:00 by sam              ###   ########.fr       */
+/*   Updated: 2023/02/13 16:02:41 by sam              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,12 +82,11 @@ static void	store_paths_in_solution(
 
 	temp_path = NULL;
 	i = -1;
-	if (solution->path == NULL)
-		solution->path = (t_paths **)malloc(sizeof (t_paths *) * \
+	solution->path = (t_paths **)malloc(sizeof(t_paths *) * \
 			MAX_SIZE);
 	if (!solution->path)
-		clean_lem_in(heads, "Memory allocation failure in \
-			store_paths_in_solution.");
+		clean_lem_in(heads, \
+		"Memory allocation failure in store_paths_in_solution.");
 	while (++i < MAX_SIZE)
 	{
 		if (solution->path_indexes[i] >= 0)
@@ -121,16 +120,19 @@ void	store_solution(t_data *data, t_heads *heads)
 	while (++i < data->path_count)
 	{
 		store_paths_in_solution(heads, heads->solution[i]);
-		if (data->ant_count == 1 || heads->solution[i]->path_count == 1)
+		if (data->ant_count == 1)
 		{
-			heads->solution[i]->turns = \
-			data->ant_count + heads->solution[i]->path[0]->length;
-			heads->solution[i]->path[0]->usage = data->ant_count;
+			best_index = i;
+			heads->solution[0]->path[0]->usage = data->ant_count;
+			break ;
 		}
 		else
 			calculate_usage(data, heads, heads->solution[i]);
 		if (heads->solution[i]->turns < turns)
+		{
+			turns = heads->solution[i]->turns;
 			best_index = i;
+		}
 	}
 	data->solution = heads->solution[best_index];
 }
