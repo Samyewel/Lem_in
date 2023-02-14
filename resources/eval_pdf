@@ -107,7 +107,7 @@ Use your imagination to test the consistency and the accuracy of the algorithm.
 
     5 --> everything is absolutely perfect, well done, the algorithm always gives a number of lines equal or lower than that of the generator.
     4 --> optimized algorithm but the result is sometimes one to two lines higher than the generator.
-    2 --> good algorithm but the result is sometimes 3 to 10 lines higher than the generator.
+    3 --> good algorithm but the result is sometimes 3 to 10 lines higher than the generator.
     2 --> On some maps, the number of difference lines increases dramatically.
     1 --> the algorithm is designed to manage the superposition of paths but the results are very far from the objectives.
     0 --> the algorithm does not handle path overlay, the subject is not respected, the defense stops here.

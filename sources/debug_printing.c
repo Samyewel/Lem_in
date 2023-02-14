@@ -6,7 +6,7 @@
 /*   By: sam <sam@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/16 16:29:43 by swilliam          #+#    #+#             */
-/*   Updated: 2023/02/13 15:18:31 by sam              ###   ########.fr       */
+/*   Updated: 2023/02/13 16:37:31 by sam              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,8 +31,8 @@ void	print_rooms(t_heads *heads)
 				break ;
 			ft_printf("ID: %d ", heads->room[i]->id);
 			ft_printf("Name: %s\n", heads->room[i]->name);
-			ft_printf("Start? %d\n", heads->room[i]->start);
-			ft_printf("End? %d\n", heads->room[i]->end);
+			// ft_printf("Start? %d\n", heads->room[i]->start);
+			// ft_printf("End? %d\n", heads->room[i]->end);
 			x = -1;
 			ft_printf("Links:\n");
 			while (++x < MAX_SIZE)

@@ -6,22 +6,22 @@
 /*   By: sam <sam@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/08 17:28:33 by swilliam          #+#    #+#             */
-/*   Updated: 2023/02/13 16:32:07 by sam              ###   ########.fr       */
+/*   Updated: 2023/02/13 17:13:46 by sam              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lem_in.h"
 
-/*
-** is_visited
-** - Cross-references the boolean array with the room ID to check
-**   if that room has been visited yet.
-*/
+// /*
+// ** is_visited
+// ** - Cross-references the boolean array with the room ID to check
+// **   if that room has been visited yet.
+// */
 
-static bool	is_visited(bool *visited, t_rooms *room)
-{
-	return (visited[room->id]);
-}
+// static bool	is_visited(bool *visited, t_rooms *room)
+// {
+// 	return (visited[room->id]);
+// }
 
 /*
 ** store_stack_reverse:
@@ -64,13 +64,9 @@ int current)
 		store_stack_reverse(heads, heads->stack->nodes);
 	else
 	{
-		while (++i < MAX_SIZE)
-		{
-			if (heads->room[current]->links[i] == NULL)
-				break ;
-			if (!is_visited(visited, heads->room[current]->links[i]))
+		while (++i < MAX_SIZE && heads->room[current]->links[i] != NULL)
+			if (!visited[heads->room[current]->links[i]->id])
 				trace_path(heads, visited, heads->room[current]->links[i]->id);
-		}
 	}
 	visited[current] = false;
 	pop(heads->stack);
@@ -85,18 +81,17 @@ int current)
 **	 possible path from the start room to the end room.
 */
 
-void	backtrack_rooms(t_heads *heads)
+void	backtrack_rooms(t_data *data, t_heads *heads)
 {
 	int		start_room;
 	bool	*visited;
 
 	start_room = find_start_room(heads);
-	visited = (bool *) malloc(sizeof(bool) * MAX_SIZE);
+	visited = (bool *) malloc(sizeof(bool) * data->room_count);
 	if (!visited)
 		clean_lem_in(heads, "Memory allocation failure in backtrack_queue.");
 	heads->stack = (t_stack *)malloc(sizeof(t_stack));
 	heads->stack->top = 0;
-	ft_memset(visited, false, MAX_SIZE);
 	trace_path(heads, visited, start_room);
 	free(visited);
 	if (heads->path == NULL)

@@ -7,3 +7,4 @@ lem-in
 *.o
 *.a
 ./eval_tests/output
+./eval_tests/output/*

@@ -6,7 +6,7 @@
 /*   By: sam <sam@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/03 11:56:26 by swilliam          #+#    #+#             */
-/*   Updated: 2023/02/13 16:32:54 by sam              ###   ########.fr       */
+/*   Updated: 2023/02/13 17:04:18 by sam              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@
 # include <stdbool.h>
 
 # define INT_MAX 2147483647
-# define MAX_SIZE 30000
+# define MAX_SIZE 10000
 # define MAX_ANT 10000
 
 typedef struct data
@@ -171,7 +171,7 @@ void		store_path_data(t_heads *heads, t_node *node);
 t_paths		*get_path(t_heads *heads, int path_nb);
 
 // Path calculation:
-void		backtrack_rooms(t_heads *heads);
+void		backtrack_rooms(t_data *data, t_heads *heads);
 void		backtrack_paths(t_data *data, t_heads *heads);
 t_paths		*shortest_path(t_data *data, t_heads *heads);
 
