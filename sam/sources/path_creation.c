@@ -6,7 +6,7 @@
 /*   By: sam <sam@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/21 17:09:45 by swilliam          #+#    #+#             */
-/*   Updated: 2023/01/17 12:43:38 by sam              ###   ########.fr       */
+/*   Updated: 2023/02/13 14:45:49 by sam              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,109 +14,120 @@
 
 /*
 ** create_path_node:
-** -
+** - Duplicates the room with necessary data to be used when accessing the
+**   path later.
 */
 
-static t_queue	*create_path_node(t_rooms *room, t_queue *previous)
+static t_rooms	*create_path_node(t_heads *heads, t_rooms *room, t_rooms *prev)
 {
-	t_queue	*new_node;
+	t_rooms	*new_node;
 
-	new_node = (t_queue *)malloc(sizeof(t_queue));
+	new_node = (t_rooms *)malloc(sizeof(t_rooms));
 	if (!new_node)
-		ft_printf_strerror("Memory allocation failure in create_path_node");
+		clean_lem_in(heads, "Memory allocation failure in create_path_node");
+	new_node->id = room->id;
 	new_node->name = ft_strdup(room->name);
 	new_node->start = room->start;
 	new_node->end = room->end;
+	new_node->is_room = (room->start == false && room->end == false);
 	new_node->visited = false;
-	new_node->edge_flow = 0;
-	new_node->capacity = 0 + (room->start == false && room->end == false);
-	new_node->depth = 0;
+	new_node->ants = 0;
 	new_node->next = NULL;
-	new_node->previous = previous;
+	new_node->previous = prev;
 	return (new_node);
 }
 
 /*
 ** create_path:
-** - Allocates a fresh
+** - Allocates a fresh array with the start path at the beginning.
 */
 
-static t_paths	*create_path(int i, t_queue *path_start)
+static t_paths	*create_path(
+t_heads *heads,
+int i,
+t_rooms *path_start)
 {
 	t_paths	*new_path;
 
 	new_path = NULL;
 	new_path = (t_paths *)malloc(sizeof(t_paths));
 	if (!new_path)
-		ft_printf_strerror("Memory allocation failure in create_path_node");
-	new_path->path_nb = i;
-	new_path->path = path_start;
-	new_path->path_flow = 0;
+		clean_lem_in(heads, "Memory allocation failure in create_path_node.");
+	new_path->nb = i;
+	new_path->room = (t_rooms **)malloc(sizeof(t_rooms *) * MAX_SIZE);
+	if (!new_path->room)
+		clean_lem_in(heads, "Memory allocation failure in create_path_node.");
+	ft_memset(new_path->room, 0, MAX_SIZE);
+	new_path->room[0] = path_start;
+	new_path->length = 0;
+	new_path->usage = 0;
+	new_path->temp_usage = 0;
+	new_path->temp = 0;
 	new_path->next = NULL;
+	heads->data->path_count++;
 	return (new_path);
 }
 
 /*
 ** create_new_path:
-** -
+** - Creates a fresh path containing the start node at the beginning, storing
+**   it at the end of the list of paths.
 */
 
 void	create_new_path(t_heads *heads, t_node *start_node)
 {
 	t_rooms	*start_room;
-	t_paths	*temp_paths;
-	t_queue	*path_start;
-	t_paths	*path;
+	t_rooms	*path_start;
 	int		i;
 
-	i = 0;
-	start_room = find_room(&heads->rooms_head, start_node->name);
-	path = NULL;
-	path_start = create_path_node(start_room, NULL);
-	temp_paths = heads->paths_head;
-	if (heads->paths_head == NULL)
+	i = -1;
+	start_room = find_room(heads->room, start_node->id);
+	path_start = create_path_node(heads, start_room, NULL);
+	if (heads->path == NULL)
 	{
-		path = create_path(0, path_start);
-		heads->paths_head = path;
-		temp_paths = heads->paths_head;
+		heads->path = (t_paths **)malloc(sizeof(t_paths *) * MAX_SIZE);
+		if (!heads->path)
+			clean_lem_in(heads, "Memory allocation failure in create_new_path");
 	}
-	else
+	while (++i < MAX_SIZE)
 	{
-		while (++i && temp_paths->next != NULL)
-			temp_paths = temp_paths->next;
-		path = create_path(i, path_start);
-		temp_paths->next = path;
-		temp_paths = temp_paths->next;
+		if (heads->path[i] == NULL)
+		{
+			heads->path[i] = create_path(heads, i, path_start);
+			break ;
+		}
 	}
 }
 
 /*
 ** add_to_path:
-** -
+** - Loops through the paths until it finds an unfinished one, adding the
+**   room onto the end of it.
 */
 
 void	store_path_data(t_heads *heads, t_node *node)
 {
-	t_paths	*temp_paths;
-	t_queue	*temp_queue;
-	t_rooms	*temp_room;
+	int		i;
+	int		x;
 
-	temp_room = find_room(&heads->rooms_head, node->name);
-	temp_paths = heads->paths_head;
-	temp_queue = NULL;
-	while (temp_paths)
+	i = -1;
+	x = -1;
+	while (++x < MAX_SIZE)
 	{
-		temp_queue = temp_paths->path;
-		while (temp_queue)
+		i = -1;
+		while (++i < MAX_SIZE)
 		{
-			if (temp_queue->next == NULL && temp_queue->end == false)
+			if (heads->path[x]->room[i + 1] == NULL)
 			{
-				temp_queue->next = create_path_node(temp_room, temp_queue);
-				return ;
+				if (heads->path[x]->room[i]->end == false)
+				{
+					heads->path[x]->room[i + 1] = create_path_node \
+						(heads, heads->room[node->id], heads->path[x]->room[i]);
+					heads->path[x]->length++;
+					return ;
+				}
+				break ;
 			}
-			temp_queue = temp_queue->next;
 		}
-		temp_paths = temp_paths->next;
 	}
-	return ;
 }

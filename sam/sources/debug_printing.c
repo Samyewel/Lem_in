@@ -6,123 +6,119 @@
 /*   By: sam <sam@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/16 16:29:43 by swilliam          #+#    #+#             */
-/*   Updated: 2023/01/17 13:09:25 by sam              ###   ########.fr       */
+/*   Updated: 2023/02/13 16:37:31 by sam              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lem_in.h"
 
 /*
-** print_data:
-** - Prints all data that has been stored.
-*/
-
-void	print_data(t_data *data)
-{
-	if (DEBUG == true && DATA == true)
-	{
-		ft_printf("\nAnt count: %d\n", data->ant_count);
-		ft_printf("\nRoom count: %d\n", data->room_count);
-	}
-}
-
-/*
 ** print_rooms:
 ** - Prints all stored rooms and relevant links.
 */
 
-void	print_rooms(t_rooms **rooms)
+void	print_rooms(t_heads *heads)
 {
-	t_rooms	*ptr;
-	t_links	*link;
+	int	i;
+	int	x;
 
-	ptr = *rooms;
+	i = -1;
 	if (DEBUG == true && ROOMS == true)
 	{
-		while (ptr)
+		while (++i < MAX_SIZE)
 		{
-			ft_printf("Name: %s\n", ptr->name);
-			ft_printf("x: %d\ny: %d\n", ptr->coord_x, ptr->coord_y);
-			ft_printf("Start? %d\nEnd? %d\n", ptr->start, ptr->end);
-			link = ptr->links;
-			while (link)
+			if (heads->room[i] == NULL)
+				break ;
+			ft_printf("ID: %d ", heads->room[i]->id);
+			ft_printf("Name: %s\n", heads->room[i]->name);
+			// ft_printf("Start? %d\n", heads->room[i]->start);
+			// ft_printf("End? %d\n", heads->room[i]->end);
+			x = -1;
+			ft_printf("Links:\n");
+			while (++x < MAX_SIZE)
 			{
-				ft_printf("Links to: %s\n", link->name);
-				link = link->next;
+				if (heads->room[i]->links[x] == NULL)
+					break ;
+				ft_printf("%s ", heads->room[i]->links[x]->name);
 			}
-			ft_printf("\n");
-			ptr = ptr->next;
+			ft_printf("\n\n");
 		}
 	}
 }
 
 /*
-** print_queue:
-** - Prints the contents of the queue.
+** print_path:
+** - Prints all nodes of the given path.
 */
 
-void	print_queue(t_queue **queue)
+void	print_path(t_paths *path)
 {
-	t_queue	*temp_queue;
+	int	i;
 
-	temp_queue = *queue;
-	if (DEBUG == true && QUEUE == true)
-	{
-		ft_printf("Queue:\n");
-		while (temp_queue)
-		{
-			if (temp_queue->visited)
-				ft_printf("!");
-			ft_printf("%s", temp_queue->name);
-			ft_printf(" [%d]", temp_queue->depth);
-			if (temp_queue->next != NULL)
-				ft_printf(", ");
-			temp_queue = temp_queue->next;
-		}
-		ft_printf("\n");
-	}
-}
-
-void	print_paths(t_paths **path_list)
-{
-	t_paths	*temp_path_list;
-	t_queue	*temp_path;
-
-	temp_path_list = *path_list;
+	i = -1;
 	if (DEBUG == true && PATHS == true)
 	{
-		while (temp_path_list)
+		ft_printf("Path[%d], length: %d, usage: %d\n", path->nb, \
+		path->length, path->usage);
+		while (++i < MAX_SIZE)
 		{
-			ft_printf("Path[%d]: ", temp_path_list->path_nb);
-			temp_path = temp_path_list->path;
-			while (temp_path)
-			{
-				if (temp_path->end)
-					ft_printf("%s\n", temp_path->name);
-				else
-					ft_printf("%s->", temp_path->name);
-				temp_path = temp_path->next;
-			}
-			temp_path_list = temp_path_list->next;
+			if (path->room[i] == NULL)
+				return ;
+			if (path->room[i]->end)
+				ft_printf("%s\n", path->room[i]->name);
+			else
+				ft_printf("%s->", path->room[i]->name);
 		}
 	}
 }
 
-void	print_flows(t_queue *path)
-{
-	t_queue	*temp_path;
+/*
+** print_paths:
+** - Prints all paths given.
+*/
 
-	temp_path = path;
-	if (DEBUG == true && FLOWS == true)
+void	print_paths(t_paths **paths)
+{
+	int	i;
+
+	i = -1;
+	if (DEBUG == true && PATHS == true)
 	{
-		while (temp_path)
+		while (++i < MAX_SIZE)
 		{
-			ft_printf("%s[%d]", temp_path->name, temp_path->edge_flow);
-			if (temp_path->end)
-				ft_printf("\n");
-			else
-				ft_printf("->");
-			temp_path = temp_path->next;
+			if (paths[i] == NULL)
+				return ;
+			print_path(paths[i]);
 		}
+	}
+}
+
+/*
+** print_solution:
+** - Prints the solution containing their non-intersecting paths.
+*/
+
+void	print_solution(t_solutions *solution)
+{
+	int	i;
+
+	i = -1;
+	if (DEBUG == true && SOLUTIONS == true)
+	{
+		ft_printf("Solution[%d], length: %d, paths: %d\n", \
+			solution->nb, solution->total_length, solution->path_count);
+		if (solution->path == NULL)
+		{
+			while (++i < MAX_SIZE)
+			{
+				if (solution->path_indexes[i] >= 0)
+					ft_printf("%d ", solution->path_indexes[i]);
+				else
+					break ;
+			}
+			ft_printf("\n");
+		}
+		else
+			print_paths(solution->path);
 	}
 }

@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: sam <sam@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/11/07 16:28:47 by swilliam          #+#    #+#             */
-/*   Updated: 2023/01/17 13:32:12 by sam              ###   ########.fr       */
+/*   Created: 2023/02/03 11:56:26 by swilliam          #+#    #+#             */
+/*   Updated: 2023/02/13 19:45:20 by sam              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,18 +20,16 @@
 # define DEBUG 1
 // INPUT: Prints the contents of the file being input into the program.
 # define INPUT 0
-// EXTRA: Prints the contents of the data struct.
-# define DATA 0
 // ROOMS: Prints all rooms and all relevant data.
 # define ROOMS 0
-// QUEUE: Prints the queue used for the BFS algorithm.
-# define QUEUE 0
 // PATHS: Prints all paths found from start to end.
-# define PATHS 0
-// FLOWS: Prints the flows during each iteration of the Edmonds Karp process.
-# define FLOWS 1
+# define PATHS 1
+// SOLUTIONS: Prints the contents of a solution.
+# define SOLUTIONS 1
+// LINES: Prints the total amount of lines used for printing ant moves.
+# define LINES 1
 // LEAKS: Prints a memory leak report.
-# define LEAKS 1
+# define LEAKS 0
 
 # include "ft_printf.h"
 # include "get_next_line.h"
@@ -39,78 +37,102 @@
 # include <stdbool.h>
 
 # define INT_MAX 2147483647
-# define INT_MIN -2147483648
+# define MAX_SIZE 10000
+# define MAX_ANT 10000
 
 typedef struct data
 {
-	int				ant_count;
-	int				room_count;
-	int				max_flow;
-	int				finished;
-	int				ant_num;
-	bool			starting_search;
-	bool			ending_search;
+	int					ant_count;
+	int					room_count;
+	int					path_count;
+	int					longest_path;
+	int					line_count;
+	int					finished;
+	int					ant_num;
+	int					counter;
+	bool				starting_search;
+	bool				start_found;
+	bool				ending_search;
+	bool				end_found;
+	bool				links_started;
+	char				*last_link_0;
+	char				*last_link_1;
+	struct solutions	*solution;
 }				t_data;
 
 typedef struct rooms
 {
 	int				id;
-	char			*name;
-	bool			start;
-	bool			end;
-	int				ants;
-	int				coord_x;
-	int				coord_y;
-	struct links	*links;
-	struct rooms	*next;
-}				t_rooms;
-
-typedef struct links
-{
-	char			*name;
-	struct links	*next;
-}				t_links;
-
-typedef struct queue
-{
+	unsigned int	index;
 	char			*name;
 	bool			start;
 	bool			end;
 	bool			visited;
-	bool			checked;
-	int				depth;
-	int				edge_flow;
-	int				capacity;
-	struct queue	*next;
-	struct queue	*previous;
-}				t_queue;
+	int				is_room;
+	int				ants;
+	int				x;
+	int				y;
+	struct rooms	**links;
+	struct rooms	*next;
+	struct rooms	*previous;
+}				t_rooms;
 
 typedef struct paths
 {
-	int				path_nb;
-	int				path_flow;
-	struct queue	*path;
+	int				nb;
+	int				length;
+	int				usage;
+	int				temp_usage;
+	int				temp;
+	struct rooms	**room;
 	struct paths	*next;
+	struct paths	*previous;
 }				t_paths;
 
-typedef struct heads
+typedef struct solutions
 {
-	struct paths	*paths_head;
-	struct rooms	*rooms_head;
-	struct queue	*queue_head;
-	struct ants		*ants_head;
-	struct stack	*stack;
-}				t_heads;
+	int					nb;
+	int					*path_indexes;
+	int					path_count;
+	int					paths_used;
+	int					total_length;
+	int					turns;
+	struct paths		*temp_previous;
+	struct paths		**path;
+	struct solutions	*next;
+}				t_solutions;
 
 typedef struct ants
 {
-	struct queue	*next_room;
+	struct rooms	**room;
 	int				ant_number;
+	int				index;
+	int				index_end;
 	struct ants		*next;
 	char			*room_location;
 	bool			has_moved;
 	bool			has_finished;
 }				t_ants;
+
+typedef struct heads
+{
+	struct data			*data;
+	struct rooms		**room;
+	struct stack		*stack;
+	struct queue		*queue;
+	int					**graph;
+	int					**residual;
+	struct paths		**path;
+	struct solutions	**solution;
+	struct ants			*ants;
+}				t_heads;
+
+typedef struct queue
+{
+    int				*data;
+    int				head;
+    int				tail;
+}				t_queue;
 
 # define MAX_NAME_LENGTH 100
 
@@ -131,50 +153,86 @@ typedef struct stack
 }				t_stack;
 
 // Debugging:
-void	print_data(t_data *data);
-void	print_rooms(t_rooms **rooms);
-void	print_queue(t_queue **queue);
-void	print_paths(t_paths **path_list);
-void	print_flows(t_queue *path);
-
-// Initialisation:
-t_data	*initialise_data(t_data *data);
-t_heads	*initialise_heads(t_heads *heads);
+void		print_rooms(t_heads *heads);
+void		print_paths(t_paths **paths);
+void		print_path(t_paths *path);
+void		print_solution(t_solutions *solution);
 
 // Reading:
-void	read_input(t_data *data, t_heads *heads);
+void		read_input(t_data *data, t_heads *heads);
 
 // Rooms
-t_rooms	*create_room(t_rooms *rooms);
-t_rooms	*store_room_data(t_data *data, t_rooms *rooms, char *line);
-t_rooms	*find_start_room(t_rooms **rooms);
-t_rooms	*find_end_room(t_rooms **rooms);
-t_rooms	*find_room(t_rooms **rooms, char *link_name);
+t_rooms		*create_room(\
+			t_data *data, t_heads *heads, t_rooms *room, char *line);
+t_rooms		*store_room(\
+			t_data *data, t_heads *heads, t_rooms *room, char *line);
+int			find_start_room(t_heads *heads);
+int			find_end_room(t_heads *heads);
+t_rooms		*find_room(t_rooms **rooms, int room_id);
+t_rooms		*find_room_name(t_rooms **rooms, char *name);
 
 // Links:
-t_links	*store_link(t_rooms **rooms, char *link_a, char *link_b);
-
-// Queue:
-t_queue	*create_queue(t_queue *queue, char *room, t_queue *prev, int depth);
-int		is_empty(t_queue **queue);
-t_rooms	*visit_next(t_queue **queue, t_rooms **rooms);
-void	explore_room(t_queue **queue_head, t_queue *queue, t_rooms *room);
-void	reset_visted(t_queue **queue);
+void		store_link(\
+			t_rooms **rooms, char *link_a, char *link_b, t_heads *heads);
 
 // Paths:
-void	create_new_path(t_heads *heads, t_node *start_node);
-void	store_path_data(t_heads *heads, t_node *node);
+void		create_new_path(t_heads *heads, t_node *start_node);
+void		store_path_data(t_heads *heads, t_node *node);
+t_paths		*get_path(t_heads *heads, int path_nb);
 
-// Max flow calculation:
-int		calculate_flow(t_heads *heads, t_data *data);
-void	backtrack_queue(t_heads *heads, t_data *data);
+// Path calculation:
+void		backtrack_rooms(t_data *data, t_heads *heads);
+void		backtrack_paths(t_data *data, t_heads *heads);
+t_paths		*shortest_path(t_data *data, t_heads *heads);
 
-//DFS
-void	push(t_stack *stack, t_rooms *room);
-t_node	*pop(t_stack *stack);
+// Flow
+void		bfs_rooms(t_data *data, t_heads *heads);
+
+// Queue
+t_queue		*init_queue(int size);
+void		enqueue(t_queue *queue, int size, int value);
+void		dequeue(t_queue *queue);
+int			is_empty(t_queue *queue);
+
+// Solutions
+t_solutions	*create_solution(t_heads *heads, t_paths *path, int i);
+t_solutions	*initialise_solution(t_paths *path);
+void		store_solution(t_data *data, t_heads *heads);
+void		calculate_usage(\
+			t_data *data, t_heads *heads, t_solutions *solution);
+t_solutions	**initialise_solutions(t_data *data);
+
+// DFS
+void		push(t_stack *stack, t_rooms *room, t_heads *heads);
+t_node		*pop(t_stack *stack);
+
+// Optimisation
+void		room_list_to_array(t_heads *heads);
+void		path_list_to_array(t_heads *heads);
 
 // Data cleaning:
-void	clean_queue(t_queue **queue);
-void	clean_paths(t_heads *heads);
+void		clean_lem_in(t_heads *heads, char *str);
+void		clean_path_list(t_heads *heads);
+void		clean_path_array(t_heads *heads);
+
+// Printer
+void		ant_mover(t_heads *heads, t_data *data);
+void		give_rest_paths(t_ants *ants, t_paths **paths, t_data *data, int i);
+void		move_played(t_ants *ants, t_data *data, t_heads *heads);
+void		first_move(t_ants *ants, t_paths **paths, t_data *data, int i);
+void		send_ants(t_ants *ants, t_data *data, t_paths **paths, int i);
+void		move_ants_already_in_play(t_ants *ants);
+t_ants		*make_ants(t_data *data, t_ants *ants, t_heads *heads);
+
+//Errors
+void		room_errors(char *line, t_data *data, t_heads *heads);
+void		room_store_errors(char **line_split, t_heads *heads);
+void		check_link_errors(char **line_split, t_data *data, t_heads *heads);
+void		verify_rooms(t_heads *heads, t_data *data);
+void		file_errors(t_heads *heads, int line_n, t_data *data);
+void		start_and_end_verify(t_data *data, t_heads *heads);
+void		start_and_end_errors(t_data *data, char *line, t_heads *heads);
+int			ft_is_dash(char *str);
+int			ft_is_space(char *str);
 
 #endif

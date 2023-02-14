@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   room_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: swilliam <swilliam@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sam <sam@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/21 13:53:38 by swilliam          #+#    #+#             */
-/*   Updated: 2023/01/05 14:52:54 by swilliam         ###   ########.fr       */
+/*   Updated: 2023/02/13 15:01:29 by sam              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,14 +17,19 @@
 ** - Points to the room that is identified as the start.
 */
 
-t_rooms	*find_start_room(t_rooms **rooms)
+int	find_start_room(t_heads *heads)
 {
-	t_rooms	*temp_room;
+	int		i;
 
-	temp_room = *rooms;
-	while (temp_room->start != true)
-		temp_room = temp_room->next;
-	return (temp_room);
+	i = -1;
+	while (++i < MAX_SIZE)
+	{
+		if (heads->room[i] == NULL)
+			return (-1);
+		if (heads->room[i]->start == true)
+			return (i);
+	}
+	return (-1);
 }
 
 /*
@@ -32,14 +37,19 @@ t_rooms	*find_start_room(t_rooms **rooms)
 ** - Points to the room that is identified as the end.
 */
 
-t_rooms	*find_end_room(t_rooms **rooms)
+int	find_end_room(t_heads *heads)
 {
-	t_rooms	*temp_room;
+	int		i;
 
-	temp_room = *rooms;
-	while (temp_room->end != true)
-		temp_room = temp_room->next;
-	return (temp_room);
+	i = -1;
+	while (++i < MAX_SIZE)
+	{
+		if (heads->room[i] == NULL)
+			return (-1);
+		if (heads->room[i]->end == true)
+			return (i);
+	}
+	return (-1);
 }
 
 /*
@@ -47,12 +57,27 @@ t_rooms	*find_end_room(t_rooms **rooms)
 ** - Points to the room that is given as a variable name.
 */
 
-t_rooms	*find_room(t_rooms **rooms, char *link_name)
+t_rooms	*find_room(t_rooms **rooms, int room_id)
 {
-	t_rooms	*temp_room;
+	if (room_id >= MAX_SIZE || room_id < 0 || rooms[room_id] == NULL)
+		return (NULL);
+	return (rooms[room_id]);
+}
 
-	temp_room = *rooms;
-	while (ft_strcmp(temp_room->name, link_name) != 0)
-		temp_room = temp_room->next;
-	return (temp_room);
+/*
+** find_room_name:
+** - Finds the room name that is equal to the given search name.
+*/
+
+t_rooms	*find_room_name(t_rooms **rooms, char *name)
+{
+	int	i;
+
+	i = -1;
+	while (++i < MAX_SIZE)
+	{
+		if (ft_strequ(name, rooms[i]->name))
+			return (rooms[i]);
+	}
+	return (NULL);
 }

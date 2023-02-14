@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: swilliam <swilliam@student.42.fr>          +#+  +:+       +#+         #
+#    By: sam <sam@student.42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/11/05 13:26:33 by swilliam          #+#    #+#              #
-#    Updated: 2023/01/05 16:12:25 by swilliam         ###   ########.fr        #
+#    Updated: 2023/02/13 17:17:26 by sam              ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,13 +14,16 @@
 LEM_IN_DIR = ./sources/
 LEM_IN_FILES = \
 main.c read_input.c \
-calculate_flow.c backtrack_queue.c \
-debug_printing.c \
-clean_data.c \
-room_creation.c room_utils.c \
-link_creation.c \
-queue_creation.c queue_utils.c \
-path_creation.c
+room_creation.c room_utils.c link_creation.c \
+backtrack_rooms.c dfs_stack.c \
+path_creation.c path_utils.c \
+backtrack_paths.c \
+solution_creation.c usage_calculation.c best_solution.c \
+printer.c printing_utils.c \
+ant_creation.c \
+debug_printing.c clean_data.c \
+error_check.c error_check2.c \
+utils.c
 
 # Libft
 LIBFT_DIR = ../libft/
@@ -33,14 +36,18 @@ OBJ = $(addprefix $(OBJ_DIR), $(LEM_IN_FILES:.c=.o))
 # Compilation
 CC = gcc
 FLAGS = -Wall -Wextra -Werror
+FS = -fsanitize=address
 DEBUG = -g
-INCLUDES = -I./includes -I$(LIBFT_DIR)includes -I../eval_tests
+INCLUDES = -I./includes -I$(LIBFT_DIR)includes -I./eval_tests
 ADD_LIB = -L. $(LIBFT)
-TEST_CMD = ./lem-in < ../resources/maps/
 LEM_IN = lem-in
 
 # Utilities
 DELETE = $(LEM_IN) $(OBJ)
+EVAL = ../eval_tests/
+OUT = ../eval_tests/output/
+TEST_CMD = ./lem-in < $(EVAL)maps/
+GENERATOR = $(EVAL)generator
 
 all:		$(LEM_IN)
 
@@ -62,6 +69,7 @@ clean:
 			@make clean -sC $(LIBFT_DIR)
 			@rm -f $(OBJ)
 			@rm -rf $(OBJ_DIR)
+			@rm -rf $(OUT)
 			@printf "\r                                       \r"
 			@printf "\rObjects cleaned.\n"
 
@@ -74,10 +82,47 @@ fclean: 	clean
 
 re:			fclean all
 
+f1:			all
+			@mkdir -p $(OUT)
+			@$(GENERATOR) --flow-one > $(OUT)flow1.map
+			@time ./lem-in < $(OUT)flow1.map
+
+f10:		all
+			@mkdir -p $(OUT)
+			@$(GENERATOR) --flow-ten > $(OUT)flow10.map
+			@time ./lem-in < $(OUT)flow10.map
+
+f1000:		all
+			@mkdir -p $(OUT)
+			@$(GENERATOR) --flow-thousand > $(OUT)flow1000.map
+			@time ./lem-in < $(OUT)flow1000.map
+
+big:		all
+			@mkdir -p $(OUT)
+			@$(GENERATOR) --big > $(OUT)big.map
+			@time ./lem-in < $(OUT)big.map
+
+super:		all
+			@mkdir -p $(OUT)
+			@$(GENERATOR) --big-superposition > $(OUT)big-superposition.map
+			@time ./lem-in < $(OUT)big-superposition.map
+
 test0:		all
-			$(TEST_CMD)0.map
+			@time $(TEST_CMD)0.map
 
 test1:		all
-			$(TEST_CMD)1.map
+			@time $(TEST_CMD)1.map
 
-.PHONY: all clean fclean re test
+test2:		all
+			@time $(TEST_CMD)2.map
+
+test3:		all
+			@time $(TEST_CMD)3.map
+
+test4:		all
+			@time $(TEST_CMD)4.map
+
+test5:		all
+			@time $(TEST_CMD)5.map
+
+.PHONY: all clean fclean re

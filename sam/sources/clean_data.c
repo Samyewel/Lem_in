@@ -6,45 +6,51 @@
 /*   By: sam <sam@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/28 20:30:16 by sam               #+#    #+#             */
-/*   Updated: 2023/01/16 12:45:41 by sam              ###   ########.fr       */
+/*   Updated: 2023/02/13 16:07:33 by sam              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lem_in.h"
 
-/*
-** clean_queue:
-** - Flushes the contents of the queue.
-*/
-
-void	clean_queue(t_queue **queue)
+void	clean_path_array(t_heads *heads)
 {
-	t_queue	*temp_queue;
-	t_queue	*temp_data;
+	int	i;
+	int	x;
 
-	temp_queue = *queue;
-	while (temp_queue)
+	i = -1;
+	while (++i < MAX_SIZE)
 	{
-		temp_data = temp_queue->next;
-		ft_strdel(&temp_queue->name);
-		free(temp_queue);
-		temp_queue = temp_data;
+		if (heads->path[i] == NULL)
+			break ;
+		else
+		{
+			x = -1;
+			while (x < MAX_SIZE)
+			{
+				if (heads->path[i]->room[x] == NULL)
+					break ;
+				else
+				{
+					ft_strdel(&heads->path[i]->room[x]->name);
+					free(heads->path[i]->room[x]);
+				}
+			}
+			free(heads->path[i]);
+		}
 	}
+	free(heads->path);
 }
 
-void	clean_paths(t_heads *heads)
-{
-	t_paths	*current_path;
-	t_paths	*next_path;
+/*
+** clean_lem_in:
+** - Upon finding an error, all necessary data is cleaned before exiting the
+**   program.
+*/
 
-	current_path = heads->paths_head;
-	next_path = NULL;
-	while (current_path != NULL)
-	{
-		next_path = current_path->next;
-		clean_queue(&current_path->path);
-		free(current_path);
-		current_path = next_path;
-	}
-	heads->paths_head = NULL;
+void	clean_lem_in(t_heads *heads, char *str)
+{
+	ft_dprintf(1, str);
+	if (heads->path)
+		clean_path_array(heads);
+	exit(EXIT_FAILURE);
 }

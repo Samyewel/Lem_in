@@ -6,7 +6,7 @@
 /*   By: sam <sam@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/07 16:16:16 by swilliam          #+#    #+#             */
-/*   Updated: 2023/01/17 13:06:56 by sam              ###   ########.fr       */
+/*   Updated: 2023/02/13 19:45:50 by sam              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,18 +18,25 @@
 **   functionality of the project.
 */
 
-t_data	*initialise_data(t_data *data)
+static t_data	*initialise_data(t_data *data)
 {
 	data = (t_data *)malloc(sizeof(t_data));
 	if (!data)
-		ft_printf_strerror("Memory allocation failure in initialise_data");
+		return (NULL);
 	data->ant_count = 0;
 	data->room_count = 0;
-	data->max_flow = 0;
+	data->path_count = 0;
+	data->line_count = 0;
 	data->finished = 0;
 	data->ant_num = 0;
 	data->starting_search = false;
+	data->start_found = false;
 	data->ending_search = false;
+	data->solution = NULL;
+	data->counter = 0;
+	data->links_started = false;
+	data->last_link_0 = NULL;
+	data->last_link_1 = NULL;
 	return (data);
 }
 
@@ -39,15 +46,18 @@ t_data	*initialise_data(t_data *data)
 **   program.
 */
 
-t_heads	*initialise_heads(t_heads *heads)
+static t_heads	*initialise_heads(t_data *data, t_heads *heads)
 {
 	heads = (t_heads *)malloc(sizeof(t_heads));
 	if (!heads)
-		ft_printf_strerror("Memory allocation failure in initialise_heads");
-	heads->rooms_head = NULL;
-	heads->queue_head = NULL;
-	heads->paths_head = NULL;
-	heads->ants_head = NULL;
+		return (NULL);
+	heads->data = data;
+	heads->room = NULL;
+	heads->path = NULL;
+	heads->graph = NULL;
+	heads->residual = NULL;
+	heads->solution = NULL;
+	heads->ants = NULL;
 	heads->stack = NULL;
 	return (heads);
 }
@@ -65,18 +75,25 @@ int	main(void)
 	data = NULL;
 	heads = NULL;
 	data = initialise_data(data);
-	heads = initialise_heads(heads);
+	heads = initialise_heads(data, heads);
 	if (!data || !heads)
 		ft_printf_strerror("Memory allocation failure in main.");
+	ft_printf("Reading input...\n");
 	read_input(data, heads);
-	if (DEBUG == true && ROOMS == true)
-		print_rooms(&heads->rooms_head);
-	print_data(data);
-	if (calculate_flow(heads, data) > 0)
-		ft_printf("");
-	if (DEBUG == true && LEAKS == true)
-		//system("leaks lem-in");
-		system("leaks lem-in | grep 'leaks for'");
+	ft_printf("Backtracking rooms...\n");
+	bfs_rooms(data, heads);
+	// backtrack_rooms(data, heads);
+	exit(1);
+	ft_printf("Backtracking paths...\n");
+	backtrack_paths(data, heads);
+	ft_printf("Storing solution...\n");
+	store_solution(data, heads);
+	ft_printf("Printing...\n");
+	ant_mover(heads, data);
+	if (DEBUG == true && LINES == true)
+		ft_printf("\nLine count = %d\n", data->line_count);
+	if (DEBUG == true && LEAKS == true) // REMOVE BEFORE SUBMISSION
+		system("leaks lem-in");
 	exit(EXIT_SUCCESS);
 	return (0);
 }
