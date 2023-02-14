@@ -6,7 +6,7 @@
 /*   By: swilliam <swilliam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/03 16:17:07 by swilliam          #+#    #+#             */
-/*   Updated: 2023/02/14 12:27:49 by swilliam         ###   ########.fr       */
+/*   Updated: 2023/02/14 12:44:29 by swilliam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ static void	reset_usage(
 
 /*
 ** longest move:
-** - Finds which path contains the longest amount of moves.
+** - Finds the highest amount of turns the current solution will take.
 */
 
 static int	longest_move(int *turns, int path_count)
@@ -58,7 +58,11 @@ static int	longest_move(int *turns, int path_count)
 
 /*
 ** distribute:
-** - Distributes the path usage among the amount of necessary paths
+** - Distributes the path usage among the amount of necessary paths.
+** - Calculates the amount of turns the current path will take with it's
+**   usage and length, storing it in an array.
+** - The amount of turns this solution's path usages will take is equal
+**   to the longest path turns in the array.
 */
 
 static int	distribute(
@@ -111,12 +115,12 @@ static void	swap_usages(t_solutions *solution, int reverse)
 	{
 		solution->paths_used--;
 		while (++i < solution->paths_used)
-			solution->path[i]->usage = solution->path[i]->temp_usage;
+			solution->path[i]->usage = solution->path[i]->previous_usage;
 	}
 	else
 	{
 		while (++i < solution->paths_used)
-			solution->path[i]->temp_usage = solution->path[i]->usage;
+			solution->path[i]->previous_usage = solution->path[i]->usage;
 	}
 }
 
