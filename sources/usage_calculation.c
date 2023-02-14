@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   usage_calculation.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sam <sam@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: swilliam <swilliam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/03 16:17:07 by swilliam          #+#    #+#             */
-/*   Updated: 2023/02/13 15:50:15 by sam              ###   ########.fr       */
+/*   Updated: 2023/02/14 12:27:49 by swilliam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,6 +92,16 @@ static int	distribute(
 	return (longest_move(turns, path_count));
 }
 
+/*
+** swap_usages:
+** - There are two cases where usages need to be swapped:
+**   - If the current usages take too many turns, we reverse the results
+**     given by swapping the path usage back to it's previous results.
+**   - If we are satisfied with the turns the current usage distribution,
+**     we set the current usage to the previous results so that they can
+**     be reverted later in case the next test takes too many turns.
+*/
+
 static void	swap_usages(t_solutions *solution, int reverse)
 {
 	int	i;
@@ -112,12 +122,11 @@ static void	swap_usages(t_solutions *solution, int reverse)
 
 /*
 ** calculate_usage:
-** - When there is either one ant or one path, the fastest method is to
-**   send all ants through the shortest path, which will always be the first
-**   path in the array.
 ** - If there are more than one ant or path, we distribute the usages amongst
 **   the necessary paths, stopping before the next path would cause there
 **   to be too many turns used.
+** - If the path count of the solution is one, then the while loop will not be
+**   met and all ants will be given to the first path.
 */
 
 void	calculate_usage(t_data *data, t_heads *heads, t_solutions *solution)
@@ -138,7 +147,7 @@ void	calculate_usage(t_data *data, t_heads *heads, t_solutions *solution)
 		current = distribute(data, heads, solution, solution->paths_used);
 		if (previous <= current)
 		{
-			swap_usages(solution, 0);
+			swap_usages(solution,0);
 			break ;
 		}
 		previous = current;
