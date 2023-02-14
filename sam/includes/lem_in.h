@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lem_in.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sam <sam@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: swilliam <swilliam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/03 11:56:26 by swilliam          #+#    #+#             */
-/*   Updated: 2023/02/13 19:45:20 by sam              ###   ########.fr       */
+/*   Updated: 2023/02/14 15:26:33 by swilliam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -132,6 +132,7 @@ typedef struct queue
     int				*data;
     int				head;
     int				tail;
+	int				size;
 }				t_queue;
 
 # define MAX_NAME_LENGTH 100
@@ -186,11 +187,11 @@ void		backtrack_paths(t_data *data, t_heads *heads);
 t_paths		*shortest_path(t_data *data, t_heads *heads);
 
 // Flow
-void		bfs_rooms(t_data *data, t_heads *heads);
+void 		flow_calculation(t_data *data, t_heads *heads);
 
 // Queue
-t_queue		*init_queue(int size);
-void		enqueue(t_queue *queue, int size, int value);
+t_queue		*init_queue(t_heads *heads, int size);
+void		enqueue(t_queue *queue, int value);
 void		dequeue(t_queue *queue);
 int			is_empty(t_queue *queue);
 

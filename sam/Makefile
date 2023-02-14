@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: sam <sam@student.42.fr>                    +#+  +:+       +#+         #
+#    By: swilliam <swilliam@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/11/05 13:26:33 by swilliam          #+#    #+#              #
-#    Updated: 2023/02/13 17:17:26 by sam              ###   ########.fr        #
+#    Updated: 2023/02/14 15:36:06 by swilliam         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,7 +23,7 @@ printer.c printing_utils.c \
 ant_creation.c \
 debug_printing.c clean_data.c \
 error_check.c error_check2.c \
-utils.c
+utils.c flow_calculation.c queue.c \
 
 # Libft
 LIBFT_DIR = ../libft/

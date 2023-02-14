@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sam <sam@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: swilliam <swilliam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/07 16:16:16 by swilliam          #+#    #+#             */
-/*   Updated: 2023/02/13 19:45:50 by sam              ###   ########.fr       */
+/*   Updated: 2023/02/14 12:52:11 by swilliam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,7 @@ int	main(void)
 	ft_printf("Reading input...\n");
 	read_input(data, heads);
 	ft_printf("Backtracking rooms...\n");
-	bfs_rooms(data, heads);
+	flow_calculation(data, heads);
 	// backtrack_rooms(data, heads);
 	exit(1);
 	ft_printf("Backtracking paths...\n");

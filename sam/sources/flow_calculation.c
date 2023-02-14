@@ -24,13 +24,27 @@ static void	populate_graph(t_data *data, t_heads *heads)
 		if (heads->room[y]->links == NULL)
 			continue ;
 		while (++x < MAX_SIZE && heads->room[y]->links[x] != NULL)
-			graph[heads->room[y]->id][heads->room[y]->links[x]->id] = 1;
+			heads->graph[heads->room[y]->id][heads->room[y]->links[x]->id] = 1;
 	}
+}
+
+static bool *initialise_visited(t_heads *heads, int start_room)
+{
+	bool *visited;
+
+	visited = NULL;
+	visited = (bool *)malloc(sizeof(bool) * heads->data->room_count);
+	if (!visited)
+		clean_lem_in(heads, "Memory allocation failure in initialise_visited.");
+	ft_memset(visited, false, heads->data->room_count);
+	visited[start_room] = true;
+	return (visited);
 }
 
 static void	initialise_flow(t_data *data, t_heads *heads)
 {
 	int	**graph;
+	int	**residual;
 	int	y;
 	int	x;
 
@@ -44,7 +58,7 @@ static void	initialise_flow(t_data *data, t_heads *heads)
 	while (++y < data->room_count)
 	{
 		x = -1;
-		while (++x < data_room_count)
+		while (++x < data->room_count)
 		{
 			graph[y][x] = 0;
 			residual[y][x] = 0;
@@ -55,23 +69,22 @@ static void	initialise_flow(t_data *data, t_heads *heads)
 	populate_graph(data, heads);
 }
 
-static bool bfs(t_heads *heads, bool *visited, int start)
+static bool bfs(t_heads *heads, int start, int end)
 {
 	int 	i;
-	int		*queue;
+	int		current;
+	t_queue	*queue;
 	bool	*visited;
 
-	queue = init_queue(heads->data->room_count);
-	visited = (bool *)malloc(sizeof(bool) * data->room_count);
-	if (!visited || !queue)
-		clean_lem_in(heads, "Memory allocation failure in bfs.");
-	ft_memset(visited, false, heads->data->room_count);
-	enqueue(queue, heads->data->room_count, start);
-	visited[start] = true;
+	current = 0;
+	queue = init_queue(heads, heads->data->room_count);
+	visited = initialise_visited(heads, start);
+	enqueue(queue, start);
 	while (!is_empty(queue))
 	{
-		current = queue->data(queue->head);
+		current = queue->data[queue->head];
 		dequeue(queue);
+		i = -1;
 		while (++i < heads->data->room_count)
 		{
 			if (heads->graph[current][i] == 1 && !visited[i])
@@ -82,22 +95,23 @@ static bool bfs(t_heads *heads, bool *visited, int start)
 		}
 	}
 	free(queue);
+	if (visited[end])
+	{
+		free(visited);
+		return (true);
+	}
+	return (false);
 }
 
-void bfs_rooms(t_data *data, t_heads *heads)
+void flow_calculation(t_data *data, t_heads *heads)
 {
 	int start_room;
-	bool *visited;
+	int	end_room;
 
 	initialise_flow(data, heads);
 	start_room = find_start_room(heads);
 	end_room = find_end_room(heads);
-	visited = (bool *)malloc(sizeof(bool) * data->room_count);
-	if (!visited)
-		clean_lem_in(heads, "Memory allocation failure in bfs_rooms.");
-	ft_memset(visited, false, data->room_count);
-	bfs(heads, visited, start_room);
-	free(visited);
+	bfs(heads, start_room, end_room);
 	if (heads->path == NULL)
 		clean_lem_in(heads, "No paths found.");
 }

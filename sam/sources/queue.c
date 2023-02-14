@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   queue.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sam <sam@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: swilliam <swilliam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/13 19:10:03 by sam               #+#    #+#             */
-/*   Updated: 2023/02/13 19:58:56 by sam              ###   ########.fr       */
+/*   Updated: 2023/02/14 15:36:25 by swilliam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lem_in.h"
 
-t_queue	*init_queue(int size)
+t_queue	*init_queue(t_heads *heads, int size)
 {
 	t_queue	*new_queue;
 	int		i;
@@ -21,10 +21,11 @@ t_queue	*init_queue(int size)
 	new_queue = NULL;
 	new_queue = (t_queue *)malloc(sizeof(t_queue));
 	if (!new_queue)
-		return (NULL);
+		clean_lem_in(heads, "Memory allocation failure in init_queue.");
 	new_queue->data = (int *)malloc(sizeof(int) * size);
 	if (!new_queue->data)
-		return (NULL);
+		clean_lem_in(heads, "Memory allocation failure in init_queue.");
+	new_queue->size = size;
 	while (++i < size)
 		new_queue->data[i] = -1;
 	new_queue->head = 0;
@@ -37,11 +38,11 @@ int		is_empty(t_queue *queue)
 	return (queue->head >= queue->tail);
 }
 
-void	enqueue(t_queue *queue, int size, int value)
+void	enqueue(t_queue *queue, int value)
 {
 	if (!queue)
 		ft_printf_strerror("Queue is not initialised.");
-	if (queue->tail < size)
+	if (queue->tail < queue->size)
 	{
 		queue->data[queue->tail] = value;
 		queue->tail++;
