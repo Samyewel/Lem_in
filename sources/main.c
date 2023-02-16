@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sam <sam@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: swilliam <swilliam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/07 16:16:16 by swilliam          #+#    #+#             */
-/*   Updated: 2023/02/16 11:56:07 by sam              ###   ########.fr       */
+/*   Updated: 2023/02/16 16:33:19 by swilliam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,15 +79,29 @@ int	main(void)
 	ft_printf("Reading input...\n");
 	read_input(data, heads);
 	ft_printf("Backtracking %d rooms...\n", data->room_count);
+	ft_printf("Links from start:\n");
+	int	i = -1;
+	while (++i < MAX_SIZE && heads->room[find_start_room(heads)]->links[i] != NULL)
+		ft_printf("%s ", heads->room[find_start_room(heads)]->links[i]->name);
 	backtrack_rooms(data, heads);
 	ft_printf("Backtracking %d paths...\n", data->path_count);
 	backtrack_paths(data, heads);
 	ft_printf("Storing solution...\n");
 	store_solution(data, heads);
+	print_solution(data->solution);
 	ft_printf("Printing...\n");
 	ant_mover(heads, data);
 	if (DEBUG == true && LINES == true)
+	{
+		ft_printf("\n----------------------------------------\n\n");
+		print_solution(data->solution);
+		ft_printf("Links from start:\n");
+		int	i = -1;
+		while (++i < MAX_SIZE && heads->room[find_start_room(heads)]->links[i] != NULL)
+			ft_printf("%s ", heads->room[find_start_room(heads)]->links[i]->name);
 		ft_printf("\nLine count = %d\n", data->line_count);
+		ft_printf("Path count = %d\n", data->path_count);
+	}
 	if (DEBUG == true && LEAKS == true) // REMOVE BEFORE SUBMISSION
 		system("leaks lem-in");
 	exit(EXIT_SUCCESS);
