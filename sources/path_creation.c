@@ -6,7 +6,7 @@
 /*   By: sam <sam@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/21 17:09:45 by swilliam          #+#    #+#             */
-/*   Updated: 2023/02/13 14:45:49 by sam              ###   ########.fr       */
+/*   Updated: 2023/02/16 11:16:50 by sam              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ t_rooms *path_start)
 	new_path->room[0] = path_start;
 	new_path->length = 0;
 	new_path->usage = 0;
-	new_path->temp_usage = 0;
+	new_path->previous_usage = 0;
 	new_path->temp = 0;
 	new_path->next = NULL;
 	heads->data->path_count++;

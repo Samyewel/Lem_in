@@ -6,7 +6,7 @@
 /*   By: sam <sam@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/07 16:16:16 by swilliam          #+#    #+#             */
-/*   Updated: 2023/02/13 19:06:37 by sam              ###   ########.fr       */
+/*   Updated: 2023/02/16 11:56:07 by sam              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,6 @@ static t_heads	*initialise_heads(t_data *data, t_heads *heads)
 	heads->data = data;
 	heads->room = NULL;
 	heads->path = NULL;
-	heads->graph = NULL;
 	heads->solution = NULL;
 	heads->ants = NULL;
 	heads->stack = NULL;
@@ -79,9 +78,9 @@ int	main(void)
 		ft_printf_strerror("Memory allocation failure in main.");
 	ft_printf("Reading input...\n");
 	read_input(data, heads);
-	ft_printf("Backtracking rooms...\n");
+	ft_printf("Backtracking %d rooms...\n", data->room_count);
 	backtrack_rooms(data, heads);
-	ft_printf("Backtracking paths...\n");
+	ft_printf("Backtracking %d paths...\n", data->path_count);
 	backtrack_paths(data, heads);
 	ft_printf("Storing solution...\n");
 	store_solution(data, heads);

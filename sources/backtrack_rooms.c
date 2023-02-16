@@ -6,7 +6,7 @@
 /*   By: sam <sam@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/08 17:28:33 by swilliam          #+#    #+#             */
-/*   Updated: 2023/02/13 17:13:46 by sam              ###   ########.fr       */
+/*   Updated: 2023/02/16 12:39:17 by sam              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,13 +60,21 @@ int current)
 	i = -1;
 	push(heads->stack, heads->room[current], heads);
 	visited[current] = true;
-	if (heads->room[current]->end)
+	ft_printf("                 \r");
+	ft_printf("\r[%d] Tracing %s", heads->stack->top, heads->room[current]->name);
+	if (heads->room[current]->end && heads->stack->top <= MAX_DEPTH)
+	{
 		store_stack_reverse(heads, heads->stack->nodes);
-	else
+		ft_printf("                 \r");
+		ft_printf("Path count = %d\n", heads->data->path_count);
+	}
+	else if (!heads->room[current]->end && heads->stack->top < MAX_DEPTH)
 	{
 		while (++i < MAX_SIZE && heads->room[current]->links[i] != NULL)
+		{
 			if (!visited[heads->room[current]->links[i]->id])
 				trace_path(heads, visited, heads->room[current]->links[i]->id);
+		}
 	}
 	visited[current] = false;
 	pop(heads->stack);
