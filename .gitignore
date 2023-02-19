@@ -8,3 +8,4 @@ lem-in
 *.a
 ./eval_tests/output
 ./eval_tests/output/*
+.DS_Store
