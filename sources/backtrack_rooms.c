@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   backtrack_rooms.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sam <sam@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: swilliam <swilliam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/08 17:28:33 by swilliam          #+#    #+#             */
-/*   Updated: 2023/02/16 12:39:17 by sam              ###   ########.fr       */
+/*   Updated: 2023/02/16 13:47:53 by swilliam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,8 @@ int current)
 				trace_path(heads, visited, heads->room[current]->links[i]->id);
 		}
 	}
-	visited[current] = false;
+	if (heads->stack->top < MAX_DEPTH)
+		visited[current] = false;
 	pop(heads->stack);
 }
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lem_in.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sam <sam@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: swilliam <swilliam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/03 11:56:26 by swilliam          #+#    #+#             */
-/*   Updated: 2023/02/16 12:40:08 by sam              ###   ########.fr       */
+/*   Updated: 2023/02/16 13:54:25 by swilliam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@
 # define MAX_SIZE 10000
 # define MAX_ANT 10000
 # define MAX_PATHS 200
-# define MAX_DEPTH 75
+# define MAX_DEPTH 150
 
 typedef struct data
 {
