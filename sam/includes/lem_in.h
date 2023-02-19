@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lem_in.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: swilliam <swilliam@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sam <sam@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/03 11:56:26 by swilliam          #+#    #+#             */
-/*   Updated: 2023/02/14 15:26:33 by swilliam         ###   ########.fr       */
+/*   Updated: 2023/02/19 14:05:48 by sam              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,8 @@
 # define ROOMS 0
 // PATHS: Prints all paths found from start to end.
 # define PATHS 1
+// GRAPH: Prints the contents of the residual graph for the BFS.
+# define GRAPH 1
 // SOLUTIONS: Prints the contents of a solution.
 # define SOLUTIONS 1
 // LINES: Prints the total amount of lines used for printing ant moves.
@@ -120,6 +122,8 @@ typedef struct heads
 	struct rooms		**room;
 	struct stack		*stack;
 	struct queue		*queue;
+	int					*parent;
+	bool				*visited;
 	int					**graph;
 	int					**residual;
 	struct paths		**path;
@@ -157,6 +161,7 @@ typedef struct stack
 void		print_rooms(t_heads *heads);
 void		print_paths(t_paths **paths);
 void		print_path(t_paths *path);
+void		print_graph(t_heads *heads, int **graph);
 void		print_solution(t_solutions *solution);
 
 // Reading:
@@ -177,8 +182,7 @@ void		store_link(\
 			t_rooms **rooms, char *link_a, char *link_b, t_heads *heads);
 
 // Paths:
-void		create_new_path(t_heads *heads, t_node *start_node);
-void		store_path_data(t_heads *heads, t_node *node);
+void		create_new_path(t_heads *heads, int end);
 t_paths		*get_path(t_heads *heads, int path_nb);
 
 // Path calculation:
@@ -186,8 +190,13 @@ void		backtrack_rooms(t_data *data, t_heads *heads);
 void		backtrack_paths(t_data *data, t_heads *heads);
 t_paths		*shortest_path(t_data *data, t_heads *heads);
 
+// BFS graph:
+void		initialise_graphs(t_data *data, t_heads *heads);
+void		populate_graph(t_data *data, t_heads *heads);
+void		update_residual(int **residual, bool *visited, t_paths *path);
+
 // Flow
-void 		flow_calculation(t_data *data, t_heads *heads);
+void 		edmonds_karp(t_data *data, t_heads *heads);
 
 // Queue
 t_queue		*init_queue(t_heads *heads, int size);

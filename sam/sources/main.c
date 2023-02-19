@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: swilliam <swilliam@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sam <sam@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/07 16:16:16 by swilliam          #+#    #+#             */
-/*   Updated: 2023/02/14 12:52:11 by swilliam         ###   ########.fr       */
+/*   Updated: 2023/02/19 13:13:05 by sam              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,8 @@ static t_heads	*initialise_heads(t_data *data, t_heads *heads)
 	heads->path = NULL;
 	heads->graph = NULL;
 	heads->residual = NULL;
+	heads->visited = NULL;
+	heads->parent = NULL;
 	heads->solution = NULL;
 	heads->ants = NULL;
 	heads->stack = NULL;
@@ -81,9 +83,7 @@ int	main(void)
 	ft_printf("Reading input...\n");
 	read_input(data, heads);
 	ft_printf("Backtracking rooms...\n");
-	flow_calculation(data, heads);
-	// backtrack_rooms(data, heads);
-	exit(1);
+	edmonds_karp(data, heads);
 	ft_printf("Backtracking paths...\n");
 	backtrack_paths(data, heads);
 	ft_printf("Storing solution...\n");

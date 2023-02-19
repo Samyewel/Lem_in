@@ -12,73 +12,63 @@
 
 #include "lem_in.h"
 
-static void	populate_graph(t_data *data, t_heads *heads)
-{
-	int	y;
-	int	x;
+/*
+** initialise_bfs:
+** - Initialises the necessary data to begin the BFS process.
+*/
 
-	y = -1;
-	while (++y < data->room_count)
-	{
-		x = -1;
-		if (heads->room[y]->links == NULL)
-			continue ;
-		while (++x < MAX_SIZE && heads->room[y]->links[x] != NULL)
-			heads->graph[heads->room[y]->id][heads->room[y]->links[x]->id] = 1;
-	}
-}
-
-static bool *initialise_visited(t_heads *heads, int start_room)
+static bool	*initialise_bfs(t_heads *heads, int start_room)
 {
-	bool *visited;
+	bool	*visited;
 
 	visited = NULL;
 	visited = (bool *)malloc(sizeof(bool) * heads->data->room_count);
 	if (!visited)
 		clean_lem_in(heads, "Memory allocation failure in initialise_visited.");
 	ft_memset(visited, false, heads->data->room_count);
+	ft_memset(heads->parent, -1, heads->data->room_count);
 	visited[start_room] = true;
+	heads->parent[start_room] = -1;
 	return (visited);
 }
 
-static void	initialise_flow(t_data *data, t_heads *heads)
-{
-	int	**graph;
-	int	**residual;
-	int	y;
-	int	x;
+/*
+** bfs_return:
+** - Used to save lines when ending the BFS process.
+*/
 
-	graph = NULL;
-	residual = NULL;
-	graph = ft_make_grid(data->room_count, data->room_count);
-	residual = ft_make_grid(data->room_count, data->room_count);
-	if (!graph || !residual)
-		clean_lem_in(heads, "Memory allocation failure in flow_network.");
-	y = -1;
-	while (++y < data->room_count)
-	{
-		x = -1;
-		while (++x < data->room_count)
-		{
-			graph[y][x] = 0;
-			residual[y][x] = 0;
-		}
-	}
-	heads->graph = graph;
-	heads->residual = residual;
-	populate_graph(data, heads);
+static bool	bfs_return(bool ret, bool *visited, t_queue *queue)
+{
+	free (visited);
+	free (queue);
+	return (ret);
 }
 
-static bool bfs(t_heads *heads, int start, int end)
+/*
+** bfs:
+** - Finds the shortest path between the start to end nodes if one exists.
+** - Tracks the parent of each node so that the path can be backtracked during
+**   path creation.
+** - Adds rooms to a queue, removing them once their links have been checked.
+** - Checks the residual graph to see that an available edge between each node
+**   is available to be used, then checks the visited array in heads to ensure
+**   a room is not already used in a path.
+*/
+
+static bool	bfs(t_heads *heads, int start, int end)
 {
-	int 	i;
+	int		i;
 	int		current;
 	t_queue	*queue;
 	bool	*visited;
+	int		ret;
 
 	current = 0;
+	ret = false;
 	queue = init_queue(heads, heads->data->room_count);
-	visited = initialise_visited(heads, start);
+	if (!queue)
+		clean_lem_in(heads, "Memory allocation failure in bfs.");
+	visited = initialise_bfs(heads, start);
 	enqueue(queue, start);
 	while (!is_empty(queue))
 	{
@@ -87,31 +77,55 @@ static bool bfs(t_heads *heads, int start, int end)
 		i = -1;
 		while (++i < heads->data->room_count)
 		{
-			if (heads->graph[current][i] == 1 && !visited[i])
+			if (heads->residual[current][i] == 1 && !visited[i] && \
+				!heads->visited[i])
 			{
-				enqueue(queue, i);
+				enqueue(queue, heads->room[i]->id);
 				visited[i] = true;
+				heads->parent[i] = current;
 			}
 		}
+		if (current == end)
+		{
+			ret = true;
+			create_new_path(heads, end);
+			break ;
+		}
 	}
-	free(queue);
-	if (visited[end])
-	{
-		free(visited);
-		return (true);
-	}
-	return (false);
+	return (bfs_return(ret, visited, queue));
 }
 
-void flow_calculation(t_data *data, t_heads *heads)
-{
-	int start_room;
-	int	end_room;
+/*
+** edmonds_karp:
+** - Creates the visited array to store all rooms used in paths created via
+**   the BFS.
+** - Creates the parent array which contains the parent of each node being
+**   stored in a path.
+** - Loops the BFS until there are no more augmenting paths to be found.
+** - Updates the residual graph so that the next BFS process cannot use a
+**   room that already exists in a path.
+*/
 
-	initialise_flow(data, heads);
+void	edmonds_karp(t_data *data, t_heads *heads)
+{
+	int	start_room;
+	int	end_room;
+	int	x;
+
 	start_room = find_start_room(heads);
 	end_room = find_end_room(heads);
-	bfs(heads, start_room, end_room);
-	if (heads->path == NULL)
-		clean_lem_in(heads, "No paths found.");
+	heads->parent = (int *)malloc(sizeof(int) * data->room_count);
+	heads->visited = (bool *)malloc(sizeof(bool) * data->room_count);
+	if (!heads->parent || !heads->visited)
+		clean_lem_in(heads, "Memory allocation failure in edmonds_karp.");
+	ft_memset(heads->visited, false, data->room_count);
+	initialise_graphs(data, heads);
+	x = -1;
+	while (bfs(heads, start_room, end_room))
+	{
+		print_graph(heads, heads->residual);
+		update_residual(heads->residual, heads->visited, heads->path[++x]);
+		print_graph(heads, heads->residual);
+	}
+	print_paths(heads->path);
 }

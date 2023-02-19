@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   queue.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: swilliam <swilliam@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sam <sam@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/13 19:10:03 by sam               #+#    #+#             */
-/*   Updated: 2023/02/14 15:36:25 by swilliam         ###   ########.fr       */
+/*   Updated: 2023/02/19 14:24:36 by sam              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ t_queue	*init_queue(t_heads *heads, int size)
 	return (new_queue);
 }
 
-int		is_empty(t_queue *queue)
+int	is_empty(t_queue *queue)
 {
 	return (queue->head >= queue->tail);
 }
@@ -50,7 +50,7 @@ void	enqueue(t_queue *queue, int value)
 	else
 	{
 		ft_printf_strerror("Queue is full.");
-		return;
+		return ;
 	}
 }
 

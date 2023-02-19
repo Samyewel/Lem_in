@@ -6,7 +6,7 @@
 /*   By: sam <sam@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/16 16:29:43 by swilliam          #+#    #+#             */
-/*   Updated: 2023/02/13 16:37:31 by sam              ###   ########.fr       */
+/*   Updated: 2023/02/19 14:24:20 by sam              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,8 +31,8 @@ void	print_rooms(t_heads *heads)
 				break ;
 			ft_printf("ID: %d ", heads->room[i]->id);
 			ft_printf("Name: %s\n", heads->room[i]->name);
-			// ft_printf("Start? %d\n", heads->room[i]->start);
-			// ft_printf("End? %d\n", heads->room[i]->end);
+			ft_printf("Start? %d\n", heads->room[i]->start);
+			ft_printf("End? %d\n", heads->room[i]->end);
 			x = -1;
 			ft_printf("Links:\n");
 			while (++x < MAX_SIZE)
@@ -120,5 +120,35 @@ void	print_solution(t_solutions *solution)
 		}
 		else
 			print_paths(solution->path);
+	}
+}
+
+/*
+** print_graph:
+** - Prints the content of the given graph.
+*/
+
+void	print_graph(t_heads *heads, int **graph)
+{
+	int	y;
+	int	x;
+
+	y = -1;
+	x = -1;
+	if (DEBUG == true && GRAPH == true)
+	{
+		ft_printf("    ");
+		while (++x < heads->data->room_count)
+			ft_printf("%2.2s ", heads->room[x]->name);
+		ft_printf("\n");
+		while (++y < heads->data->room_count)
+		{
+			x = -1;
+			ft_printf("%3.3s", heads->room[y]->name);
+			while (++x < heads->data->room_count)
+				ft_printf("%3d", graph[y][x]);
+			ft_printf("\n");
+		}
+		ft_printf("\n");
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: sam <sam@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/21 17:09:45 by swilliam          #+#    #+#             */
-/*   Updated: 2023/02/13 14:45:49 by sam              ###   ########.fr       */
+/*   Updated: 2023/02/19 14:26:43 by sam              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,10 +18,11 @@
 **   path later.
 */
 
-static t_rooms	*create_path_node(t_heads *heads, t_rooms *room, t_rooms *prev)
+static t_rooms	*create_path_node(t_heads *heads, t_rooms *room)
 {
 	t_rooms	*new_node;
 
+	new_node = NULL;
 	new_node = (t_rooms *)malloc(sizeof(t_rooms));
 	if (!new_node)
 		clean_lem_in(heads, "Memory allocation failure in create_path_node");
@@ -33,19 +34,18 @@ static t_rooms	*create_path_node(t_heads *heads, t_rooms *room, t_rooms *prev)
 	new_node->visited = false;
 	new_node->ants = 0;
 	new_node->next = NULL;
-	new_node->previous = prev;
+	new_node->previous = NULL;
 	return (new_node);
 }
 
 /*
 ** create_path:
-** - Allocates a fresh array with the start path at the beginning.
+** - Allocates a fresh path.
 */
 
 static t_paths	*create_path(
 t_heads *heads,
-int i,
-t_rooms *path_start)
+int i)
 {
 	t_paths	*new_path;
 
@@ -58,7 +58,7 @@ t_rooms *path_start)
 	if (!new_path->room)
 		clean_lem_in(heads, "Memory allocation failure in create_path_node.");
 	ft_memset(new_path->room, 0, MAX_SIZE);
-	new_path->room[0] = path_start;
+	new_path->room[0] = NULL;
 	new_path->length = 0;
 	new_path->usage = 0;
 	new_path->temp_usage = 0;
@@ -69,65 +69,69 @@ t_rooms *path_start)
 }
 
 /*
-** create_new_path:
-** - Creates a fresh path containing the start node at the beginning, storing
-**   it at the end of the list of paths.
+** add_to_path_front:
+** - Shifts all node one to the right, storing the new node at the beginning
+**   of the list.
 */
 
-void	create_new_path(t_heads *heads, t_node *start_node)
+static void	add_to_path_front(t_heads *heads, t_paths *path, t_rooms *room)
 {
-	t_rooms	*start_room;
-	t_rooms	*path_start;
 	int		i;
+	t_rooms	*new_node;
+
+	i = heads->data->room_count;
+	new_node = NULL;
+	while (--i >= 0)
+	{
+		if (path->room[i] != NULL)
+			path->room[i + 1] = path->room[i];
+	}
+	new_node = create_path_node(heads, room);
+	path->room[0] = new_node;
+	path->length++;
+}
+
+/*
+** store_path_data:
+** - Backtracks the parent array to find a path from the end to start, storing
+**   it in reverse order so that it is from start to end.
+*/
+
+static void	store_path_data(t_heads *heads, t_paths *path, int end)
+{
+	int	node;
+
+	node = end;
+	while (node != -1)
+	{
+		add_to_path_front(heads, path, heads->room[node]);
+		node = heads->parent[node];
+	}
+}
+
+/*
+** create_new_path:
+** - Creates a fresh path and stores it at the end of the list of paths.
+*/
+
+void	create_new_path(t_heads *heads, int end)
+{
+	int	i;
 
 	i = -1;
-	start_room = find_room(heads->room, start_node->id);
-	path_start = create_path_node(heads, start_room, NULL);
 	if (heads->path == NULL)
 	{
 		heads->path = (t_paths **)malloc(sizeof(t_paths *) * MAX_SIZE);
 		if (!heads->path)
 			clean_lem_in(heads, "Memory allocation failure in create_new_path");
 	}
-	while (++i < MAX_SIZE)
+	while (++i < heads->data->room_count)
 	{
 		if (heads->path[i] == NULL)
 		{
-			heads->path[i] = create_path(heads, i, path_start);
+			heads->path[i] = create_path(heads, i);
+			store_path_data(heads, heads->path[i], end);
 			break ;
-		}
-	}
-}
-
-/*
-** add_to_path:
-** - Loops through the paths until it finds an unfinished one, adding the
-**   room onto the end of it.
-*/
-
-void	store_path_data(t_heads *heads, t_node *node)
-{
-	int		i;
-	int		x;
-
-	i = -1;
-	x = -1;
-	while (++x < MAX_SIZE)
-	{
-		i = -1;
-		while (++i < MAX_SIZE)
-		{
-			if (heads->path[x]->room[i + 1] == NULL)
-			{
-				if (heads->path[x]->room[i]->end == false)
-				{
-					heads->path[x]->room[i + 1] = create_path_node \
-						(heads, heads->room[node->id], heads->path[x]->room[i]);
-					heads->path[x]->length++;
-					return ;
-				}
-				break ;
-			}
 		}
 	}
 }
