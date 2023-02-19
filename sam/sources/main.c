@@ -6,7 +6,7 @@
 /*   By: sam <sam@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/07 16:16:16 by swilliam          #+#    #+#             */
-/*   Updated: 2023/02/19 14:59:03 by sam              ###   ########.fr       */
+/*   Updated: 2023/02/19 15:35:37 by sam              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,13 +54,11 @@ static t_heads	*initialise_heads(t_data *data, t_heads *heads)
 	heads->data = data;
 	heads->room = NULL;
 	heads->path = NULL;
-	heads->graph = NULL;
+	heads->solution = NULL;
 	heads->residual = NULL;
 	heads->stored = NULL;
 	heads->parent = NULL;
-	heads->solution = NULL;
 	heads->ants = NULL;
-	heads->stack = NULL;
 	return (heads);
 }
 
@@ -79,7 +77,7 @@ int	main(void)
 	data = initialise_data(data);
 	heads = initialise_heads(data, heads);
 	if (!data || !heads)
-		ft_printf_strerror("Memory allocation failure in main.");
+		clean_lem_in("Memory allocation failure in main.");
 	ft_printf("Reading input...\n");
 	read_input(data, heads);
 	ft_printf("Backtracking rooms...\n");
@@ -90,8 +88,8 @@ int	main(void)
 	store_solution(data, heads);
 	print_solution(data->solution);
 	ft_printf("Printing...\n");
-	ant_mover(heads, data);
-	if (DEBUG == true && LINES == true) // REMOVE BEFORE SUBMISSION
+	move_ants(heads, data);
+	if (DEBUG == true && LINES == true)
 		ft_printf("\nLine count = %d\n", data->line_count);
 	if (DEBUG == true && LEAKS == true) // REMOVE BEFORE SUBMISSION
 		system("leaks lem-in");

@@ -6,7 +6,7 @@
 /*   By: sam <sam@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/18 16:16:43 by egaliber          #+#    #+#             */
-/*   Updated: 2023/02/13 13:53:24 by sam              ###   ########.fr       */
+/*   Updated: 2023/02/19 15:30:07 by sam              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ void	give_ants_paths(t_ants *ants, t_data *data, \
 ** -
 */
 
-void	ant_mover(t_heads *heads, t_data *data)
+void	move_ants(t_heads *heads, t_data *data)
 {
 	t_ants		*ants;
 	t_ants		*temp;

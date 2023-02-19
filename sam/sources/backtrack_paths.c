@@ -6,7 +6,7 @@
 /*   By: sam <sam@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/26 17:00:15 by sam               #+#    #+#             */
-/*   Updated: 2023/02/13 13:36:04 by sam              ###   ########.fr       */
+/*   Updated: 2023/02/19 15:37:49 by sam              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -159,7 +159,7 @@ void	backtrack_paths(t_data *data, t_heads *heads)
 	i = -1;
 	heads->solution = initialise_solutions(data);
 	if (!heads->solution)
-		clean_lem_in(heads, "Memory allocation failure in backtrack_paths.");
+		clean_lem_in("Memory allocation failure in backtrack_paths.");
 	if (data->ant_count == 1)
 		heads->solution[0] = \
 		create_solution(heads, shortest_path(data, heads), 0);

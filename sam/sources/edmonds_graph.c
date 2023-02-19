@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   bfs_graph.c                                        :+:      :+:    :+:   */
+/*   edmonds_graph.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sam <sam@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/19 13:31:31 by sam               #+#    #+#             */
-/*   Updated: 2023/02/19 14:26:31 by sam              ###   ########.fr       */
+/*   Updated: 2023/02/19 15:34:42 by sam              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 ** - Fills the graph with each edge, where y is the parent, and x is the child.
 */
 
-void	populate_graph(t_data *data, t_heads *heads)
+void	populate_graph(t_data *data, t_heads *heads, int **graph)
 {
 	int	y;
 	int	x;
@@ -29,12 +29,7 @@ void	populate_graph(t_data *data, t_heads *heads)
 		if (heads->room[y]->links == NULL)
 			continue ;
 		while (++x < MAX_SIZE && heads->room[y]->links[x] != NULL)
-		{
-			heads->graph \
-				[heads->room[y]->id][heads->room[y]->links[x]->id] = 1;
-			heads->residual \
-				[heads->room[y]->id][heads->room[y]->links[x]->id] = 1;
-		}
+			graph[heads->room[y]->id][heads->room[y]->links[x]->id] = 1;
 	}
 }
 
@@ -45,30 +40,23 @@ void	populate_graph(t_data *data, t_heads *heads)
 
 void	initialise_graphs(t_data *data, t_heads *heads)
 {
-	int	**graph;
 	int	**residual;
 	int	y;
 	int	x;
 
-	graph = NULL;
 	residual = NULL;
-	graph = ft_make_grid(data->room_count, data->room_count);
 	residual = ft_make_grid(data->room_count, data->room_count);
-	if (!graph || !residual)
-		clean_lem_in(heads, "Memory allocation failure in flow_network.");
+	if (!residual)
+		clean_lem_in("Memory allocation failure in flow_network.");
 	y = -1;
 	while (++y < data->room_count)
 	{
 		x = -1;
 		while (++x < data->room_count)
-		{
-			graph[y][x] = 0;
 			residual[y][x] = 0;
-		}
 	}
-	heads->graph = graph;
 	heads->residual = residual;
-	populate_graph(data, heads);
+	populate_graph(data, heads, heads->residual);
 }
 
 /*

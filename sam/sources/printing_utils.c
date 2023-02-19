@@ -6,14 +6,14 @@
 /*   By: sam <sam@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/18 16:19:17 by egaliber          #+#    #+#             */
-/*   Updated: 2023/02/10 12:48:03 by sam              ###   ########.fr       */
+/*   Updated: 2023/02/19 15:32:08 by sam              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lem_in.h"
 
 /*
-** :
+** give_rest_paths:
 ** -
 */
 
@@ -28,7 +28,7 @@ void	give_rest_paths(t_ants *ants, t_paths **paths, t_data *data, int i)
 }
 
 /*
-** :
+** first_move:
 ** -
 */
 
@@ -38,7 +38,7 @@ void	first_move(t_ants *ants, t_paths **paths, t_data *data, int i)
 			&& ants->has_moved == false && ants->has_finished == false)
 	{
 		ants->index++;
-		send_ants(ants, data, paths, i);
+		send_ants(ants, paths, i);
 		if (ants->next != NULL)
 		{
 			if (ants->room_location != ants->next->room_location)
@@ -58,7 +58,7 @@ void	first_move(t_ants *ants, t_paths **paths, t_data *data, int i)
 }
 
 /*
-** :
+** move_played:
 ** -
 */
 
@@ -91,7 +91,7 @@ void	move_played(t_ants *ants, t_data *data, t_heads *heads)
 }
 
 /*
-** :
+** move_ants_already_in_play:
 ** -
 */
 
@@ -110,14 +110,12 @@ void	move_ants_already_in_play(t_ants *ants)
 }
 
 /*
-** :
+** send_ants:
 ** -
 */
 
-void	send_ants(t_ants *ants, t_data *data, t_paths **paths, int i)
+void	send_ants(t_ants *ants, t_paths **paths, int i)
 {
-	if (data)
-		ft_printf("");
 	ants->room_location = ants->room[ants->index]->name;
 	ants->index++;
 	write(1, "L", 1);

@@ -6,7 +6,7 @@
 /*   By: sam <sam@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/03 16:17:07 by swilliam          #+#    #+#             */
-/*   Updated: 2023/02/13 15:50:15 by sam              ###   ########.fr       */
+/*   Updated: 2023/02/19 15:42:13 by sam              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,6 @@
 */
 
 static void	reset_usage(
-	t_heads *heads,
 	t_solutions *solution,
 	int **turns,
 	int path_count)
@@ -29,8 +28,8 @@ static void	reset_usage(
 
 	i = -1;
 	*turns = (int *)malloc(sizeof(int) * path_count);
-	if (!(*turns))
-		clean_lem_in(heads, "Memory allocation failure in reset_usage.");
+	if (!turns)
+		clean_lem_in("Memory allocation failure in reset_usage.");
 	while (++i < solution->path_count)
 		solution->path[i]->usage = 0;
 }
@@ -63,7 +62,6 @@ static int	longest_move(int *turns, int path_count)
 
 static int	distribute(
 	t_data *data,
-	t_heads *heads,
 	t_solutions *solution,
 	int path_count)
 {
@@ -73,7 +71,7 @@ static int	distribute(
 
 	ants_left = data->ant_count;
 	turns = NULL;
-	reset_usage(heads, solution, &turns, path_count);
+	reset_usage(solution, &turns, path_count);
 	while (ants_left > 0)
 	{
 		i = -1;
@@ -120,14 +118,14 @@ static void	swap_usages(t_solutions *solution, int reverse)
 **   to be too many turns used.
 */
 
-void	calculate_usage(t_data *data, t_heads *heads, t_solutions *solution)
+void	calculate_usage(t_data *data, t_solutions *solution)
 {
 	int	i;
 	int	current;
 	int	previous;
 
 	i = -1;
-	previous = distribute(data, heads, solution, solution->paths_used);
+	previous = distribute(data, solution, solution->paths_used);
 	swap_usages(solution, 1);
 	solution->turns = previous;
 	while (++i < solution->path_count)
@@ -135,7 +133,7 @@ void	calculate_usage(t_data *data, t_heads *heads, t_solutions *solution)
 		if (solution->paths_used == solution->path_count)
 			break ;
 		solution->paths_used++;
-		current = distribute(data, heads, solution, solution->paths_used);
+		current = distribute(data, solution, solution->paths_used);
 		if (previous <= current)
 		{
 			swap_usages(solution, 0);

@@ -6,7 +6,7 @@
 /*   By: sam <sam@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/03 12:39:05 by swilliam          #+#    #+#             */
-/*   Updated: 2023/02/09 20:31:14 by sam              ###   ########.fr       */
+/*   Updated: 2023/02/19 15:35:58 by sam              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ t_paths	*get_path(t_heads *heads, int path_nb)
 {
 	if (path_nb >= MAX_SIZE || path_nb < 0 || \
 			heads->path[path_nb] == NULL)
-		clean_lem_in(heads, "Invalid path_nb in get_path.");
+		clean_lem_in("Invalid path_nb in get_path.");
 	return (heads->path[path_nb]);
 }
 

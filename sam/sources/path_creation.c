@@ -6,7 +6,7 @@
 /*   By: sam <sam@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/21 17:09:45 by swilliam          #+#    #+#             */
-/*   Updated: 2023/02/19 14:26:43 by sam              ###   ########.fr       */
+/*   Updated: 2023/02/19 15:41:11 by sam              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,14 +18,14 @@
 **   path later.
 */
 
-static t_rooms	*create_path_node(t_heads *heads, t_rooms *room)
+static t_rooms	*create_path_node(t_rooms *room)
 {
 	t_rooms	*new_node;
 
 	new_node = NULL;
 	new_node = (t_rooms *)malloc(sizeof(t_rooms));
 	if (!new_node)
-		clean_lem_in(heads, "Memory allocation failure in create_path_node");
+		clean_lem_in("Memory allocation failure in create_path_node");
 	new_node->id = room->id;
 	new_node->name = ft_strdup(room->name);
 	new_node->start = room->start;
@@ -52,11 +52,11 @@ int i)
 	new_path = NULL;
 	new_path = (t_paths *)malloc(sizeof(t_paths));
 	if (!new_path)
-		clean_lem_in(heads, "Memory allocation failure in create_path_node.");
+		clean_lem_in("Memory allocation failure in create_path_node.");
 	new_path->nb = i;
 	new_path->room = (t_rooms **)malloc(sizeof(t_rooms *) * MAX_SIZE);
 	if (!new_path->room)
-		clean_lem_in(heads, "Memory allocation failure in create_path_node.");
+		clean_lem_in("Memory allocation failure in create_path_node.");
 	ft_memset(new_path->room, 0, MAX_SIZE);
 	new_path->room[0] = NULL;
 	new_path->length = 0;
@@ -86,7 +86,7 @@ static void	add_to_path_front(t_heads *heads, t_paths *path, t_rooms *room)
 		if (path->room[i] != NULL)
 			path->room[i + 1] = path->room[i];
 	}
-	new_node = create_path_node(heads, room);
+	new_node = create_path_node(room);
 	path->room[0] = new_node;
 	path->length++;
 }
@@ -123,7 +123,7 @@ void	create_new_path(t_heads *heads, int end)
 	{
 		heads->path = (t_paths **)malloc(sizeof(t_paths *) * MAX_SIZE);
 		if (!heads->path)
-			clean_lem_in(heads, "Memory allocation failure in create_new_path");
+			clean_lem_in("Memory allocation failure in create_new_path");
 	}
 	while (++i < heads->data->room_count)
 	{

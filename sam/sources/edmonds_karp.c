@@ -24,7 +24,7 @@ static bool	*initialise_bfs(t_heads *heads, int start_room)
 	visited = NULL;
 	visited = (bool *)malloc(sizeof(bool) * heads->data->room_count);
 	if (!visited)
-		clean_lem_in(heads, "Memory allocation failure in initialise_visited.");
+		clean_lem_in("Memory allocation failure in initialise_visited.");
 	ft_memset(visited, false, heads->data->room_count);
 	ft_memset(heads->parent, -1, heads->data->room_count);
 	visited[start_room] = true;
@@ -73,7 +73,7 @@ static bool	bfs(t_heads *heads, int start, int end)
 
 	c = 0;
 	ret = false;
-	heads->queue = init_queue(heads, heads->data->room_count);
+	heads->queue = init_queue(heads->data->room_count);
 	visited = initialise_bfs(heads, start);
 	enqueue(heads->queue, start);
 	while (!is_empty(heads->queue))
@@ -115,7 +115,7 @@ void	edmonds_karp(t_data *data, t_heads *heads)
 	heads->parent = (int *)malloc(sizeof(int) * data->room_count);
 	heads->stored = (bool *)malloc(sizeof(bool) * data->room_count);
 	if (!heads->parent || !heads->stored)
-		clean_lem_in(heads, "Memory allocation failure in edmonds_karp.");
+		clean_lem_in("Memory allocation failure in edmonds_karp.");
 	ft_memset(heads->stored, false, data->room_count);
 	initialise_graphs(data, heads);
 	x = -1;

@@ -6,7 +6,7 @@
 /*   By: sam <sam@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/28 13:05:45 by swilliam          #+#    #+#             */
-/*   Updated: 2023/02/13 16:02:41 by sam              ###   ########.fr       */
+/*   Updated: 2023/02/19 15:42:48 by sam              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,8 +59,7 @@ static void	duplicate_path(t_solutions *solution, t_paths *path)
 				solution->path[i] = \
 				create_duplicate_path(path, solution->path[i - 1]);
 			if (!solution->path[i])
-				ft_printf_strerror("Memory \
-				allocation failure in duplicate_path.");
+				clean_lem_in("Memory allocation failure in duplicate_path.");
 			break ;
 		}
 	}
@@ -85,8 +84,7 @@ static void	store_paths_in_solution(
 	solution->path = (t_paths **)malloc(sizeof(t_paths *) * \
 			MAX_SIZE);
 	if (!solution->path)
-		clean_lem_in(heads, \
-		"Memory allocation failure in store_paths_in_solution.");
+		clean_lem_in("Memory allocation failure in store_paths_in_solution.");
 	while (++i < MAX_SIZE)
 	{
 		if (solution->path_indexes[i] >= 0)
@@ -127,7 +125,7 @@ void	store_solution(t_data *data, t_heads *heads)
 			break ;
 		}
 		else
-			calculate_usage(data, heads, heads->solution[i]);
+			calculate_usage(data, heads->solution[i]);
 		if (heads->solution[i]->turns < turns)
 		{
 			turns = heads->solution[i]->turns;
