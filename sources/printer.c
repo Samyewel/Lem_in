@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   printer.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sam <sam@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: egaliber <egaliber@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/18 16:16:43 by egaliber          #+#    #+#             */
-/*   Updated: 2023/02/19 18:15:28 by sam              ###   ########.fr       */
+/*   Updated: 2023/02/19 21:03:12 by egaliber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,13 +25,13 @@ static void	ant_mover(t_heads *heads, t_data *data)
 
 	ants = heads->ants;
 	paths = data->solution->path;
+	i = 0;
 	while (data->finished != data->ant_count)
 	{
 		data->counter = 0;
 		i = 0;
 		first_move(ants, paths, data, i);
-		if (ANTS == true)
-			ft_printf("\n");
+		ft_printf("\n");
 		data->line_count++;
 		if (heads->ants->has_moved == true)
 		{
@@ -63,6 +63,8 @@ static void	give_ants_paths(t_ants *ants, t_data *data, t_heads *heads)
 		i = 0;
 		while (i < data->solution->paths_used)
 		{
+			while (paths[i]->usage == 0)
+				i++;
 			give_rest_paths(ants, paths, data, i);
 			i++;
 			if (ants->next != NULL)

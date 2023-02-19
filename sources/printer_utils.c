@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   printer_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sam <sam@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: egaliber <egaliber@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/18 16:19:17 by egaliber          #+#    #+#             */
-/*   Updated: 2023/02/19 18:17:57 by sam              ###   ########.fr       */
+/*   Updated: 2023/02/19 21:03:32 by egaliber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ void	give_rest_paths(t_ants *ants, t_paths **paths, t_data *data, int i)
 	ants->index_end = paths[i]->length;
 	paths[i]->usage--;
 	paths[i]->temp++;
-	if (paths[i]->usage <= 0)
+	if (paths[i]->usage == 0)
 		data->solution->paths_used--;
 }
 
@@ -79,8 +79,7 @@ void	move_played(t_ants *ants, t_data *data, t_heads *heads)
 			else
 			{
 				ants = heads->ants;
-				if (ANTS == true)
-					ft_printf("\n");
+				ft_printf("\n");
 				data->line_count++;
 			}
 		}
@@ -102,14 +101,11 @@ void	move_ants_already_in_play(t_ants *ants)
 	{
 		ants->room_location = ants->room[ants->index]->name;
 		ants->index++;
-		if (ANTS == true)
-		{
-			write(1, "L", 1);
-			ft_putnbr(ants->ant_number);
-			write(1, "-", 1);
-			ft_putstr(ants->room_location);
-			write(1, " ", 1);
-		}
+		write(1, "L", 1);
+		ft_putnbr(ants->ant_number);
+		write(1, "-", 1);
+		ft_putstr(ants->room_location);
+		write(1, " ", 1);
 	}
 }
 
@@ -122,14 +118,11 @@ void	send_ants(t_ants *ants, t_paths **paths, int i)
 {
 	ants->room_location = ants->room[ants->index]->name;
 	ants->index++;
-	if (ANTS == true)
-	{
-		write(1, "L", 1);
-		ft_putnbr(ants->ant_number);
-		write(1, "-", 1);
-		ft_putstr(ants->room_location);
-		write(1, " ", 1);
-	}
+	write(1, "L", 1);
+	ft_putnbr(ants->ant_number);
+	write(1, "-", 1);
+	ft_putstr(ants->room_location);
+	write(1, " ", 1);
 	ants->has_moved = true;
 	paths[i]->temp--;
 }
