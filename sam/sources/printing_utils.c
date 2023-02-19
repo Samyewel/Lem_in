@@ -6,7 +6,7 @@
 /*   By: sam <sam@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/18 16:19:17 by egaliber          #+#    #+#             */
-/*   Updated: 2023/02/19 15:32:08 by sam              ###   ########.fr       */
+/*   Updated: 2023/02/19 16:05:31 by sam              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,8 @@ void	give_rest_paths(t_ants *ants, t_paths **paths, t_data *data, int i)
 	ants->index_end = paths[i]->length + 1;
 	paths[i]->usage--;
 	paths[i]->temp++;
-	if (paths[i]->usage == 0)
-		data->counter++;
+	if (paths[i]->usage <= 0)
+		data->solution->paths_used--;
 }
 
 /*
