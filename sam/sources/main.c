@@ -6,7 +6,7 @@
 /*   By: sam <sam@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/07 16:16:16 by swilliam          #+#    #+#             */
-/*   Updated: 2023/02/19 16:07:55 by sam              ###   ########.fr       */
+/*   Updated: 2023/02/19 16:39:25 by sam              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,18 +78,12 @@ int	main(void)
 	heads = initialise_heads(data, heads);
 	if (!data || !heads)
 		clean_lem_in("Memory allocation failure in main.");
-	ft_printf("Reading input...\n");
 	read_input(data, heads);
-	ft_printf("Backtracking rooms...\n");
 	edmonds_karp(data, heads);
-	ft_printf("Backtracking paths...\n");
 	backtrack_paths(data, heads);
-	ft_printf("Storing solution...\n");
 	store_solution(data, heads);
-	print_solution(data->solution);
 	ft_printf("Printing...\n");
-	move_ants(heads, data);
-	ft_printf("Do we reach?\n");
+	printer(heads, data);
 	if (DEBUG == true && LINES == true)
 		ft_printf("\nLine count = %d\n", data->line_count);
 	if (DEBUG == true && LEAKS == true) // REMOVE BEFORE SUBMISSION

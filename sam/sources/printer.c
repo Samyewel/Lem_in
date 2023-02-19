@@ -6,18 +6,18 @@
 /*   By: sam <sam@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/18 16:16:43 by egaliber          #+#    #+#             */
-/*   Updated: 2023/02/19 16:04:50 by sam              ###   ########.fr       */
+/*   Updated: 2023/02/19 16:38:14 by sam              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lem_in.h"
 
 /*
-** printer:
+** ant_mover:
 ** -
 */
 
-void	printer(t_heads *heads, t_data *data)
+static void	ant_mover(t_heads *heads, t_data *data)
 {
 	t_paths	**paths;
 	t_ants	*ants;
@@ -50,8 +50,7 @@ void	printer(t_heads *heads, t_data *data)
 ** -
 */
 
-void	give_ants_paths(t_ants *ants, t_data *data, \
-						t_heads *heads)
+static void	give_ants_paths(t_ants *ants, t_data *data, t_heads *heads)
 {
 	t_paths	**paths;
 	int		i;
@@ -72,11 +71,11 @@ void	give_ants_paths(t_ants *ants, t_data *data, \
 }
 
 /*
-** move_ants:
+** printer:
 ** -
 */
 
-void	move_ants(t_heads *heads, t_data *data)
+void	printer(t_heads *heads, t_data *data)
 {
 	t_ants		*ants;
 	t_ants		*temp;
@@ -89,5 +88,5 @@ void	move_ants(t_heads *heads, t_data *data)
 	ants = temp;
 	give_ants_paths(ants, data, heads);
 	data->solution->paths_used = paths_used;
-	printer(heads, data);
+	ant_mover(heads, data);
 }

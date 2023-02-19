@@ -6,7 +6,7 @@
 /*   By: sam <sam@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/03 11:56:26 by swilliam          #+#    #+#             */
-/*   Updated: 2023/02/19 15:45:56 by sam              ###   ########.fr       */
+/*   Updated: 2023/02/19 16:50:23 by sam              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -130,10 +130,10 @@ typedef struct heads
 
 typedef struct queue
 {
-    int				*data;
-    int				head;
-    int				tail;
-	int				size;
+	int					*data;
+	int					head;
+	int					tail;
+	int					size;
 }				t_queue;
 
 // Debugging:
@@ -173,7 +173,7 @@ t_paths		*shortest_path(t_data *data, t_heads *heads);
 void		initialise_graphs(t_data *data, t_heads *heads);
 void		populate_graph(t_data *data, t_heads *heads, int **graph);
 void		update_residual(int **residual, bool *visited, t_paths *path);
-void 		edmonds_karp(t_data *data, t_heads *heads);
+void		edmonds_karp(t_data *data, t_heads *heads);
 
 // Queue
 t_queue		*init_queue(int size);
@@ -193,7 +193,7 @@ t_solutions	**initialise_solutions(t_data *data);
 void		clean_lem_in(char *str);
 
 // Printer
-void		move_ants(t_heads *heads, t_data *data);
+void		printer(t_heads *heads, t_data *data);
 void		give_rest_paths(t_ants *ants, t_paths **paths, t_data *data, int i);
 void		move_played(t_ants *ants, t_data *data, t_heads *heads);
 void		first_move(t_ants *ants, t_paths **paths, t_data *data, int i);
@@ -201,7 +201,7 @@ void		send_ants(t_ants *ants, t_paths **paths, int i);
 void		move_ants_already_in_play(t_ants *ants);
 t_ants		*make_ants(t_data *data, t_ants *ants, t_heads *heads);
 
+// Utilities
 int			ft_is_dash(char *str);
-int			ft_is_space(char *str);
 
 #endif
