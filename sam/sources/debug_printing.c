@@ -6,7 +6,7 @@
 /*   By: sam <sam@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/16 16:29:43 by swilliam          #+#    #+#             */
-/*   Updated: 2023/02/19 14:24:20 by sam              ###   ########.fr       */
+/*   Updated: 2023/02/19 14:40:52 by sam              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,6 +90,7 @@ void	print_paths(t_paths **paths)
 				return ;
 			print_path(paths[i]);
 		}
+		ft_printf("\n");
 	}
 }
 
@@ -120,6 +121,7 @@ void	print_solution(t_solutions *solution)
 		}
 		else
 			print_paths(solution->path);
+		ft_printf("\n");
 	}
 }
 

@@ -6,7 +6,7 @@
 /*   By: sam <sam@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/07 16:16:16 by swilliam          #+#    #+#             */
-/*   Updated: 2023/02/19 13:13:05 by sam              ###   ########.fr       */
+/*   Updated: 2023/02/19 14:59:03 by sam              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ static t_heads	*initialise_heads(t_data *data, t_heads *heads)
 	heads->path = NULL;
 	heads->graph = NULL;
 	heads->residual = NULL;
-	heads->visited = NULL;
+	heads->stored = NULL;
 	heads->parent = NULL;
 	heads->solution = NULL;
 	heads->ants = NULL;
@@ -88,9 +88,10 @@ int	main(void)
 	backtrack_paths(data, heads);
 	ft_printf("Storing solution...\n");
 	store_solution(data, heads);
+	print_solution(data->solution);
 	ft_printf("Printing...\n");
 	ant_mover(heads, data);
-	if (DEBUG == true && LINES == true)
+	if (DEBUG == true && LINES == true) // REMOVE BEFORE SUBMISSION
 		ft_printf("\nLine count = %d\n", data->line_count);
 	if (DEBUG == true && LEAKS == true) // REMOVE BEFORE SUBMISSION
 		system("leaks lem-in");

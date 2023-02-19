@@ -6,7 +6,7 @@
 #    By: sam <sam@student.42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/11/05 13:26:33 by swilliam          #+#    #+#              #
-#    Updated: 2023/02/19 13:34:54 by sam              ###   ########.fr        #
+#    Updated: 2023/02/19 15:00:47 by sam              ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,14 +15,16 @@ LEM_IN_DIR = ./sources/
 LEM_IN_FILES = \
 main.c read_input.c \
 room_creation.c room_utils.c link_creation.c \
+edmonds_karp.c queue.c edmonds_graph.c \
 path_creation.c path_utils.c \
 backtrack_paths.c \
-solution_creation.c usage_calculation.c best_solution.c \
+solution_creation.c \
+usage_calculation.c best_solution.c \
 printer.c printing_utils.c \
 ant_creation.c \
 debug_printing.c clean_data.c \
 error_check.c error_check2.c \
-utils.c flow_calculation.c queue.c bfs_graph.c
+utils.c
 
 # Libft
 LIBFT_DIR = ../libft/

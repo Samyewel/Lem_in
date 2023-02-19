@@ -6,7 +6,7 @@
 /*   By: sam <sam@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/03 11:56:26 by swilliam          #+#    #+#             */
-/*   Updated: 2023/02/19 14:05:48 by sam              ###   ########.fr       */
+/*   Updated: 2023/02/19 14:58:18 by sam              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@
 // PATHS: Prints all paths found from start to end.
 # define PATHS 1
 // GRAPH: Prints the contents of the residual graph for the BFS.
-# define GRAPH 1
+# define GRAPH 0
 // SOLUTIONS: Prints the contents of a solution.
 # define SOLUTIONS 1
 // LINES: Prints the total amount of lines used for printing ant moves.
@@ -123,7 +123,7 @@ typedef struct heads
 	struct stack		*stack;
 	struct queue		*queue;
 	int					*parent;
-	bool				*visited;
+	bool				*stored;
 	int					**graph;
 	int					**residual;
 	struct paths		**path;
