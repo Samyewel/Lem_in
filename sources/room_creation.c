@@ -6,7 +6,7 @@
 /*   By: sam <sam@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/21 13:53:38 by swilliam          #+#    #+#             */
-/*   Updated: 2023/02/13 16:19:01 by sam              ###   ########.fr       */
+/*   Updated: 2023/02/19 15:46:43 by sam              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,9 +73,9 @@ t_rooms	*store_room(t_data *data, t_heads *heads, t_rooms *room, char *line)
 	char		**line_split;
 
 	line_split = ft_strsplit(line, ' ');
-	room_store_errors(line_split, heads);
+	room_store_errors(line_split);
 	if (room_check(heads->room, line_split[0]))
-		clean_lem_in(heads, "Duplicate rooms.");
+		clean_lem_in("Duplicate rooms.");
 	room->id = data->room_count;
 	room->name = ft_strdup(line_split[0]);
 	if (!room->name)

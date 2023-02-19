@@ -6,7 +6,7 @@
 /*   By: sam <sam@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/27 15:09:20 by sam               #+#    #+#             */
-/*   Updated: 2023/02/13 13:35:43 by sam              ###   ########.fr       */
+/*   Updated: 2023/02/19 15:36:42 by sam              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ int i
 
 	new_solution = initialise_solution(path);
 	if (!new_solution)
-		clean_lem_in(heads, "Memory allocation failure in create_solution.");
+		clean_lem_in("Memory allocation failure in create_solution.");
 	if (i > 0)
 		heads->solution[i - 1]->next = new_solution;
 	return (new_solution);

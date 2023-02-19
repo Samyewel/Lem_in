@@ -6,14 +6,14 @@
 /*   By: sam <sam@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/05 14:29:46 by egaliber          #+#    #+#             */
-/*   Updated: 2023/02/10 12:48:23 by sam              ###   ########.fr       */
+/*   Updated: 2023/02/19 16:02:54 by sam              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lem_in.h"
 
 /*
-** :
+** init_ants:
 ** -
 */
 
@@ -30,7 +30,7 @@ void	init_ants(t_ants *new)
 }
 
 /*
-** :
+** make_new_ant:
 ** -
 */
 
@@ -46,7 +46,7 @@ t_ants	*make_new_ant(t_data *data, t_ants *new)
 }
 
 /*
-** :
+** make_ants:
 ** -
 */
 
@@ -57,7 +57,7 @@ t_ants	*make_ants(t_data *data, t_ants *ants, t_heads *heads)
 	new_ant = NULL;
 	new_ant = make_new_ant(data, new_ant);
 	if (!new_ant)
-		clean_lem_in(heads, "Memory allocation failure in make_ants.");
+		clean_lem_in("Memory allocation failure in make_ants.");
 	if (heads->ants == NULL)
 	{
 		ants = new_ant;

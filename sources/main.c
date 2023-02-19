@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: swilliam <swilliam@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sam <sam@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/07 16:16:16 by swilliam          #+#    #+#             */
-/*   Updated: 2023/02/16 16:33:19 by swilliam         ###   ########.fr       */
+/*   Updated: 2023/02/19 18:07:21 by sam              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,8 +55,10 @@ static t_heads	*initialise_heads(t_data *data, t_heads *heads)
 	heads->room = NULL;
 	heads->path = NULL;
 	heads->solution = NULL;
+	heads->residual = NULL;
+	heads->stored = NULL;
+	heads->parent = NULL;
 	heads->ants = NULL;
-	heads->stack = NULL;
 	return (heads);
 }
 
@@ -75,33 +77,14 @@ int	main(void)
 	data = initialise_data(data);
 	heads = initialise_heads(data, heads);
 	if (!data || !heads)
-		ft_printf_strerror("Memory allocation failure in main.");
-	ft_printf("Reading input...\n");
+		clean_lem_in("Memory allocation failure in main.");
 	read_input(data, heads);
-	ft_printf("Backtracking %d rooms...\n", data->room_count);
-	ft_printf("Links from start:\n");
-	int	i = -1;
-	while (++i < MAX_SIZE && heads->room[find_start_room(heads)]->links[i] != NULL)
-		ft_printf("%s ", heads->room[find_start_room(heads)]->links[i]->name);
-	backtrack_rooms(data, heads);
-	ft_printf("Backtracking %d paths...\n", data->path_count);
+	edmonds_karp(data, heads);
 	backtrack_paths(data, heads);
-	ft_printf("Storing solution...\n");
 	store_solution(data, heads);
-	print_solution(data->solution);
-	ft_printf("Printing...\n");
-	ant_mover(heads, data);
+	printer(heads, data);
 	if (DEBUG == true && LINES == true)
-	{
-		ft_printf("\n----------------------------------------\n\n");
-		print_solution(data->solution);
-		ft_printf("Links from start:\n");
-		int	i = -1;
-		while (++i < MAX_SIZE && heads->room[find_start_room(heads)]->links[i] != NULL)
-			ft_printf("%s ", heads->room[find_start_room(heads)]->links[i]->name);
 		ft_printf("\nLine count = %d\n", data->line_count);
-		ft_printf("Path count = %d\n", data->path_count);
-	}
 	if (DEBUG == true && LEAKS == true) // REMOVE BEFORE SUBMISSION
 		system("leaks lem-in");
 	exit(EXIT_SUCCESS);

@@ -6,24 +6,21 @@
 #    By: sam <sam@student.42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/11/05 13:26:33 by swilliam          #+#    #+#              #
-#    Updated: 2023/02/13 16:06:42 by sam              ###   ########.fr        #
+#    Updated: 2023/02/19 18:19:15 by sam              ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 # Source files
 LEM_IN_DIR = ./sources/
 LEM_IN_FILES = \
-main.c read_input.c \
-room_creation.c room_utils.c link_creation.c \
-backtrack_rooms.c dfs_stack.c \
-path_creation.c path_utils.c \
-backtrack_paths.c \
-solution_creation.c usage_calculation.c best_solution.c \
-printer.c printing_utils.c \
+main.c parse_input.c \
+room_creation.c room_links.c room_utils.c room_errors_1.c room_errors_2.c \
+edmonds_karp.c edmonds_graph.c queue.c \
+path_creation.c path_utils.c path_backtracking.c \
+solution_creation.c solution_selection.c solution_usage.c \
+printer.c printer_utils.c \
 ant_creation.c \
 debug_printing.c clean_data.c \
-error_check.c error_check2.c \
-utils.c
 
 # Libft
 LIBFT_DIR = ./libft/
