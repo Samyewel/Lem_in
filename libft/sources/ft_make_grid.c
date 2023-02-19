@@ -6,7 +6,7 @@
 /*   By: sam <sam@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/18 19:55:11 by sam               #+#    #+#             */
-/*   Updated: 2023/01/18 20:16:22 by sam              ###   ########.fr       */
+/*   Updated: 2023/02/19 15:18:00 by sam              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,8 @@ int	**ft_make_grid(int rows, int columns)
 	while (++y < rows)
 	{
 		grid[y] = (int *)malloc(sizeof(int) * columns);
+		if (!grid[y])
+			return (NULL);
 		x = 0;
 		while (x < columns)
 		{
