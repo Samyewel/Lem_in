@@ -6,7 +6,7 @@
 #    By: sam <sam@student.42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/11/05 13:26:33 by swilliam          #+#    #+#              #
-#    Updated: 2023/02/19 15:00:47 by sam              ###   ########.fr        #
+#    Updated: 2023/02/19 15:07:12 by sam              ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,7 +15,7 @@ LEM_IN_DIR = ./sources/
 LEM_IN_FILES = \
 main.c read_input.c \
 room_creation.c room_utils.c link_creation.c \
-edmonds_karp.c queue.c edmonds_graph.c \
+edmonds_karp.c edmonds_graph.c queue.c \
 path_creation.c path_utils.c \
 backtrack_paths.c \
 solution_creation.c \
