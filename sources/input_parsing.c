@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parse_input.c                                      :+:      :+:    :+:   */
+/*   input_parsing.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sam <sam@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: swilliam <swilliam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/16 14:13:08 by swilliam          #+#    #+#             */
-/*   Updated: 2023/02/19 18:12:00 by sam              ###   ########.fr       */
+/*   Updated: 2023/02/20 13:45:49 by swilliam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -157,8 +157,7 @@ void	read_input(t_data *data, t_heads *heads)
 	line_n = 0;
 	while (get_next_line(0, &line))
 	{
-		if (INPUT == true)
-			ft_putendl(line);
+		store_input(data, line, line_n);
 		read_ants(data, line, line_n);
 		read_comments(data, line, line_n);
 		read_rooms(data, heads, line, line_n);
@@ -168,4 +167,5 @@ void	read_input(t_data *data, t_heads *heads)
 			ft_strdel(&line);
 	}
 	file_errors(heads, line_n, data);
+	print_input(heads, data);
 }

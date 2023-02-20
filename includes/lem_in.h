@@ -3,37 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   lem_in.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: egaliber <egaliber@student.42.fr>          +#+  +:+       +#+        */
+/*   By: swilliam <swilliam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/03 11:56:26 by swilliam          #+#    #+#             */
-/*   Updated: 2023/02/20 11:59:27 by egaliber         ###   ########.fr       */
+/*   Updated: 2023/02/20 14:00:28 by swilliam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef LEM_IN_H
 # define LEM_IN_H
-
-/*
-** Debug toggles:
-*/
-// INPUT: Prints the contents of the file being input into the program.
-# define INPUT 1
-// ANTS: Prints the ant moves.
-# define ANTS 1
-// DEBUG: Enables the printing of debug messages.
-# define DEBUG 1
-// ROOMS: Prints all rooms and all relevant data.
-# define ROOMS 0
-// PATHS: Prints all paths found from start to end.
-# define PATHS 0
-// GRAPH: Prints the contents of the residual graph for the BFS.
-# define GRAPH 0
-// SOLUTIONS: Prints the contents of a solution.
-# define SOLUTIONS 0
-// LINES: Prints the total amount of lines used for printing ant moves.
-# define LINES 1
-// LEAKS: Prints a memory leak report.
-# define LEAKS 0
 
 # include "ft_printf.h"
 # include "get_next_line.h"
@@ -48,7 +26,6 @@ typedef struct data
 	int					ant_count;
 	int					room_count;
 	int					path_count;
-	int					longest_path;
 	int					line_count;
 	int					finished;
 	int					ant_num;
@@ -60,10 +37,22 @@ typedef struct data
 	bool				links_started;
 	bool				lines;
 	bool				print_paths;
+	char				**input;
 	char				*last_link_0;
 	char				*last_link_1;
 	struct solutions	*solution;
 }				t_data;
+
+typedef struct	flags
+{
+	bool		input;
+	bool		ants;
+	bool		rooms;
+	bool		paths;
+	bool		graph;
+	bool		solutions;
+	bool		lines;
+}				t_flags;
 
 typedef struct rooms
 {
@@ -121,6 +110,7 @@ typedef struct ants
 
 typedef struct heads
 {
+	struct flags		*flags;
 	struct data			*data;
 	struct rooms		**room;
 	struct paths		**path;
@@ -140,12 +130,16 @@ typedef struct queue
 	int					size;
 }				t_queue;
 
+// Flags:
+void		set_flags(t_flags *flags, char flag);
+void		parse_flags(t_flags *flags, int argc, char **argv);
+
 // Debugging:
 void		print_rooms(t_heads *heads);
-void		print_paths(t_paths **paths);
-void		print_path(t_paths *path);
+void		print_paths(t_heads *heads, t_paths **paths);
+void		print_path(t_heads *heads, t_paths *path);
 void		print_graph(t_heads *heads, int **graph);
-void		print_solution(t_solutions *solution);
+void		print_solution(t_heads *heads, t_solutions *solution);
 
 // Reading:
 void		read_input(t_data *data, t_heads *heads);
@@ -156,6 +150,10 @@ void		verify_rooms(t_heads *heads, t_data *data);
 void		file_errors(t_heads *heads, int line_n, t_data *data);
 void		start_and_end_verify(t_data *data);
 void		start_and_end_errors(t_data *data, char *line);
+
+// Input printing:
+void		store_input(t_data *data, char *line, int line_n);
+void		print_input(t_heads *heads, t_data *data);
 
 // Rooms
 t_rooms		*create_room(\

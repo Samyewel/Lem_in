@@ -3,40 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: egaliber <egaliber@student.42.fr>          +#+  +:+       +#+        */
+/*   By: swilliam <swilliam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/07 16:16:16 by swilliam          #+#    #+#             */
-/*   Updated: 2023/02/20 11:55:39 by egaliber         ###   ########.fr       */
+/*   Updated: 2023/02/20 13:59:29 by swilliam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lem_in.h"
-
-void	init_flags(t_data *data, char flag)
-{
-	if (flag == 'l')
-		data->lines = true;
-	if (flag == 'p')
-		data->print_paths = true;
-}
-
-void	parse_flags(t_data *data, int argc, char **argv)
-{
-	int i;
-
-	i = 0;
-	if (argc == 2 && argv[1][i++] == '-')
-	{
-		if (argv[1][i] && ft_strchr("l", argv[1][i]))
-		{
-			while (argv[1][i])
-			{
-				init_flags(data, argv[1][i]);
-				i++;
-			}
-		}
-	}
-}
 
 /*
 ** initialise_data:
@@ -60,6 +34,7 @@ static t_data	*initialise_data(t_data *data)
 	data->ending_search = false;
 	data->solution = NULL;
 	data->counter = 0;
+	data->input = NULL;
 	data->links_started = false;
 	data->last_link_0 = NULL;
 	data->last_link_1 = NULL;
@@ -69,17 +44,38 @@ static t_data	*initialise_data(t_data *data)
 }
 
 /*
+** initialise_input_flags:
+** - Initialises the struct used for the flags to modify the output.
+*/
+
+static t_flags	*initialise_input_flags(t_flags *flags)
+{
+	flags = (t_flags *)malloc(sizeof(t_flags));
+	if (!flags)
+		return (NULL);
+	flags->input = true;
+	flags->ants = false;
+	flags->rooms = false;
+	flags->lines = false;
+	flags->paths = false;
+	flags->graph = false;
+	flags->solutions = false;
+	return (flags);
+}
+
+/*
 ** initialise_heads:
 ** - Initialises a struct containing the heads of each list used during the
 **   program.
 */
 
-static t_heads	*initialise_heads(t_data *data, t_heads *heads)
+static t_heads	*initialise_heads(t_data *data, t_heads *heads, t_flags *flags)
 {
 	heads = (t_heads *)malloc(sizeof(t_heads));
 	if (!heads)
 		return (NULL);
 	heads->data = data;
+	heads->flags = flags;
 	heads->room = NULL;
 	heads->path = NULL;
 	heads->solution = NULL;
@@ -97,26 +93,28 @@ static t_heads	*initialise_heads(t_data *data, t_heads *heads)
 
 int	main(int argc, char **argv)
 {
-	t_heads	*heads;
 	t_data	*data;
+	t_flags	*flags;
+	t_heads	*heads;
 
 	data = NULL;
+	flags = NULL;
 	heads = NULL;
 	data = initialise_data(data);
-	heads = initialise_heads(data, heads);
-	if (!data || !heads)
+	flags = initialise_input_flags(flags);
+	heads = initialise_heads(data, heads, flags);
+	if (!data || !heads || !flags)
 		clean_lem_in("Memory allocation failure in main.");
 	if (argc > 1)
-		parse_flags(data, argc, argv);
+		parse_flags(flags, argc, argv);
 	read_input(data, heads);
 	edmonds_karp(data, heads);
 	backtrack_paths(data, heads);
 	store_solution(data, heads);
 	printer(heads, data);
-	if (data->lines == true)
+	if (flags->lines == true)
 		ft_printf("\nLine count = %d\n", data->line_count);
-	if (DEBUG == true && LEAKS == true) // REMOVE BEFORE SUBMISSION
-		system("leaks lem-in");
+	system("leaks lem-in");
 	exit(EXIT_SUCCESS);
 	return (0);
 }
