@@ -6,7 +6,7 @@
 /*   By: swilliam <swilliam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/18 16:19:17 by egaliber          #+#    #+#             */
-/*   Updated: 2023/02/20 14:24:50 by swilliam         ###   ########.fr       */
+/*   Updated: 2023/02/20 14:31:20 by swilliam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ void	first_move(t_heads *heads, t_ants *ants, t_paths **paths, int i)
 			heads->data->solution->paths_used--;
 			heads->data->counter--;
 		}
-		if (i <heads-> data->solution->paths_used)
+		if (i < heads->data->solution->paths_used)
 			i++;
 		else
 			i = 0;
