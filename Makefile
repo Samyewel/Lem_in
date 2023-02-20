@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: sam <sam@student.42.fr>                    +#+  +:+       +#+         #
+#    By: egaliber <egaliber@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/11/05 13:26:33 by swilliam          #+#    #+#              #
-#    Updated: 2023/02/19 18:19:15 by sam              ###   ########.fr        #
+#    Updated: 2023/02/20 11:09:14 by egaliber         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,7 +17,7 @@ main.c parse_input.c \
 room_creation.c room_links.c room_utils.c room_errors_1.c room_errors_2.c \
 edmonds_karp.c edmonds_graph.c queue.c \
 path_creation.c path_utils.c path_backtracking.c \
-solution_creation.c solution_selection.c solution_usage.c \
+solution_creation.c solution_selection.c solution_usage.c solution_utils.c \
 printer.c printer_utils.c \
 ant_creation.c \
 debug_printing.c clean_data.c \

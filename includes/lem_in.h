@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lem_in.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sam <sam@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: egaliber <egaliber@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/03 11:56:26 by swilliam          #+#    #+#             */
-/*   Updated: 2023/02/19 18:19:39 by sam              ###   ########.fr       */
+/*   Updated: 2023/02/20 11:10:10 by egaliber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -189,6 +189,8 @@ t_solutions	*create_solution(t_heads *heads, t_paths *path, int i);
 t_solutions	*initialise_solution(t_paths *path);
 void		store_solution(t_data *data, t_heads *heads);
 void		calculate_usage(t_data *data, t_solutions *solution);
+void		calculate_path_use(t_data *data, t_solutions *solution, \
+			int path_count);
 t_solutions	**initialise_solutions(t_data *data);
 
 // Data cleaning:

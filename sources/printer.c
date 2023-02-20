@@ -6,11 +6,30 @@
 /*   By: egaliber <egaliber@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/18 16:16:43 by egaliber          #+#    #+#             */
-/*   Updated: 2023/02/19 21:03:12 by egaliber         ###   ########.fr       */
+/*   Updated: 2023/02/20 11:06:09 by egaliber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lem_in.h"
+
+void	only_start_end(t_ants *ants, t_data *data)
+{
+	while (ants)
+	{
+		ants->room_location = ants->room[1]->name;
+		write(1, "L", 1);
+		ft_putnbr(ants->ant_number);
+		write(1, "-", 1);
+		ft_putstr(ants->room_location);
+		write(1, " ", 1);
+		if (ants->next != NULL)
+			ants = ants->next;
+		else
+			break ;
+	}
+	ft_printf("\n");
+	data->line_count++;
+}
 
 /*
 ** ant_mover:
@@ -83,7 +102,9 @@ void	printer(t_heads *heads, t_data *data)
 	t_ants	*ants;
 	t_ants	*temp;
 	int		paths_used;
+	int		i;
 
+	i = 0;
 	paths_used = data->solution->paths_used;
 	while (data->ant_num < data->ant_count)
 		ants = make_ants(data, ants, heads);
@@ -91,5 +112,8 @@ void	printer(t_heads *heads, t_data *data)
 	ants = temp;
 	give_ants_paths(ants, data, heads);
 	data->solution->paths_used = paths_used;
-	ant_mover(heads, data);
+	if (ants->room[i + 1]->end == true)
+		only_start_end(ants, data);
+	else
+		ant_mover(heads, data);
 }

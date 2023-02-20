@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   usage_calculation.c                                :+:      :+:    :+:   */
+/*   solution_usage.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sam <sam@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: egaliber <egaliber@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/03 16:17:07 by swilliam          #+#    #+#             */
-/*   Updated: 2023/02/19 15:42:13 by sam              ###   ########.fr       */
+/*   Updated: 2023/02/20 11:08:51 by egaliber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,14 @@ static int	distribute(
 	ants_left = data->ant_count;
 	turns = NULL;
 	reset_usage(solution, &turns, path_count);
-	while (ants_left > 0)
+	i = -1;
+	if (path_count > 0)
+	{
+		calculate_path_use(data, solution, path_count);
+		while (++i < path_count)
+			turns[i] = solution->path[i]->length + solution->path[i]->usage;
+	}
+	if (path_count == 1)
 	{
 		i = -1;
 		while (++i < path_count)
