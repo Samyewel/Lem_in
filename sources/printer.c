@@ -6,11 +6,17 @@
 /*   By: egaliber <egaliber@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/18 16:16:43 by egaliber          #+#    #+#             */
-/*   Updated: 2023/02/20 11:06:09 by egaliber         ###   ########.fr       */
+/*   Updated: 2023/02/20 12:26:10 by egaliber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lem_in.h"
+
+/*
+** only_start_end:
+** - Small function that takes of cases where there is only start-end.
+**   Prints all ants on the same line.
+*/
 
 void	only_start_end(t_ants *ants, t_data *data)
 {
@@ -33,7 +39,13 @@ void	only_start_end(t_ants *ants, t_data *data)
 
 /*
 ** ant_mover:
-** -
+** - We start moving the ants untill all of them have finished.
+** - First sending the ants that haven't started yet.
+** - Once we see some ants are in play those are moved
+**   before sending new ones.
+** - When all ants that are in play have moved
+**   we send the next bunch of new ants.
+**   When all ants are in play and we just keep moving them.
 */
 
 static void	ant_mover(t_heads *heads, t_data *data)
@@ -67,7 +79,10 @@ static void	ant_mover(t_heads *heads, t_data *data)
 
 /*
 ** give_ants_paths:
-** -
+** - Each ant is assigned with a path to use depending on how many paths we use.
+**   If a paths usage hits 0, we go to the next path.
+** - After a path is given we move to the next path and ant
+**   untill all paths are done.
 */
 
 static void	give_ants_paths(t_ants *ants, t_data *data, t_heads *heads)
@@ -94,7 +109,10 @@ static void	give_ants_paths(t_ants *ants, t_data *data, t_heads *heads)
 
 /*
 ** printer:
-** -
+** - The "main of the Printer".
+**   First we create ant struct and make the into a list.
+**   We give those ants the correct paths and rooms to start.
+**   Then we start moving and print the ants.
 */
 
 void	printer(t_heads *heads, t_data *data)

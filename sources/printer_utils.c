@@ -6,7 +6,7 @@
 /*   By: egaliber <egaliber@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/18 16:19:17 by egaliber          #+#    #+#             */
-/*   Updated: 2023/02/19 21:03:32 by egaliber         ###   ########.fr       */
+/*   Updated: 2023/02/20 12:35:46 by egaliber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,9 @@
 
 /*
 ** give_rest_paths:
-** -
+** - Each ant is assigned with the current path and the start room.
+** - Paths usage is decreased when to an ant and temp is is uage for later.
+**   When usage hits 0 we decrease the amount of paths used.
 */
 
 void	give_rest_paths(t_ants *ants, t_paths **paths, t_data *data, int i)
@@ -29,7 +31,11 @@ void	give_rest_paths(t_ants *ants, t_paths **paths, t_data *data, int i)
 
 /*
 ** first_move:
-** -
+** - We send ant that arent in play to the first rooms.
+**   Index is increased because start is not printed.
+**   Counter is to indicate how many ants we send each turn.
+** - Once we moved the same amout of ants as paths
+**   the correct number has started.
 */
 
 void	first_move(t_ants *ants, t_paths **paths, t_data *data, int i)
@@ -59,7 +65,10 @@ void	first_move(t_ants *ants, t_paths **paths, t_data *data, int i)
 
 /*
 ** move_played:
-** -
+** - We start moving ants that have already been put into play.
+**   If an ant hasnt finished it needs to move.
+** - Once an ant reaches to the end we activate bool finished.
+**   When we've gone through all ants we print a newline.
 */
 
 void	move_played(t_ants *ants, t_data *data, t_heads *heads)
@@ -84,7 +93,11 @@ void	move_played(t_ants *ants, t_data *data, t_heads *heads)
 			}
 		}
 		else if (ants->ant_number == data->ant_count)
+		{
 			ants = heads->ants;
+			ft_printf("\n");
+			data->line_count++;
+		}
 		else
 			ants = ants->next;
 	}
@@ -92,7 +105,8 @@ void	move_played(t_ants *ants, t_data *data, t_heads *heads)
 
 /*
 ** move_ants_already_in_play:
-** -
+** - By using the index we calculate where the ant is currently.
+**   And then print its move.
 */
 
 void	move_ants_already_in_play(t_ants *ants)
@@ -111,7 +125,10 @@ void	move_ants_already_in_play(t_ants *ants)
 
 /*
 ** send_ants:
-** -
+** - By using the index we calculate where the ant is currently.
+**   We then print the ants move and activate the bool moved.
+**   The paths temp (usage) is decreased to
+**   follow how many times a path needs to be used.
 */
 
 void	send_ants(t_ants *ants, t_paths **paths, int i)

@@ -6,7 +6,7 @@
 /*   By: egaliber <egaliber@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/03 16:17:07 by swilliam          #+#    #+#             */
-/*   Updated: 2023/02/20 11:08:51 by egaliber         ###   ########.fr       */
+/*   Updated: 2023/02/20 11:25:02 by egaliber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,21 +78,6 @@ static int	distribute(
 		calculate_path_use(data, solution, path_count);
 		while (++i < path_count)
 			turns[i] = solution->path[i]->length + solution->path[i]->usage;
-	}
-	if (path_count == 1)
-	{
-		i = -1;
-		while (++i < path_count)
-			turns[i] = solution->path[i]->length + solution->path[i]->usage;
-		i = -1;
-		while (++i < path_count && ants_left > 0)
-		{
-			if (solution->path[i]->usage < turns[i])
-			{
-				solution->path[i]->usage++;
-				ants_left--;
-			}
-		}
 	}
 	return (longest_move(turns, path_count));
 }

@@ -6,7 +6,7 @@
 /*   By: egaliber <egaliber@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/03 11:56:26 by swilliam          #+#    #+#             */
-/*   Updated: 2023/02/20 11:10:10 by egaliber         ###   ########.fr       */
+/*   Updated: 2023/02/20 11:59:27 by egaliber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,8 @@ typedef struct data
 	bool				ending_search;
 	bool				end_found;
 	bool				links_started;
+	bool				lines;
+	bool				print_paths;
 	char				*last_link_0;
 	char				*last_link_1;
 	struct solutions	*solution;

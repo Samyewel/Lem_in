@@ -3,14 +3,40 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sam <sam@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: egaliber <egaliber@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/07 16:16:16 by swilliam          #+#    #+#             */
-/*   Updated: 2023/02/19 18:07:21 by sam              ###   ########.fr       */
+/*   Updated: 2023/02/20 11:55:39 by egaliber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lem_in.h"
+
+void	init_flags(t_data *data, char flag)
+{
+	if (flag == 'l')
+		data->lines = true;
+	if (flag == 'p')
+		data->print_paths = true;
+}
+
+void	parse_flags(t_data *data, int argc, char **argv)
+{
+	int i;
+
+	i = 0;
+	if (argc == 2 && argv[1][i++] == '-')
+	{
+		if (argv[1][i] && ft_strchr("l", argv[1][i]))
+		{
+			while (argv[1][i])
+			{
+				init_flags(data, argv[1][i]);
+				i++;
+			}
+		}
+	}
+}
 
 /*
 ** initialise_data:
@@ -37,6 +63,8 @@ static t_data	*initialise_data(t_data *data)
 	data->links_started = false;
 	data->last_link_0 = NULL;
 	data->last_link_1 = NULL;
+	data->print_paths = false;
+	data->lines = false;
 	return (data);
 }
 
@@ -67,7 +95,7 @@ static t_heads	*initialise_heads(t_data *data, t_heads *heads)
 ** -
 */
 
-int	main(void)
+int	main(int argc, char **argv)
 {
 	t_heads	*heads;
 	t_data	*data;
@@ -78,12 +106,14 @@ int	main(void)
 	heads = initialise_heads(data, heads);
 	if (!data || !heads)
 		clean_lem_in("Memory allocation failure in main.");
+	if (argc > 1)
+		parse_flags(data, argc, argv);
 	read_input(data, heads);
 	edmonds_karp(data, heads);
 	backtrack_paths(data, heads);
 	store_solution(data, heads);
 	printer(heads, data);
-	if (DEBUG == true && LINES == true)
+	if (data->lines == true)
 		ft_printf("\nLine count = %d\n", data->line_count);
 	if (DEBUG == true && LEAKS == true) // REMOVE BEFORE SUBMISSION
 		system("leaks lem-in");
