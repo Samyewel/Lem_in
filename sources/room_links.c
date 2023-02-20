@@ -6,7 +6,7 @@
 /*   By: swilliam <swilliam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/21 17:00:10 by swilliam          #+#    #+#             */
-/*   Updated: 2023/02/20 16:18:52 by swilliam         ###   ########.fr       */
+/*   Updated: 2023/02/20 16:34:02 by swilliam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,9 @@ void	store_link(t_rooms **rooms, char *link_a, char *link_b)
 			clean_lem_in("Memory allocation failure in store_link.");
 	}
 	while (++i < MAX_SIZE && temp_room->links[i] != NULL)
-		;
+	{
+		if (ft_strcmp(temp_room->links[i]->name, temp_link->name) == 0)
+			clean_lem_in("Duplicate links for room.");
+	}
 	temp_room->links[i] = temp_link;
 }
