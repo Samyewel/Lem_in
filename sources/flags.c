@@ -6,7 +6,7 @@
 /*   By: swilliam <swilliam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/20 13:20:14 by swilliam          #+#    #+#             */
-/*   Updated: 2023/02/20 14:06:40 by swilliam         ###   ########.fr       */
+/*   Updated: 2023/02/20 14:22:38 by swilliam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void	set_flags(t_flags *flags, char flag)
 	else if (flag == 's')
 		flags->solutions = true;
 	else if (flag == 'a')
-		flags->ants = true;
+		flags->ants = false;
 	else if (flag == 'g')
 		flags->graph = true;
 	else if (flag == 'i')

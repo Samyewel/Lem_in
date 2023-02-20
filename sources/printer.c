@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   printer.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: egaliber <egaliber@student.42.fr>          +#+  +:+       +#+        */
+/*   By: swilliam <swilliam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/18 16:16:43 by egaliber          #+#    #+#             */
-/*   Updated: 2023/02/20 12:47:03 by egaliber         ###   ########.fr       */
+/*   Updated: 2023/02/20 14:29:08 by swilliam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,23 +35,27 @@ void	give_rest_paths(t_ants *ants, t_paths **paths, t_data *data, int i)
 **   Prints all ants on the same line.
 */
 
-void	only_start_end(t_ants *ants, t_data *data)
+void	only_start_end(t_heads *heads, t_ants *ants)
 {
 	while (ants)
 	{
 		ants->room_location = ants->room[1]->name;
-		write(1, "L", 1);
-		ft_putnbr(ants->ant_number);
-		write(1, "-", 1);
-		ft_putstr(ants->room_location);
-		write(1, " ", 1);
+		if (heads->flags->ants == true)
+		{
+			write(1, "L", 1);
+			ft_putnbr(ants->ant_number);
+			write(1, "-", 1);
+			ft_putstr(ants->room_location);
+			write(1, " ", 1);
+		}
 		if (ants->next != NULL)
 			ants = ants->next;
 		else
 			break ;
 	}
-	ft_printf("\n");
-	data->line_count++;
+	if (heads->flags->ants == true)
+		ft_printf("\n");
+	heads->data->line_count++;
 }
 
 /*
@@ -69,17 +73,15 @@ static void	ant_mover(t_heads *heads, t_data *data)
 {
 	t_paths	**paths;
 	t_ants	*ants;
-	int		i;
 
 	ants = heads->ants;
 	paths = data->solution->path;
-	i = 0;
 	while (data->finished != data->ant_count)
 	{
 		data->counter = 0;
-		i = 0;
-		first_move(ants, paths, data, i);
-		ft_printf("\n");
+		first_move(heads, ants, paths, 0);
+		if (heads->flags->ants == true)
+			ft_printf("\n");
 		data->line_count++;
 		if (heads->ants->has_moved == true)
 		{
@@ -148,7 +150,7 @@ void	printer(t_heads *heads, t_data *data)
 	give_ants_paths(ants, data, heads);
 	data->solution->paths_used = paths_used;
 	if (ants->room[i + 1]->end == true)
-		only_start_end(ants, data);
+		only_start_end(heads, ants);
 	else
 		ant_mover(heads, data);
 }

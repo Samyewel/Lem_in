@@ -6,7 +6,7 @@
 /*   By: swilliam <swilliam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/07 16:16:16 by swilliam          #+#    #+#             */
-/*   Updated: 2023/02/20 13:59:29 by swilliam         ###   ########.fr       */
+/*   Updated: 2023/02/20 14:27:08 by swilliam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ static t_flags	*initialise_input_flags(t_flags *flags)
 	if (!flags)
 		return (NULL);
 	flags->input = true;
-	flags->ants = false;
+	flags->ants = true;
 	flags->rooms = false;
 	flags->lines = false;
 	flags->paths = false;

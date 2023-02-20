@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   printer_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: egaliber <egaliber@student.42.fr>          +#+  +:+       +#+        */
+/*   By: swilliam <swilliam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/18 16:19:17 by egaliber          #+#    #+#             */
-/*   Updated: 2023/02/20 13:05:35 by egaliber         ###   ########.fr       */
+/*   Updated: 2023/02/20 14:24:50 by swilliam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,8 @@
 t_ants	*all_checked(t_data *data, t_ants *ants, t_heads *heads)
 {
 	ants = heads->ants;
-	ft_printf("\n");
+	if (heads->flags->ants == true)
+		ft_printf("\n");
 	data->line_count++;
 	return (ants);
 }
@@ -33,13 +34,13 @@ t_ants	*all_checked(t_data *data, t_ants *ants, t_heads *heads)
 **   the correct number has started.
 */
 
-void	first_move(t_ants *ants, t_paths **paths, t_data *data, int i)
+void	first_move(t_heads *heads, t_ants *ants, t_paths **paths, int i)
 {
-	while (data->counter < data->solution->paths_used \
+	while (heads->data->counter < heads->data->solution->paths_used \
 			&& ants->has_moved == false && ants->has_finished == false)
 	{
 		ants->index++;
-		send_ants(ants, paths, i);
+		send_ants(heads, ants, paths, i);
 		if (ants->next != NULL)
 		{
 			if (ants->room_location != ants->next->room_location)
@@ -47,14 +48,14 @@ void	first_move(t_ants *ants, t_paths **paths, t_data *data, int i)
 		}
 		if (paths[i]->temp == 0)
 		{
-			data->solution->paths_used--;
-			data->counter--;
+			heads->data->solution->paths_used--;
+			heads->data->counter--;
 		}
-		if (i < data->solution->paths_used)
+		if (i <heads-> data->solution->paths_used)
 			i++;
 		else
 			i = 0;
-		data->counter++;
+		heads->data->counter++;
 	}
 }
 
@@ -72,7 +73,7 @@ void	move_played(t_ants *ants, t_data *data, t_heads *heads)
 	{
 		if (ants->has_finished == false)
 		{
-			move_ants_already_in_play(ants);
+			move_ants_already_in_play(heads, ants);
 			if (ants->index == ants->index_end)
 			{
 				ants->has_finished = true;
@@ -83,7 +84,8 @@ void	move_played(t_ants *ants, t_data *data, t_heads *heads)
 			else
 			{
 				ants = heads->ants;
-				ft_printf("\n");
+				if (heads->flags->ants == true)
+					ft_printf("\n");
 				data->line_count++;
 			}
 		}
@@ -100,17 +102,20 @@ void	move_played(t_ants *ants, t_data *data, t_heads *heads)
 **   And then print its move.
 */
 
-void	move_ants_already_in_play(t_ants *ants)
+void	move_ants_already_in_play(t_heads *heads, t_ants *ants)
 {
 	if (ants->index < ants->index_end)
 	{
 		ants->room_location = ants->room[ants->index]->name;
 		ants->index++;
-		write(1, "L", 1);
-		ft_putnbr(ants->ant_number);
-		write(1, "-", 1);
-		ft_putstr(ants->room_location);
-		write(1, " ", 1);
+		if (heads->flags->ants == true)
+		{
+			write(1, "L", 1);
+			ft_putnbr(ants->ant_number);
+			write(1, "-", 1);
+			ft_putstr(ants->room_location);
+			write(1, " ", 1);
+		}
 	}
 }
 
@@ -122,15 +127,18 @@ void	move_ants_already_in_play(t_ants *ants)
 **   follow how many times a path needs to be used.
 */
 
-void	send_ants(t_ants *ants, t_paths **paths, int i)
+void	send_ants(t_heads *heads, t_ants *ants, t_paths **paths, int i)
 {
 	ants->room_location = ants->room[ants->index]->name;
 	ants->index++;
-	write(1, "L", 1);
-	ft_putnbr(ants->ant_number);
-	write(1, "-", 1);
-	ft_putstr(ants->room_location);
-	write(1, " ", 1);
+	if (heads->flags->ants == true)
+	{
+		write(1, "L", 1);
+		ft_putnbr(ants->ant_number);
+		write(1, "-", 1);
+		ft_putstr(ants->room_location);
+		write(1, " ", 1);
+	}
 	ants->has_moved = true;
 	paths[i]->temp--;
 }
