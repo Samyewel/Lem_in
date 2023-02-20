@@ -6,11 +6,28 @@
 /*   By: egaliber <egaliber@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/18 16:16:43 by egaliber          #+#    #+#             */
-/*   Updated: 2023/02/20 12:26:10 by egaliber         ###   ########.fr       */
+/*   Updated: 2023/02/20 12:47:03 by egaliber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lem_in.h"
+
+/*
+** give_rest_paths:
+** - Each ant is assigned with the current path and the start room.
+** - Paths usage is decreased when to an ant and temp is is uage for later.
+**   When usage hits 0 we decrease the amount of paths used.
+*/
+
+void	give_rest_paths(t_ants *ants, t_paths **paths, t_data *data, int i)
+{
+	ants->room = paths[i]->room;
+	ants->index_end = paths[i]->length;
+	paths[i]->usage--;
+	paths[i]->temp++;
+	if (paths[i]->usage == 0)
+		data->solution->paths_used--;
+}
 
 /*
 ** only_start_end:

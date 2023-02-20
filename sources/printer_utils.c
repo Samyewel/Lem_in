@@ -6,27 +6,22 @@
 /*   By: egaliber <egaliber@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/18 16:19:17 by egaliber          #+#    #+#             */
-/*   Updated: 2023/02/20 12:35:46 by egaliber         ###   ########.fr       */
+/*   Updated: 2023/02/20 13:05:35 by egaliber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lem_in.h"
 
 /*
-** give_rest_paths:
-** - Each ant is assigned with the current path and the start room.
-** - Paths usage is decreased when to an ant and temp is is uage for later.
-**   When usage hits 0 we decrease the amount of paths used.
+** - If ants have reached the last we roatate back to the first.
 */
 
-void	give_rest_paths(t_ants *ants, t_paths **paths, t_data *data, int i)
+t_ants	*all_checked(t_data *data, t_ants *ants, t_heads *heads)
 {
-	ants->room = paths[i]->room;
-	ants->index_end = paths[i]->length;
-	paths[i]->usage--;
-	paths[i]->temp++;
-	if (paths[i]->usage == 0)
-		data->solution->paths_used--;
+	ants = heads->ants;
+	ft_printf("\n");
+	data->line_count++;
+	return (ants);
 }
 
 /*
@@ -93,11 +88,7 @@ void	move_played(t_ants *ants, t_data *data, t_heads *heads)
 			}
 		}
 		else if (ants->ant_number == data->ant_count)
-		{
-			ants = heads->ants;
-			ft_printf("\n");
-			data->line_count++;
-		}
+			ants = all_checked(data, ants, heads);
 		else
 			ants = ants->next;
 	}
