@@ -41,8 +41,9 @@ static bool	bfs_return(t_heads *heads, bool ret, bool *visited, int end)
 {
 	if (ret == true)
 		create_new_path(heads, end);
-	free (visited);
-	free (heads->queue);
+	free(visited);
+	free(heads->queue->data);
+	free(heads->queue);
 	return (ret);
 }
 
@@ -121,4 +122,5 @@ void	edmonds_karp(t_data *data, t_heads *heads)
 	x = -1;
 	while (bfs(heads, start_room, end_room))
 		update_residual(heads->residual, heads->stored, heads->path[++x]);
+	print_paths(heads, heads->path);
 }

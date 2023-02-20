@@ -6,7 +6,7 @@
 #    By: swilliam <swilliam@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/11/05 13:26:33 by swilliam          #+#    #+#              #
-#    Updated: 2023/02/20 14:40:01 by swilliam         ###   ########.fr        #
+#    Updated: 2023/02/20 16:09:58 by swilliam         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -45,7 +45,7 @@ EVAL = ./eval_tests/
 OUT = ./eval_tests/output/
 TEST_CMD = ./lem-in $(INPUT_FLAGS) < $(EVAL)maps/
 GENERATOR = $(EVAL)generator
-INPUT_FLAGS = -ispal
+INPUT_FLAGS = -il
 
 all:		$(LEM_IN)
 

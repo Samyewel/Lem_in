@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   path_creation.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sam <sam@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: swilliam <swilliam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/21 17:09:45 by swilliam          #+#    #+#             */
-/*   Updated: 2023/02/19 15:41:11 by sam              ###   ########.fr       */
+/*   Updated: 2023/02/20 16:02:05 by swilliam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,10 +54,9 @@ int i)
 	if (!new_path)
 		clean_lem_in("Memory allocation failure in create_path_node.");
 	new_path->nb = i;
-	new_path->room = (t_rooms **)malloc(sizeof(t_rooms *) * MAX_SIZE);
+	new_path->room = (t_rooms **)ft_memalloc(sizeof(t_rooms *) * MAX_SIZE);
 	if (!new_path->room)
 		clean_lem_in("Memory allocation failure in create_path_node.");
-	ft_memset(new_path->room, 0, MAX_SIZE);
 	new_path->room[0] = NULL;
 	new_path->length = 0;
 	new_path->usage = 0;
@@ -121,7 +120,7 @@ void	create_new_path(t_heads *heads, int end)
 	i = -1;
 	if (heads->path == NULL)
 	{
-		heads->path = (t_paths **)malloc(sizeof(t_paths *) * MAX_SIZE);
+		heads->path = (t_paths **)ft_memalloc(sizeof(t_paths *) * MAX_SIZE);
 		if (!heads->path)
 			clean_lem_in("Memory allocation failure in create_new_path");
 	}

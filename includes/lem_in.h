@@ -6,7 +6,7 @@
 /*   By: swilliam <swilliam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/03 11:56:26 by swilliam          #+#    #+#             */
-/*   Updated: 2023/02/20 14:26:19 by swilliam         ###   ########.fr       */
+/*   Updated: 2023/02/20 16:20:37 by swilliam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ typedef struct data
 	struct solutions	*solution;
 }				t_data;
 
-typedef struct	flags
+typedef struct flags
 {
 	bool		input;
 	bool		ants;
@@ -89,7 +89,6 @@ typedef struct solutions
 	int					*path_indexes;
 	int					path_count;
 	int					paths_used;
-	int					total_length;
 	int					turns;
 	struct paths		*temp_previous;
 	struct paths		**path;

@@ -6,7 +6,7 @@
 /*   By: swilliam <swilliam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/16 14:13:08 by swilliam          #+#    #+#             */
-/*   Updated: 2023/02/20 13:45:49 by swilliam         ###   ########.fr       */
+/*   Updated: 2023/02/20 16:14:21 by swilliam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,15 +92,15 @@ static void	read_rooms(t_data *data, t_heads *heads, char *line, int line_n)
 	if (ft_strchr(line, ' ') == NULL && ft_strchr(line, '-') != NULL)
 		return ;
 	room_errors(line, data);
-	room = create_room(data, heads, room, line);
-	if (!room)
-		clean_lem_in("Memory allocation failure in read_rooms.");
 	if (heads->room == NULL)
 	{
-		heads->room = (t_rooms **)malloc(sizeof(t_rooms *) * MAX_SIZE);
+		heads->room = (t_rooms **)ft_memalloc(sizeof(t_rooms *) * MAX_SIZE);
 		if (!heads->room)
 			clean_lem_in("Memory allocation failure in read_rooms.");
 	}
+	room = create_room(data, heads, room, line);
+	if (!room)
+		clean_lem_in("Memory allocation failure in read_rooms.");
 	while (++i < MAX_SIZE && heads->room[i] != NULL)
 		;
 	heads->room[i] = room;
@@ -123,6 +123,8 @@ static void	read_links(t_heads *heads, char *line, int line_n, t_data *data)
 
 	if (line_n == 0 || line[0] == '#')
 		return ;
+	if (line[0] == 'L')
+		clean_lem_in("Cannot use 'L' for room names.");
 	line_split = NULL;
 	if (ft_strchr(line, '-') == NULL)
 		return ;

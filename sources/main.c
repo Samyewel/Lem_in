@@ -6,7 +6,7 @@
 /*   By: swilliam <swilliam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/07 16:16:16 by swilliam          #+#    #+#             */
-/*   Updated: 2023/02/20 14:27:08 by swilliam         ###   ########.fr       */
+/*   Updated: 2023/02/20 16:14:31 by swilliam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ static t_data	*initialise_data(t_data *data)
 	data->starting_search = false;
 	data->start_found = false;
 	data->ending_search = false;
+	data->end_found = false;
 	data->solution = NULL;
 	data->counter = 0;
 	data->input = NULL;
@@ -114,7 +115,6 @@ int	main(int argc, char **argv)
 	printer(heads, data);
 	if (flags->lines == true)
 		ft_printf("\nLine count = %d\n", data->line_count);
-	system("leaks lem-in");
 	exit(EXIT_SUCCESS);
 	return (0);
 }

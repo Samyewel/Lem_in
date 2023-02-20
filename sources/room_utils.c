@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   room_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sam <sam@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: swilliam <swilliam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/21 13:53:38 by swilliam          #+#    #+#             */
-/*   Updated: 2023/02/13 15:01:29 by sam              ###   ########.fr       */
+/*   Updated: 2023/02/20 16:19:05 by swilliam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,13 +19,11 @@
 
 int	find_start_room(t_heads *heads)
 {
-	int		i;
+	int	i;
 
 	i = -1;
-	while (++i < MAX_SIZE)
+	while (++i < MAX_SIZE && heads->room[i])
 	{
-		if (heads->room[i] == NULL)
-			return (-1);
 		if (heads->room[i]->start == true)
 			return (i);
 	}
@@ -39,13 +37,11 @@ int	find_start_room(t_heads *heads)
 
 int	find_end_room(t_heads *heads)
 {
-	int		i;
+	int	i;
 
 	i = -1;
-	while (++i < MAX_SIZE)
+	while (++i < MAX_SIZE && heads->room[i])
 	{
-		if (heads->room[i] == NULL)
-			return (-1);
 		if (heads->room[i]->end == true)
 			return (i);
 	}
@@ -74,9 +70,11 @@ t_rooms	*find_room_name(t_rooms **rooms, char *name)
 	int	i;
 
 	i = -1;
-	while (++i < MAX_SIZE)
+	if (rooms == NULL)
+		return (NULL);
+	while (++i < MAX_SIZE && rooms[i])
 	{
-		if (ft_strequ(name, rooms[i]->name))
+		if (ft_strcmp(name, rooms[i]->name) == 0)
 			return (rooms[i]);
 	}
 	return (NULL);

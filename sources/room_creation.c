@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   room_creation.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sam <sam@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: swilliam <swilliam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/21 13:53:38 by swilliam          #+#    #+#             */
-/*   Updated: 2023/02/19 15:46:43 by sam              ###   ########.fr       */
+/*   Updated: 2023/02/20 15:05:53 by swilliam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,13 +21,11 @@ static int	room_check(t_rooms **rooms, char *name)
 {
 	int	i;
 
-	i = -1;
+	i = 0;
 	if (rooms == NULL)
 		return (0);
-	while (++i < MAX_SIZE)
+	while (++i < MAX_SIZE && rooms[i])
 	{
-		if (rooms[i] == NULL)
-			break ;
 		if (ft_strequ(name, rooms[i]->name))
 			return (1);
 	}
@@ -74,7 +72,7 @@ t_rooms	*store_room(t_data *data, t_heads *heads, t_rooms *room, char *line)
 
 	line_split = ft_strsplit(line, ' ');
 	room_store_errors(line_split);
-	if (room_check(heads->room, line_split[0]))
+	if (heads->room != NULL && room_check(heads->room, line_split[0]))
 		clean_lem_in("Duplicate rooms.");
 	room->id = data->room_count;
 	room->name = ft_strdup(line_split[0]);
