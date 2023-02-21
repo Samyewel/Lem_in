@@ -115,6 +115,7 @@ void	edmonds_karp(t_data *data, t_heads *heads)
 	int	start_room;
 	int	end_room;
 	int	x;
+	int	i;
 
 	start_room = find_start_room(heads);
 	end_room = find_end_room(heads);
@@ -123,9 +124,16 @@ void	edmonds_karp(t_data *data, t_heads *heads)
 	if (!heads->parent || !heads->stored)
 		clean_lem_in("Memory allocation failure in edmonds_karp.");
 	ft_memset(heads->stored, false, data->room_count);
-	initialise_graphs(data, heads);
+	initialise_graph(data, heads);
 	x = -1;
-	while (bfs(heads, start_room, end_room))
-		update_residual(heads->residual, heads->stored, heads->path[++x]);
-	print_paths(heads, heads->path);
+	i = 1;
+	while (x < i)
+	{
+		while (bfs(heads, start_room, end_room))
+			update_visited(heads->stored, heads->path[++x]);
+		if (heads->path != NULL && heads->path[0] != NULL)
+			i = heads->path[0]->length - 1;
+		if (!continue_bfs(heads, heads->parent, heads->stored))
+			break ;
+	}
 }

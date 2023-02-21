@@ -6,7 +6,7 @@
 /*   By: swilliam <swilliam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/21 17:09:45 by swilliam          #+#    #+#             */
-/*   Updated: 2023/02/20 16:02:05 by swilliam         ###   ########.fr       */
+/*   Updated: 2023/02/21 14:47:20 by swilliam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,7 @@ int i)
 	new_path->length = 0;
 	new_path->usage = 0;
 	new_path->temp_usage = 0;
+	new_path->bfs_index = 0;
 	new_path->temp = 0;
 	new_path->next = NULL;
 	heads->data->path_count++;

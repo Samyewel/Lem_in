@@ -6,7 +6,7 @@
 #    By: swilliam <swilliam@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/11/05 13:26:33 by swilliam          #+#    #+#              #
-#    Updated: 2023/02/21 13:47:17 by swilliam         ###   ########.fr        #
+#    Updated: 2023/02/21 15:22:17 by swilliam         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -43,8 +43,9 @@ LEM_IN = lem-in
 DELETE = $(LEM_IN) $(OBJ)
 EVAL = ../eval_tests/
 OUT = ../eval_tests/output/
-TEST_CMD = ./lem-in < $(EVAL)maps/
+TEST_CMD = ./lem-in $(INPUT_FLAGS) < $(EVAL)maps/
 GENERATOR = $(EVAL)generator
+INPUT_FLAGS = -ilgsp
 
 all:		$(LEM_IN)
 
@@ -82,27 +83,27 @@ re:			fclean all
 f1:			all
 			@mkdir -p $(OUT)
 			@$(GENERATOR) --flow-one > $(OUT)flow1.map
-			@time ./lem-in < $(OUT)flow1.map
+			@time ./lem-in $(INPUT_FLAGS) < $(OUT)flow1.map
 
 f10:		all
 			@mkdir -p $(OUT)
 			@$(GENERATOR) --flow-ten > $(OUT)flow10.map
-			@time ./lem-in < $(OUT)flow10.map
+			@time ./lem-in $(INPUT_FLAGS) < $(OUT)flow10.map
 
 f1000:		all
 			@mkdir -p $(OUT)
 			@$(GENERATOR) --flow-thousand > $(OUT)flow1000.map
-			@time ./lem-in < $(OUT)flow1000.map
+			@time ./lem-in $(INPUT_FLAGS) < $(OUT)flow1000.map
 
 big:		all
 			@mkdir -p $(OUT)
 			@$(GENERATOR) --big > $(OUT)big.map
-			@time ./lem-in < $(OUT)big.map
+			@time ./lem-in $(INPUT_FLAGS) < $(OUT)big.map
 
 super:		all
 			@mkdir -p $(OUT)
 			@$(GENERATOR) --big-superposition > $(OUT)big-superposition.map
-			@time ./lem-in < $(OUT)big-superposition.map
+			@time ./lem-in $(INPUT_FLAGS) < $(OUT)big-superposition.map
 
 test0:		all
 			@time $(TEST_CMD)0.map

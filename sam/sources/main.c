@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: egaliber <egaliber@student.42.fr>          +#+  +:+       +#+        */
+/*   By: swilliam <swilliam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/07 16:16:16 by swilliam          #+#    #+#             */
-/*   Updated: 2023/02/21 13:32:32 by egaliber         ###   ########.fr       */
+/*   Updated: 2023/02/21 14:48:24 by swilliam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ static t_data	*initialise_data(t_data *data)
 	data->line_count = 0;
 	data->finished = 0;
 	data->ant_num = 0;
+	data->bfs_path = 0;
 	data->starting_search = false;
 	data->start_found = false;
 	data->ending_search = false;

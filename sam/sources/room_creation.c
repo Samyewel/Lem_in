@@ -6,7 +6,7 @@
 /*   By: swilliam <swilliam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/21 13:53:38 by swilliam          #+#    #+#             */
-/*   Updated: 2023/02/20 17:14:25 by swilliam         ###   ########.fr       */
+/*   Updated: 2023/02/21 13:52:37 by swilliam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,7 @@ t_rooms	*create_room(
 	room->end = false;
 	room->is_room = 0;
 	room->ants = 0;
+	room->blocked = NULL;
 	room->x = 0;
 	room->y = 0;
 	room->next = NULL;
