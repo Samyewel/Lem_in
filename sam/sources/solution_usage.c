@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   usage_calculation.c                                :+:      :+:    :+:   */
+/*   solution_usage.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sam <sam@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: swilliam <swilliam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/03 16:17:07 by swilliam          #+#    #+#             */
-/*   Updated: 2023/02/19 15:42:13 by sam              ###   ########.fr       */
+/*   Updated: 2023/02/20 17:12:02 by swilliam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,23 +72,22 @@ static int	distribute(
 	ants_left = data->ant_count;
 	turns = NULL;
 	reset_usage(solution, &turns, path_count);
-	while (ants_left > 0)
+	i = -1;
+	if (path_count > 0)
 	{
-		i = -1;
+		calculate_path_use(data, solution, path_count);
 		while (++i < path_count)
 			turns[i] = solution->path[i]->length + solution->path[i]->usage;
-		i = -1;
-		while (++i < path_count && ants_left > 0)
-		{
-			if (solution->path[i]->usage < turns[i])
-			{
-				solution->path[i]->usage++;
-				ants_left--;
-			}
-		}
 	}
 	return (longest_move(turns, path_count));
 }
+
+/*
+** swap_usages:
+** - Swaps the usage between the temporary and current usage counts
+**   for when we are calculating which usage results in the shortest
+**   amoun of turns.
+*/
 
 static void	swap_usages(t_solutions *solution, int reverse)
 {

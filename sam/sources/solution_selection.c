@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   best_solution.c                                    :+:      :+:    :+:   */
+/*   solution_selection.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sam <sam@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: swilliam <swilliam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/28 13:05:45 by swilliam          #+#    #+#             */
-/*   Updated: 2023/02/19 15:42:48 by sam              ###   ########.fr       */
+/*   Updated: 2023/02/20 15:17:42 by swilliam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,8 +81,7 @@ static void	store_paths_in_solution(
 
 	temp_path = NULL;
 	i = -1;
-	solution->path = (t_paths **)malloc(sizeof(t_paths *) * \
-			MAX_SIZE);
+	solution->path = (t_paths **)ft_memalloc(sizeof(t_paths *) * MAX_SIZE);
 	if (!solution->path)
 		clean_lem_in("Memory allocation failure in store_paths_in_solution.");
 	while (++i < MAX_SIZE)
@@ -108,29 +107,17 @@ static void	store_paths_in_solution(
 
 void	store_solution(t_data *data, t_heads *heads)
 {
-	int	best_index;
-	int	turns;
 	int	i;
 
-	best_index = 0;
-	turns = INT_MAX;
 	i = -1;
-	while (++i < data->path_count)
+	while (++i < 1)
 	{
 		store_paths_in_solution(heads, heads->solution[i]);
 		if (data->ant_count == 1)
-		{
-			best_index = i;
 			heads->solution[0]->path[0]->usage = data->ant_count;
-			break ;
-		}
 		else
 			calculate_usage(data, heads->solution[i]);
-		if (heads->solution[i]->turns < turns)
-		{
-			turns = heads->solution[i]->turns;
-			best_index = i;
-		}
 	}
-	data->solution = heads->solution[best_index];
+	data->solution = heads->solution[0];
+	print_solution(heads, data->solution);
 }

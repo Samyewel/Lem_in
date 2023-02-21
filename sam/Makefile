@@ -3,21 +3,21 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: sam <sam@student.42.fr>                    +#+  +:+       +#+         #
+#    By: swilliam <swilliam@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/11/05 13:26:33 by swilliam          #+#    #+#              #
-#    Updated: 2023/02/19 16:44:10 by sam              ###   ########.fr        #
+#    Updated: 2023/02/21 13:47:17 by swilliam         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 # Source files
 LEM_IN_DIR = ./sources/
 LEM_IN_FILES = \
-main.c parse_input.c \
+main.c flags.c input_parsing.c input_printing.c \
 room_creation.c room_links.c room_utils.c room_errors_1.c room_errors_2.c \
-edmonds_karp.c edmonds_graph.c queue.c \
+edmonds_karp.c edmonds_karp_graph.c edmonds_karp_queue.c \
 path_creation.c path_utils.c path_backtracking.c \
-solution_creation.c solution_selection.c solution_usage.c \
+solution_creation.c solution_selection.c solution_usage.c solution_utils.c \
 printer.c printer_utils.c \
 ant_creation.c \
 debug_printing.c clean_data.c \

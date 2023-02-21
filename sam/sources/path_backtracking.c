@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   backtrack_paths.c                                  :+:      :+:    :+:   */
+/*   path_backtracking.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sam <sam@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: swilliam <swilliam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/26 17:00:15 by sam               #+#    #+#             */
-/*   Updated: 2023/02/19 15:37:49 by sam              ###   ########.fr       */
+/*   Updated: 2023/02/20 15:56:35 by swilliam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,13 +26,11 @@ static void	sort_solution(t_heads *heads, int *array)
 	i = 1;
 	temp = 0;
 	swapped = 0;
-	while (i < MAX_SIZE)
+	while (i < MAX_SIZE && array[i] >= 0)
 	{
-		if (array[i] < 0)
-			break ;
 		swapped = 0;
-		if (get_path(heads, array[i])->length < \
-				get_path(heads, array[i - 1])->length && i > 0)
+		if (i > 0 && get_path(heads, array[i])->length < \
+				get_path(heads, array[i - 1])->length)
 		{
 			temp = array[i];
 			array[i] = array[i - 1];
@@ -65,7 +63,6 @@ static void	add_to_solution(bool b, t_solutions *solution, t_paths *add_path)
 		if (solution->path_indexes[i] < 0)
 		{
 			solution->path_indexes[i] = add_path->nb;
-			solution->total_length += add_path->length;
 			solution->path_count++;
 			break ;
 		}

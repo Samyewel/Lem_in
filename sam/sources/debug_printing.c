@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   debug_printing.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sam <sam@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: swilliam <swilliam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/16 16:29:43 by swilliam          #+#    #+#             */
-/*   Updated: 2023/02/19 14:40:52 by sam              ###   ########.fr       */
+/*   Updated: 2023/02/20 16:09:04 by swilliam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ void	print_rooms(t_heads *heads)
 	int	x;
 
 	i = -1;
-	if (DEBUG == true && ROOMS == true)
+	if (heads->flags->rooms == true)
 	{
 		while (++i < MAX_SIZE)
 		{
@@ -51,12 +51,12 @@ void	print_rooms(t_heads *heads)
 ** - Prints all nodes of the given path.
 */
 
-void	print_path(t_paths *path)
+void	print_path(t_heads *heads, t_paths *path)
 {
 	int	i;
 
 	i = -1;
-	if (DEBUG == true && PATHS == true)
+	if (heads->flags->paths == true)
 	{
 		ft_printf("Path[%d], length: %d, usage: %d\n", path->nb, \
 		path->length, path->usage);
@@ -77,18 +77,18 @@ void	print_path(t_paths *path)
 ** - Prints all paths given.
 */
 
-void	print_paths(t_paths **paths)
+void	print_paths(t_heads *heads, t_paths **paths)
 {
 	int	i;
 
 	i = -1;
-	if (DEBUG == true && PATHS == true)
+	if (heads->flags->paths == true)
 	{
 		while (++i < MAX_SIZE)
 		{
 			if (paths[i] == NULL)
 				return ;
-			print_path(paths[i]);
+			print_path(heads, paths[i]);
 		}
 		ft_printf("\n");
 	}
@@ -99,28 +99,22 @@ void	print_paths(t_paths **paths)
 ** - Prints the solution containing their non-intersecting paths.
 */
 
-void	print_solution(t_solutions *solution)
+void	print_solution(t_heads *heads, t_solutions *solution)
 {
 	int	i;
 
-	i = -1;
-	if (DEBUG == true && SOLUTIONS == true)
+	if (heads->flags->solutions == true)
 	{
-		ft_printf("Solution[%d], length: %d, paths: %d\n", \
-			solution->nb, solution->total_length, solution->path_count);
-		if (solution->path == NULL)
+		ft_printf("Solution:\nAnts: %d | Paths: %d\n", \
+		heads->data->ant_count, solution->paths_used);
+		i = -1;
+		while (++i < solution->paths_used)
 		{
-			while (++i < MAX_SIZE)
-			{
-				if (solution->path_indexes[i] >= 0)
-					ft_printf("%d ", solution->path_indexes[i]);
-				else
-					break ;
-			}
-			ft_printf("\n");
+			if (heads->flags->paths == false)
+				ft_printf("%d ", solution->path_indexes[i]);
+			else
+				print_path(heads, solution->path[i]);
 		}
-		else
-			print_paths(solution->path);
 		ft_printf("\n");
 	}
 }
@@ -137,7 +131,7 @@ void	print_graph(t_heads *heads, int **graph)
 
 	y = -1;
 	x = -1;
-	if (DEBUG == true && GRAPH == true)
+	if (heads->flags->graph)
 	{
 		ft_printf("    ");
 		while (++x < heads->data->room_count)

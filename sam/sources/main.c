@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sam <sam@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: egaliber <egaliber@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/07 16:16:16 by swilliam          #+#    #+#             */
-/*   Updated: 2023/02/19 16:39:25 by sam              ###   ########.fr       */
+/*   Updated: 2023/02/21 13:32:32 by egaliber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,12 +32,36 @@ static t_data	*initialise_data(t_data *data)
 	data->starting_search = false;
 	data->start_found = false;
 	data->ending_search = false;
+	data->end_found = false;
 	data->solution = NULL;
 	data->counter = 0;
+	data->input = NULL;
 	data->links_started = false;
 	data->last_link_0 = NULL;
 	data->last_link_1 = NULL;
+	data->print_paths = false;
+	data->lines = false;
 	return (data);
+}
+
+/*
+** initialise_input_flags:
+** - Initialises the struct used for the flags to modify the output.
+*/
+
+static t_flags	*initialise_input_flags(t_flags *flags)
+{
+	flags = (t_flags *)malloc(sizeof(t_flags));
+	if (!flags)
+		return (NULL);
+	flags->input = true;
+	flags->ants = true;
+	flags->rooms = false;
+	flags->lines = false;
+	flags->paths = false;
+	flags->graph = false;
+	flags->solutions = false;
+	return (flags);
 }
 
 /*
@@ -46,12 +70,13 @@ static t_data	*initialise_data(t_data *data)
 **   program.
 */
 
-static t_heads	*initialise_heads(t_data *data, t_heads *heads)
+static t_heads	*initialise_heads(t_data *data, t_heads *heads, t_flags *flags)
 {
 	heads = (t_heads *)malloc(sizeof(t_heads));
 	if (!heads)
 		return (NULL);
 	heads->data = data;
+	heads->flags = flags;
 	heads->room = NULL;
 	heads->path = NULL;
 	heads->solution = NULL;
@@ -64,30 +89,41 @@ static t_heads	*initialise_heads(t_data *data, t_heads *heads)
 
 /*
 ** lem-in:
-** -
+** - Parses given input flags to determine what data is printed on output.
+** - Parses input to store rooms, links and ant count.
+** - Utilises the Edmonds Karp algorithm to store augmenting paths from
+**   the start to end nodes.
+** - Backtracks the paths and stores them in a solution struct in ascending
+**   length order.
+** - Calculates how much each path can be used to determine the shortest
+**   amount of turns traversal will take.
+** - Moves ants from start to end using stored paths and their usages.
+** - Prints total amount of lines used during printing.
 */
 
-int	main(void)
+int	main(int argc, char **argv)
 {
-	t_heads	*heads;
 	t_data	*data;
+	t_flags	*flags;
+	t_heads	*heads;
 
 	data = NULL;
+	flags = NULL;
 	heads = NULL;
 	data = initialise_data(data);
-	heads = initialise_heads(data, heads);
-	if (!data || !heads)
+	flags = initialise_input_flags(flags);
+	heads = initialise_heads(data, heads, flags);
+	if (!data || !heads || !flags)
 		clean_lem_in("Memory allocation failure in main.");
+	if (argc > 1)
+		parse_flags(flags, argc, argv);
 	read_input(data, heads);
 	edmonds_karp(data, heads);
 	backtrack_paths(data, heads);
 	store_solution(data, heads);
-	ft_printf("Printing...\n");
 	printer(heads, data);
-	if (DEBUG == true && LINES == true)
+	if (flags->lines == true)
 		ft_printf("\nLine count = %d\n", data->line_count);
-	if (DEBUG == true && LEAKS == true) // REMOVE BEFORE SUBMISSION
-		system("leaks lem-in");
 	exit(EXIT_SUCCESS);
 	return (0);
 }

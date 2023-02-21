@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   link_creation.c                                    :+:      :+:    :+:   */
+/*   room_links.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sam <sam@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: swilliam <swilliam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/21 17:00:10 by swilliam          #+#    #+#             */
-/*   Updated: 2023/02/19 15:39:15 by sam              ###   ########.fr       */
+/*   Updated: 2023/02/20 16:36:11 by swilliam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,16 +31,15 @@ void	store_link(t_rooms **rooms, char *link_a, char *link_b)
 		clean_lem_in("Invalid link name.");
 	if (temp_room->links == NULL)
 	{
-		temp_room->links = (t_rooms **)malloc(sizeof(t_rooms *) * MAX_SIZE);
+		temp_room->links = (t_rooms **)ft_memalloc(sizeof(t_rooms *) * \
+			MAX_SIZE);
 		if (!temp_room->links)
 			clean_lem_in("Memory allocation failure in store_link.");
-		ft_memset(temp_room->links, 0, MAX_SIZE);
-		temp_room->links[0] = temp_link;
 	}
-	else
+	while (++i < MAX_SIZE && temp_room->links[i] != NULL)
 	{
-		while (++i < MAX_SIZE && temp_room->links[i] != NULL)
-			;
-		temp_room->links[i] = temp_link;
+		if (ft_strcmp(temp_room->links[i]->name, temp_link->name) == 0)
+			clean_lem_in("Duplicate links for room.");
 	}
+	temp_room->links[i] = temp_link;
 }
