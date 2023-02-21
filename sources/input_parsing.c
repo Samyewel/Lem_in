@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   input_parsing.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: swilliam <swilliam@student.42.fr>          +#+  +:+       +#+        */
+/*   By: egaliber <egaliber@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/16 14:13:08 by swilliam          #+#    #+#             */
-/*   Updated: 2023/02/20 16:14:21 by swilliam         ###   ########.fr       */
+/*   Updated: 2023/02/21 13:02:47 by egaliber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -157,7 +157,7 @@ void	read_input(t_data *data, t_heads *heads)
 
 	line = NULL;
 	line_n = 0;
-	while (get_next_line(0, &line))
+	while (get_next_line(0, &line) > 0)
 	{
 		store_input(data, line, line_n);
 		read_ants(data, line, line_n);

@@ -6,11 +6,16 @@
 /*   By: swilliam <swilliam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/20 13:20:14 by swilliam          #+#    #+#             */
-/*   Updated: 2023/02/20 14:22:38 by swilliam         ###   ########.fr       */
+/*   Updated: 2023/02/21 16:35:21 by swilliam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lem_in.h"
+
+/*
+** set_flags:
+** - Activates flags depending on which have been entered on input.
+*/
 
 void	set_flags(t_flags *flags, char flag)
 {
@@ -32,6 +37,11 @@ void	set_flags(t_flags *flags, char flag)
 		clean_lem_in("Invalid flag.");
 }
 
+/*
+** parse_flags:
+** - Reads the input, activating the given flags.
+*/
+
 void	parse_flags(t_flags *flags, int argc, char **argv)
 {
 	int	i;
@@ -45,4 +55,6 @@ void	parse_flags(t_flags *flags, int argc, char **argv)
 			i++;
 		}
 	}
+	else
+		clean_lem_in("Usage: ./lem-in -[flag] < [map]");
 }

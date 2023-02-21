@@ -6,13 +6,14 @@
 /*   By: swilliam <swilliam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/18 16:19:17 by egaliber          #+#    #+#             */
-/*   Updated: 2023/02/20 14:31:20 by swilliam         ###   ########.fr       */
+/*   Updated: 2023/02/20 17:14:56 by swilliam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lem_in.h"
 
 /*
+** all_checked:
 ** - If ants have reached the last we roatate back to the first.
 */
 

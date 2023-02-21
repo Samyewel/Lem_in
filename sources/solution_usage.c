@@ -6,7 +6,7 @@
 /*   By: swilliam <swilliam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/03 16:17:07 by swilliam          #+#    #+#             */
-/*   Updated: 2023/02/20 15:44:48 by swilliam         ###   ########.fr       */
+/*   Updated: 2023/02/21 15:24:42 by swilliam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,6 +81,13 @@ static int	distribute(
 	}
 	return (longest_move(turns, path_count));
 }
+
+/*
+** swap_usages:
+** - Swaps the usage between the temporary and current usage counts
+**   for when we are calculating which usage results in the shortest
+**   amoun of turns.
+*/
 
 static void	swap_usages(t_solutions *solution, int reverse)
 {

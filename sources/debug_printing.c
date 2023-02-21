@@ -6,7 +6,7 @@
 /*   By: swilliam <swilliam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/16 16:29:43 by swilliam          #+#    #+#             */
-/*   Updated: 2023/02/20 16:09:04 by swilliam         ###   ########.fr       */
+/*   Updated: 2023/02/21 15:22:08 by swilliam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,7 +108,7 @@ void	print_solution(t_heads *heads, t_solutions *solution)
 		ft_printf("Solution:\nAnts: %d | Paths: %d\n", \
 		heads->data->ant_count, solution->paths_used);
 		i = -1;
-		while (++i < solution->paths_used)
+		while (++i < solution->path_count)
 		{
 			if (heads->flags->paths == false)
 				ft_printf("%d ", solution->path_indexes[i]);

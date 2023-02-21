@@ -6,7 +6,7 @@
 #    By: swilliam <swilliam@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/11/05 13:26:33 by swilliam          #+#    #+#              #
-#    Updated: 2023/02/20 16:09:58 by swilliam         ###   ########.fr        #
+#    Updated: 2023/02/21 18:56:08 by swilliam         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -41,11 +41,6 @@ LEM_IN = lem-in
 
 # Utilities
 DELETE = $(LEM_IN) $(OBJ)
-EVAL = ./eval_tests/
-OUT = ./eval_tests/output/
-TEST_CMD = ./lem-in $(INPUT_FLAGS) < $(EVAL)maps/
-GENERATOR = $(EVAL)generator
-INPUT_FLAGS = -il
 
 all:		$(LEM_IN)
 
@@ -79,48 +74,5 @@ fclean: 	clean
 			@printf "\rAll created files removed.\n"
 
 re:			fclean all
-
-f1:			all
-			@mkdir -p $(OUT)
-			@$(GENERATOR) --flow-one > $(OUT)flow1.map
-			@time ./lem-in $(INPUT_FLAGS) < $(OUT)flow1.map
-
-f10:		all
-			@mkdir -p $(OUT)
-			@$(GENERATOR) --flow-ten > $(OUT)flow10.map
-			@time ./lem-in $(INPUT_FLAGS) < $(OUT)flow10.map
-
-f1000:		all
-			@mkdir -p $(OUT)
-			@$(GENERATOR) --flow-thousand > $(OUT)flow1000.map
-			@time ./lem-in $(INPUT_FLAGS) < $(OUT)flow1000.map
-
-big:		all
-			@mkdir -p $(OUT)
-			@$(GENERATOR) --big > $(OUT)big.map
-			@time ./lem-in $(INPUT_FLAGS) < $(OUT)big.map
-
-super:		all
-			@mkdir -p $(OUT)
-			@$(GENERATOR) --big-superposition > $(OUT)big-superposition.map
-			@time ./lem-in $(INPUT_FLAGS) < $(OUT)big-superposition.map
-
-test0:		all
-			@time $(TEST_CMD)0.map
-
-test1:		all
-			@time $(TEST_CMD)1.map
-
-test2:		all
-			@time $(TEST_CMD)2.map
-
-test3:		all
-			@time $(TEST_CMD)3.map
-
-test4:		all
-			@time $(TEST_CMD)4.map
-
-test5:		all
-			@time $(TEST_CMD)5.map
 
 .PHONY: all clean fclean re

@@ -47,6 +47,11 @@ static bool	bfs_return(t_heads *heads, bool ret, bool *visited, int end)
 	return (ret);
 }
 
+/*
+** explore:
+** - Explores the linked rooms.
+*/
+
 static void	explore(t_heads *heads, bool *visited, int current, int i)
 {
 	enqueue(heads->queue, heads->room[i]->id);
@@ -110,17 +115,26 @@ void	edmonds_karp(t_data *data, t_heads *heads)
 	int	start_room;
 	int	end_room;
 	int	x;
+	int	i;
 
 	start_room = find_start_room(heads);
 	end_room = find_end_room(heads);
-	heads->parent = (int *)malloc(sizeof(int) * data->room_count);
-	heads->stored = (bool *)malloc(sizeof(bool) * data->room_count);
-	if (!heads->parent || !heads->stored)
-		clean_lem_in("Memory allocation failure in edmonds_karp.");
-	ft_memset(heads->stored, false, data->room_count);
-	initialise_graphs(data, heads);
+	initialise_edmonds_karp(data, heads);
 	x = -1;
-	while (bfs(heads, start_room, end_room))
-		update_residual(heads->residual, heads->stored, heads->path[++x]);
-	print_paths(heads, heads->path);
+	i = 1;
+	while (x < i)
+	{
+		print_graph(heads, heads->residual);
+		while (bfs(heads, start_room, end_room))
+		{
+			update_visited(heads->stored, heads->path[++x]);
+			print_path(heads, heads->path[x]);
+			if (heads->path[x]->length == 2 || data->ant_count == 1)
+				break ;
+		}
+		if (heads->path != NULL)
+			i = heads->path[data->bfs_path]->length - 1;
+		if (!continue_bfs(heads, heads->parent, heads->stored))
+			break ;
+	}
 }

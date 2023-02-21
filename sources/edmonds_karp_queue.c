@@ -1,16 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   queue.c                                            :+:      :+:    :+:   */
+/*   edmonds_karp_queue.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sam <sam@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: swilliam <swilliam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/13 19:10:03 by sam               #+#    #+#             */
-/*   Updated: 2023/02/19 15:40:19 by sam              ###   ########.fr       */
+/*   Updated: 2023/02/20 17:19:17 by swilliam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lem_in.h"
+
+/*
+** init_queue:
+** - Initialises the queue for use in the BFS process.
+*/
 
 t_queue	*init_queue(int size)
 {
@@ -33,10 +38,20 @@ t_queue	*init_queue(int size)
 	return (new_queue);
 }
 
+/*
+** is_empty:
+** - Checks the upper and lower bounds of the queue to check if it is empty.
+*/
+
 int	is_empty(t_queue *queue)
 {
 	return (queue->head >= queue->tail);
 }
+
+/*
+** enqueue:
+** - Adds a node to the queue, extending the tail.
+*/
 
 void	enqueue(t_queue *queue, int value)
 {
@@ -53,6 +68,11 @@ void	enqueue(t_queue *queue, int value)
 		return ;
 	}
 }
+
+/*
+** dequeue:
+** - Removes a node from the queue by incrementing the head.
+*/
 
 void	dequeue(t_queue *queue)
 {

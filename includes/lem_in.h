@@ -6,7 +6,7 @@
 /*   By: swilliam <swilliam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/03 11:56:26 by swilliam          #+#    #+#             */
-/*   Updated: 2023/02/20 16:20:37 by swilliam         ###   ########.fr       */
+/*   Updated: 2023/02/21 18:21:50 by swilliam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ typedef struct data
 	int					finished;
 	int					ant_num;
 	int					counter;
+	int					bfs_path;
 	bool				starting_search;
 	bool				start_found;
 	bool				ending_search;
@@ -78,6 +79,7 @@ typedef struct paths
 	int				usage;
 	int				temp_usage;
 	int				temp;
+	int				bfs_index;
 	struct rooms	**room;
 	struct paths	*next;
 	struct paths	*previous;
@@ -171,10 +173,12 @@ t_paths		*get_path(t_heads *heads, int path_nb);
 t_paths		*shortest_path(t_data *data, t_heads *heads);
 
 // Edmonds Karp functionality:
-void		initialise_graphs(t_data *data, t_heads *heads);
+void		initialise_edmonds_karp(t_data *data, t_heads *heads);
+void		initialise_graph(t_data *data, t_heads *heads);
 void		populate_graph(t_data *data, t_heads *heads, int **graph);
-void		update_residual(int **residual, bool *visited, t_paths *path);
+void		update_visited(bool *visited, t_paths *path);
 void		edmonds_karp(t_data *data, t_heads *heads);
+int			continue_bfs(t_heads *heads, int *parent, bool *stored);
 
 // Queue
 t_queue		*init_queue(int size);

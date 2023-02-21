@@ -6,15 +6,15 @@
 /*   By: swilliam <swilliam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/21 13:53:38 by swilliam          #+#    #+#             */
-/*   Updated: 2023/02/20 15:05:53 by swilliam         ###   ########.fr       */
+/*   Updated: 2023/02/21 18:21:40 by swilliam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lem_in.h"
 
 /*
-** create_room:
-** - Creates a fresh room.
+** room_check:
+** - Checks if name already exists in the list of rooms.
 */
 
 static int	room_check(t_rooms **rooms, char *name)

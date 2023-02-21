@@ -6,7 +6,7 @@
 /*   By: swilliam <swilliam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/07 16:16:16 by swilliam          #+#    #+#             */
-/*   Updated: 2023/02/20 16:14:31 by swilliam         ###   ########.fr       */
+/*   Updated: 2023/02/21 16:14:19 by swilliam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ static t_data	*initialise_data(t_data *data)
 	data->line_count = 0;
 	data->finished = 0;
 	data->ant_num = 0;
+	data->bfs_path = 0;
 	data->starting_search = false;
 	data->start_found = false;
 	data->ending_search = false;
@@ -89,7 +90,16 @@ static t_heads	*initialise_heads(t_data *data, t_heads *heads, t_flags *flags)
 
 /*
 ** lem-in:
-** -
+** - Parses given input flags to determine what data is printed on output.
+** - Parses input to store rooms, links and ant count.
+** - Utilises the Edmonds Karp algorithm to store augmenting paths from
+**   the start to end nodes.
+** - Backtracks the paths and stores them in a solution struct in ascending
+**   length order.
+** - Calculates how much each path can be used to determine the shortest
+**   amount of turns traversal will take.
+** - Moves ants from start to end using stored paths and their usages.
+** - Prints total amount of lines used during printing.
 */
 
 int	main(int argc, char **argv)

@@ -6,7 +6,7 @@
 /*   By: swilliam <swilliam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/28 13:05:45 by swilliam          #+#    #+#             */
-/*   Updated: 2023/02/20 15:17:42 by swilliam         ###   ########.fr       */
+/*   Updated: 2023/02/21 15:53:13 by swilliam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,16 +108,27 @@ static void	store_paths_in_solution(
 void	store_solution(t_data *data, t_heads *heads)
 {
 	int	i;
+	int	turns;
+	int	best_index;
 
 	i = -1;
-	while (++i < 1)
+	turns = INT_MAX;
+	best_index = 0;
+	while (++i < data->path_count)
 	{
 		store_paths_in_solution(heads, heads->solution[i]);
-		if (data->ant_count == 1)
+		if (data->ant_count == 1 || heads->solution[0]->path[0]->length == 1)
 			heads->solution[0]->path[0]->usage = data->ant_count;
 		else
+		{
 			calculate_usage(data, heads->solution[i]);
+			if (heads->solution[i]->turns < turns)
+			{
+				turns = heads->solution[i]->turns;
+				best_index = i;
+			}
+		}
 	}
-	data->solution = heads->solution[0];
+	data->solution = heads->solution[best_index];
 	print_solution(heads, data->solution);
 }

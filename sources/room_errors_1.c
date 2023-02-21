@@ -12,6 +12,11 @@
 
 #include "lem_in.h"
 
+/*
+** start_and_end_errors:
+** - Edge cases for when an error is met.
+*/
+
 void	start_and_end_errors(t_data *data, char *line)
 {
 	if (data->start_found == true && data->starting_search == true)
@@ -24,13 +29,21 @@ void	start_and_end_errors(t_data *data, char *line)
 		clean_lem_in("Error in start/end node.");
 }
 
+/*
+** start_and_end_verify:
+** - Edge cases for when an error is met.
+*/
+
 void	start_and_end_verify(t_data *data)
 {
 	if (data->starting_search && data->ending_search)
 		clean_lem_in("Error in start/end node.");
-	if (data->start_found == false && data->end_found == true)
-		clean_lem_in("Error in start/end node.");
 }
+
+/*
+** verify_rooms:
+** - Edge cases for when an error is met.
+*/
 
 void	verify_rooms(t_heads *heads, t_data *data)
 {
@@ -49,6 +62,11 @@ void	verify_rooms(t_heads *heads, t_data *data)
 	if (data->ending_search == true || data->starting_search)
 		clean_lem_in("No start found.");
 }
+
+/*
+** file_errors:
+** - Used when input has been read, ensuring there are no failures met.
+*/
 
 void	file_errors(t_heads *heads, int line_n, t_data *data)
 {

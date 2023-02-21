@@ -6,11 +6,16 @@
 /*   By: egaliber <egaliber@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/20 11:07:57 by egaliber          #+#    #+#             */
-/*   Updated: 2023/02/20 11:29:09 by egaliber         ###   ########.fr       */
+/*   Updated: 2023/02/20 17:40:50 by egaliber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lem_in.h"
+
+/*
+** calculate_remain:
+** - We calculate and distribute the remain to all paths from first.
+*/
 
 void	calculate_remain(t_paths **paths, int remain, int path_count)
 {
@@ -27,6 +32,12 @@ void	calculate_remain(t_paths **paths, int remain, int path_count)
 	}
 }
 
+/*
+** calculate_path:
+** - We calculate the result by subtrackting longest path - previous.
+**   so we get the remain of the test_round
+*/
+
 int	calculate_path(t_paths **path, int last)
 {
 	int	edge;
@@ -42,6 +53,13 @@ int	calculate_path(t_paths **path, int last)
 	return (res);
 }
 
+/*
+** test_round:
+** - We give the longest path usage of 1. Edge is the longest path_length.
+**   the previous paths usage becomes is longest - that path.
+**   untill all paths are used.
+*/
+
 void	test_round(t_paths **paths, int nb_paths, int last)
 {
 	int	edge;
@@ -55,6 +73,13 @@ void	test_round(t_paths **paths, int nb_paths, int last)
 		nb_paths--;
 	}
 }
+
+/*
+** calculate_path_use:
+** - We start calculating the usage by doing a test_round.
+** - Paths recieve a usage and we add the remain.
+**   Then remain is calculated and distributed evenly on all paths.
+*/
 
 void	calculate_path_use(t_data *data, t_solutions *solution, int path_count)
 {
