@@ -6,7 +6,7 @@
 /*   By: swilliam <swilliam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/28 13:05:45 by swilliam          #+#    #+#             */
-/*   Updated: 2023/02/21 15:35:30 by swilliam         ###   ########.fr       */
+/*   Updated: 2023/02/21 15:53:13 by swilliam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,7 +117,7 @@ void	store_solution(t_data *data, t_heads *heads)
 	while (++i < data->path_count)
 	{
 		store_paths_in_solution(heads, heads->solution[i]);
-		if (data->ant_count == 1)
+		if (data->ant_count == 1 || heads->solution[0]->path[0]->length == 1)
 			heads->solution[0]->path[0]->usage = data->ant_count;
 		else
 		{
