@@ -132,7 +132,7 @@ void	edmonds_karp(t_data *data, t_heads *heads)
 			if (heads->path[x]->length == 2 || data->ant_count == 1)
 				break ;
 		}
-		if (heads->path != NULL)
+		if (heads->path != NULL && i == 1)
 			i = heads->path[data->bfs_path]->length - 1;
 		if (!continue_bfs(heads, heads->parent, heads->stored))
 			break ;

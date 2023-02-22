@@ -6,7 +6,7 @@
 /*   By: swilliam <swilliam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/03 11:56:26 by swilliam          #+#    #+#             */
-/*   Updated: 2023/02/21 18:21:50 by swilliam         ###   ########.fr       */
+/*   Updated: 2023/02/22 14:54:31 by swilliam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -201,7 +201,7 @@ void		clean_lem_in(char *str);
 
 // Printer
 void		printer(t_heads *heads, t_data *data);
-void		give_rest_paths(t_ants *ants, t_paths **paths, t_data *data, int i);
+void		give_rest_paths(t_ants *ants, t_paths **paths, int i);
 void		move_played(t_ants *ants, t_data *data, t_heads *heads);
 void		first_move(t_heads *heads, t_ants *ants, t_paths **paths, int i);
 void		send_ants(t_heads *heads, t_ants *ants, t_paths **paths, int i);

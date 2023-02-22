@@ -1,0 +1,223 @@
+result:
+big_ant_nbr:
+Error in ants.leaks Report Version: 4.0
+Process 23150: 169 nodes malloced for 174 KB
+Process 23150: 0 leaks for 0 total leaked bytes.
+
+
+comment_in_link:
+Invalid room name.leaks Report Version: 4.0
+Process 23158: 197 nodes malloced for 495 KB
+Process 23158: 0 leaks for 0 total leaked bytes.
+
+
+comment_in_room:
+Invalid data.leaks Report Version: 4.0
+Process 23165: 178 nodes malloced for 254 KB
+Process 23165: 0 leaks for 0 total leaked bytes.
+
+
+corrupted_command:
+Error in start/end node.leaks Report Version: 4.0
+Process 23172: 178 nodes malloced for 254 KB
+Process 23172: 0 leaks for 0 total leaked bytes.
+
+
+duplicate_room:
+Duplicate rooms.leaks Report Version: 4.0
+Process 23179: 184 nodes malloced for 254 KB
+Process 23179: 0 leaks for 0 total leaked bytes.
+
+
+empty_file:
+Empty file.leaks Report Version: 4.0
+Process 23187: 166 nodes malloced for 14 KB
+Process 23187: 0 leaks for 0 total leaked bytes.
+
+
+empty_line_after_ants:
+Invalid data.leaks Report Version: 4.0
+Process 23196: 170 nodes malloced for 174 KB
+Process 23196: 0 leaks for 0 total leaked bytes.
+
+
+empty_line_between_rooms_and_links:
+Invalid data.leaks Report Version: 4.0
+Process 23203: 191 nodes malloced for 254 KB
+Process 23203: 0 leaks for 0 total leaked bytes.
+
+
+empty_line_in_links:
+Invalid data.leaks Report Version: 4.0
+Process 23210: 202 nodes malloced for 655 KB
+Process 23210: 0 leaks for 0 total leaked bytes.
+
+
+empty_line_in_rooms:
+Invalid data.leaks Report Version: 4.0
+Process 23217: 181 nodes malloced for 254 KB
+Process 23217: 0 leaks for 0 total leaked bytes.
+
+
+invalid_ants:
+No ant count given.leaks Report Version: 4.0
+Process 23224: 169 nodes malloced for 174 KB
+Process 23224: 0 leaks for 0 total leaked bytes.
+
+
+invalid_room_coordinate:
+Coordinates given are not numbers.leaks Report Version: 4.0
+Process 23231: 183 nodes malloced for 254 KB
+Process 23231: 0 leaks for 0 total leaked bytes.
+
+
+invalid_room_in_link_0:
+Invalid link name.leaks Report Version: 4.0
+Process 23238: 199 nodes malloced for 495 KB
+Process 23238: 0 leaks for 0 total leaked bytes.
+
+
+invalid_room_in_link_1:
+Invalid data.leaks Report Version: 4.0
+Process 23246: 196 nodes malloced for 494 KB
+Process 23246: 0 leaks for 0 total leaked bytes.
+
+
+invalid_room_in_link_2:
+Invalid data.leaks Report Version: 4.0
+Process 23253: 199 nodes malloced for 575 KB
+Process 23253: 0 leaks for 0 total leaked bytes.
+
+
+invalid_room_name_0:
+Cannot use 'L' for room names.leaks Report Version: 4.0
+Process 23260: 175 nodes malloced for 254 KB
+Process 23260: 0 leaks for 0 total leaked bytes.
+
+
+invalid_room_name_1:
+Invalid room name.leaks Report Version: 4.0
+Process 23267: 176 nodes malloced for 254 KB
+Process 23267: 0 leaks for 0 total leaked bytes.
+
+
+invalid_room_spaces:
+Invalid data.leaks Report Version: 4.0
+Process 23274: 171 nodes malloced for 174 KB
+Process 23274: 0 leaks for 0 total leaked bytes.
+
+
+link_after_end:
+Error in start/end node.leaks Report Version: 4.0
+Process 23281: 191 nodes malloced for 254 KB
+Process 23281: 0 leaks for 0 total leaked bytes.
+
+
+link_after_start:
+Invalid link name.leaks Report Version: 4.0
+Process 23288: 194 nodes malloced for 414 KB
+Process 23288: 0 leaks for 0 total leaked bytes.
+
+
+link_among_rooms:
+Invalid data.leaks Report Version: 4.0
+Process 23295: 191 nodes malloced for 414 KB
+Process 23295: 0 leaks for 0 total leaked bytes.
+
+
+missing_room_coordinate:
+Invalid data.leaks Report Version: 4.0
+Process 23302: 178 nodes malloced for 254 KB
+Process 23302: 0 leaks for 0 total leaked bytes.
+
+
+mixed_room_edge:
+Invalid data.leaks Report Version: 4.0
+Process 23309: 185 nodes malloced for 414 KB
+Process 23309: 0 leaks for 0 total leaked bytes.
+
+
+negative_ants:
+No ant count given.leaks Report Version: 4.0
+Process 23316: 169 nodes malloced for 174 KB
+Process 23316: 0 leaks for 0 total leaked bytes.
+
+
+no_ants:
+Error in ants.leaks Report Version: 4.0
+Process 23323: 169 nodes malloced for 174 KB
+Process 23323: 0 leaks for 0 total leaked bytes.
+
+
+no_end:
+Error in start/end node.leaks Report Version: 4.0
+Process 23331: 203 nodes malloced for 735 KB
+Process 23331: 0 leaks for 0 total leaked bytes.
+
+
+no_links:
+No links.leaks Report Version: 4.0
+Process 23338: 189 nodes malloced for 254 KB
+Process 23338: 0 leaks for 0 total leaked bytes.
+
+
+no_path_from_start_to_end:
+No links to end.leaks Report Version: 4.0
+Process 23347: 207 nodes malloced for 735 KB
+Process 23347: 0 leaks for 0 total leaked bytes.
+
+
+no_rooms:
+Invalid link name.leaks Report Version: 4.0
+Process 23354: 173 nodes malloced for 174 KB
+Process 23354: 0 leaks for 0 total leaked bytes.
+
+
+no_start:
+Error in start/end node.leaks Report Version: 4.0
+Process 23361: 203 nodes malloced for 735 KB
+Process 23361: 0 leaks for 0 total leaked bytes.
+
+
+room_among_links:
+Invalid data.leaks Report Version: 4.0
+Process 23368: 202 nodes malloced for 655 KB
+Process 23368: 0 leaks for 0 total leaked bytes.
+
+
+same_room_twice:
+Duplicate rooms.leaks Report Version: 4.0
+Process 23375: 196 nodes malloced for 255 KB
+Process 23375: 0 leaks for 0 total leaked bytes.
+
+
+start_after_end:
+Error in start/end node.leaks Report Version: 4.0
+Process 23382: 171 nodes malloced for 174 KB
+Process 23382: 0 leaks for 0 total leaked bytes.
+
+
+start_after_start:
+Error in start/end node.leaks Report Version: 4.0
+Process 23389: 171 nodes malloced for 174 KB
+Process 23389: 0 leaks for 0 total leaked bytes.
+
+
+two_ends:
+Error in start/end node.leaks Report Version: 4.0
+Process 23396: 191 nodes malloced for 254 KB
+Process 23396: 0 leaks for 0 total leaked bytes.
+
+
+two_ends_in_row:
+Error in start/end node.leaks Report Version: 4.0
+Process 23403: 188 nodes malloced for 254 KB
+Process 23403: 0 leaks for 0 total leaked bytes.
+
+
+two_starts:
+Error in start/end node.leaks Report Version: 4.0
+Process 23410: 191 nodes malloced for 254 KB
+Process 23410: 0 leaks for 0 total leaked bytes.
+
+

@@ -6,7 +6,7 @@
 /*   By: swilliam <swilliam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/18 16:16:43 by egaliber          #+#    #+#             */
-/*   Updated: 2023/02/20 14:29:08 by swilliam         ###   ########.fr       */
+/*   Updated: 2023/02/22 14:55:31 by swilliam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,14 +19,12 @@
 **   When usage hits 0 we decrease the amount of paths used.
 */
 
-void	give_rest_paths(t_ants *ants, t_paths **paths, t_data *data, int i)
+void	give_rest_paths(t_ants *ants, t_paths **paths, int i)
 {
 	ants->room = paths[i]->room;
 	ants->index_end = paths[i]->length;
 	paths[i]->usage--;
 	paths[i]->temp++;
-	if (paths[i]->usage == 0)
-		data->solution->paths_used--;
 }
 
 /*
@@ -79,7 +77,7 @@ static void	ant_mover(t_heads *heads, t_data *data)
 	while (data->finished != data->ant_count)
 	{
 		data->counter = 0;
-		first_move(heads, ants, paths, 0);
+		first_move(heads, ants, paths, data->counter);
 		if (heads->flags->ants == true)
 			ft_printf("\n");
 		data->line_count++;
@@ -104,24 +102,30 @@ static void	ant_mover(t_heads *heads, t_data *data)
 **   untill all paths are done.
 */
 
-static void	give_ants_paths(t_ants *ants, t_data *data, t_heads *heads)
+static void	give_ants_paths(t_ants *ants, t_data *data)
 {
-	t_paths	**paths;
 	int		i;
+	int		x;
+	int		path_count;
 
-	paths = data->solution->path;
-	ants = heads->ants;
-	while (data->solution->paths_used > 0)
+	path_count = data->solution->paths_used;
+	i = 1;
+	while (i <= data->ant_count)
 	{
-		i = 0;
-		while (i < data->solution->paths_used)
+		if (data->solution->path[path_count - 1]->usage == 0)
+			path_count--;
+		x = -1;
+		while (++x < path_count)
 		{
-			while (paths[i]->usage == 0)
+			if (data->solution->path[x]->usage > 0)
+			{
+				give_rest_paths(ants, data->solution->path, x);
+				if (ants->next != NULL)
+					ants = ants->next;
 				i++;
-			give_rest_paths(ants, paths, data, i);
-			i++;
-			if (ants->next != NULL)
-				ants = ants->next;
+			}
+			else
+				break ;
 		}
 	}
 }
@@ -138,17 +142,15 @@ void	printer(t_heads *heads, t_data *data)
 {
 	t_ants	*ants;
 	t_ants	*temp;
-	int		paths_used;
 	int		i;
 
 	i = 0;
-	paths_used = data->solution->paths_used;
+	print_solution(heads, data->solution);
 	while (data->ant_num < data->ant_count)
 		ants = make_ants(data, ants, heads);
 	temp = heads->ants;
 	ants = temp;
-	give_ants_paths(ants, data, heads);
-	data->solution->paths_used = paths_used;
+	give_ants_paths(ants, data);
 	if (ants->room[i + 1]->end == true)
 		only_start_end(heads, ants);
 	else
