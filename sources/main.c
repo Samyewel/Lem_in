@@ -6,7 +6,7 @@
 /*   By: swilliam <swilliam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/07 16:16:16 by swilliam          #+#    #+#             */
-/*   Updated: 2023/02/22 15:11:14 by swilliam         ###   ########.fr       */
+/*   Updated: 2023/02/22 15:27:37 by swilliam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,9 +119,7 @@ int	main(int argc, char **argv)
 	if (argc > 1)
 		parse_flags(flags, argc, argv);
 	read_input(data, heads);
-	ft_printf("read\n");
 	edmonds_karp(data, heads);
-	ft_printf("EK\n");
 	backtrack_paths(data, heads);
 	store_solution(data, heads);
 	printer(heads, data);
