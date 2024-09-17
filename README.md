@@ -70,5 +70,6 @@ Lem-in was easily the most challenging yet insightful project I faced during my 
 ## Credits
 
 - For demonstration purposes, I am using azajay08's beautiful little visualiser!
-- egaliber, for the great job on creating the functions to print the ant output.
+- egalibert, for the great job on creating the functions to print and move the ant output.
+- Samyewel, for the algorithm implementation.
 - 42 for the eye-opening project creation.
