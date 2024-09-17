@@ -4,7 +4,7 @@
 - [Introduction](#introduction)
 - [Goal](#goal)
 - [Algorithm](#algorithm)
-- [Usage] (#usage)
+- [Usage](#usage)
 - [Reflections](#reflections)
 - [Example](#example)
 

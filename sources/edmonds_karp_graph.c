@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   edmonds_karp_graph.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: swilliam <swilliam@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sam <sam@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/19 13:31:31 by sam               #+#    #+#             */
-/*   Updated: 2023/02/21 18:22:04 by swilliam         ###   ########.fr       */
+/*   Updated: 2024/09/17 12:33:09 by sam              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,13 +74,11 @@ void	initialise_edmonds_karp(t_data *data, t_heads *heads)
 void	update_visited(bool *visited, t_paths *path)
 {
 	int	i;
-	int	from;
 	int	to;
 
 	i = -1;
 	while (++i < path->length - 1)
 	{
-		from = path->room[i]->id;
 		to = path->room[i + 1]->id;
 		if (!path->room[i + 1]->end)
 			visited[to] = true;

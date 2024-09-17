@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   solution_usage.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: swilliam <swilliam@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sam <sam@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/03 16:17:07 by swilliam          #+#    #+#             */
-/*   Updated: 2023/02/21 15:24:42 by swilliam         ###   ########.fr       */
+/*   Updated: 2024/09/17 12:33:30 by sam              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,9 +67,7 @@ static int	distribute(
 {
 	int	i;
 	int	*turns;
-	int	ants_left;
 
-	ants_left = data->ant_count;
 	turns = NULL;
 	reset_usage(solution, &turns, path_count);
 	i = -1;

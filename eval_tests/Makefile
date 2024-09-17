@@ -74,5 +74,8 @@ super:		all
 			@$(GENERATOR) --big-superposition > $(OUT)big-superposition.map
 			$(RUN) < $(OUT)big-superposition.map
 
-.PHONY: all clean fclean re norm error_1 error_2 error_3 gauntlet gen f1 f10 \
+visualise:	all
+			$(RUN) < $(MAPS)vis/vis_map2 | python3 ./visualiser/lem_in_vis.py
+
+.PHONY: all clean fclean re norm error_1 error_2 error_3 gauntlet gen f1 f10 f1000 \
 f1000 big super
