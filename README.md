@@ -30,6 +30,8 @@ You are provided with a map of rooms connected by tunnels, with ants that need t
 2. Find the optimal paths to move all ants.
 3. Display the movements in the minimum number of steps.
 
+![Lem_in .gif](https://user-images.githubusercontent.com/86073849/209192867-549939b7-319c-4147-a758-f6669efab447.gif)
+
 ---
 
 ## Algorithm
